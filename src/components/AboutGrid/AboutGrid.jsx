@@ -21,6 +21,9 @@ import {
     Sparkles
 } from 'lucide-react';
 
+import ProfileImage from '../../assets/PROFILE-1.jpg';
+import ResumePDF from '../../assets/KenjiJaculbia_Curriculum_Vitae.pdf';
+
 // Static data moved outside component
 const techStacks = [
     {
@@ -288,7 +291,7 @@ const EnhancedAvatar = memo(() => (
                 }}
             >
                 <img
-                    src="/src/assets/PROFILE-1.jpg"
+                    src={ProfileImage}
                     alt="Profile"
                     className="w-full h-full object-cover"
                 />
@@ -362,7 +365,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
 
 const ResumeButton = memo(() => {
     const handleDownload = useCallback(() => {
-        window.open('/src/assets/KenjiJaculbia_Curriculum_Vitae.pdf', '_blank');
+        window.open(ResumePDF, '_blank');
     }, []);
 
     return (

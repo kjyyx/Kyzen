@@ -2,12 +2,23 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/Kyzen/', // This should match your repository name
+  plugins: [react(), tailwindcss()],
+  base: '/Kyzen/',
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]'
+      }
+    }
+  },
+  // Ensure assets are properly resolved
+  resolve: {
+    alias: {
+      '@': '/src',
+      '@assets': '/src/assets'
+    }
   }
 })

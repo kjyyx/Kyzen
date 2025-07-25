@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 
+import AvatarImage from '../../assets/Avatar.png';
+
 const HeaderGrid = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true });
@@ -165,7 +167,7 @@ const HeaderGrid = () => {
                         }}
                     >
                         <img
-                            src="/src/assets/Avatar.png"
+                            src={AvatarImage}  // Changed from "/src/assets/Avatar.png"
                             alt="Avatar"
                             className="w-full h-full object-contain drop-shadow-2xl"
                         />

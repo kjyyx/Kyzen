@@ -2,10 +2,15 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code, Calendar, Users, Award } from "lucide-react";
 
+import CNImage from '../../assets/CN-3.png';
+import ITSImage from '../../assets/ITS-1.png';
+import LCImage from '../../assets/LC-1.png';
+import REImage from '../../assets/RE-1.png';
+
 const projects = [
     {
         title: "Clarknav",
-        image: "/src/assets/CN-3.png",
+        image: CNImage,
         link: "#",
         description: "Navigation system",
         tech: ["Angular", "Laravel", "PostgreSQL"],
@@ -15,7 +20,7 @@ const projects = [
     },
     {
         title: "ITS ATS",
-        image: "/src/assets/ITS-1.png",
+        image: ITSImage,
         link: "#",
         description: "Applicant tracking system",
         tech: ["Angular", ".NET", "PostgreSQL"],
@@ -25,7 +30,7 @@ const projects = [
     },
     {
         title: "Lavacraze",
-        image: "/src/assets/LC-1.png",
+        image: LCImage,
         link: "#",
         description: "E-commerce platform",
         tech: ["Wordpress", "Elementor"],
@@ -35,7 +40,7 @@ const projects = [
     },
     {
         title: "Railroad-ed",
-        image: "/src/assets/RE-1.png",
+        image: REImage,
         link: "#",
         description: "Educational rail system",
         tech: ["Wordpress", "D3.js", "Firebase"],

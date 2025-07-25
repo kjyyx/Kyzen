@@ -12,6 +12,7 @@ import {
     Award,
     Home
 } from "lucide-react";
+
 import kyzenLogo from "/src/assets/KYZENLOGO1.png";
 
 const navigation = [

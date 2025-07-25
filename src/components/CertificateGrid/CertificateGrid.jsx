@@ -13,14 +13,31 @@ import {
 } from 'lucide-react';
 import './CertificateGrid.css'
 
+import AWSCertImage from '../../assets/Certificates/AWS_Academy_Cloud_Foundations-1.png';
+import AWSCertPDF from '../../assets/Certificates/AWS_Academy_Cloud_Foundations.pdf';
+import CyberSecurityCertImage from '../../assets/Certificates/Introduction_to_Cybersecurity-1.png';
+import CyberSecurityCertPDF from '../../assets/Certificates/Introduction_to_Cybersecurity.pdf';
+import IoTCertImage from '../../assets/Certificates/Introduction_to_IoT-1.png';
+import IoTCertPDF from '../../assets/Certificates/Introduction_to_IoT.pdf';
+import JSCertImage from '../../assets/Certificates/JavaScriptEssentials-1.png';
+import JSCertPDF from '../../assets/Certificates/JavaScriptEssentials.pdf';
+import CyberOpsCertImage from '../../assets/Certificates/CyberOps_Associate-1.png';
+import CyberOpsCertPDF from '../../assets/Certificates/CyberOps_Associate.pdf';
+
+import RedHatSeminar from '../../assets/Seminars/RedHat_Certificate.png';
+import CybersecurityAISeminar from '../../assets/Seminars/Cybersecurity_AI_Certificate.jpg';
+import GitSeminar from '../../assets/Seminars/Git_Certificate.png';
+import BlockchainSeminar from '../../assets/Seminars/Blockchain_Certificate.jpg';
+import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certificate.jpg';
+
 const certificates = [
     {
         title: "AWS Academy Graduate - AWS Academy Cloud Foundations",
         issuer: "Amazon Web Services Training and Certification",
         date: "April 23, 2024",
-        image: "/src/assets/Certificates/AWS_Academy_Cloud_Foundations-1.png",
+        image: AWSCertImage,
         skills: ["AWS Architecture", "AWS Cloud", "AWS Core Services", "AWS Pricing", "AWS Support"],
-        verification: "/src/assets/Certificates/AWS_Academy_Cloud_Foundations.pdf",
+        verification: AWSCertPDF,
         credentialId: "a99d8a81-6fc2-4b92-96f8-6c01d7dbaa6a",
         category: "Cloud",
         description: "Earners of this badge have taken the AWS Academy Cloud Foundations course and demonstrated knowledge of AWS Cloud concepts, core services, security, architecture, pricing, and support."
@@ -29,9 +46,9 @@ const certificates = [
         title: "Introduction to Cybersecurity",
         issuer: "Cisco",
         date: "November 8, 2021",
-        image: "/src/assets/Certificates/Introduction_to_Cybersecurity-1.png",
+        image: CyberSecurityCertImage,
         skills: ["Cybersecurity", "Threat Detection", "Cyber Best Practices", "Network Vulnerabilities", "Privacy And Data Confidentiality"],
-        verification: "/src/assets/Certificates/Introduction_to_Cybersecurity.pdf",
+        verification: CyberSecurityCertPDF,
         credentialId: "5c161100-bac4-4067-8114-f920e55d8fdd",
         category: "Security",
         description: "Cisco verifies the earner of this badge successfully completed the Introduction to Cybersecurity course and understands fundamental cybersecurity concepts and best practices."
@@ -40,9 +57,9 @@ const certificates = [
         title: "Introduction to IoT",
         issuer: "Cisco",
         date: "February 17, 2022",
-        image: "/src/assets/Certificates/Introduction_to_IoT-1.png",
+        image: IoTCertImage,
         skills: ["Digital Transformation", "Internet Of Things", "IoT", "Connected Devices", "IoT Security"],
-        verification: "/src/assets/Certificates/Introduction_to_IoT.pdf",
+        verification: IoTCertPDF,
         credentialId: "acc959ac-025e-4efd-b696-a23524788986",
         category: "IoT",
         description: "Cisco verifies the earner of this badge successfully completed the Introduction to IoT course and understands IoT fundamentals, applications, and digital transformation concepts."
@@ -51,9 +68,9 @@ const certificates = [
         title: "JavaScript Essentials 1",
         issuer: "Cisco (in collaboration with OpenEDG JS Institute)",
         date: "October 10, 2024",
-        image: "/src/assets/Certificates/JavaScriptEssentials-1.png",
+        image: JSCertImage,
         skills: ["JavaScript", "Data Types", "Functions", "Control Flow", "Debugging", "DOM Manipulation", "Event Handling", "Variables", "Operators"],
-        verification: "/src/assets/Certificates/JavaScriptEssentials.pdf",
+        verification: JSCertPDF,
         credentialId: "0e37fd57-d72f-43b2-a87d-9eabbd4c1b3e",
         category: "Development",
         description: "Cisco, in collaboration with OpenEDG JS Institute, verifies the earner successfully completed JavaScript Essentials 1 and demonstrates proficiency in fundamental JavaScript programming concepts."
@@ -62,9 +79,9 @@ const certificates = [
         title: "CyberOps Associate",
         issuer: "Cisco",
         date: "November 26, 2023",
-        image: "/src/assets/Certificates/CyberOps_Associate-1.png",
+        image: CyberOpsCertImage,
         skills: ["Security Operations", "Incident Response", "Threat Analysis", "Network Security", "Security Monitoring", "Digital Forensics", "SIEM Operations"],
-        verification: "/src/assets/Certificates/CyberOps_Associate.pdf",
+        verification: CyberOpsCertPDF,
         credentialId: "CYOPS-001-2023",
         category: "Security",
         description: "Cisco verifies the earner successfully completed the CyberOps Associate certification, validating skills in security operations, threat detection, incident response, and network security monitoring."
@@ -77,7 +94,7 @@ const seminars = [
         organizer: "Red Hat Academy",
         date: "November 12, 2022",
         location: "Online Event",
-        image: "/src/assets/Seminars/RedHat_Certificate.png",
+        image: RedHatSeminar,
         type: "Training Course"
     },
     {
@@ -85,7 +102,7 @@ const seminars = [
         organizer: "Holy Angel University School of Computing",
         date: "February 7, 2025",
         location: "Holy Angel University",
-        image: "/src/assets/Seminars/Cybersecurity_AI_Certificate.jpg",
+        image: CybersecurityAISeminar,
         type: "Conference"
     },
     {
@@ -93,7 +110,7 @@ const seminars = [
         organizer: "Code Geeks",
         date: "October 5, 2024",
         location: "Online Event",
-        image: "/src/assets/Seminars/Git_Certificate.png",
+        image: GitSeminar,
         type: "Workshop"
     },
     {
@@ -101,7 +118,7 @@ const seminars = [
         organizer: "Holy Angel University",
         date: "July 19, 2024",
         location: "Holy Angel University",
-        image: "/src/assets/Seminars/Blockchain_Certificate.jpg",
+        image: BlockchainSeminar,
         type: "Conference"
     },
     {
@@ -109,7 +126,7 @@ const seminars = [
         organizer: "PSM in Cybersecurity",
         date: "January 31, 2025",
         location: "Holy Angel University",
-        image: "/src/assets/Seminars/Cyber_Resilience_Certificate.jpg",
+        image: CyberResilienceSeminar,
         type: "Seminar"
     }
 ];
