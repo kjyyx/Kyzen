@@ -15,7 +15,7 @@ const projects = [
         description: "Navigation system",
         tech: ["Angular", "Laravel", "PostgreSQL"],
         category: "Full-Stack",
-        year: "2024",
+        year: "2025",
         status: "Live",
     },
     {
@@ -207,69 +207,74 @@ function ProjectCard({
                 {/* Floating rectangle - optimized */}
                 <motion.div
                     className={`absolute ${isMobile
-                            ? "top-4 -right-4"
-                            : verticalRectangle
-                                ? "top-16 -right-16"
-                                : "top-10 -left-16"
+                        ? "top-4 -right-4"
+                        : verticalRectangle
+                            ? "top-16 -right-16"
+                            : "top-10 -left-16"
                         } z-40`}
                     initial={{
                         opacity: 1,
                         scale: 1,
-                        x: isMobile ? -10 : 0,
+                        x: isMobile ? -200 : 0, // Start from far left on mobile
                         y: isMobile ? -5 : 0,
                     }}
                     animate={{
                         opacity: 1,
-                        scale: 1,
-                        x: isMobile ? -10 : showEffects ? (verticalRectangle ? 0 : -80) : 0,
-                        y: isMobile ? -5 : showEffects ? (verticalRectangle ? -80 : 0) : 0,
+                        scale: showEffects ? 1.02 : 1,
+                        x: isMobile
+                            ? (showEffects ? -70 : -120) // Slide in from left on mobile
+                            : showEffects
+                                ? (verticalRectangle ? 0 : -80)
+                                : 0,
+                        y: isMobile ? 10 : showEffects ? (verticalRectangle ? -80 : 0) : 0,
                     }}
                     transition={{
                         type: "spring",
-                        stiffness: 150,
-                        damping: 20,
-                        duration: 0.4,
+                        stiffness: isMobile ? 200 : 150, // Snappier on mobile
+                        damping: isMobile ? 25 : 20,
+                        duration: isMobile ? 0.3 : 0.4,
                     }}
                 >
                     <motion.div
-                        className={`rounded-xl bg-gradient-to-r from-white/25 to-white/15 border border-white/40 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile ? "w-[280px] h-[50px]" : "w-[340px] h-[60px]"
+                        className={`rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile ? "w-[280px] h-[50px]" : "w-[340px] h-[60px]"
                             } ${verticalRectangle && !isMobile ? "rotate-90" : ""}`}
+                        animate={{
+                            borderColor: showEffects ? "rgba(255, 117, 223, 0.6)" : "rgba(255, 255, 255, 0.5)",
+                            boxShadow: showEffects
+                                ? "0 25px 50px -12px rgba(255, 117, 223, 0.25)"
+                                : "0 25px 50px -12px rgba(255, 255, 255, 0.1)"
+                        }}
+                        transition={{ duration: 0.2 }}
                         whileHover={{ scale: 1.02 }}
                     >
-                        <div
-                            className={`px-4 py-3 flex items-center justify-between h-full ${isMobile ? "px-3 py-2" : "px-6 py-4"
-                                }`}
-                        >
+                        <div className={`px-4 py-3 flex items-center justify-between h-full ${isMobile ? "px-3 py-2" : "px-6 py-4"}`}>
                             <div className="flex-1">
-                                <AnimatePresence>
+                                <AnimatePresence mode="wait">
                                     {showEffects && (
                                         <motion.span
-                                            className={`text-white italic tracking-tight font-black whitespace-nowrap ${isMobile ? "text-base" : "text-lg"
-                                                }`}
-                                            initial={{ opacity: 0, x: -20 }}
+                                            className={`text-white italic tracking-tight font-black whitespace-nowrap ${isMobile ? "text-base" : "text-lg"}`}
+                                            initial={{ opacity: 0, x: -15 }}
                                             animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -20 }}
-                                            transition={{ delay: 0.1, duration: 0.2 }}
+                                            exit={{ opacity: 0, x: 15 }}
+                                            transition={{ duration: 0.15, ease: "easeOut" }}
                                         >
                                             explore project
                                         </motion.span>
                                     )}
                                 </AnimatePresence>
                             </div>
-                            <AnimatePresence>
+                            <AnimatePresence mode="wait">
                                 {showEffects && (
                                     <motion.div
-                                        className={`ml-3 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 ${isMobile ? "w-6 h-6" : "w-8 h-8"
-                                            }`}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
-                                        transition={{ duration: 0.2 }}
-                                        whileHover={{ scale: 1.1 }}
+                                        className={`ml-3 rounded-full bg-white/25 flex items-center justify-center flex-shrink-0 ${isMobile ? "w-6 h-6" : "w-8 h-8"}`}
+                                        initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
+                                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                                        exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
+                                        transition={{ duration: 0.15, ease: "easeOut" }}
+                                        whileHover={{ scale: 1.15, rotate: 5 }}
                                     >
                                         <ExternalLink
-                                            className={`text-white ${isMobile ? "w-3 h-3" : "w-4 h-4"
-                                                }`}
+                                            className={`text-white ${isMobile ? "w-3 h-3" : "w-4 h-4"}`}
                                         />
                                     </motion.div>
                                 )}
@@ -282,26 +287,51 @@ function ProjectCard({
                 {showEffects && (
                     <motion.div
                         className="absolute bottom-20 left-6 right-6 z-30"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ 
+                            duration: 0.15, // Reduced from 0.2
+                            ease: "easeOut"
+                        }}
                     >
-                        <div className="p-4 border border-white/20 rounded-xl backdrop-blur-sm">
-                            <p className="text-white/90 text-lg font-light italic tracking-wide mb-3">
+                        <motion.div 
+                            className="p-4 border border-white/30 rounded-xl backdrop-blur-md bg-black/20"
+                            initial={{ backdropFilter: "blur(0px)" }}
+                            animate={{ backdropFilter: "blur(12px)" }}
+                            transition={{ duration: 0.1 }}
+                        >
+                            <motion.p 
+                                className="text-white/90 text-lg font-medium italic tracking-wide mb-3"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.15, delay: 0.05 }}
+                            >
                                 {project.description}
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                {project.tech.map((tech) => (
-                                    <span
+                            </motion.p>
+                            <motion.div 
+                                className="flex flex-wrap gap-2"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.15, delay: 0.08 }}
+                            >
+                                {project.tech.map((tech, techIndex) => (
+                                    <motion.span
                                         key={tech}
-                                        className="px-3 py-1 text-xs italic tracking-tight font-black text-white/80 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
+                                        className="px-3 py-1 text-xs italic tracking-tight font-black text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ 
+                                            duration: 0.1, 
+                                            delay: 0.1 + (techIndex * 0.02) 
+                                        }}
+                                        whileHover={{ scale: 1.05 }}
                                     >
                                         {tech}
-                                    </span>
+                                    </motion.span>
                                 ))}
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </motion.div>
                 )}
 
@@ -328,18 +358,18 @@ function ProjectCard({
                 {showEffects && (
                     <>
                         <motion.div
-                            className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#ff75df]/60 rounded-tr-lg z-30"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.2 }}
+                            className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#ff75df]/80 rounded-tr-lg z-30"
+                            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                            exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                            transition={{ duration: 0.15, ease: "easeOut" }}
                         />
                         <motion.div
-                            className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#ff75df]/60 rounded-bl-lg z-30"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.2, delay: 0.05 }}
+                            className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#ff75df]/80 rounded-bl-lg z-30"
+                            initial={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                            exit={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                            transition={{ duration: 0.15, delay: 0.02, ease: "easeOut" }}
                         />
                     </>
                 )}
@@ -397,14 +427,14 @@ function ProjectGrid() {
             </div>
 
             {/* Title */}
-            <motion.div 
+            <motion.div
                 className="w-full flex justify-start mb-16 sm:mb-28 relative z-10"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
                 <div className="relative">
-                    <motion.h2 
+                    <motion.h2
                         className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -417,9 +447,9 @@ function ProjectGrid() {
                         <br />
                         works<span className="text-[#ff75df]">:</span>
                     </motion.h2>
-                    
+
                     {/* Enhanced underline with gradient */}
-                    <motion.div 
+                    <motion.div
                         className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: "10rem" }}
@@ -486,8 +516,8 @@ function ProjectGrid() {
                         {!isMobile && (
                             <motion.div
                                 className={`absolute ${idx % 2 === 0
-                                        ? "-left-20 sm:-left-40"
-                                        : "-right-20 sm:-right-40"
+                                    ? "-left-20 sm:-left-40"
+                                    : "-right-20 sm:-right-40"
                                     } top-1/2 transform -translate-y-1/2`}
                                 initial={{ opacity: 0, scale: 0.5 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -513,7 +543,7 @@ function ProjectGrid() {
             </motion.div>
 
             {/* Bottom decoration */}
-            <motion.div 
+            <motion.div
                 className="w-full mt-12 sm:mt-20 flex justify-center"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}

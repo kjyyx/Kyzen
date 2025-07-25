@@ -948,7 +948,7 @@ const AboutGrid = () => {
                                     Full-Stack Web Developer
                                 </p>
                                 <motion.p
-                                    className="text-[#ff75df]/70 text-sm font-light"
+                                    className="text-[#ff75df]/70 text-sm font-medium"
                                     animate={{
                                         opacity: [0.5, 1, 0.5]
                                     }}
@@ -1027,7 +1027,7 @@ const AboutGrid = () => {
                             transition={{ delay: 0.6 }}
                         >
                             <motion.p
-                                className="text-xl text-white/90 leading-relaxed"
+                                className="text-sm md:text-xl text-white/90 leading-relaxed"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.7 }}
@@ -1160,7 +1160,7 @@ const AboutGrid = () => {
                             />
                         </div>
 
-                        <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-12 overflow-hidden max-w-4xl mx-auto">
+                        <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 md:p-12 overflow-hidden max-w-4xl mx-auto">
 
                             <motion.div
                                 className="flex items-center justify-between mb-12"

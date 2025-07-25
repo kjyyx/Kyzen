@@ -120,7 +120,7 @@ const HeaderGrid = () => {
                 ref={containerRef}
             >
                 {/* Background Text */}
-                <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 w-full overflow-hidden">
+                <div className="absolute top-1/4 md:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 w-full overflow-hidden">
                     {/* Japanese Characters */}
                     <motion.div
                         className="absolute top-2 left-5 md:top-25 md:left-80 text-xl md:text-3xl lg:text-5xl text-gray-300 font-light z-6"
@@ -154,7 +154,7 @@ const HeaderGrid = () => {
 
                 {/* Avatar Image */}
                 <motion.div
-                    className="absolute top-[55%] md:top-[65%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-8"
+                    className="absolute top-[47%] md:top-[65%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-8"
                     variants={avatarVariants}
                     initial="hidden"
                     animate={controls}
@@ -177,7 +177,7 @@ const HeaderGrid = () => {
 
             {/* Supporting Text */}
             <motion.div
-                className="absolute bottom-20 left-4 md:bottom-50 md:left-65 max-w-xs md:max-w-md text-gray-300/90 text-xs md:text-sm lg:text-base leading-relaxed z-6 px-4"
+                className="absolute bottom-30 left-4 md:bottom-50 md:left-65 max-w-xs md:max-w-md text-gray-300/90 text-sm lg:text-base leading-relaxed z-6 px-4 justify-center"
                 variants={fadeInVariants}
                 initial="hidden"
                 animate={controls}

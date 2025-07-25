@@ -131,6 +131,50 @@ const seminars = [
     }
 ];
 
+const getCategoryStyle = (category) => {
+    const styles = {
+        "Development": {
+            gradient: "from-[#ff75df]/30 to-purple-500/30",
+            border: "border-[#ff75df]/40",
+            accent: "text-[#ff75df]",
+            bg: "bg-[#ff75df]/20",
+            glow: "shadow-[#ff75df]/20"
+        },
+        "Cloud": {
+            gradient: "from-blue-500/30 to-cyan-500/30",
+            border: "border-blue-400/40",
+            accent: "text-blue-300",
+            bg: "bg-blue-500/20",
+            glow: "shadow-blue-500/20"
+        },
+        "Security": {
+            gradient: "from-red-500/30 to-orange-500/30",
+            border: "border-red-400/40",
+            accent: "text-red-300",
+            bg: "bg-red-500/20",
+            glow: "shadow-red-500/20"
+        },
+        "IoT": {
+            gradient: "from-green-500/30 to-emerald-500/30",
+            border: "border-green-400/40",
+            accent: "text-green-300",
+            bg: "bg-green-500/20",
+            glow: "shadow-green-500/20"
+        }
+    };
+    return styles[category] || styles["Development"];
+};
+
+const getCategoryIcon = (category) => {
+    const icons = {
+        "Development": Code2,
+        "Cloud": Cloud,
+        "Security": Shield,
+        "IoT": Wifi
+    };
+    return icons[category] || Code2;
+};
+
 // Static animation variants (moved outside component)
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -215,12 +259,15 @@ const getTypeColor = (type) => {
     };
 };
 
-// Memoized components
 const CertificateCard = memo(({ certificate, index }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Get category styling
+    const categoryStyle = useMemo(() => getCategoryStyle(certificate.category), [certificate.category]);
+    const CategoryIcon = useMemo(() => getCategoryIcon(certificate.category), [certificate.category]);
 
     const handleVerificationClick = useCallback((e) => {
         e.stopPropagation();
@@ -257,12 +304,12 @@ const CertificateCard = memo(({ certificate, index }) => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                {/* Simplified background glow */}
+                {/* Enhanced background glow with category color */}
                 {isHovered && (
                     <motion.div 
-                        className="absolute -inset-4 bg-white/10 rounded-2xl blur-xl"
+                        className={`absolute -inset-4 bg-gradient-to-r ${categoryStyle.gradient} rounded-2xl blur-xl`}
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        animate={{ opacity: 0.6 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                     />
@@ -277,7 +324,7 @@ const CertificateCard = memo(({ certificate, index }) => {
                 >
                     {/* Front of card */}
                     <motion.div className="absolute inset-0 backface-hidden">
-                        <div className="relative w-full h-full bg-white/15 rounded-xl border border-white/20 backdrop-blur-[20px] overflow-hidden">
+                        <div className={`relative w-full h-full bg-white/15 rounded-xl border ${categoryStyle.border} backdrop-blur-[20px] overflow-hidden`}>
                             
                             {/* Certificate image background */}
                             <div className="absolute inset-0">
@@ -290,16 +337,17 @@ const CertificateCard = memo(({ certificate, index }) => {
                                 <div className="absolute inset-0 bg-black/60" />
                             </div>
 
-                            {/* Corner decorations */}
-                            <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#ff75df]/40 rounded-tr-lg opacity-30" />
-                            <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#ff75df]/40 rounded-bl-lg opacity-30" />
+                            {/* Corner decorations with category color */}
+                            <div className={`absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 ${categoryStyle.border} rounded-tr-lg opacity-50`} />
+                            <div className={`absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 ${categoryStyle.border} rounded-bl-lg opacity-50`} />
 
                             {/* Content overlay */}
                             <div className="relative z-10 p-6 h-full flex flex-col justify-between">
                                 {/* Header */}
                                 <div>
                                     <div className="flex items-center justify-between mb-4">
-                                        <span className="px-3 py-1 text-xs italic tracking-tight font-black text-white bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
+                                        <span className={`px-3 py-1 text-xs italic tracking-tight font-black text-white ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex items-center gap-2`}>
+                                            <CategoryIcon className="w-3 h-3" />
                                             {certificate.category}
                                         </span>
                                         <span className="text-white/70 text-sm font-medium flex items-center gap-1">
@@ -313,7 +361,7 @@ const CertificateCard = memo(({ certificate, index }) => {
                                     </h3>
 
                                     <p className="text-white/90 text-sm font-medium mb-4 flex items-center gap-2">
-                                        <Award className="w-4 h-4 text-[#ff75df]" />
+                                        <Award className={`w-4 h-4 ${categoryStyle.accent}`} />
                                         {certificate.issuer}
                                     </p>
                                 </div>
@@ -343,11 +391,11 @@ const CertificateCard = memo(({ certificate, index }) => {
                                         <span className="text-white/70 text-xs italic">
                                             Click to view
                                         </span>
-                                        <ExternalLink className="w-3 h-3 text-[#ff75df]" />
+                                        <ExternalLink className={`w-3 h-3 ${categoryStyle.accent}`} />
                                     </div>
 
-                                    <div className="w-8 h-8 border-2 border-[#ff75df]/50 rounded-full flex items-center justify-center">
-                                        <div className="w-2 h-2 bg-[#ff75df] rounded-full"></div>
+                                    <div className={`w-8 h-8 border-2 ${categoryStyle.border} rounded-full flex items-center justify-center`}>
+                                        <div className={`w-2 h-2 ${categoryStyle.bg} rounded-full`}></div>
                                     </div>
                                 </div>
                             </div>
@@ -356,12 +404,12 @@ const CertificateCard = memo(({ certificate, index }) => {
 
                     {/* Back of card */}
                     <motion.div className="absolute inset-0 backface-hidden rotate-y-180">
-                        <div className="relative w-full h-full bg-black/20 rounded-xl border border-white/10 backdrop-blur-[15px] overflow-hidden">
+                        <div className={`relative w-full h-full bg-black/20 rounded-xl border ${categoryStyle.border} backdrop-blur-[15px] overflow-hidden`}>
                             <div className="relative z-10 h-full flex flex-col">
-                                {/* Header */}
-                                <div className="flex-shrink-0 bg-white/10 backdrop-blur-md px-6 py-3 border-b border-white/20">
+                                {/* Header with category color */}
+                                <div className={`flex-shrink-0 bg-gradient-to-r ${categoryStyle.gradient} backdrop-blur-md px-6 py-3 border-b ${categoryStyle.border}`}>
                                     <h4 className="text-white text-lg italic tracking-tight font-black flex items-center gap-2">
-                                        <Award className="w-5 h-5 text-[#ff75df]" />
+                                        <CategoryIcon className={`w-5 h-5 ${categoryStyle.accent}`} />
                                         Certificate Details
                                     </h4>
                                 </div>
@@ -381,7 +429,7 @@ const CertificateCard = memo(({ certificate, index }) => {
                                             {certificate.skills.map((skill) => (
                                                 <span 
                                                     key={skill} 
-                                                    className="px-3 py-1 text-xs font-medium text-white/90 bg-white/20 backdrop-blur-sm rounded-full border border-white/30"
+                                                    className={`px-3 py-1 text-xs font-medium text-white/90 ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border}`}
                                                 >
                                                     {skill}
                                                 </span>
@@ -393,7 +441,7 @@ const CertificateCard = memo(({ certificate, index }) => {
                                         <h5 className="text-white text-sm mb-3 italic tracking-tight font-black">
                                             Verification Details
                                         </h5>
-                                        <div className="space-y-3 p-4 bg-white/5 rounded-lg border border-white/20">
+                                        <div className={`space-y-3 p-4 ${categoryStyle.bg} rounded-lg border ${categoryStyle.border}`}>
                                             <div className="flex items-center justify-between">
                                                 <span className="text-white/70 text-xs">Issued Date:</span>
                                                 <span className="text-white/90 text-xs font-medium">{formatDate(certificate.date)}</span>
@@ -414,7 +462,7 @@ const CertificateCard = memo(({ certificate, index }) => {
 
                                     <motion.button 
                                         onClick={handleVerificationClick}
-                                        className="w-full py-3 px-4 bg-[#ff75df]/30 hover:bg-[#ff75df]/50 border border-[#ff75df]/50 rounded-lg text-white italic tracking-tight font-black transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2"
+                                        className={`w-full py-3 px-4 bg-gradient-to-r ${categoryStyle.gradient} hover:opacity-80 border ${categoryStyle.border} rounded-lg text-white italic tracking-tight font-black transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2`}
                                         whileHover={{ scale: 1.02, y: -2 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
@@ -776,25 +824,37 @@ function CertificateGrid() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                {categories.map((category) => (
-                    <motion.button
-                        key={category.name}
-                        onClick={() => handleCategorySelect(category.name)}
-                        className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full italic tracking-tight font-black transition-all duration-300 ${
-                            selectedCategory === category.name
-                                ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
-                                : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
-                        }`}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <category.icon className="w-4 h-4" />
-                        <span>{category.name}</span>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
-                            {category.count}
-                        </span>
-                    </motion.button>
-                ))}
+                {categories.map((category) => {
+                    const categoryStyle = category.name !== "All" ? getCategoryStyle(category.name) : null;
+                    
+                    return (
+                        <motion.button
+                            key={category.name}
+                            onClick={() => handleCategorySelect(category.name)}
+                            className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full italic tracking-tight font-black transition-all duration-300 backdrop-blur-sm ${
+                                selectedCategory === category.name
+                                    ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] shadow-lg shadow-[#ff75df]/20'
+                                    : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
+                            }`}
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <category.icon 
+                                className={`w-4 h-4 ${
+                                    category.name !== "All" && categoryStyle 
+                                        ? categoryStyle.accent 
+                                        : selectedCategory === category.name 
+                                            ? 'text-[#ff75df]' 
+                                            : 'text-white/70'
+                                }`} 
+                            />
+                            <span>{category.name}</span>
+                            <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                                {category.count}
+                            </span>
+                        </motion.button>
+                    );
+                })}
             </motion.div>
 
             {/* Certificates grid */}
@@ -828,7 +888,7 @@ function CertificateGrid() {
                     <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl italic tracking-tight font-black mb-4">
                         Seminars & Workshops<span className="text-[#ff75df]">_</span>
                     </h3>
-                    <p className="text-white/70 text-base sm:text-lg font-light max-w-2xl mx-auto">
+                    <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
                         Additional learning experiences and professional development initiatives
                     </p>
                     
@@ -876,7 +936,7 @@ function CertificateGrid() {
                             <div className="text-2xl sm:text-3xl md:text-4xl italic tracking-tight font-black text-white">
                                 {stat.value}
                             </div>
-                            <div className="text-white/60 text-sm sm:text-base font-light">
+                            <div className="text-white/60 text-sm sm:text-base font-medium">
                                 {stat.label}
                             </div>
                         </motion.div>
