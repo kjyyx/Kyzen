@@ -1,0 +1,342 @@
+import React from "react";
+
+const projects = [
+    {
+        title: "Clarknav",
+        image: "/src/assets/CN-3.png",
+        link: "#",
+        description: "Navigation system"
+    },
+    {
+        title: "ITS ATS",
+        image: "/src/assets/ITS-1.png",
+        link: "#",
+        description: "Applicant tracking system"
+    },
+    {
+        title: "Lavacraze",
+        image: "/src/assets/LC-1.png",
+        link: "#",
+        description: "E-commerce platform"
+    },
+    {
+        title: "Railroad-ed",
+        image: "/src/assets/RE-1.png",
+        link: "#",
+        description: "Educational rail system"
+    },
+];
+
+// Card component for reuse
+function ProjectCard({ project, align = "right", verticalRectangle = false }) {
+
+    return (
+        <div className={`flex flex-col items-${align}`}>
+            <div className="relative group w-[360px] h-[360px]">
+                {/* Image with dim on hover */}
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-center rounded-lg transition duration-300"
+                    style={{
+                        filter: "grayscale(1) sepia(1) saturate(0.5) contrast(0.6) brightness(0.8)"
+                    }}
+                />
+                {/* Dimming overlay on hover */}
+                <div className="absolute inset-0 rounded-lg pointer-events-none transition duration-500 group-hover:bg-black/60" />
+                {/* transition-transform duration-500 group-hover:scale-105 */}
+                {/* Rectangle geometric shape */}
+                {verticalRectangle ? (
+                    // Vertical rectangle for right-side cards
+                    <div className="absolute top-65 right-8 transition duration-300 origin-top-right rotate-90">
+                        <div className="rounded-lg bg-white/30 border border-white/20 backdrop-blur-[15px] px-8 py-6 transition duration-300
+                            opacity-60 group-hover:opacity-100 flex items-center justify-end min-w-[320px]">
+                            <span className="text-white italic tracking-tight font-light text-lg transition duration-300
+                                opacity-0 group-hover:opacity-100 whitespace-nowrap">
+                                explore project ↗
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    // Horizontal rectangle for left-side cards
+                    <div className="absolute top-8 -left-10 transition duration-300">
+                        <div className="rounded-lg bg-white/30 border border-white/20 backdrop-blur-[15px] px-8 py-6 transition duration-300
+                            opacity-60 group-hover:opacity-100 flex items-center justify-end min-w-[320px]">
+                            <span className="text-white italic tracking-tight font-light text-lg transition duration-300
+                                opacity-0 group-hover:opacity-100">
+                                explore project ↗
+                            </span>
+                        </div>
+                    </div>
+                )}
+                {/* Project description */}
+                <div className="absolute bottom-6 left-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                    <p className="text-white/80 text-xl font-light italic tracking-wide">{project.description}</p>
+                </div>
+                {/* Project title overlapping image, bottom left */}
+                <div className="absolute -bottom-5 left-6">
+                    <span className="block text-white text-5xl font-black italic tracking-tight leading-none drop-shadow-lg">{project.title}</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ProjectGrid() {
+    return (
+        <div className="flex flex-col items-center py-16 max-w-5xl mx-auto">
+            {/* Title */}
+            <div className="w-full flex justify-start mb-20">
+                <h2 className="text-white text-6xl md:text-7xl font-black leading-none italic tracking-tight text-left">
+                    Featured<span className="text-[#e2dbd2]">_</span>
+                    <br />
+                    works<span className="text-[#e2dbd2]">:</span>
+                </h2>
+            </div>
+            {/* Alternating cards */}
+            <div className="w-full flex flex-col gap-16">
+                {projects.map((project, idx) => (
+                    <div
+                        key={project.title}
+                        className={`
+                            flex ${idx % 2 === 0 ? "justify-start ml-30" : "justify-end"}
+                            ${idx !== 0 ? "-mt-24" : ""}
+                            z-${10 - idx}
+                        `}
+                    >
+                        <ProjectCard
+                            project={project}
+                            align={idx % 2 === 0 ? "start" : "end"}
+                            verticalRectangle={idx % 2 === 1}
+                        />
+                    </div>
+                ))}
+            </div>
+            {/* Bottom decorative line */}
+            <div className="w-full mt-20 flex justify-center">
+                <div className="w-64 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+        </div>
+    );
+}
+
+export default ProjectGrid;
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+
+const projects = [
+    {
+        title: "Clarknav",
+        image: "/src/assets/CN-3.png",
+        link: "#",
+        description: "Navigation system",
+        tech: ["Angular", "Laravel", "PostgreSQL"]
+    },
+    {
+        title: "ITS ATS",
+        image: "/src/assets/ITS-1.png",
+        link: "#",
+        description: "Applicant tracking system",
+        tech: ["Angular", ".NET", "PostgreSQL"]
+    },
+    {
+        title: "Lavacraze",
+        image: "/src/assets/LC-1.png",
+        link: "#",
+        description: "E-commerce platform",
+        tech: ["Wordpress", "Elementor"]
+    },
+    {
+        title: "Railroad-ed",
+        image: "/src/assets/RE-1.png",
+        link: "#",
+        description: "Educational rail system",
+        tech: ["Wordpress", "D3.js", "Firebase"]
+    },
+];
+
+function ProjectCard({ project, align = "right", verticalRectangle = false, index, isMobile, isActive, onClick }) {
+    const [isHovered, setIsHovered] = useState(false);
+
+    // For desktop, use hover state; for mobile, use the isActive prop
+    const showEffects = isMobile ? isActive : isHovered;
+
+    return (
+        <div
+            className={`flex flex-col items-${align} relative`}
+            onMouseEnter={() => !isMobile && setIsHovered(true)}
+            onMouseLeave={() => !isMobile && setIsHovered(false)}
+            onClick={isMobile ? onClick : undefined}
+        >
+            <div className={`relative ${isMobile ? 'w-full h-auto aspect-square' : 'group w-[380px] h-[380px]'}`}>
+                {/* Background glow effect */}
+                <div className={`absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 rounded-2xl blur-xl transition-all duration-700 ${showEffects ? 'opacity-100' : 'opacity-0'
+                    }`} />
+
+                {/* Image with enhanced styling */}
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className={`w-full h-full object-cover object-center rounded-xl transition-all duration-500 ${showEffects ? 'scale-[1.02]' : ''
+                        } relative z-10`}
+                    style={{
+                        filter: "grayscale(0.8) sepia(0.3) saturate(0.7) contrast(0.9) brightness(0.9)"
+                    }}
+                />
+
+                {/* Enhanced dimming overlay */}
+                <div className={`absolute inset-0 rounded-xl pointer-events-none transition-all duration-500 ${showEffects ? 'bg-black/50 scale-[1.02]' : ''
+                    } z-20`} />
+
+                {/* Animated border */}
+                <div className={`absolute inset-0 rounded-xl border transition-all duration-500 z-30 ${showEffects ? 'border-white/40' : 'border-white/20'
+                    }`} />
+
+                {/* Floating rectangle with enhanced styling */}
+                {verticalRectangle ? (
+                    // Vertical rectangle for right-side cards
+                    <div className={`absolute ${isMobile ? 'top-8 -right-8' : 'top-16 -right-18'} transition-all duration-500 ${!isMobile && 'rotate-90 group-hover:-top-0'
+                        } ${showEffects ? (isMobile ? '-top-2' : '-top-0') : ''} z-40`}>
+                        <div className={`rounded-xl bg-gradient-to-r from-white/25 to-white/15 border border-white/30 backdrop-blur-[20px] px-6 py-6 sm:px-10 sm:py-8 transition-all duration-500 flex items-center justify-end ${showEffects ? 'opacity-100 shadow-2xl shadow-white/10' : 'opacity-70'
+                            } ${isMobile ? 'min-w-[280px]' : 'min-w-[340px]'}`}>
+                            <span className={`text-white italic tracking-tight font-light text-lg sm:text-xl transition-all duration-500 ${showEffects ? 'opacity-100 whitespace-nowrap text-white/90' : 'opacity-0'
+                                }`}>
+                                explore project ↗
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    // Horizontal rectangle for left-side cards
+                    <div className={`absolute ${isMobile ? 'top-8 -left-16' : 'top-10 -left-16'} transition-all duration-500 ${showEffects ? (isMobile ? '-left-20' : '-left-30') : ''
+                        } z-40`}>
+                        <div className={`rounded-xl bg-gradient-to-r from-white/25 to-white/15 border border-white/30 backdrop-blur-[20px] px-6 py-6 sm:px-10 sm:py-8 transition-all duration-500 flex items-center justify-end ${showEffects ? 'opacity-100 shadow-2xl shadow-white/10' : 'opacity-70'
+                            } ${isMobile ? 'min-w-[280px]' : 'min-w-[340px]'}`}>
+                            <span className={`text-white italic tracking-tight font-light text-lg sm:text-xl transition-all duration-500 ${showEffects ? 'opacity-100 text-white/90' : 'opacity-0'
+                                }`}>
+                                explore project ↗
+                            </span>
+                        </div>
+                    </div>
+                )}
+
+                {/* Enhanced project description */}
+                <div className={`absolute bottom-12 left-10 transition-all duration-700 transform ${showEffects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                    } z-30`}>
+                    <p className="text-white/90 text-xl sm:text-2xl font-light italic tracking-wide drop-shadow-lg">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mt-0">
+                        {project.tech.map((tech) => (
+                            <span key={tech} className="px-2 py-1 text-xs font-medium text-white/70 bg-white/10 backdrop-blur-sm rounded border border-white/20">
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Enhanced project title with gradient */}
+                <div className="absolute -bottom-6 left-6 z-30">
+                    <span className="block text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl font-black italic tracking-tight leading-none drop-shadow-2xl pr-1">
+                        {project.title}
+                    </span>
+                </div>
+
+                {/* Subtle corner accents */}
+                <div className={`absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/30 rounded-tr-lg transition-all duration-500 z-30 ${showEffects ? 'opacity-100' : 'opacity-0'
+                    }`} />
+                <div className={`absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/30 rounded-bl-lg transition-all duration-500 z-30 ${showEffects ? 'opacity-100' : 'opacity-0'
+                    }`} />
+            </div>
+        </div>
+    );
+}
+
+function ProjectGrid() {
+    const [isMobile, setIsMobile] = useState(false);
+    const [activeCard, setActiveCard] = useState(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        handleResize(); // Set initial value
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleCardClick = (index) => {
+        if (!isMobile) return;
+        setActiveCard(activeCard === index ? null : index);
+    };
+
+    return (
+        <div className="flex flex-col items-center py-12 sm:py-20 max-w-6xl mx-auto w-11/12 sm:w-2/3 relative px-4 sm:px-6">
+            {/* Background decorative elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-24 sm:w-32 h-24 sm:h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-2xl sm:blur-3xl" />
+                <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-32 sm:w-40 h-32 sm:h-40 bg-gradient-to-br from-pink-500/10 to-red-500/10 rounded-full blur-2xl sm:blur-3xl" />
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-gradient-to-br from-green-500/5 to-blue-500/5 rounded-full blur-3xl" />
+            </div>
+
+            {/* Enhanced title with gradient and animation */}
+            <div className="w-full flex justify-start mb-16 sm:mb-28 relative z-10">
+                <div className="relative">
+                    <h2 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left">
+                        Featured<span className="text-[#e2dbd2]">_</span>
+                        <br />
+                        works<span className="text-[#e2dbd2]">:</span>
+                    </h2>
+                    {/* Subtle underline accent */}
+                    <div className="absolute -bottom-2 left-0 w-32 h-1 bg-gradient-to-r from-white/40 to-transparent rounded-full" />
+                </div>
+            </div>
+
+            {/* Enhanced grid with better spacing - mobile single column */}
+            <div className="w-full flex flex-col gap-12 sm:gap-20 relative z-10">
+                {projects.map((project, idx) => (
+                    <div
+                        key={project.title}
+                        className={`
+                            ${isMobile ? 'w-full flex justify-center' : `flex ${idx % 2 === 0 ? "justify-start ml-0 sm:ml-32" : "justify-end mr-0 sm:mr-32"}`}
+                            ${!isMobile && idx !== 0 ? "-mt-28" : ""}
+                            relative
+                        `}
+                        style={{
+                            zIndex: 10 - idx
+                        }}
+                    >
+                        {/* Project number indicator - hidden on mobile or adjusted */}
+                        {!isMobile && (
+                            <div className={`absolute ${idx % 2 === 0 ? '-left-20 sm:-left-40' : '-right-20 sm:-right-40'} top-1/2 transform -translate-y-1/2`}>
+                                <span className="text-white/50 text-6xl sm:text-8xl font-black italic">
+                                    {String(idx + 1).padStart(2, '0')}
+                                </span>
+                            </div>
+                        )}
+
+                        <ProjectCard
+                            project={project}
+                            align={isMobile ? "center" : idx % 2 === 0 ? "start" : "end"}
+                            verticalRectangle={!isMobile && idx % 2 === 1}
+                            index={idx}
+                            isMobile={isMobile}
+                            isActive={activeCard === idx}
+                            onClick={() => handleCardClick(idx)}
+                        />
+                    </div>
+                ))}
+            </div>
+
+            {/* Bottom decorative line */}
+            <div className="w-full mt-12 sm:mt-20 flex justify-center">
+                <div className="w-64 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+        </div>
+    );
+}
+
+export default ProjectGrid;

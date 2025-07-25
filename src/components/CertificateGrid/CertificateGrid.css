@@ -1,0 +1,33 @@
+/* Add to your global CSS */
+.backface-hidden {
+    backface-visibility: hidden;
+}
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    /* user-drag: none; */
+    pointer-events: none;
+}
+
+.group img {
+    pointer-events: auto;
+}

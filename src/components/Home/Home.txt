@@ -1,0 +1,77 @@
+import React, { memo, Suspense, lazy } from 'react'
+import Navbar from '../Navbar/Navbar.jsx'
+import Footer from '../Footer/Footer.jsx'
+import './Home.css'
+
+// Lazy load heavy components for better initial performance
+const ProjectGrid = lazy(() => import('../ProjectGrid/ProjectGrid.jsx'))
+const CertificateGrid = lazy(() => import('../CertificateGrid/CertificateGrid.jsx'))
+const HeaderGrid = lazy(() => import('../HeaderGrid/HeaderGrid.jsx'))
+const AboutGrid = lazy(() => import('../AboutGrid/AboutGrid.jsx'))
+
+// Loading component with your theme colors
+const LoadingFallback = memo(() => (
+    <div className="flex items-center justify-center py-20">
+        <div className="relative">
+            <div className="w-8 h-8 border-2 border-[#ff75df]/30 border-t-[#ff75df] rounded-full animate-spin"></div>
+            <div className="absolute inset-0 w-8 h-8 border-2 border-[#2e175c]/20 border-b-[#2e175c] rounded-full animate-spin animate-reverse"></div>
+        </div>
+    </div>
+))
+
+// Memoized background components to prevent unnecessary re-renders
+const BackgroundElements = memo(() => (
+    <>
+        {/* Subtle gradient with your custom colors */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2e175c]/70 via-[#2e175c]/40 via-[#ff75df]/20 to-black z-0" />
+
+        {/* Soft atmospheric glow */}
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#ff75df]/25 via-[#2e175c]/15 to-transparent rounded-full blur-3xl z-5" />
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-[#2e175c]/30 via-[#ff75df]/10 to-transparent rounded-full blur-2xl z-5" />
+
+        {/* Original background elements with main-bg preserved */}
+        <div id="main-bg" className="z-10" />
+        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-15" />
+    </>
+))
+
+// Memoized content wrapper
+const ContentWrapper = memo(() => (
+    <div className="relative z-20 mx-auto min-h-screen px-4 sm:px-8">
+        <Suspense fallback={<LoadingFallback />}>
+            <HeaderGrid />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback />}>
+            <AboutGrid />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback />}>
+            <ProjectGrid />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback />}>
+            <CertificateGrid />
+        </Suspense>
+    </div>
+))
+
+function Home() {
+    return (
+        <div className="relative h-full w-full bg-[#131313] overflow-hidden">
+            {/* Background layer */}
+            <BackgroundElements />
+            
+            {/* Navigation */}
+            <Navbar />
+            
+            {/* Main content */}
+            <ContentWrapper />
+            
+            {/* Footer */}
+            <Footer />
+        </div>
+    )
+}
+
+export default memo(Home)
