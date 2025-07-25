@@ -4,5 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-});
+  plugins: [react()],
+  base: '/Kyzen/', // This should match your repository name
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets'
+  }
+})
