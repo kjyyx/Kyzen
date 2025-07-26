@@ -560,7 +560,7 @@ const TechStackCategory = memo(({ stack, index, isActive, onClick }) => (
             />
         </motion.div>
 
-        <span className="relative z-10 hidden sm:inline">{stack.category}</span>
+        <span className="relative z-10">{stack.category}</span>
 
         {isActive && (
             <motion.div
@@ -879,7 +879,7 @@ const AboutGrid = () => {
     );
 
     return (
-        <div className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="about" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
 
             {/* Title */}
             <motion.div
@@ -1105,7 +1105,7 @@ const AboutGrid = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
             >
-                <div className="text-center space-y-6">
+                <div id="skills" className="text-center space-y-6">
                     <motion.div
                         className="flex items-center justify-center gap-6 mb-8"
                         initial={{ opacity: 0, scale: 0.8 }}

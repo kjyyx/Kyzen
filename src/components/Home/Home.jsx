@@ -6,14 +6,20 @@ import CertificateGrid from '../CertificateGrid/CertificateGrid.jsx'
 import HeaderGrid from '../HeaderGrid/HeaderGrid.jsx'
 import AboutGrid from '../AboutGrid/AboutGrid.jsx'
 import LoadingScreen from './LoadingScreen.jsx'
+import DevelopmentModal from './DevelopmentModal.jsx'
 // import SkillsGrid from '../SkillsGrid/SkillsGrid.jsx'
 import './Home.css'
 
 function Home() {
     const [isLoading, setIsLoading] = useState(true);
+    const [showDevModal, setShowDevModal] = useState(true);
 
     const handleLoadingComplete = () => {
         setIsLoading(false);
+    };
+
+    const handleCloseDevModal = () => {
+        setShowDevModal(false);
     };
 
     return (
@@ -44,6 +50,11 @@ function Home() {
             {/* Loading screen overlay */}
             {isLoading && (
                 <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+            )}
+
+            {/* Development notice modal */}
+            {showDevModal && !isLoading && (
+                <DevelopmentModal onClose={handleCloseDevModal} />
             )}
         </>
     )

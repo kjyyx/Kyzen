@@ -348,8 +348,7 @@ const CertificateCard = memo(({ certificate, index }) => {
                                     <div className="flex items-center justify-between mb-3 sm:mb-4">
                                         <span className={`px-2 sm:px-3 py-1 text-xs italic tracking-tight font-black text-white ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex items-center gap-1 sm:gap-2`}>
                                             <CategoryIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                                            <span className="hidden xs:inline">{certificate.category}</span>
-                                            <span className="xs:hidden">{certificate.category.charAt(0)}</span>
+                                            <span className="relative z-10">{certificate.category}</span>
                                         </span>
                                         <span className="text-white/70 text-xs sm:text-sm font-medium flex items-center gap-1">
                                             <Calendar className="w-3 h-3" />
@@ -799,7 +798,7 @@ function CertificateGrid() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="certifications" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
             {/* Title */}
             <motion.div
                 className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
@@ -861,8 +860,7 @@ function CertificateGrid() {
                                         : 'text-white/70'
                                     }`}
                             />
-                            <span className="hidden xs:inline sm:inline">{category.name}</span>
-                            <span className="xs:hidden sm:hidden">{category.name.charAt(0)}</span>
+                            <span className="relative z-10">{category.name}</span>
                             <span className="text-xs bg-white/20 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
                                 {category.count}
                             </span>

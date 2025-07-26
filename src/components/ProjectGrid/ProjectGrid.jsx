@@ -225,12 +225,12 @@ function ProjectCard({
                         opacity: 1,
                         scale: showEffects ? 1.02 : 1,
                         x: (isMobile || isTablet)
-                            ? (showEffects ? -60 : -100)
+                            ? (showEffects ? -120 : -200)
                             : showEffects
                                 ? (verticalRectangle ? 0 : -80)
                                 : 0,
                         y: (isMobile || isTablet)
-                            ? (showEffects ? 8 : 5)
+                            ? (showEffects ? 20 : 15)
                             : showEffects
                                 ? (verticalRectangle ? -80 : 0)
                                 : 0,
@@ -316,7 +316,7 @@ function ProjectCard({
                             transition={{ duration: 0.1 }}
                         >
                             <motion.p
-                                className="text-white/90 text-base sm:text-lg font-medium italic tracking-wide mb-2 sm:mb-3"
+                                className="text-white/90 text-base sm:text-lg font-normal italic tracking-wide mb-2 sm:mb-3"
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.15, delay: 0.05 }}
@@ -332,7 +332,7 @@ function ProjectCard({
                                 {project.tech.map((tech, techIndex) => (
                                     <motion.span
                                         key={tech}
-                                        className="px-2 sm:px-3 py-1 text-xs sm:text-sm italic tracking-tight font-black text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
+                                        className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-normal text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{
@@ -428,7 +428,7 @@ function ProjectGrid() {
     );
 
     return (
-        <div className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="projects" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
 
             {/* Simplified background elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">

@@ -16,11 +16,11 @@ import {
 import kyzenLogo from "/src/assets/KYZENLOGO1.png";
 
 const navigation = [
-    { name: "info", href: "#", current: true, icon: Home },
-    { name: "skills", href: "#", current: false, icon: Code2 },
-    { name: "projects", href: "#", current: false, icon: FolderOpen },
-    { name: "experience", href: "#", current: false, icon: Briefcase },
-    { name: "certifications", href: "#", current: false, icon: Award },
+    { name: "info", href: "#about", current: true, icon: Home },
+    { name: "skills", href: "#skills", current: false, icon: Code2 },
+    { name: "projects", href: "#projects", current: false, icon: FolderOpen },
+    { name: "experience", href: "#experience", current: false, icon: Briefcase },
+    { name: "certifications", href: "#certifications", current: false, icon: Award },
 ];
 
 // Memoized animation variants to prevent recreation
@@ -31,7 +31,46 @@ const navVariants = {
         opacity: 1,
         transition: {
             duration: 0.6,
-            ease: "easeOut"
+            ease: "easeOut",
+            staggerChildren: 0.08
+        }
+    }
+};
+
+const navItemVariants = {
+    hidden: {
+        opacity: 0,
+        y: -20,
+        scale: 0.9
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            duration: 0.5,
+            ease: [0.4, 0, 0.2, 1]
+        }
+    }
+};
+
+const activeItemVariants = {
+    inactive: {
+        scale: 1,
+        backgroundColor: "rgba(255, 255, 255, 0)",
+        borderColor: "rgba(255, 117, 223, 0)",
+        transition: {
+            duration: 0.3,
+            ease: "easeInOut"
+        }
+    },
+    active: {
+        scale: 1.02,
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        borderColor: "rgba(255, 117, 223, 0.5)",
+        transition: {
+            duration: 0.3,
+            ease: "easeInOut"
         }
     }
 };
@@ -82,22 +121,22 @@ const Logo = memo(() => (
         <motion.img
             alt="KYZEN Logo"
             src={kyzenLogo}
-            className="h-8 w-auto mr-3 cursor-pointer"
+            className="h-6 w-auto sm:h-7 md:h-8 mr-2 sm:mr-3 cursor-pointer"
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.6 }}
         />
         <div className="flex items-baseline">
-            <span className="text-[#e2dbd2] text-2xl italic tracking-tight font-black">
+            <span className="text-[#e2dbd2] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
                 Kyzen
             </span>
             <motion.span
-                className="text-white/40 italic tracking-tight font-light ml-2"
+                className="text-white/40 italic tracking-tight font-light ml-1 sm:ml-2"
                 animate={{ opacity: [0.4, 0.8, 0.4] }}
                 transition={{ duration: 2, repeat: Infinity }}
             >
                 |
             </motion.span>
-            <span className="text-white/80 italic tracking-tight font-light ml-2 hidden md:inline">
+            <span className="text-white/80 italic tracking-tight font-light ml-1 sm:ml-2 hidden lg:inline">
                 Web Developer
             </span>
         </div>
@@ -106,12 +145,12 @@ const Logo = memo(() => (
 
 const ContactButton = memo(() => (
     <motion.button
-        className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative"
+        className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-sm"
         whileHover={{ scale: 1.05, y: -1 }}
         whileTap={{ scale: 0.98 }}
     >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <Phone className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+        <Phone className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
         <span className="italic tracking-tight font-black relative z-10">
             contact
         </span>
@@ -135,32 +174,63 @@ const MobileContactButton = memo(() => (
 // Memoized navigation item component
 const NavItem = memo(({ item, index, isActive, onClick }) => {
     const IconComponent = item.icon;
-    
+
     return (
         <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+            variants={navItemVariants}
+            initial="hidden"
+            animate="visible"
+            custom={index}
+            layout
         >
             <motion.a
                 href={item.href}
                 onClick={onClick}
-                className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium group transition-all duration-300 ${
-                    isActive
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${isActive
                         ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
                         : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                    }`}
+                variants={activeItemVariants}
+                animate={isActive ? "active" : "inactive"}
+                whileHover={{
+                    scale: 1.05,
+                    y: -2,
+                    transition: { duration: 0.2, ease: "easeOut" }
+                }}
+                whileTap={{
+                    scale: 0.95,
+                    transition: { duration: 0.1 }
+                }}
+                layout
+                layoutId={`nav-item-${item.name}`}
             >
-                <IconComponent className={`w-4 h-4 transition-colors duration-300 ${
-                    isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
-                }`} />
-                <span className="italic tracking-tight font-black">
-                    {item.name}
-                </span>
+                {/* Background highlight with smooth transition */}
+                <AnimatePresence>
+                    {isActive && (
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-[#ff75df]/10 via-white/10 to-[#ff75df]/10 rounded-full"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            layoutId="nav-active-bg"
+                        />
+                    )}
+                </AnimatePresence>
+
+                <motion.div
+                    className="relative z-10 flex items-center gap-1.5 sm:gap-2"
+                    animate={isActive ? { y: 0 } : { y: 0 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    <IconComponent
+                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
+                            }`}
+                    />
+                    <span className="italic tracking-tight font-black">
+                        {item.name}
+                    </span>
+                </motion.div>
             </motion.a>
         </motion.div>
     );
@@ -168,33 +238,47 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
 
 const MobileNavItem = memo(({ item, isActive, onClick }) => {
     const IconComponent = item.icon;
-    
+
     return (
-        <motion.div variants={menuItemVariants}>
+        <motion.div
+            variants={menuItemVariants}
+            layout
+        >
             <DisclosureButton
                 as="a"
                 href={item.href}
                 onClick={onClick}
-                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${
-                    isActive
+                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${isActive
                         ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
                         : "text-white/70 hover:bg-white/10 hover:text-white"
-                }`}
+                    }`}
             >
-                <IconComponent className={`w-5 h-5 transition-colors duration-300 ${
-                    isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
-                }`} />
-                <span className="italic tracking-tight font-black">
-                    {item.name}
-                </span>
-                {isActive && (
-                    <motion.div
-                        className="ml-auto w-2 h-2 bg-[#e2dbd2] rounded-full"
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3 }}
+                <motion.div
+                    className="flex items-center gap-3 w-full"
+                    animate={isActive ? { x: 4 } : { x: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                    <IconComponent
+                        className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
+                            }`}
                     />
-                )}
+                    <span className="italic tracking-tight font-black">
+                        {item.name}
+                    </span>
+
+                    <AnimatePresence>
+                        {isActive && (
+                            <motion.div
+                                className="ml-auto w-2 h-2 bg-[#e2dbd2] rounded-full"
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                layoutId="mobile-nav-active-dot"
+                            />
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </DisclosureButton>
         </motion.div>
     );
@@ -214,7 +298,7 @@ function Navbar() {
 
     useEffect(() => {
         let ticking = false;
-        
+
         const throttledScroll = () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
@@ -235,7 +319,7 @@ function Navbar() {
     }, []);
 
     // Memoized navigation items
-    const navigationItems = useMemo(() => 
+    const navigationItems = useMemo(() =>
         navigation.map((item, index) => (
             <NavItem
                 key={item.name}
@@ -247,7 +331,7 @@ function Navbar() {
         )), [activeItem, handleNavClick]
     );
 
-    const mobileNavigationItems = useMemo(() => 
+    const mobileNavigationItems = useMemo(() =>
         navigation.map((item) => (
             <MobileNavItem
                 key={item.name}
@@ -264,7 +348,7 @@ function Navbar() {
             <AnimatePresence>
                 {scrolled && (
                     <motion.div
-                        className="fixed top-0 left-0 w-full h-20 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
+                        className="fixed top-0 left-0 w-full h-16 sm:h-18 md:h-20 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -273,18 +357,18 @@ function Navbar() {
                 )}
             </AnimatePresence>
 
-            <Disclosure as="nav" className="h-20 fixed w-full z-[100]">
+            <Disclosure as="nav" className="h-16 sm:h-18 md:h-20 fixed w-full z-[100]">
                 {({ open }) => (
                     <>
                         <motion.div
-                            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-[100]"
+                            className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
                             variants={navVariants}
                             initial="hidden"
                             animate="visible"
                         >
-                            <div className="relative flex h-20 items-center justify-between">
+                            <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
                                 {/* Mobile menu button */}
-                                <div className="absolute inset-y-0 right-0 flex items-center sm:hidden z-[100]">
+                                <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
                                     <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
                                         <span className="sr-only">Open main menu</span>
                                         <AnimatePresence mode="wait">
@@ -296,7 +380,7 @@ function Navbar() {
                                                     exit={{ rotate: 90, opacity: 0 }}
                                                     transition={{ duration: 0.2 }}
                                                 >
-                                                    <Menu className="h-6 w-6" />
+                                                    <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                                                 </motion.div>
                                             ) : (
                                                 <motion.div
@@ -306,7 +390,7 @@ function Navbar() {
                                                     exit={{ rotate: 90, opacity: 0 }}
                                                     transition={{ duration: 0.2 }}
                                                 >
-                                                    <X className="h-6 w-6" />
+                                                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
@@ -322,17 +406,22 @@ function Navbar() {
                                 >
                                     <Logo />
 
-                                    {/* Desktop navigation */}
-                                    <div className="hidden sm:ml-10 sm:block relative z-[90]">
-                                        <div className="flex space-x-2">
+                                    {/* Desktop/Tablet navigation with enhanced transitions */}
+                                    <div className="hidden md:ml-6 lg:ml-10 md:block relative z-[90]">
+                                        <motion.div
+                                            className="flex space-x-1 lg:space-x-2"
+                                            variants={navVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                        >
                                             {navigationItems}
-                                        </div>
+                                        </motion.div>
                                     </div>
                                 </motion.div>
 
                                 {/* Contact button */}
                                 <motion.div
-                                    className="hidden sm:ml-6 sm:block relative z-[90]"
+                                    className="hidden md:ml-4 lg:ml-6 md:block relative z-[90]"
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.4, duration: 0.6 }}
@@ -353,9 +442,9 @@ function Navbar() {
                         {/* Mobile menu */}
                         <AnimatePresence>
                             {open && (
-                                <DisclosurePanel static className="sm:hidden relative z-[80]">
+                                <DisclosurePanel static className="md:hidden relative z-[80]">
                                     <motion.div
-                                        className="mt-5 w-11/12 max-w-sm mx-auto bg-black/80 backdrop-blur-[20px] rounded-2xl border border-white/20 shadow-[inset_0_0_30px_rgba(255,255,255,0.08)] overflow-hidden"
+                                        className="mt-4 sm:mt-5 w-11/12 max-w-sm mx-auto bg-black/80 backdrop-blur-[20px] rounded-2xl border border-white/20 shadow-[inset_0_0_30px_rgba(255,255,255,0.08)] overflow-hidden"
                                         variants={mobileMenuVariants}
                                         initial="hidden"
                                         animate="visible"
