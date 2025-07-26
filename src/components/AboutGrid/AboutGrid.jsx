@@ -195,7 +195,7 @@ const titleVariants = {
 
 const containerVariants = {
     initial: { opacity: 0 },
-    animate: { 
+    animate: {
         opacity: 1,
         transition: {
             staggerChildren: 0.1
@@ -205,8 +205,8 @@ const containerVariants = {
 
 const itemVariants = {
     initial: { opacity: 0, y: 20 },
-    animate: { 
-        opacity: 1, 
+    animate: {
+        opacity: 1,
         y: 0,
         transition: { duration: 0.6 }
     }
@@ -261,7 +261,7 @@ const EnhancedAvatar = memo(() => (
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
     >
-        <div className="relative w-56 h-56">
+        <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
             <motion.div
                 className="absolute inset-0 rounded-full border-2 border-[#ff75df]/30"
                 animate={{ rotate: 360 }}
@@ -310,7 +310,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             {showRealName ? (
                 <motion.h1
                     key="real"
-                    className="text-5xl lg:text-6xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-[#ff75df] via-purple-400 to-blue-400 bg-clip-text"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-[#ff75df] via-purple-400 to-blue-400 bg-clip-text text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
@@ -324,7 +324,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             ) : (
                 <motion.h1
                     key="dev"
-                    className="text-5xl lg:text-7xl italic font-black text-white tracking-tight"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black text-white tracking-tight text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
@@ -461,11 +461,11 @@ const SocialLink = memo(({ social, index }) => (
 ));
 
 const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => (
-    <div className="flex flex-wrap gap-8 justify-left">
+    <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start">
         {currentTechSkills.map((skill, index) => (
             <motion.div
                 key={skill.name}
-                className="relative group cursor-pointer flex flex-col items-center gap-3"
+                className="relative group cursor-pointer flex flex-col items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 1.1 + index * 0.1, type: "spring" }}
@@ -488,7 +488,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => (
                 />
 
                 <motion.div
-                    className="relative w-12 h-12 flex items-center justify-center"
+                    className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
                     animate={{
                         rotate: hoveredSkill === skill.name ? [0, 5, -5, 0] : 0
                     }}
@@ -497,7 +497,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => (
                     <motion.img
                         src={skill.icon}
                         alt={skill.name}
-                        className="w-10 h-10 object-contain"
+                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10 object-contain"
                         style={{
                             filter: hoveredSkill === skill.name
                                 ? 'brightness(1.1) saturate(1.1) drop-shadow(0 0 2px currentColor)'
@@ -519,11 +519,10 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => (
 
 const TechStackCategory = memo(({ stack, index, isActive, onClick }) => (
     <motion.button
-        className={`group relative flex items-center gap-4 px-8 py-4 rounded-2xl italic tracking-tight font-black text-lg transition-all duration-500 overflow-hidden ${
-            isActive
-                ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-white shadow-2xl scale-105'
-                : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
-        }`}
+        className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-xl sm:rounded-2xl italic tracking-tight font-black text-sm sm:text-base md:text-lg transition-all duration-500 overflow-hidden ${isActive
+            ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-white shadow-2xl scale-105'
+            : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
+            }`}
         style={{
             borderColor: isActive ? stack.color : 'rgba(255,255,255,0.1)',
             boxShadow: isActive ? `0 0 30px ${stack.color}40` : 'none'
@@ -556,12 +555,12 @@ const TechStackCategory = memo(({ stack, index, isActive, onClick }) => (
             }}
         >
             <stack.icon
-                className="w-7 h-7"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7"
                 style={{ color: isActive ? stack.color : 'currentColor' }}
             />
         </motion.div>
 
-        <span className="relative z-10">{stack.category}</span>
+        <span className="relative z-10 hidden sm:inline">{stack.category}</span>
 
         {isActive && (
             <motion.div
@@ -614,7 +613,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => (
         />
 
         <motion.div
-            className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-6 flex flex-col items-center text-center space-y-4 overflow-hidden"
+            className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center text-center space-y-2 sm:space-y-3 md:space-y-4 overflow-hidden"
             style={{
                 borderColor: isHovered ? skill.color + '30' : 'rgba(255,255,255,0.2)'
             }}
@@ -627,7 +626,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => (
             />
 
             <motion.div
-                className="relative w-16 h-16 flex items-center justify-center"
+                className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center"
                 animate={{
                     rotate: isHovered ? [0, 5, -5, 0] : 0
                 }}
@@ -636,7 +635,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => (
                 <motion.img
                     src={skill.logo}
                     alt={skill.name}
-                    className="w-12 h-12 object-contain relative z-10"
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain relative z-10"
                     style={{
                         filter: isHovered
                             ? 'brightness(1.2) saturate(1.3)'
@@ -654,9 +653,9 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => (
                 />
             </motion.div>
 
-            <motion.div className="relative z-10 space-y-2">
+            <motion.div className="relative z-10 space-y-1 sm:space-y-2">
                 <motion.h5
-                    className="italic tracking-tight font-black text-lg"
+                    className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
                     style={{
                         color: isHovered ? skill.color : '#ffffff'
                     }}
@@ -725,9 +724,9 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => (
             transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
         />
 
-        <div className={`relative flex items-center gap-4 px-6 py-4 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
+        <div className={`relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
             <motion.span
-                className="text-2xl"
+                className="text-lg sm:text-xl md:text-2xl"
                 animate={{
                     scale: isHovered ? [1, 1.2, 1] : 1,
                     rotate: isHovered ? [0, 10, -10, 0] : 0
@@ -738,7 +737,7 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => (
             </motion.span>
 
             <motion.span
-                className="italic tracking-tight font-black text-lg"
+                className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
                 style={{ color: hobby.color }}
                 animate={{
                     x: isHovered ? 3 : 0,
@@ -832,14 +831,14 @@ const AboutGrid = () => {
     }, []);
 
     // Memoized social links
-    const socialLinksElements = useMemo(() => 
+    const socialLinksElements = useMemo(() =>
         socialLinks.map((social, index) => (
             <SocialLink key={social.label} social={social} index={index} />
         )), []
     );
 
     // Memoized hobby cards
-    const hobbyCards = useMemo(() => 
+    const hobbyCards = useMemo(() =>
         hobbies.map((hobby, index) => (
             <HobbyCard
                 key={hobby.name}
@@ -853,7 +852,7 @@ const AboutGrid = () => {
     );
 
     // Memoized tech stack categories
-    const techStackCategories = useMemo(() => 
+    const techStackCategories = useMemo(() =>
         techStacks.map((stack, index) => (
             <TechStackCategory
                 key={stack.category}
@@ -866,7 +865,7 @@ const AboutGrid = () => {
     );
 
     // Memoized skill cards
-    const skillCards = useMemo(() => 
+    const skillCards = useMemo(() =>
         currentTechStack.skills.map((skill, index) => (
             <SkillCard
                 key={skill.name}
@@ -880,18 +879,18 @@ const AboutGrid = () => {
     );
 
     return (
-        <div className="flex flex-col items-center py-12 sm:py-20 max-w-6xl mx-auto w-11/12 sm:w-2/3 relative px-4 sm:px-6">
+        <div className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
 
             {/* Title */}
-            <motion.div 
-                className="w-full flex justify-start mb-16 sm:mb-28 relative z-10"
+            <motion.div
+                className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                <div className="relative">
-                    <motion.h2 
-                        className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
+                <div className="relative w-full">
+                    <motion.h2
+                        className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight sm:leading-none italic tracking-tight text-left"
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1 }}
@@ -903,10 +902,10 @@ const AboutGrid = () => {
                         <br />
                         me<span className="text-[#ff75df]">:</span>
                     </motion.h2>
-                    
+
                     {/* Enhanced underline with gradient */}
-                    <motion.div 
-                        className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
+                    <motion.div
+                        className="absolute -bottom-1 sm:-bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: "10rem" }}
                         transition={{ duration: 1, delay: 0.5 }}
@@ -922,7 +921,7 @@ const AboutGrid = () => {
             >
                 <FloatingParticles />
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-start xl:items-center">
 
                     {/* Left Side - Enhanced Profile */}
                     <div className="flex flex-col items-center space-y-8">
@@ -931,46 +930,79 @@ const AboutGrid = () => {
 
                         {/* Enhanced Name & Title */}
                         <motion.div
-                            className="text-center space-y-4"
+                            className="text-center space-y-4 sm:space-y-6 md:space-y-8 max-w-md mx-auto"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                         >
                             <NameDisplay showRealName={showRealName} onToggle={handleNameToggle} />
-
+                        
                             <motion.div
-                                className="space-y-2"
+                                className="space-y-3 sm:space-y-4"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.6 }}
                             >
-                                <p className="text-xl text-white/80 font-medium">
-                                    Full-Stack Web Developer
-                                </p>
-                                <motion.p
-                                    className="text-[#ff75df]/70 text-sm font-medium"
-                                    animate={{
-                                        opacity: [0.5, 1, 0.5]
-                                    }}
-                                    transition={{ duration: 2, repeat: Infinity }}
+                                {/* Job Title with Responsive Typography */}
+                                <motion.div 
+                                    className="relative"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.7 }}
                                 >
-                                    Building the future, one line at a time
-                                </motion.p>
+                                    <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-medium tracking-wide">
+                                        Full-Stack Web Developer
+                                    </p>
+                                    
+                                    {/* Subtle underline accent */}
+                                    <motion.div
+                                        className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: "60%" }}
+                                        transition={{ duration: 0.8, delay: 0.9 }}
+                                    />
+                                </motion.div>
+                        
+                                {/* Tagline with Enhanced Animation */}
+                                <motion.div className="relative">
+                                    <motion.p
+                                        className="text-sm sm:text-base md:text-lg text-[#ff75df]/80 font-medium italic tracking-wide"
+                                        animate={{
+                                            opacity: [0.6, 1, 0.6]
+                                        }}
+                                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                    >
+                                        Building the future, one line at a time
+                                    </motion.p>
+                                </motion.div>
                             </motion.div>
-
+                        
+                            {/* Interactive Hint - Improved Design */}
                             <motion.div
-                                className="flex items-center justify-center gap-2 text-white/40 text-xs"
+                                className="flex items-center justify-center gap-2 text-white/40 text-xs sm:text-sm mt-6 sm:mt-8"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 0.8 }}
+                                transition={{ delay: 1 }}
                             >
                                 <motion.div
-                                    animate={{ x: [0, 3, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
+                                    animate={{ 
+                                        scale: [1, 1.02, 1],
+                                        borderColor: ["rgba(255,255,255,0.1)", "rgba(255,117,223,0.2)", "rgba(255,255,255,0.1)"]
+                                    }}
+                                    transition={{ duration: 3, repeat: Infinity }}
                                 >
-                                    👆
+                                    <motion.div
+                                        animate={{ 
+                                            y: [0, -2, 0],
+                                            rotate: [0, 5, -5, 0]
+                                        }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                    >
+                                        👆
+                                    </motion.div>
+                                    <span className="font-medium">Click name to toggle</span>
                                 </motion.div>
-                                <span>Click name to toggle</span>
                             </motion.div>
                         </motion.div>
 
@@ -999,7 +1031,7 @@ const AboutGrid = () => {
                             transition={{ delay: 0.4 }}
                         >
                             <motion.h2
-                                className="text-5xl lg:text-6xl italic tracking-tight font-black text-white leading-tight"
+                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-white leading-tight"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.5 }}
@@ -1027,7 +1059,7 @@ const AboutGrid = () => {
                             transition={{ delay: 0.6 }}
                         >
                             <motion.p
-                                className="text-sm md:text-xl text-white/90 leading-relaxed"
+                                className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.7 }}
@@ -1103,7 +1135,7 @@ const AboutGrid = () => {
                     </motion.div>
 
                     <motion.h3
-                        className="text-5xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
@@ -1112,7 +1144,7 @@ const AboutGrid = () => {
                     </motion.h3>
 
                     <motion.p
-                        className="text-white/70 text-lg max-w-2xl mx-auto"
+                        className="text-sm sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto px-4"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.7 }}
@@ -1122,7 +1154,7 @@ const AboutGrid = () => {
                 </div>
 
                 <motion.div
-                    className="flex flex-wrap gap-4 justify-center mb-16"
+                    className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center mb-8 sm:mb-12 md:mb-16"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
@@ -1217,9 +1249,8 @@ const AboutGrid = () => {
                             whileHover={{ scale: 1.2 }}
                         >
                             <div
-                                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                    activeCategory === index ? 'bg-white scale-125' : 'bg-white/30'
-                                }`}
+                                className={`w-3 h-3 rounded-full transition-all duration-300 ${activeCategory === index ? 'bg-white scale-125' : 'bg-white/30'
+                                    }`}
                                 style={{
                                     backgroundColor: activeCategory === index ? currentTechStack.color : 'rgba(255,255,255,0.3)'
                                 }}
@@ -1255,7 +1286,7 @@ const AboutGrid = () => {
                     >
                         <Coffee className="w-7 h-7 text-[#ff75df]" />
                     </motion.div>
-                    <h3 className="text-3xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
                     <motion.div
                         className="flex-1 h-px bg-gradient-to-r from-[#ff75df]/50 to-transparent"
                         initial={{ scaleX: 0 }}
@@ -1264,13 +1295,13 @@ const AboutGrid = () => {
                     />
                 </div>
 
-                <div className="flex flex-wrap gap-6 justify-center">
+                <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
                     {hobbyCards}
                 </div>
             </motion.div>
 
             {/* Bottom decoration */}
-            <motion.div 
+            <motion.div
                 className="w-full mt-12 sm:mt-20 flex justify-center"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
