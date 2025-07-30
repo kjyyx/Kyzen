@@ -28,7 +28,7 @@ import RedHatSeminar from '../../assets/Seminars/RedHat_Certificate.png';
 import CybersecurityAISeminar from '../../assets/Seminars/Cybersecurity_AI_Certificate.jpg';
 import GitSeminar from '../../assets/Seminars/Git_Certificate.png';
 import BlockchainSeminar from '../../assets/Seminars/Blockchain_Certificate.jpg';
-import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certificate.jpg';
+import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certificate.JPG';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
