@@ -9,10 +9,13 @@ import {
     ArrowUp,
     Heart
 } from 'lucide-react';
-import kyzenLogo from '/src/assets/KYZENLOGO1.png';
+import kyzenLogo from '/src/assets/KYZENLOGO3.png';
 import './Footer.css';
 
-// Memoized static data
+import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
+import StaggerContainer from '../../common/StaggerContainer';
+
+// ===== DATA CONFIGURATION =====
 const socialLinks = [
     {
         name: 'Facebook',
@@ -40,19 +43,6 @@ const socialLinks = [
     }
 ];
 
-// Memoized animation variants
-const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.8,
-            staggerChildren: 0.1
-        }
-    }
-};
-
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -62,19 +52,14 @@ const itemVariants = {
     }
 };
 
-const marqueeVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { duration: 1 }
-    }
-};
+// ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
-// Memoized components
-const MarqueeText = memo(() => (
-    <motion.div
+// Animated Marquee Text Component
+const AnimatedMarqueeText = memo(() => (
+    <ScrollAnimatedSection
+        animationType="fadeUp"
+        delay={0.2}
         className="overflow-hidden w-full mb-8 sm:mb-10 md:mb-12"
-        variants={marqueeVariants}
     >
         <motion.div 
             className="flex whitespace-nowrap"
@@ -91,7 +76,7 @@ const MarqueeText = memo(() => (
             {[0.5, 0.7, 0.9].map((delay, index) => (
                 <motion.span 
                     key={index}
-                    className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text mr-8 sm:mr-12 md:mr-16"
+                    className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-white mr-8 sm:mr-12 md:mr-16 leading-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay }}
@@ -100,10 +85,59 @@ const MarqueeText = memo(() => (
                 </motion.span>
             ))}
         </motion.div>
-    </motion.div>
+    </ScrollAnimatedSection>
 ));
 
-const CTAButton = memo(() => (
+// Background Effects Component
+const BackgroundEffects = memo(() => (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl sm:rounded-2xl">
+        {/* Gradient Orbs */}
+        <motion.div
+            className="absolute top-0 left-1/4 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
+            animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3],
+                x: [0, 20, 0],
+                y: [0, -10, 0]
+            }}
+            transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+            className="absolute bottom-0 right-1/4 w-24 h-24 sm:w-36 sm:h-36 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"
+            animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.5, 0.2],
+                x: [0, -15, 0],
+                y: [0, 15, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+        />
+        
+        {/* Floating Particles */}
+        {[...Array(6)].map((_, i) => (
+            <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/30 rounded-full"
+                style={{
+                    left: `${20 + (i * 12)}%`,
+                    top: `${30 + (i * 8)}%`
+                }}
+                animate={{
+                    y: [0, -20, 0],
+                    opacity: [0.3, 1, 0.3],
+                    scale: [1, 1.5, 1]
+                }}
+                transition={{
+                    duration: 4 + (i * 0.5),
+                    repeat: Infinity,
+                    delay: i * 0.5
+                }}
+            />
+        ))}
+    </div>
+));
+// Book a Call Button Component
+const BookCallButton = memo(() => (
     <motion.button
         className="group relative px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-white to-white/95 text-black rounded-full font-black italic tracking-tight transition-all duration-300 flex items-center gap-2 sm:gap-3 overflow-hidden shadow-lg hover:shadow-xl hover:shadow-white/20 z-10 text-sm sm:text-base"
         whileHover={{ scale: 1.05, y: -2 }}
@@ -128,7 +162,46 @@ const CTAButton = memo(() => (
     </motion.button>
 ));
 
-const EmailCTA = memo(() => (
+// Call to Action Section Component
+const CallToActionSection = memo(() => (
+    <motion.div
+        className="flex flex-col items-center gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12 relative z-50"
+        variants={itemVariants}
+    >
+        <BookCallButton />
+        <EmailCallToAction />
+    </motion.div>
+));
+
+// Copyright Information Component
+const CopyrightInfo = memo(() => (
+    <motion.div
+        className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 italic tracking-tight font-light text-center sm:text-left"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.4 }}
+    >
+        <div className="flex items-center gap-1 sm:gap-2">
+            <span>Made with</span>
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-400 animate-pulse" />
+        </div>
+        <span className="hidden sm:inline">© 2025. All rights reserved</span>
+        <span className="sm:hidden">© 2025</span>
+    </motion.div>
+));
+
+// Decorative Line Component
+const DecorativeLine = memo(() => (
+    <motion.div
+        className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 1, duration: 0.8 }}
+    />
+));
+
+// Email Call to Action Component
+const EmailCallToAction = memo(() => (
     <motion.div
         className="text-center relative z-30 px-4"
         initial={{ opacity: 0 }}
@@ -149,7 +222,99 @@ const EmailCTA = memo(() => (
     </motion.div>
 ));
 
-const SocialLink = memo(({ social, index }) => {
+// Footer Bottom Section Component
+const FooterBottomSection = memo(() => (
+    <motion.div
+        className="space-y-4 sm:space-y-6 relative z-50"
+        variants={itemVariants}
+    >
+        <DecorativeLine />
+        <div className="flex flex-col sm:flex-row justify-between items-center text-white/60 text-xs sm:text-sm gap-4 sm:gap-0">
+            <LogoBranding />
+            <CopyrightInfo />
+        </div>
+    </motion.div>
+));
+
+// Footer Container Component
+const FooterContainer = memo(({ children }) => (
+    <motion.footer
+        className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+    >
+        <BackgroundEffects />
+        <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
+            {children}
+        </div>
+    </motion.footer>
+));
+
+// Footer Content Component
+const FooterContent = memo(() => (
+    <>
+        <AnimatedMarqueeText />
+        <CallToActionSection />
+        <SocialLinksSection />
+        <ScrollToTopSection />
+        <FooterBottomSection />
+    </>
+));
+
+// Logo Branding Component
+const LogoBranding = memo(() => (
+    <motion.div
+        className="flex items-center gap-2 sm:gap-3"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2 }}
+    >
+        <motion.img
+            alt="KYZEN Logo"
+            src={kyzenLogo}
+            className="h-5 sm:h-6 md:h-7 w-auto cursor-pointer"
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+        />
+        <span className="text-[#e9dcc8] text-lg sm:text-xl italic tracking-tight font-black">
+            Kyzen.
+        </span>
+    </motion.div>
+));
+
+// Scroll to Top Button Component
+const ScrollToTopButton = memo(({ onClick }) => (
+    <motion.button
+        onClick={onClick}
+        className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 z-10"
+        whileHover={{ scale: 1.1, y: -2 }}
+        whileTap={{ scale: 0.95 }}
+    >
+        <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-y-1 transition-transform duration-300" />
+        <span className="sr-only">Scroll to top</span>
+    </motion.button>
+));
+
+// Scroll to Top Section Component
+const ScrollToTopSection = memo(() => {
+    const scrollToTop = useCallback(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
+    return (
+        <motion.div
+            className="flex justify-center mb-6 sm:mb-8 relative z-50"
+            variants={itemVariants}
+        >
+            <ScrollToTopButton onClick={scrollToTop} />
+        </motion.div>
+    );
+});
+
+// Social Link Item Component
+const SocialLinkItem = memo(({ social, index }) => {
     const IconComponent = social.icon;
     
     return (
@@ -170,95 +335,17 @@ const SocialLink = memo(({ social, index }) => {
                 <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:rotate-12" />
                 <span className="sr-only">{social.name}</span>
 
-                {/* Responsive Tooltip */}
-                <motion.div
-                    className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50"
-                    initial={{ opacity: 0, y: 5 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                >
-                    {social.name}
-                </motion.div>
+                <SocialLinkTooltip name={social.name} />
             </motion.a>
         </motion.div>
     );
 });
 
-const ScrollToTopButton = memo(({ onClick }) => (
-    <motion.div
-        className="flex justify-center mb-6 sm:mb-8 relative z-50"
-        variants={itemVariants}
-    >
-        <motion.button
-            onClick={onClick}
-            className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 z-10"
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-        >
-            <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-y-1 transition-transform duration-300" />
-        </motion.button>
-    </motion.div>
-));
-
-const FooterBottom = memo(() => (
-    <motion.div
-        className="space-y-4 sm:space-y-6 relative z-50"
-        variants={itemVariants}
-    >
-        {/* Decorative line */}
-        <motion.div
-            className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-        />
-
-        {/* Footer content with improved mobile layout */}
-        <div className="flex flex-col sm:flex-row justify-between items-center text-white/60 text-xs sm:text-sm gap-4 sm:gap-0">
-            <motion.div
-                className="flex items-center gap-2 sm:gap-3"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2 }}
-            >
-                <motion.img
-                    alt="KYZEN Logo"
-                    src={kyzenLogo}
-                    className="h-5 sm:h-6 md:h-7 w-auto cursor-pointer"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                />
-                <span className="text-[#e9dcc8] text-lg sm:text-xl italic tracking-tight font-black">
-                    Kyzen.
-                </span>
-            </motion.div>
-
-            <motion.div
-                className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 italic tracking-tight font-light text-center sm:text-left"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4 }}
-            >
-                <div className="flex items-center gap-1 sm:gap-2">
-                    <span>Made with</span>
-                    <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-400 animate-pulse" />
-                </div>
-                <span className="hidden sm:inline">© 2025. All rights reserved</span>
-                <span className="sm:hidden">© 2025</span>
-            </motion.div>
-        </div>
-    </motion.div>
-));
-
-function Footer() {
-    // Optimized scroll handler
-    const scrollToTop = useCallback(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
-
-    // Memoized social links
+// Social Links Section Component
+const SocialLinksSection = memo(() => {
     const socialLinksElements = useMemo(() => 
         socialLinks.map((social, index) => (
-            <SocialLink 
+            <SocialLinkItem 
                 key={social.name} 
                 social={social} 
                 index={index} 
@@ -267,44 +354,72 @@ function Footer() {
     );
 
     return (
+        <motion.div
+            className="flex justify-center mb-8 sm:mb-10 md:mb-12 relative z-50"
+            variants={itemVariants}
+        >
+            <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+                {socialLinksElements}
+            </div>
+        </motion.div>
+    );
+});
+
+// Social Link Tooltip Component
+const SocialLinkTooltip = memo(({ name }) => (
+    <motion.div
+        className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50"
+        initial={{ opacity: 0, y: 5 }}
+        whileHover={{ opacity: 1, y: 0 }}
+    >
+        {name}
+    </motion.div>
+));
+
+// ===== MAIN COMPONENT =====
+
+/**
+ * Footer Component
+ * 
+ * Component Tree Structure:
+ * Footer
+ * └── FooterContainer
+ *     ├── BackgroundEffects
+ *     └── FooterContent
+ *         ├── AnimatedMarqueeText
+ *         ├── CallToActionSection
+ *         │   ├── BookCallButton
+ *         │   └── EmailCallToAction
+ *         ├── SocialLinksSection
+ *         │   └── SocialLinkItem
+ *         │       └── SocialLinkTooltip
+ *         ├── ScrollToTopSection
+ *         │   └── ScrollToTopButton
+ *         └── FooterBottomSection
+ *             ├── DecorativeLine
+ *             ├── LogoBranding
+ *             └── CopyrightInfo
+ */
+function Footer() {
+    return (
         <div className="pb-4 sm:pb-6 px-2 sm:px-4 mt-8 sm:mt-10 relative">
-            <motion.footer
+            <ScrollAnimatedSection 
+                animationType="fadeUp" 
+                threshold={0.2}
                 className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
             >
+                {/* <BackgroundEffects /> */}
                 <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
-                    {/* Animated marquee */}
-                    <MarqueeText />
+                    <AnimatedMarqueeText />
+                    <CallToActionSection />
                     
-                    {/* CTA Section */}
-                    <motion.div
-                        className="flex flex-col items-center gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12 relative z-50"
-                        variants={itemVariants}
-                    >
-                        <CTAButton />
-                        <EmailCTA />
-                    </motion.div>
-
-                    {/* Social Links with responsive spacing */}
-                    <motion.div
-                        className="flex justify-center mb-8 sm:mb-10 md:mb-12 relative z-50"
-                        variants={itemVariants}
-                    >
-                        <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8">
-                            {socialLinksElements}
-                        </div>
-                    </motion.div>
-
-                    {/* Scroll to top button */}
-                    <ScrollToTopButton onClick={scrollToTop} />
-
-                    {/* Footer bottom section */}
-                    <FooterBottom />
+                    <StaggerContainer staggerDelay={0.15}>
+                        <SocialLinksSection />
+                        <ScrollToTopSection />
+                        <FooterBottomSection />
+                    </StaggerContainer>
                 </div>
-            </motion.footer>
+            </ScrollAnimatedSection>
         </div>
     );
 }

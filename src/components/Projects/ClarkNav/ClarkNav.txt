@@ -1,0 +1,348 @@
+import React, { useState, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { ExternalLink, Code, Calendar, Users, Award, ChevronRight, MapPin, Compass, Navigation, Smartphone } from 'lucide-react'
+
+function ClarkNav() {
+    const [activeSection, setActiveSection] = useState(0)
+    const containerRef = useRef(null)
+    const isInView = useInView(containerRef, { once: true, amount: 0.1 })
+
+    // Animation variants consistent with your existing design
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.1
+            }
+        }
+    }
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: "easeOut" }
+        }
+    }
+
+    const features = [
+        {
+            icon: MapPin,
+            title: "Real-time Location",
+            description: "Precise GPS tracking and location services"
+        },
+        {
+            icon: Compass,
+            title: "Smart Navigation",
+            description: "Intelligent route planning and guidance"
+        },
+        {
+            icon: Navigation,
+            title: "Offline Maps",
+            description: "Download maps for offline navigation"
+        },
+        {
+            icon: Smartphone,
+            title: "Mobile First",
+            description: "Optimized for mobile devices"
+        }
+    ]
+
+    const techStack = [
+        { name: "Angular", color: "#dd0031" },
+        { name: "Laravel", color: "#ff2d20" },
+        { name: "PostgreSQL", color: "#336791" },
+        { name: "TypeScript", color: "#3178c6" },
+        { name: "SCSS", color: "#cf649a" }
+    ]
+
+    return (
+        <div 
+            ref={containerRef}
+            className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden"
+        >
+            {/* Background Effects */}
+            <div className="absolute inset-0 pointer-events-none">
+                <motion.div
+                    className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#ff75df]/10 to-purple-500/10 rounded-full blur-3xl"
+                    animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                />
+                <motion.div
+                    className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl"
+                    animate={{ 
+                        scale: [1, 1.3, 1],
+                        opacity: [0.2, 0.5, 0.2]
+                    }}
+                    transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+                />
+            </div>
+
+            <motion.div
+                className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20"
+                variants={containerVariants}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+            >
+                {/* Header Section */}
+                <motion.div 
+                    className="text-center mb-16 sm:mb-20"
+                    variants={itemVariants}
+                >
+                    {/* Project Category */}
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff75df]/20 border border-[#ff75df]/30 rounded-full mb-6"
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <Code className="w-4 h-4 text-[#ff75df]" />
+                        <span className="text-[#ff75df] text-sm font-medium tracking-wide">Navigation System</span>
+                    </motion.div>
+
+                    {/* Project Title */}
+                    <motion.h1
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6"
+                        style={{
+                            textShadow: '0 0 30px rgba(255, 117, 223, 0.3)'
+                        }}
+                    >
+                        ClarkNav
+                    </motion.h1>
+
+                    {/* Project Description */}
+                    <motion.p
+                        className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed"
+                        variants={itemVariants}
+                    >
+                        A comprehensive navigation system built with modern web technologies, 
+                        featuring real-time GPS tracking, intelligent route planning, and offline map capabilities.
+                    </motion.p>
+
+                    {/* Project Meta */}
+                    <motion.div
+                        className="flex flex-wrap justify-center gap-6 mt-8"
+                        variants={itemVariants}
+                    >
+                        {[
+                            { icon: Calendar, label: "2025", value: "Latest" },
+                            { icon: Users, label: "Team", value: "Solo Project" },
+                            { icon: Award, label: "Status", value: "Live" }
+                        ].map((meta, index) => (
+                            <motion.div
+                                key={meta.label}
+                                className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10"
+                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                            >
+                                <meta.icon className="w-4 h-4 text-[#ff75df]" />
+                                <span className="text-white/60 text-sm">{meta.label}:</span>
+                                <span className="text-white text-sm font-medium">{meta.value}</span>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </motion.div>
+
+                {/* Hero Image/Video Section */}
+                <motion.div
+                    className="relative mb-20"
+                    variants={itemVariants}
+                >
+                    <motion.div
+                        className="relative rounded-2xl overflow-hidden border border-white/20 backdrop-blur-sm bg-gradient-to-br from-white/10 to-white/5"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {/* Placeholder for project image/video */}
+                        <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                            <motion.div
+                                className="text-center"
+                                animate={{ y: [0, -10, 0] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            >
+                                <Navigation className="w-16 h-16 text-[#ff75df] mx-auto mb-4" />
+                                <p className="text-white/60">Project Screenshot/Demo Video</p>
+                            </motion.div>
+                        </div>
+                        
+                        {/* Overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                        
+                        {/* Floating action button */}
+                        <motion.button
+                            className="absolute top-4 right-4 p-3 bg-[#ff75df]/20 backdrop-blur-sm border border-[#ff75df]/30 rounded-full text-[#ff75df] hover:bg-[#ff75df]/30 transition-colors"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <ExternalLink className="w-5 h-5" />
+                        </motion.button>
+                    </motion.div>
+                </motion.div>
+
+                {/* Features Grid */}
+                <motion.div
+                    className="mb-20"
+                    variants={itemVariants}
+                >
+                    <motion.h2
+                        className="text-3xl sm:text-4xl font-black text-white mb-12 text-center"
+                        variants={itemVariants}
+                    >
+                        Key Features
+                    </motion.h2>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {features.map((feature, index) => (
+                            <motion.div
+                                key={feature.title}
+                                className="group relative p-6 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-xl hover:border-[#ff75df]/40 transition-all duration-300"
+                                variants={itemVariants}
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                custom={index}
+                            >
+                                {/* Background glow effect */}
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-br from-[#ff75df]/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                />
+                                
+                                <div className="relative z-10">
+                                    <motion.div
+                                        className="w-12 h-12 bg-[#ff75df]/20 border border-[#ff75df]/30 rounded-xl flex items-center justify-center mb-4"
+                                        whileHover={{ rotate: 10, scale: 1.1 }}
+                                    >
+                                        <feature.icon className="w-6 h-6 text-[#ff75df]" />
+                                    </motion.div>
+                                    
+                                    <h3 className="text-xl font-black text-white mb-2">{feature.title}</h3>
+                                    <p className="text-white/70 text-sm leading-relaxed">{feature.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* Technology Stack */}
+                <motion.div
+                    className="mb-20"
+                    variants={itemVariants}
+                >
+                    <motion.h2
+                        className="text-3xl sm:text-4xl font-black text-white mb-12 text-center"
+                        variants={itemVariants}
+                    >
+                        Technology Stack
+                    </motion.h2>
+                    
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {techStack.map((tech, index) => (
+                            <motion.div
+                                key={tech.name}
+                                className="group px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-full hover:border-white/40 transition-all duration-300"
+                                variants={itemVariants}
+                                whileHover={{ scale: 1.05, y: -2 }}
+                                custom={index}
+                            >
+                                <span 
+                                    className="text-white font-medium"
+                                    style={{ color: tech.color }}
+                                >
+                                    {tech.name}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* Project Details/Process */}
+                <motion.div
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20"
+                    variants={itemVariants}
+                >
+                    <motion.div
+                        className="space-y-6"
+                        variants={itemVariants}
+                    >
+                        <h3 className="text-2xl font-black text-white flex items-center gap-3">
+                            <div className="w-1 h-8 bg-[#ff75df] rounded-full" />
+                            Project Overview
+                        </h3>
+                        <p className="text-white/80 leading-relaxed">
+                            ClarkNav represents a modern approach to navigation systems, built with performance 
+                            and user experience at its core. The application leverages Angular's powerful 
+                            component architecture and Laravel's robust backend capabilities to deliver 
+                            real-time navigation services.
+                        </p>
+                        <p className="text-white/80 leading-relaxed">
+                            The system integrates advanced GPS tracking, intelligent route optimization, 
+                            and offline map functionality to provide users with a seamless navigation experience 
+                            across various devices and network conditions.
+                        </p>
+                    </motion.div>
+
+                    <motion.div
+                        className="space-y-6"
+                        variants={itemVariants}
+                    >
+                        <h3 className="text-2xl font-black text-white flex items-center gap-3">
+                            <div className="w-1 h-8 bg-[#ff75df] rounded-full" />
+                            Key Challenges
+                        </h3>
+                        <ul className="space-y-3">
+                            {[
+                                "Real-time GPS data processing and accuracy",
+                                "Offline map storage and synchronization",
+                                "Cross-platform compatibility and performance",
+                                "Battery optimization for mobile devices"
+                            ].map((challenge, index) => (
+                                <motion.li
+                                    key={index}
+                                    className="flex items-start gap-3 text-white/80"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                >
+                                    <ChevronRight className="w-5 h-5 text-[#ff75df] mt-0.5 flex-shrink-0" />
+                                    {challenge}
+                                </motion.li>
+                            ))}
+                        </ul>
+                    </motion.div>
+                </motion.div>
+
+                {/* Call to Action */}
+                <motion.div
+                    className="text-center"
+                    variants={itemVariants}
+                >
+                    <motion.div
+                        className="inline-flex gap-4"
+                        variants={itemVariants}
+                    >
+                        <motion.button
+                            className="group px-8 py-4 bg-gradient-to-r from-[#ff75df] to-purple-500 text-white rounded-full font-black italic tracking-tight transition-all duration-300 flex items-center gap-3"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <ExternalLink className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                            View Live Project
+                        </motion.button>
+                        
+                        <motion.button
+                            className="group px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full font-black italic tracking-tight hover:bg-white/20 transition-all duration-300 flex items-center gap-3"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <Code className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                            View Source Code
+                        </motion.button>
+                    </motion.div>
+                </motion.div>
+            </motion.div>
+        </div>
+    )
+}
+
+export default ClarkNav

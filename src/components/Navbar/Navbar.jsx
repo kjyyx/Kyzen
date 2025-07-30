@@ -12,186 +12,367 @@ import {
     Award,
     Home
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import kyzenLogo from "/src/assets/KYZENLOGO1.png";
+import kyzenLogo from "/src/assets/KYZENLOGO3.png";
 
+import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
+import { throttle } from '../../utils/helpers';
+
+// ===== DATA CONFIGURATION =====
 const navigation = [
-    { name: "info", href: "#about", current: true, icon: Home },
-    { name: "skills", href: "#skills", current: false, icon: Code2 },
-    { name: "projects", href: "#projects", current: false, icon: FolderOpen },
-    { name: "experience", href: "#experience", current: false, icon: Briefcase },
-    { name: "certifications", href: "#certifications", current: false, icon: Award },
+    { name: "info", href: "/Kyzen/#about", current: true, icon: Home },
+    { name: "skills", href: "/Kyzen/#skills", current: false, icon: Code2 },
+    { name: "projects", href: "/Kyzen/#projects", current: false, icon: FolderOpen },
+    { name: "experience", href: "/Kyzen/#experience", current: false, icon: Briefcase },
+    { name: "certifications", href: "/Kyzen/#certifications", current: false, icon: Award },
 ];
 
-// Memoized animation variants to prevent recreation
-const navVariants = {
-    hidden: { y: -100, opacity: 0 },
-    visible: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            duration: 0.6,
-            ease: "easeOut",
-            staggerChildren: 0.08
-        }
-    }
-};
+// ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
-const navItemVariants = {
-    hidden: {
-        opacity: 0,
-        y: -20,
-        scale: 0.9
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            duration: 0.5,
-            ease: [0.4, 0, 0.2, 1]
-        }
-    }
-};
-
-const activeItemVariants = {
-    inactive: {
-        scale: 1,
-        backgroundColor: "rgba(255, 255, 255, 0)",
-        borderColor: "rgba(255, 117, 223, 0)",
-        transition: {
-            duration: 0.3,
-            ease: "easeInOut"
-        }
-    },
-    active: {
-        scale: 1.02,
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        borderColor: "rgba(255, 117, 223, 0.5)",
-        transition: {
-            duration: 0.3,
-            ease: "easeInOut"
-        }
-    }
-};
-
-const mobileMenuVariants = {
-    hidden: {
-        opacity: 0,
-        y: -20,
-        scale: 0.95
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            duration: 0.3,
-            ease: "easeOut",
-            staggerChildren: 0.05
-        }
-    },
-    exit: {
-        opacity: 0,
-        y: -20,
-        scale: 0.95,
-        transition: {
-            duration: 0.2,
-            ease: "easeIn"
-        }
-    }
-};
-
-const menuItemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.3 }
-    }
-};
-
-// Memoized components for better performance
-const Logo = memo(() => (
-    <motion.div
-        className="flex shrink-0 items-center"
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.2 }}
-    >
-        <motion.img
-            alt="KYZEN Logo"
-            src={kyzenLogo}
-            className="h-6 w-auto sm:h-7 md:h-8 mr-2 sm:mr-3 cursor-pointer"
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.6 }}
-        />
-        <div className="flex items-baseline">
-            <span className="text-[#e2dbd2] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
-                Kyzen
-            </span>
-            <motion.span
-                className="text-white/40 italic tracking-tight font-light ml-1 sm:ml-2"
-                animate={{ opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-            >
-                |
-            </motion.span>
-            <span className="text-white/80 italic tracking-tight font-light ml-1 sm:ml-2 hidden lg:inline">
-                Web Developer
-            </span>
-        </div>
-    </motion.div>
+// Brand Logo Component
+const BrandLogo = memo(({ onClick }) => (
+    <motion.img
+        alt="KYZEN Logo"
+        src={kyzenLogo}
+        className="h-6 w-auto sm:h-7 md:h-8 mr-2 sm:mr-3 cursor-pointer"
+        whileHover={{ rotate: 360 }}
+        transition={{ duration: 0.6 }}
+        onClick={onClick}
+    />
 ));
 
+// Brand Text Component
+const BrandText = memo(({ onClick }) => (
+    <div className="flex items-baseline cursor-pointer" onClick={onClick}>
+        <span className="text-[#e2dbd2] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
+            Kyzen
+        </span>
+        <BrandTextSeparator />
+        <BrandTextTitle />
+    </div>
+));
+
+// Brand Text Separator Component
+const BrandTextSeparator = memo(() => (
+    <motion.span
+        className="text-white/40 italic tracking-tight font-light ml-1 sm:ml-2"
+        animate={{ opacity: [0.4, 0.8, 0.4] }}
+        transition={{ duration: 2, repeat: Infinity }}
+    >
+        |
+    </motion.span>
+));
+
+// Brand Text Title Component
+const BrandTextTitle = memo(() => (
+    <span className="text-white/80 italic tracking-tight font-light ml-1 sm:ml-2 lg:inline">
+        Web Developer
+    </span>
+));
+
+// Contact Button Component
 const ContactButton = memo(() => (
     <motion.button
         className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-sm"
         whileHover={{ scale: 1.05, y: -1 }}
         whileTap={{ scale: 0.98 }}
     >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <Phone className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
-        <span className="italic tracking-tight font-black relative z-10">
-            contact
-        </span>
+        <ContactButtonOverlay />
+        <ContactButtonIcon />
+        <ContactButtonText />
     </motion.button>
 ));
 
+// Contact Button Icon Component
+const ContactButtonIcon = memo(() => (
+    <Phone className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+));
+
+// Contact Button Overlay Component
+const ContactButtonOverlay = memo(() => (
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+));
+
+// Contact Button Text Component
+const ContactButtonText = memo(() => (
+    <span className="italic tracking-tight font-black relative z-10">
+        contact
+    </span>
+));
+
+// Contact Button Section Component
+const ContactButtonSection = memo(() => (
+    <motion.div
+        className="hidden md:ml-4 lg:ml-6 md:block relative z-[90]"
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+    >
+        <ContactButton />
+    </motion.div>
+));
+
+// Desktop Navigation Component
+const DesktopNavigation = memo(({ navigationItems }) => (
+    <div className="hidden md:ml-6 lg:ml-10 md:block relative z-[90]">
+        <motion.div
+            className="flex space-x-1 lg:space-x-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                staggerChildren: 0.08,
+                delayChildren: 0.2
+            }}
+        >
+            {navigationItems}
+        </motion.div>
+    </div>
+));
+
+// Logo Component
+const Logo = memo(() => {
+    const navigate = useNavigate();
+    const handleBrandClick = useCallback(() => {
+        navigate("/");
+    }, [navigate]);
+
+    return (
+        <motion.div
+            className="flex shrink-0 items-center"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            whileHover={{ scale: 1.05 }}
+        >
+            <BrandLogo onClick={handleBrandClick} />
+            <BrandText onClick={handleBrandClick} />
+        </motion.div>
+    );
+});
+
+// Mobile Contact Button Component
 const MobileContactButton = memo(() => (
     <motion.button
         className="group w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
     >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
-        <span className="italic tracking-tight font-black relative z-10">
-            contact
-        </span>
+        <MobileContactButtonOverlay />
+        <MobileContactButtonIcon />
+        <MobileContactButtonText />
     </motion.button>
 ));
 
-// Memoized navigation item component
+// Mobile Contact Button Icon Component
+const MobileContactButtonIcon = memo(() => (
+    <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+));
+
+// Mobile Contact Button Overlay Component
+const MobileContactButtonOverlay = memo(() => (
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+));
+
+// Mobile Contact Button Section Component
+const MobileContactButtonSection = memo(() => (
+    <motion.div
+        className="pt-3 border-t border-white/10"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+    >
+        <MobileContactButton />
+    </motion.div>
+));
+
+// Mobile Contact Button Text Component
+const MobileContactButtonText = memo(() => (
+    <span className="italic tracking-tight font-black relative z-10">
+        contact
+    </span>
+));
+
+// Mobile Menu Background Component
+const MobileMenuBackground = memo(() => (
+    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 pointer-events-none" />
+));
+
+// Mobile Menu Button Component
+const MobileMenuButton = memo(({ open }) => (
+    <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
+        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
+            <span className="sr-only">Open main menu</span>
+            <MobileMenuIcon open={open} />
+        </DisclosureButton>
+    </div>
+));
+
+// Mobile Menu Content Component
+const MobileMenuContent = memo(({ mobileNavigationItems }) => (
+    <div className="space-y-1 px-4 pt-4 pb-4 relative z-10">
+        {mobileNavigationItems}
+        <MobileContactButtonSection />
+    </div>
+));
+
+// Mobile Menu Container Component
+const MobileMenuContainer = memo(({ open, mobileNavigationItems }) => (
+    <AnimatePresence>
+        {open && (
+            <DisclosurePanel static className="md:hidden relative z-[80]">
+                <motion.div
+                    className="mt-4 sm:mt-5 w-11/12 max-w-sm mx-auto bg-black/80 backdrop-blur-[20px] rounded-2xl border border-white/20 shadow-[inset_0_0_30px_rgba(255,255,255,0.08)] overflow-hidden"
+                    initial={{
+                        opacity: 0,
+                        y: -20,
+                        scale: 0.95
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: {
+                            duration: 0.3,
+                            ease: "easeOut",
+                            staggerChildren: 0.05,
+                            delayChildren: 0.1
+                        }
+                    }}
+                    exit={{
+                        opacity: 0,
+                        y: -20,
+                        scale: 0.95,
+                        transition: {
+                            duration: 0.2,
+                            ease: "easeIn"
+                        }
+                    }}
+                >
+                    <MobileMenuBackground />
+                    <MobileMenuContent mobileNavigationItems={mobileNavigationItems} />
+                </motion.div>
+            </DisclosurePanel>
+        )}
+    </AnimatePresence>
+));
+
+
+// Mobile Menu Icon Component
+const MobileMenuIcon = memo(({ open }) => (
+    <AnimatePresence mode="wait">
+        {!open ? (
+            <motion.div
+                key="menu"
+                initial={{ rotate: 0, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+            >
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+            </motion.div>
+        ) : (
+            <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+            >
+                <X className="h-5 w-5 sm:h-6 sm:w-6" />
+            </motion.div>
+        )}
+    </AnimatePresence>
+));
+
+// Mobile Nav Item Component
+const MobileNavItem = memo(({ item, isActive, onClick }) => {
+    const IconComponent = item.icon;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            layout
+        >
+            <DisclosureButton
+                as="a"
+                href={item.href}
+                onClick={onClick}
+                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${
+                    isActive
+                        ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
+                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                }`}
+            >
+                <MobileNavItemContent item={item} isActive={isActive} IconComponent={IconComponent} />
+            </DisclosureButton>
+        </motion.div>
+    );
+});
+
+// Mobile Nav Item Content Component
+const MobileNavItemContent = memo(({ item, isActive, IconComponent }) => (
+    <motion.div
+        className="flex items-center gap-3 w-full"
+        animate={isActive ? { x: 4 } : { x: 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+        <IconComponent
+            className={`w-5 h-5 transition-all duration-300 ${
+                isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
+            }`}
+        />
+        <span className="italic tracking-tight font-black">
+            {item.name}
+        </span>
+        <MobileNavItemIndicator isActive={isActive} />
+    </motion.div>
+));
+
+// Mobile Nav Item Indicator Component
+const MobileNavItemIndicator = memo(({ isActive }) => (
+    <AnimatePresence>
+        {isActive && (
+            <motion.div
+                className="ml-auto w-2 h-2 bg-[#e2dbd2] rounded-full"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                layoutId="mobile-nav-active-dot"
+            />
+        )}
+    </AnimatePresence>
+));
+
+// Nav Item Component
 const NavItem = memo(({ item, index, isActive, onClick }) => {
     const IconComponent = item.icon;
 
     return (
         <motion.div
-            variants={navItemVariants}
-            initial="hidden"
-            animate="visible"
-            custom={index}
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+                duration: 0.5,
+                ease: [0.4, 0, 0.2, 1],
+                delay: index * 0.08
+            }}
             layout
         >
             <motion.a
                 href={item.href}
                 onClick={onClick}
-                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${isActive
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${
+                    isActive
                         ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
                         : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
-                    }`}
-                variants={activeItemVariants}
-                animate={isActive ? "active" : "inactive"}
+                }`}
                 whileHover={{
                     scale: 1.05,
                     y: -2,
@@ -204,113 +385,168 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
                 layout
                 layoutId={`nav-item-${item.name}`}
             >
-                {/* Background highlight with smooth transition */}
-                <AnimatePresence>
-                    {isActive && (
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-[#ff75df]/10 via-white/10 to-[#ff75df]/10 rounded-full"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                            layoutId="nav-active-bg"
-                        />
-                    )}
-                </AnimatePresence>
-
-                <motion.div
-                    className="relative z-10 flex items-center gap-1.5 sm:gap-2"
-                    animate={isActive ? { y: 0 } : { y: 0 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    <IconComponent
-                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
-                            }`}
-                    />
-                    <span className="italic tracking-tight font-black">
-                        {item.name}
-                    </span>
-                </motion.div>
+                <NavItemBackground isActive={isActive} />
+                <NavItemContent item={item} isActive={isActive} IconComponent={IconComponent} />
             </motion.a>
         </motion.div>
     );
 });
 
-const MobileNavItem = memo(({ item, isActive, onClick }) => {
-    const IconComponent = item.icon;
+// Nav Item Background Component
+const NavItemBackground = memo(({ isActive }) => (
+    <AnimatePresence>
+        {isActive && (
+            <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-[#ff75df]/10 via-white/10 to-[#ff75df]/10 rounded-full"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                layoutId="nav-active-bg"
+            />
+        )}
+    </AnimatePresence>
+));
 
-    return (
-        <motion.div
-            variants={menuItemVariants}
-            layout
-        >
-            <DisclosureButton
-                as="a"
-                href={item.href}
-                onClick={onClick}
-                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${isActive
-                        ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
-                    }`}
-            >
-                <motion.div
-                    className="flex items-center gap-3 w-full"
-                    animate={isActive ? { x: 4 } : { x: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                    <IconComponent
-                        className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
-                            }`}
-                    />
-                    <span className="italic tracking-tight font-black">
-                        {item.name}
-                    </span>
+// Nav Item Content Component
+const NavItemContent = memo(({ item, isActive, IconComponent }) => (
+    <motion.div
+        className="relative z-10 flex items-center gap-1.5 sm:gap-2"
+        animate={isActive ? { y: 0 } : { y: 0 }}
+        transition={{ duration: 0.2 }}
+    >
+        <IconComponent
+            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${
+                isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
+            }`}
+        />
+        <span className="italic tracking-tight font-black">
+            {item.name}
+        </span>
+    </motion.div>
+));
 
-                    <AnimatePresence>
-                        {isActive && (
-                            <motion.div
-                                className="ml-auto w-2 h-2 bg-[#e2dbd2] rounded-full"
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                layoutId="mobile-nav-active-dot"
-                            />
-                        )}
-                    </AnimatePresence>
-                </motion.div>
-            </DisclosureButton>
-        </motion.div>
-    );
-});
+// Navbar Content Component
+const NavbarContent = memo(({ navigationItems, mobileNavigationItems, open }) => (
+    <motion.div
+        className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+            duration: 0.6,
+            ease: "easeOut",
+            staggerChildren: 0.1
+        }}
+    >
+        <NavbarInner navigationItems={navigationItems} open={open} />
+        <NavbarBottomBorder />
+        <MobileMenuContainer open={open} mobileNavigationItems={mobileNavigationItems} />
+    </motion.div>
+));
 
+// Navbar Bottom Border Component
+const NavbarBottomBorder = memo(() => (
+    <motion.div
+        className="mx-auto h-[1px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+    />
+));
+
+// Navbar Inner Component
+const NavbarInner = memo(({ navigationItems, open }) => (
+    <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
+        <MobileMenuButton open={open} />
+        <NavbarMainContent navigationItems={navigationItems} />
+        <ContactButtonSection />
+    </div>
+));
+
+// Navbar Main Content Component
+const NavbarMainContent = memo(({ navigationItems }) => (
+    <motion.div
+        className="flex flex-1 items-center justify-between relative z-[90]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+    >
+        <Logo />
+        <DesktopNavigation navigationItems={navigationItems} />
+    </motion.div>
+));
+
+// Scroll Background Overlay Component
+const ScrollBackgroundOverlay = memo(({ scrolled }) => (
+    <AnimatePresence>
+        {scrolled && (
+            <motion.div
+                className="fixed top-0 left-0 w-full h-16 sm:h-18 md:h-20 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+            />
+        )}
+    </AnimatePresence>
+));
+
+// ===== MAIN COMPONENT =====
+
+/**
+ * Navbar Component
+ * 
+ * Component Tree Structure:
+ * Navbar
+ * ├── ScrollBackgroundOverlay
+ * └── Disclosure
+ *     └── NavbarContent
+ *         ├── NavbarInner
+ *         │   ├── MobileMenuButton
+ *         │   │   └── MobileMenuIcon
+ *         │   ├── NavbarMainContent
+ *         │   │   ├── Logo
+ *         │   │   │   ├── BrandLogo
+ *         │   │   │   └── BrandText
+ *         │   │   │       ├── BrandTextSeparator
+ *         │   │   │       └── BrandTextTitle
+ *         │   │   └── DesktopNavigation
+ *         │   │       └── NavItem (multiple instances)
+ *         │   │           ├── NavItemBackground
+ *         │   │           └── NavItemContent
+ *         │   └── ContactButtonSection
+ *         │       └── ContactButton
+ *         │           ├── ContactButtonOverlay
+ *         │           ├── ContactButtonIcon
+ *         │           └── ContactButtonText
+ *         ├── NavbarBottomBorder
+ *         └── MobileMenuContainer
+ *             └── MobileMenuContent
+ *                 ├── MobileNavItem (multiple instances)
+ *                 │   └── MobileNavItemContent
+ *                 │       └── MobileNavItemIndicator
+ *                 └── MobileContactButtonSection
+ *                     └── MobileContactButton
+ *                         ├── MobileContactButtonOverlay
+ *                         ├── MobileContactButtonIcon
+ *                         └── MobileContactButtonText
+ */
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [activeItem, setActiveItem] = useState("info");
 
-    // Optimized scroll handler with throttling
-    const handleScroll = useCallback(() => {
-        const isScrolled = window.scrollY > 0;
-        if (isScrolled !== scrolled) {
+    // Use the optimized throttle function from utils
+    const handleScroll = useCallback(
+        throttle(() => {
+            const isScrolled = window.scrollY > 0;
             setScrolled(isScrolled);
-        }
-    }, [scrolled]);
+        }, 16), // ~60fps
+        []
+    );
 
     useEffect(() => {
-        let ticking = false;
-
-        const throttledScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener("scroll", throttledScroll, { passive: true });
-        return () => window.removeEventListener("scroll", throttledScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
     }, [handleScroll]);
 
     // Memoized click handler
@@ -344,131 +580,14 @@ function Navbar() {
 
     return (
         <>
-            {/* Background blur overlay when scrolled */}
-            <AnimatePresence>
-                {scrolled && (
-                    <motion.div
-                        className="fixed top-0 left-0 w-full h-16 sm:h-18 md:h-20 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                    />
-                )}
-            </AnimatePresence>
-
+            <ScrollBackgroundOverlay scrolled={scrolled} />
             <Disclosure as="nav" className="h-16 sm:h-18 md:h-20 fixed w-full z-[100]">
                 {({ open }) => (
-                    <>
-                        <motion.div
-                            className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
-                            variants={navVariants}
-                            initial="hidden"
-                            animate="visible"
-                        >
-                            <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
-                                {/* Mobile menu button */}
-                                <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
-                                    <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
-                                        <span className="sr-only">Open main menu</span>
-                                        <AnimatePresence mode="wait">
-                                            {!open ? (
-                                                <motion.div
-                                                    key="menu"
-                                                    initial={{ rotate: 0, opacity: 0 }}
-                                                    animate={{ rotate: 0, opacity: 1 }}
-                                                    exit={{ rotate: 90, opacity: 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
-                                                </motion.div>
-                                            ) : (
-                                                <motion.div
-                                                    key="close"
-                                                    initial={{ rotate: -90, opacity: 0 }}
-                                                    animate={{ rotate: 0, opacity: 1 }}
-                                                    exit={{ rotate: 90, opacity: 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </DisclosureButton>
-                                </div>
-
-                                {/* Logo and brand */}
-                                <motion.div
-                                    className="flex flex-1 items-center justify-between relative z-[90]"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.2, duration: 0.6 }}
-                                >
-                                    <Logo />
-
-                                    {/* Desktop/Tablet navigation with enhanced transitions */}
-                                    <div className="hidden md:ml-6 lg:ml-10 md:block relative z-[90]">
-                                        <motion.div
-                                            className="flex space-x-1 lg:space-x-2"
-                                            variants={navVariants}
-                                            initial="hidden"
-                                            animate="visible"
-                                        >
-                                            {navigationItems}
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
-
-                                {/* Contact button */}
-                                <motion.div
-                                    className="hidden md:ml-4 lg:ml-6 md:block relative z-[90]"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.4, duration: 0.6 }}
-                                >
-                                    <ContactButton />
-                                </motion.div>
-                            </div>
-
-                            {/* Subtle bottom border */}
-                            <motion.div
-                                className="mx-auto h-[1px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ delay: 0.6, duration: 0.8 }}
-                            />
-                        </motion.div>
-
-                        {/* Mobile menu */}
-                        <AnimatePresence>
-                            {open && (
-                                <DisclosurePanel static className="md:hidden relative z-[80]">
-                                    <motion.div
-                                        className="mt-4 sm:mt-5 w-11/12 max-w-sm mx-auto bg-black/80 backdrop-blur-[20px] rounded-2xl border border-white/20 shadow-[inset_0_0_30px_rgba(255,255,255,0.08)] overflow-hidden"
-                                        variants={mobileMenuVariants}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                    >
-                                        {/* Mobile menu background overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 pointer-events-none" />
-
-                                        <div className="space-y-1 px-4 pt-4 pb-4 relative z-10">
-                                            {mobileNavigationItems}
-
-                                            {/* Mobile contact button */}
-                                            <motion.div
-                                                className="pt-3 border-t border-white/10"
-                                                variants={menuItemVariants}
-                                            >
-                                                <MobileContactButton />
-                                            </motion.div>
-                                        </div>
-                                    </motion.div>
-                                </DisclosurePanel>
-                            )}
-                        </AnimatePresence>
-                    </>
+                    <NavbarContent
+                        navigationItems={navigationItems}
+                        mobileNavigationItems={mobileNavigationItems}
+                        open={open}
+                    />
                 )}
             </Disclosure>
         </>
