@@ -5,7 +5,7 @@ import MainPage from './components/Projects/MainPage.jsx'
 
 function App() {
     return (
-        <Router basename="/Kyzen">
+        <Router basename="/">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/projects/*" element={<MainPage />} />

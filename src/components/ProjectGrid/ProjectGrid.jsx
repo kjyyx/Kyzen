@@ -46,7 +46,7 @@ const projects = [
     {
         title: "Railroad-ed",
         image: REImage,
-        link: "#",
+        link: "/projects/railroaded",
         description: "Educational rail system",
         tech: ["Wordpress", "D3.js", "Firebase"],
         category: "Educational",
