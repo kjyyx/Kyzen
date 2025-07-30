@@ -53,9 +53,9 @@ function Home() {
             )}
 
             {/* Development notice modal */}
-            {/* {showDevModal && !isLoading && (
+            {showDevModal && !isLoading && (
                 <DevelopmentModal onClose={handleCloseDevModal} />
-            )} */}
+            )}
         </>
     )
 }
