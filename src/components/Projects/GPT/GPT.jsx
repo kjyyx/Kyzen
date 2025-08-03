@@ -24,11 +24,11 @@ import {
 } from 'lucide-react';
 import NextProjectSection from '../NextProjectSection';
 
-import BackgroundImage from '../../../assets/Projects_Icons/Lavacraze_bg.png'
+import BackgroundImage from '../../../assets/Projects_Icons/GPT_bg.png'
 
 // Project data configuration
 const projectData = {
-    title: "LAVACRAZE",
+    title: "GPT",
     subtitle: "Navigation Enhancement Project",
     category: "Web Development",
     categoryIcon: Code2,
@@ -131,11 +131,11 @@ const pageVariants = {
 const screenshots = [
     {
         src: "../src/assets/Webpage_Screenshots/LC (1).png",
-        alt: "LavaCraze Homepage Fullpage Screenshot"
+        alt: "GPT Homepage Fullpage Screenshot"
     },
     {
         src: "../src/assets/Webpage_Screenshots/LC (2).png",
-        alt: "LavaCraze Articles Fullpage Screenshot"
+        alt: "GPT Articles Fullpage Screenshot"
     },
 ];
 
@@ -458,7 +458,7 @@ const TechnologyStack = memo(() => {
     );
 });
 
-// Add this new component above the main LavaCraze function/component
+// Add this new component above the main GPT function/component
 const ScreenshotGallery = memo(({ images }) => (
     <section className="py-20">
         <div className="max-w-5xl mx-auto">
@@ -899,8 +899,8 @@ const ProjectImpact = memo(() => {
 });
 
 
-// Main LavaCraze Component
-function LavaCraze() {
+// Main GPT Component
+function GPT() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
@@ -1025,4 +1025,4 @@ function LavaCraze() {
     );
 }
 
-export default memo(LavaCraze);
+export default memo(GPT);

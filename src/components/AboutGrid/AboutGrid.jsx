@@ -12,6 +12,7 @@ import {
     Music,
     Camera,
     Gamepad2,
+    Bus,
     Plane,
     Mail,
     Github,
@@ -21,7 +22,7 @@ import {
     Sparkles
 } from 'lucide-react';
 
-import ProfileImage from '../../assets/PROFILE-1.jpg';
+import ProfileImage from '../../assets/PROFILE-2.jpg';
 import ResumePDF from '../../assets/KenjiJaculbia_Curriculum_Vitae.pdf';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
@@ -122,8 +123,8 @@ const hobbies = [
     },
     {
         name: "Travel",
-        icon: Plane,
-        emoji: "✈️",
+        icon: Bus,
+        emoji: "🚌",
         color: "#f97316",
         gradient: "from-orange-500/30 to-red-500/30",
         border: "border-orange-400/40"
@@ -176,14 +177,14 @@ const socialLinks = [
     },
     {
         icon: Github,
-        href: "https://github.com",
+        href: "https://github.com/kjyyx",
         color: "#60a5fa",
         label: "GitHub",
         hoverColor: "#7db6fb"
     },
     {
         icon: Linkedin,
-        href: "https://linkedin.com",
+        href: "www.linkedin.com/in/kenji-jaculbia-9b048a314",
         color: "#10b981",
         label: "LinkedIn",
         hoverColor: "#34d399"

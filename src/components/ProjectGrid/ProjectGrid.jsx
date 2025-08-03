@@ -26,7 +26,7 @@ const projects = [
     {
         title: "ITS ATS",
         image: ITSImage,
-        link: "#",
+        link: "/projects/itsats",
         description: "Applicant tracking system",
         tech: ["Angular", ".NET", "PostgreSQL"],
         category: "Enterprise",
@@ -53,6 +53,33 @@ const projects = [
         year: "2023",
         status: "Live",
     },
+];
+
+const remainingProjects = [
+    {
+        name: "Brisk",
+        logo: "/src/assets/Projects_Icons/Brisk_ico.png",
+        alt: "Brisk Logo",
+        link: "/projects/brisk"
+    },
+    {
+        name: "GPT",
+        logo: "/src/assets/Projects_Icons/GPT_ico.png",
+        alt: "GPT Logo",
+        link: "/projects/gpt"
+    },
+    {
+        name: "Kairos",
+        logo: "/src/assets/Projects_Icons/Kairos_ico.png",
+        alt: "Kairos Logo",
+        link: "/projects/kairos"
+    },
+    {
+        name: "Sprint",
+        logo: "/src/assets/Projects_Icons/Sprint_ico.png",
+        alt: "Sprint Logo",
+        link: "/projects/sprint"
+    }
 ];
 
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
@@ -208,20 +235,20 @@ const ProjectCardDescription = memo(({ project, showEffects }) => (
 ));
 
 // Project Card Floating Button Component
-const ProjectCardFloatingButton = memo(({ 
-    project, 
-    showEffects, 
-    isMobile, 
-    isTablet, 
-    verticalRectangle, 
-    onProjectClick 
+const ProjectCardFloatingButton = memo(({
+    project,
+    showEffects,
+    isMobile,
+    isTablet,
+    verticalRectangle,
+    onProjectClick
 }) => (
     <motion.div
         className={`absolute ${isMobile || isTablet
-                ? "top-3 sm:top-4 -right-3 sm:-right-4"
-                : verticalRectangle
-                    ? "top-12 sm:top-16 -right-12 sm:-right-16"
-                    : "top-8 sm:top-10 -left-12 sm:-left-16"
+            ? "top-3 sm:top-4 -right-3 sm:-right-4"
+            : verticalRectangle
+                ? "top-12 sm:top-16 -right-12 sm:-right-16"
+                : "top-8 sm:top-10 -left-12 sm:-left-16"
             } z-40`}
         initial={{
             opacity: 1,
@@ -252,10 +279,10 @@ const ProjectCardFloatingButton = memo(({
     >
         <motion.div
             className={`rounded-lg sm:rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile
-                    ? "w-[240px] h-[40px]"
-                    : isTablet
-                        ? "w-[260px] h-[45px]"
-                        : "w-[340px] h-[60px]"
+                ? "w-[240px] h-[40px]"
+                : isTablet
+                    ? "w-[260px] h-[45px]"
+                    : "w-[340px] h-[60px]"
                 } ${verticalRectangle && !isMobile && !isTablet ? "rotate-90" : ""}`}
             animate={{
                 borderColor: showEffects ? "rgba(255, 117, 223, 0.6)" : "rgba(255, 255, 255, 0.5)",
@@ -317,7 +344,7 @@ const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, se
 
 // Project Card Status Badge Component
 const ProjectCardStatusBadge = memo(({ project, statusStyle, showEffects }) => (
-    <div className="absolute bottom-6 sm:bottom-8 md:bottom-10 right-3 sm:right-4 flex flex-col gap-2 z-30">
+    <div className="absolute bottom-8 sm:bottom-8 md:bottom-10 right-3 sm:right-4 flex flex-col gap-2 z-30">
         <motion.div
             className="px-2 sm:px-3 py-1 rounded-full backdrop-blur-sm border border-white/30 self-end"
             style={{ backgroundColor: `${statusStyle.color}20` }}
@@ -350,7 +377,7 @@ const ProjectCardTitle = memo(({ project, index, showEffects }) => (
         transition={{ delay: 0.2 + index * 0.05 }}
     >
         <motion.span
-            className="block text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tight leading-none pr-1"
+            className="block text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text text-5xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic tracking-tight leading-none pr-1"
             style={{
                 textShadow: showEffects
                     ? "0 0 30px rgba(255, 117, 223, 0.5)"
@@ -598,8 +625,8 @@ const ProjectCard = memo(({
         >
             <div className={`relative ${getCardSize()} cursor-pointer`} onClick={handleProjectClick}>
                 <ProjectCardGlow showEffects={showEffects} />
-                
-                <ProjectCardImage 
+
+                <ProjectCardImage
                     project={project}
                     showEffects={showEffects}
                     isMobile={isMobile}
@@ -607,7 +634,7 @@ const ProjectCard = memo(({
                     setImageLoaded={setImageLoaded}
                 />
 
-                <ProjectCardStatusBadge 
+                <ProjectCardStatusBadge
                     project={project}
                     statusStyle={statusStyle}
                     showEffects={showEffects}
@@ -622,12 +649,12 @@ const ProjectCard = memo(({
                     onProjectClick={handleProjectClick}
                 />
 
-                <ProjectCardDescription 
+                <ProjectCardDescription
                     project={project}
                     showEffects={showEffects}
                 />
 
-                <ProjectCardTitle 
+                <ProjectCardTitle
                     project={project}
                     index={index}
                     showEffects={showEffects}
@@ -639,6 +666,45 @@ const ProjectCard = memo(({
     );
 });
 
+const RemainingProjectsRow = memo(() => {
+    const navigate = useNavigate();
+    return (
+        <motion.div
+            className="w-full flex flex-col items-center mt-20"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+        >
+            <span className="text-white/60 text-base uppercase tracking-wider font-medium mb-8 block">
+                Other Projects
+            </span>
+            <div className="flex flex-row flex-wrap gap-5 md:gap-12 justify-center items-center">
+                {remainingProjects.map((proj, idx) => (
+                    <motion.div
+                        key={proj.name}
+                        className="flex flex-col items-center cursor-pointer"
+                        initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 + idx * 0.08 }}
+                        whileHover={{ scale: 1.08, y: -6 }}
+                        onClick={() => navigate(proj.link)}
+                    >
+                        <img
+                            src={proj.logo}
+                            alt={proj.alt}
+                            className="w-34 h-24 md:w-38 md:h-28 object-contain"
+                        />
+                        {/* <span className="mt-4 text-sm md:text-base text-white/80 font-semibold tracking-wide text-center">
+                            {proj.name}
+                        </span> */}
+                    </motion.div>
+                ))}
+            </div>
+        </motion.div>
+    );
+});
 // ===== MAIN COMPONENT =====
 
 /**
@@ -703,7 +769,7 @@ function ProjectGrid() {
 
     return (
         <div id="projects" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
-            
+
             {/* Background Effects */}
             <BackgroundEffects />
 
@@ -714,13 +780,15 @@ function ProjectGrid() {
             {/* <StatisticsSection statistics={statistics} /> */}
 
             {/* Projects Grid */}
-            <ProjectGridContainer 
+            <ProjectGridContainer
                 projects={projects}
                 isMobile={isMobile}
                 isTablet={isTablet}
                 activeCard={activeCard}
                 onCardClick={handleCardClick}
             />
+
+            <RemainingProjectsRow />
 
             {/* Bottom Decoration */}
             <BottomDecoration />

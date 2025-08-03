@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo, useMemo } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import Avatar from '../../assets/Avatar.png';
+import Avatar from '../../assets/Avatar-2.png';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
@@ -357,7 +357,7 @@ const TitleSection = memo(() => (
  */
 function HeaderGrid() {
     return (
-        <div className="relative min-h-screen overflow-hidden">
+        <div id="header-section" className="relative min-h-screen overflow-hidden">
             {/* Background Effects */}
             <BackgroundCircles />
             

@@ -19,25 +19,25 @@ import StaggerContainer from '../../common/StaggerContainer';
 const socialLinks = [
     {
         name: 'Facebook',
-        href: '#',
+        href: 'https://www.facebook.com/jikennn/',
         icon: Facebook,
         color: 'hover:text-blue-400'
     },
     {
         name: 'LinkedIn',
-        href: '#',
+        href: "www.linkedin.com/in/kenji-jaculbia-9b048a314",
         icon: Linkedin,
         color: 'hover:text-blue-500'
     },
     {
         name: 'GitHub',
-        href: '#',
+        href: "https://github.com/kjyyx",
         icon: Github,
         color: 'hover:text-purple-400'
     },
     {
         name: 'Email',
-        href: 'mailto:kpjaculbia@gmail.com',
+        href: 'mailto:kenjijaculbia@gmail.com',
         icon: Mail,
         color: 'hover:text-green-400'
     }
@@ -402,7 +402,7 @@ const SocialLinkTooltip = memo(({ name }) => (
  */
 function Footer() {
     return (
-        <div className="pb-4 sm:pb-6 px-2 sm:px-4 mt-8 sm:mt-10 relative">
+        <div id="footer-section" className="pb-4 sm:pb-6 px-2 sm:px-4 mt-8 sm:mt-10 relative">
             <ScrollAnimatedSection 
                 animationType="fadeUp" 
                 threshold={0.2}

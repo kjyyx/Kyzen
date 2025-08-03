@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, memo, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -22,8 +22,9 @@ import {
     ArrowRight,
     Eye
 } from 'lucide-react';
+import NextProjectSection from '../NextProjectSection';
 
-import CNImage from '../../../assets/RE-2.png'
+import BackgroundImage from '../../../assets/Projects_Icons/Railroaded_bg.png'
 
 // Project data configuration
 const projectData = {
@@ -903,107 +904,11 @@ const ProjectImpact = memo(() => {
     );
 });
 
-// Next Project Section (keeping original)
-const NextProjectSection = memo(() => {
-    const [isHovered, setIsHovered] = useState(false);
-    const navigate = useNavigate();
-
-    const handleProjectClick = useCallback(() => {
-        // Navigate to next project or projects page
-        navigate('/projects/next-project');
-    }, [navigate]);
-
-    return (
-        <motion.div
-            className="relative h-full flex items-center justify-end overflow-hidden"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-        >
-
-            {/* Next Project Label */}
-            <motion.div
-                className="absolute top-0 right-0 z-20"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-            >
-                <span className="text-white/60 text-sm tracking-wider font-medium">
-                    next project
-                </span>
-            </motion.div>
-
-            {/* Interactive Project Title */}
-            <motion.div
-                className="relative z-10 mr-8 cursor-pointer"
-                style={{
-                    transformOrigin: "100% 50%", // Right center - this is the hinge point
-                    perspective: "1000px"
-                }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={handleProjectClick}
-            >
-                {/* Solid filled text (appears on hover) */}
-                <motion.h2
-                    // tracking-tight italic font-black text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[12rem] italic font-black uppercase tracking-tight text-white select-none"
-                    initial={{
-                        opacity: 0,
-                        rotateY: -20 // Start swung out
-                    }}
-                    animate={{
-                        opacity: isHovered ? 1 : 0,
-                        rotateY: isHovered ? 0 : -20 // Swing in on hover
-                    }}
-                    transition={{
-                        duration: 0.6,
-                        ease: [0.23, 1, 0.32, 1] // Custom easing for smooth door swing
-                    }}
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        zIndex: 2,
-                        transformOrigin: "100% 50%" // Right center hinge
-                    }}
-                >
-                    RAILROAD-ED
-                </motion.h2>
-
-                {/* Outlined text (default swung out state) */}
-                <motion.h2
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[12rem] italic font-black uppercase tracking-tight text-transparent select-none"
-                    style={{
-                        WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
-                        position: 'relative',
-                        zIndex: 1,
-                        transformOrigin: "100% 50%" // Right center hinge
-                    }}
-                    initial={{
-                        rotateY: -20, // Start swung out
-                        opacity: 1
-                    }}
-                    animate={{
-                        rotateY: isHovered ? 0 : -20, // Swing in on hover
-                        opacity: isHovered ? 0 : 1 // Fade out on hover
-                    }}
-                    transition={{
-                        duration: 0.6,
-                        ease: [0.23, 1, 0.32, 1] // Custom easing for smooth door swing
-                    }}
-                >
-                    RAILROAD-ED
-                </motion.h2>
-            </motion.div>
-        </motion.div>
-    );
-});
-
 // Main Railroaded Component
 function Railroaded() {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
     return (
         <div className="min-h-screen relative overflow-hidden">
             {/* Background Effects */}
@@ -1074,7 +979,7 @@ function Railroaded() {
                     transition={{ delay: 0.3, duration: 0.8 }}
                 >
                     <img
-                        src={CNImage}
+                        src={BackgroundImage}
                         alt="Project showcase"
                         className="w-full h-full object-cover object-center"
                     />

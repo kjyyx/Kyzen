@@ -12,7 +12,8 @@ import {
     Award,
     Home
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { scroller } from "react-scroll";
 
 import kyzenLogo from "/src/assets/KYZENLOGO3.png";
 
@@ -22,11 +23,11 @@ import { throttle } from '../../utils/helpers';
 
 // ===== DATA CONFIGURATION =====
 const navigation = [
-    { name: "info", href: "/Kyzen/#about", current: true, icon: Home },
-    { name: "skills", href: "/Kyzen/#skills", current: false, icon: Code2 },
-    { name: "projects", href: "/Kyzen/#projects", current: false, icon: FolderOpen },
-    { name: "experience", href: "/Kyzen/#experience", current: false, icon: Briefcase },
-    { name: "certifications", href: "/Kyzen/#certifications", current: false, icon: Award },
+    { name: "info", href: "about", current: true, icon: Home },
+    { name: "skills", href: "skills", current: false, icon: Code2 },
+    { name: "projects", href: "projects", current: false, icon: FolderOpen },
+    // { name: "experience", href: "experience", current: false, icon: Briefcase },
+    { name: "certifications", href: "certifications", current: false, icon: Award },
 ];
 
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
@@ -73,17 +74,28 @@ const BrandTextTitle = memo(() => (
 ));
 
 // Contact Button Component
-const ContactButton = memo(() => (
-    <motion.button
-        className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-sm"
-        whileHover={{ scale: 1.05, y: -1 }}
-        whileTap={{ scale: 0.98 }}
-    >
-        <ContactButtonOverlay />
-        <ContactButtonIcon />
-        <ContactButtonText />
-    </motion.button>
-));
+const ContactButton = memo(() => {
+    const handleContactClick = useCallback(() => {
+        scroller.scrollTo("footer-section", {
+            duration: 600,
+            delay: 0,
+            smooth: "easeInOutQuart"
+        });
+    }, []);
+
+    return (
+        <motion.button
+            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-sm"
+            whileHover={{ scale: 1.05, y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleContactClick}
+        >
+            <ContactButtonOverlay />
+            <ContactButtonIcon />
+            <ContactButtonText />
+        </motion.button>
+    );
+});
 
 // Contact Button Icon Component
 const ContactButtonIcon = memo(() => (
@@ -136,9 +148,26 @@ const DesktopNavigation = memo(({ navigationItems }) => (
 // Logo Component
 const Logo = memo(() => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const handleBrandClick = useCallback(() => {
-        navigate("/");
-    }, [navigate]);
+        if (location.pathname !== "/") {
+            navigate("/");
+            setTimeout(() => {
+                scroller.scrollTo("header-section", {
+                    duration: 600,
+                    delay: 0,
+                    smooth: "easeInOutQuart"
+                });
+            }, 400);
+        } else {
+            scroller.scrollTo("header-section", {
+                duration: 600,
+                delay: 0,
+                smooth: "easeInOutQuart"
+            });
+        }
+    }, [navigate, location.pathname]);
 
     return (
         <motion.div
@@ -290,7 +319,30 @@ const MobileMenuIcon = memo(({ open }) => (
 
 // Mobile Nav Item Component
 const MobileNavItem = memo(({ item, isActive, onClick }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const IconComponent = item.icon;
+
+    const handleScrollNav = useCallback((e) => {
+        e.preventDefault();
+        if (location.pathname !== "/") {
+            navigate("/");
+            setTimeout(() => {
+                scroller.scrollTo(item.href, {
+                    duration: 600,
+                    delay: 0,
+                    smooth: "easeInOutQuart"
+                });
+            }, 400);
+        } else {
+            scroller.scrollTo(item.href, {
+                duration: 600,
+                delay: 0,
+                smooth: "easeInOutQuart"
+            });
+        }
+        onClick(item.name);
+    }, [item.href, onClick, navigate, location.pathname]);
 
     return (
         <motion.div
@@ -301,13 +353,12 @@ const MobileNavItem = memo(({ item, isActive, onClick }) => {
         >
             <DisclosureButton
                 as="a"
-                href={item.href}
-                onClick={onClick}
-                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${
-                    isActive
-                        ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
-                }`}
+                href={`#${item.href}`}
+                onClick={handleScrollNav}
+                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${isActive
+                    ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
+                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
             >
                 <MobileNavItemContent item={item} isActive={isActive} IconComponent={IconComponent} />
             </DisclosureButton>
@@ -323,9 +374,8 @@ const MobileNavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.3, ease: "easeInOut" }}
     >
         <IconComponent
-            className={`w-5 h-5 transition-all duration-300 ${
-                isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
-            }`}
+            className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
+                }`}
         />
         <span className="italic tracking-tight font-black">
             {item.name}
@@ -352,7 +402,31 @@ const MobileNavItemIndicator = memo(({ isActive }) => (
 
 // Nav Item Component
 const NavItem = memo(({ item, index, isActive, onClick }) => {
-    const IconComponent = item.icon;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const IconComponent = item.icon; // <-- Add this line
+
+    const handleScrollNav = useCallback((e) => {
+        e.preventDefault();
+        if (location.pathname !== "/") {
+            // Go to homepage first, then scroll after navigation
+            navigate("/");
+            setTimeout(() => {
+                scroller.scrollTo(item.href, {
+                    duration: 600,
+                    delay: 0,
+                    smooth: "easeInOutQuart"
+                });
+            }, 400); // delay to ensure homepage is rendered
+        } else {
+            scroller.scrollTo(item.href, {
+                duration: 600,
+                delay: 0,
+                smooth: "easeInOutQuart"
+            });
+        }
+        onClick(item.name);
+    }, [item.href, onClick, navigate, location.pathname]);
 
     return (
         <motion.div
@@ -366,13 +440,12 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
             layout
         >
             <motion.a
-                href={item.href}
-                onClick={onClick}
-                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${
-                    isActive
-                        ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
-                        : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
-                }`}
+                href={`#${item.href}`}
+                onClick={handleScrollNav}
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${isActive
+                    ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
+                    : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
+                    }`}
                 whileHover={{
                     scale: 1.05,
                     y: -2,
@@ -416,9 +489,8 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.2 }}
     >
         <IconComponent
-            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${
-                isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
-            }`}
+            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
+                }`}
         />
         <span className="italic tracking-tight font-black">
             {item.name}
