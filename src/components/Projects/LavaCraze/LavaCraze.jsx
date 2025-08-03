@@ -1,131 +1,58 @@
-import React, { useEffect, useState, memo, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import React, { useEffect, memo, useCallback, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
     ArrowLeft,
     ExternalLink,
     Github,
-    Calendar,
-    Users,
     Award,
-    Code2,
-    Palette,
-    Database,
-    Cloud,
-    Smartphone,
-    Monitor,
     Globe,
-    Zap,
-    CheckCircle,
-    Star,
     Play,
-    ArrowRight,
-    Eye
+    Users,
+    Sparkles,
+    Calendar,
+    CheckCircle,
+    Zap,
+    Target,
+    Star
 } from 'lucide-react';
 import NextProjectSection from '../NextProjectSection';
+import BackgroundImage from '../../../assets/Projects_Icons/Lavacraze_bg.png';
 
-import BackgroundImage from '../../../assets/Projects_Icons/Lavacraze_bg.png'
+import ScrollAnimatedSection from '../../../common/ScrollAnimatedSection';
+import StaggerContainer from '../../../common/StaggerContainer';
+import { useScrollAnimation, useHeroScrollAnimation } from '../../../hooks/useScrollAnimation';
 
-// Project data configuration
+// --- Project Data ---
 const projectData = {
     title: "LAVACRAZE",
-    subtitle: "Navigation Enhancement Project",
-    category: "Web Development",
-    categoryIcon: Code2,
-    description: "A comprehensive navigation system redesign that transforms user experience through intuitive design and cutting-edge technology implementation.",
-
-    // Project metadata
     meta: {
         year: "2024",
-        duration: "6 months",
-        team: "Creative Team of 5",
         status: "Completed"
     },
-
-    // Key features with icons
-    features: [
-        {
-            icon: Monitor,
-            title: "UI/UX Design",
-            description: "Modern, intuitive interface design focused on user experience"
-        },
-        {
-            icon: Code2,
-            title: "Frontend Development",
-            description: "Responsive web application built with modern technologies"
-        },
-        {
-            icon: Smartphone,
-            title: "Mobile App",
-            description: "Cross-platform mobile application for seamless navigation"
-        },
-        {
-            icon: Palette,
-            title: "Branding",
-            description: "Complete brand identity and visual design system"
-        }
-    ],
-
-    // Technology stack
     techStack: [
         { name: "WordPress", color: "#21759b", icon: "https://cdn-icons-png.flaticon.com/512/174/174881.png" },
         { name: "Elementor", color: "#92003B", icon: "https://cdn-icons-png.flaticon.com/512/5968/5968699.png" },
         { name: "Hostinger", color: "#673de6", icon: "https://www.cdnlogo.com/logos/h/24/hostinger.svg" },
         { name: "Google Analytics", color: "#fbbc05", icon: "https://images.seeklogo.com/logo-png/43/2/google-analytics-2022-logo-png_seeklogo-435447.png" },
     ],
-
-    // Color theme
-    colors: {
-        primary: "#ff75df",
-        secondary: "#8b5cf6",
-        accent: "#06b6d4",
-        gradient: "from-[#ff75df] to-purple-500"
-    },
-
-    // Project links
     links: {
         website: "https://www.lavacraze.com",
         github: "https://github.com/example",
         live: "https://demo.example.com"
     },
-
-    // Project highlights
-    highlights: [
-        "Lead the way with innovative design approaches",
-        "Innovation to follow modern development standards",
-        "Seamless integration across all platforms",
-        "Enhanced user engagement and retention"
+    teamMembers: [
+        { name: "Kenji Jaculbia", role: "Full-Stack Developer" },
+        { name: "Jane Doe", role: "UI/UX Designer" },
+        { name: "John Smith", role: "Content Strategist" },
+        { name: "Alex Lee", role: "SEO Specialist" },
     ],
-
-    // Mobile app features
-    mobileFeatures: [
-        {
-            title: "Real-time Navigation",
-            description: "Advanced GPS integration with live traffic updates",
-            color: "#ff75df"
-        },
-        {
-            title: "Smart Recommendations",
-            description: "AI-powered suggestions based on user preferences",
-            color: "#8b5cf6"
-        },
-        {
-            title: "Offline Support",
-            description: "Full functionality even without internet connection",
-            color: "#06b6d4"
-        },
-        {
-            title: "Performance Analytics",
-            description: "Detailed insights and usage statistics",
-            color: "#10b981"
-        }
+    highlights: [
+        "First client website project",
+        "SEO optimized structure",
+        "Mobile-responsive design",
+        "Integrated analytics tracking"
     ]
-};
-
-const pageVariants = {
-    initial: { opacity: 0, y: 40 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -40 }
 };
 
 const screenshots = [
@@ -139,57 +66,22 @@ const screenshots = [
     },
 ];
 
-// Animation variants
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.2
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: "easeOut" }
-    }
-};
-
-const slideUpVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.8, ease: "easeOut" }
-    }
-};
-
-// Enhanced back button component
+// --- Back Button ---
 const BackButton = memo(() => {
     const navigate = useNavigate();
-
-    const handleBack = useCallback(() => {
-        navigate('/');
-    }, []);
+    const handleBack = useCallback(() => navigate('/'), []);
 
     return (
         <motion.button
             className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
             onClick={handleBack}
-            whileHover={{ scale: 1.15, x: -5 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.5, type: "spring" }}
         >
-            <ArrowLeft className="w-6 h-6 group-hover:scale-110 transition-transform" />
-
-            {/* Minimal tooltip */}
+            <ArrowLeft className="w-6 h-6" />
             <motion.div
                 className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 initial={{ x: -10 }}
@@ -201,720 +93,362 @@ const BackButton = memo(() => {
     );
 });
 
-// Project Statistics Component
-const ProjectStatistics = memo(() => {
-    const stats = [
-        { value: "100%", label: "Completion", icon: CheckCircle, color: "text-emerald-400" },
-        { value: "5", label: "Team Members", icon: Users, color: "text-blue-400" },
-        { value: "6", label: "Months", icon: Calendar, color: "text-amber-400" },
-        { value: "4.9", label: "Rating", icon: Star, color: "text-yellow-400" }
-    ];
+// --- Section Header Component ---
+const SectionHeader = memo(({ icon: Icon, badge, title, subtitle, delay = 0.2 }) => (
+    <ScrollAnimatedSection
+        animationType="fadeUp"
+        delay={delay}
+        className="text-center mb-12 sm:mb-16 md:mb-20"
+    >
+        <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 backdrop-blur-sm border border-[#ff75df]/30 rounded-full mb-6"
+            whileHover={{ scale: 1.02 }}
+        >
+            <Icon className="w-4 h-4 text-[#ff75df]" />
+            <span className="text-white/90 text-sm font-medium tracking-wide">{badge}</span>
+        </motion.div>
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-[0.9]">
+            {title}
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mb-4" />
+        {subtitle && (
+            <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-4">
+                {subtitle}
+            </p>
+        )}
+    </ScrollAnimatedSection>
+));
 
-    return (
-        <section className="py-20">
-            <div className="max-w-6xl mx-auto">
-                <motion.div
-                    className="text-left mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+// --- Enhanced Project Overview ---
+const ProjectOverview = memo(() => (
+    <section className="py-16 sm:py-20 md:py-32 relative">
+        <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 md:px-8">
+            <SectionHeader
+                icon={Sparkles}
+                badge="PROJECT SHOWCASE"
+                title="Project Overview"
+                subtitle="A comprehensive look at the development process and key achievements"
+            />
+
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-12 items-start">
+                {/* Main Content */}
+                <ScrollAnimatedSection
+                    animationType="fadeLeft"
+                    delay={0.3}
+                    className="xl:col-span-7 space-y-8 md:space-y-12"
                 >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                        Project Metrics
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 pl-2 leading-[1.15]">
-                        Achievement Overview
-                    </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
-                        Key performance indicators showcasing project success and impact
-                    </p>
-                </motion.div>
+                    <div className="relative">
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-10 shadow-2xl">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-2 h-2 bg-[#ff75df] rounded-full animate-pulse" />
+                                <span className="text-[#ff75df] text-sm font-black uppercase tracking-widest">
+                                    WordPress Excellence
+                                </span>
+                            </div>
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black italic tracking-tight text-white mb-6 leading-tight">
+                                A Seamless WordPress Experience for a Modern Brand
+                            </h3>
+                            <p className="text-white/80 text-base md:text-lg leading-relaxed mb-8">
+                                Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design.
+                            </p>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                    {stats.map((stat, index) => (
-                        <motion.div
-                            key={stat.label}
-                            className="text-center group"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            whileHover={{ y: -8 }}
-                        >
-                            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group-hover:shadow-2xl shadow-[#ff75df]/10">
-                                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 border border-white/20 mb-6 ${stat.color}`}>
-                                    <stat.icon className="w-8 h-8" />
-                                </div>
-                                <div className="text-4xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300">
-                                    {stat.value}
-                                </div>
-                                <div className="text-white/60 font-medium">
-                                    {stat.label}
+                            {/* Key Highlights */}
+                            <StaggerContainer
+                                staggerDelay={0.1}
+                                className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
+                            >
+                                {projectData.highlights.map((highlight, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300"
+                                    >
+                                        <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                                        <span className="text-white/90 font-medium">{highlight}</span>
+                                    </div>
+                                ))}
+                            </StaggerContainer>
+
+                            {/* Action Buttons */}
+                            <StaggerContainer
+                                staggerDelay={0.2}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <motion.a
+                                    href={projectData.links.live}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group relative overflow-hidden bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight transition-all duration-300 flex items-center gap-3"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Play className="w-5 h-5" />
+                                    <span>Live Demo</span>
+                                </motion.a>
+                                <motion.a
+                                    href={projectData.links.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group border-2 border-white/20 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-3"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Github className="w-5 h-5" />
+                                    View Code
+                                </motion.a>
+                            </StaggerContainer>
+                        </div>
+                    </div>
+                </ScrollAnimatedSection>
+
+                {/* Enhanced Sidebar */}
+                <ScrollAnimatedSection
+                    animationType="fadeRight"
+                    delay={0.4}
+                    className="xl:col-span-5 space-y-6"
+                >
+                    {/* Project Status Card */}
+                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-white font-black italic text-xl flex items-center gap-3">
+                                <Award className="w-6 h-6 text-[#ff75df]" />
+                                Project Status
+                            </h3>
+                            <div className="px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-green-400/20 border border-emerald-400/30 rounded-full">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                                    <span className="text-emerald-400 font-black text-sm">{projectData.meta.status}</span>
                                 </div>
                             </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-});
-
-// Project Overview Component
-const ProjectOverview = memo(() => {
-    return (
-        <section className="py-20">
-            <div className="max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
-                    {/* Main Content */}
-                    <motion.div
-                        className="lg:col-span-3 space-y-8"
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <div>
-                            <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                                About This Project
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
-                                A Seamless WordPress Experience for a Modern Brand
-                            </h2>
                         </div>
-
-                        <div className="prose prose-lg prose-invert">
-                            <p className="text-white/80 text-xl leading-relaxed mb-6">
-                                Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design, promising a delightful and user-friendly experience.
-                            </p>
-                            {/* <p className="text-white/70 text-lg leading-relaxed">
-                                The project methodology involved extensive user research, iterative design processes,
-                                and advanced development techniques. Every aspect was carefully crafted to ensure
-                                optimal performance, accessibility, and user satisfaction across all platforms and devices.
-                            </p> */}
+                        <div className="flex items-center gap-3 text-white/70">
+                            <Calendar className="w-5 h-5 text-[#ff75df]" />
+                            <span className="font-medium">Delivered in {projectData.meta.year}</span>
                         </div>
+                    </div>
 
-                        <div className="flex flex-wrap gap-4 pt-4">
+                    {/* Project Links Card */}
+                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
+                        <h3 className="text-white font-black italic text-xl mb-6 flex items-center gap-3">
+                            <Globe className="w-6 h-6 text-[#ff75df]" />
+                            Project Links
+                        </h3>
+                        <StaggerContainer
+                            staggerDelay={0.1}
+                            className="space-y-4"
+                        >
                             <motion.a
-                                href={projectData.links.live}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-[#ff75df]/25 transition-all duration-300 flex items-center gap-2"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
+                                href={projectData.links.website}
+                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
+                                whileHover={{ x: 4 }}
                             >
-                                <Play className="w-5 h-5" />
-                                Live Demo
+                                <div className="w-10 h-10 bg-gradient-to-br from-[#ff75df]/20 to-purple-400/20 rounded-xl flex items-center justify-center">
+                                    <ExternalLink className="w-5 h-5 text-[#ff75df]" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-white font-black">Live Website</div>
+                                    <div className="text-white/60 text-sm truncate">www.lavacraze.com</div>
+                                </div>
                             </motion.a>
                             <motion.a
                                 href={projectData.links.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="border border-white/20 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
+                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
+                                whileHover={{ x: 4 }}
                             >
-                                <Github className="w-5 h-5" />
-                                View Code
+                                <div className="w-10 h-10 bg-gradient-to-br from-[#ff75df]/20 to-purple-400/20 rounded-xl flex items-center justify-center">
+                                    <Github className="w-5 h-5 text-[#ff75df]" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-white font-black">Source Code</div>
+                                    <div className="text-white/60 text-sm truncate">GitHub Repository</div>
+                                </div>
                             </motion.a>
-                        </div>
-                    </motion.div>
-
-                    {/* Project Details Sidebar */}
-                    <motion.div
-                        className="lg:col-span-2"
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                    >
-                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 space-y-8 shadow-lg shadow-[#ff75df]/10">
-                            <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Globe className="w-5 h-5 text-[#ff75df]" />
-                                    Project Links
-                                </h3>
-                                <div className="space-y-3">
-                                    <a
-                                        href={projectData.links.website}
-                                        className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
-                                    >
-                                        <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        www.lavacraze.com
-                                    </a>
-                                    <a
-                                        href={projectData.links.github}
-                                        className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
-                                    >
-                                        <Github className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                                        GitHub Repository
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Calendar className="w-5 h-5 text-[#ff75df]" />
-                                    Timeline
-                                </h3>
-                                <div className="text-white/70">
-                                    <p className="mb-2">{projectData.meta.duration}</p>
-                                    <p className="text-sm text-white/50">Completed in {projectData.meta.year}</p>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Users className="w-5 h-5 text-[#ff75df]" />
-                                    Team
-                                </h3>
-                                <p className="text-white/70">{projectData.meta.team}</p>
-                            </div>
-
-                            <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Award className="w-5 h-5 text-[#ff75df]" />
-                                    Status
-                                </h3>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                                    <span className="text-white/70">{projectData.meta.status}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                        </StaggerContainer>
+                    </div>
+                </ScrollAnimatedSection>
             </div>
-        </section>
-    );
-});
 
-// Technology Stack Component
-const TechnologyStack = memo(() => {
-    return (
-        <section className="py-20">
-            <div className="max-w-6xl mx-auto">
-                <motion.div
-                    className="text-center mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                        Built With
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-[1.15]">
-                        Technology Stack
-                    </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4 mx-auto" />
+            {/* Team Section */}
+            <ScrollAnimatedSection
+                animationType="fadeUp"
+                delay={0.5}
+                className="mt-16 md:mt-20"
+            >
+                <div className="text-center mb-12">
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 backdrop-blur-sm border border-[#ff75df]/30 rounded-full mb-6"
+                        whileHover={{ scale: 1.02 }}
+                    >
+                        <Users className="w-4 h-4 text-[#ff75df]" />
+                        <span className="text-white/90 text-sm font-medium tracking-wide">DREAM TEAM</span>
+                    </motion.div>
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-tight">
+                        Meet the Team
+                    </h3>
+                    <div className="w-20 h-1 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mb-4" />
                     <p className="text-white/70 text-lg max-w-2xl mx-auto">
-                        Modern technologies and frameworks powering exceptional digital experiences
+                        The talented individuals who brought this project to life
                     </p>
-                </motion.div>
+                </div>
 
-                <div className="flex flex-wrap justify-center gap-8">
-                    {projectData.techStack.map((tech, index) => (
+                <StaggerContainer
+                    staggerDelay={0.15}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 justify-items-center"
+                >
+                    {projectData.teamMembers.map((member, idx) => (
                         <motion.div
-                            key={tech.name}
-                            className="group relative flex flex-col items-center justify-center w-40 h-48 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-[#ff75df]/10 hover:shadow-2xl hover:shadow-[#ff75df]/20 transition-all duration-300"
-                            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.08 }}
-                            whileHover={{ y: -10, scale: 1.07 }}
+                            key={member.name}
+                            className="group text-center"
+                            whileHover={{ y: -8, scale: 1.05 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         >
-                            {/* Floating glow effect */}
-                            <motion.div
-                                className="absolute -inset-2 rounded-2xl pointer-events-none z-0"
-                                style={{
-                                    background: `radial-gradient(circle at 60% 40%, ${tech.color}33 0%, transparent 80%)`
-                                }}
-                                initial={{ opacity: 0 }}
-                                whileHover={{ opacity: 1 }}
-                                transition={{ duration: 0.3 }}
-                            />
-                            <div
-                                className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-white/10 border border-white/20 shadow-inner"
-                                style={{
-                                    backgroundColor: `${tech.color}22`,
-                                    borderColor: `${tech.color}44`
-                                }}
-                            >
-                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain" />
+                            <div className="relative w-20 h-20 mx-auto mb-4">
+                                <div className="w-full h-full bg-gradient-to-br from-[#ff75df] to-purple-400 rounded-full flex items-center justify-center text-white font-black text-xl shadow-lg">
+                                    {member.name.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                {idx === 0 && (
+                                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                                        <Star className="w-3 h-3 text-yellow-900" />
+                                    </div>
+                                )}
                             </div>
-                            <h3 className="text-white font-black italic mb-1 text-lg z-10">{tech.name}</h3>
-                            <div
-                                className="w-10 h-1 rounded-full mt-3 opacity-60 group-hover:opacity-100 transition-opacity mx-auto z-10"
-                                style={{ backgroundColor: tech.color }}
-                            />
+
+                            <div>
+                                <h4 className="text-white font-black text-lg mb-1 group-hover:text-[#ff75df] transition-colors duration-300">
+                                    {member.name}
+                                </h4>
+                                <p className="text-white/60 text-sm font-medium uppercase tracking-wide">
+                                    {member.role}
+                                </p>
+                            </div>
+
+                            <div className="w-8 h-0.5 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </motion.div>
                     ))}
-                </div>
-            </div>
-        </section>
-    );
-});
-
-// Add this new component above the main LavaCraze function/component
-const ScreenshotGallery = memo(({ images }) => (
-    <section className="py-20">
-        <div className="max-w-5xl mx-auto">
-            <motion.div
-                className="mb-10 text-left"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-            >
-                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                    Website Preview
-                </span>
-                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-tight">
-                    Screenshots
-                </h2>
-                <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
-                <p className="text-white/70 text-lg max-w-2xl">
-                    Visual overviews of the live site as delivered.
-                </p>
-            </motion.div>
-            <div className="flex flex-col gap-12">
-                {images.map((img, idx) => (
-                    <motion.div
-                        key={img.src}
-                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg shadow-[#ff75df]/10 overflow-auto flex justify-center items-center"
-                        initial={{ opacity: 0, scale: 0.97 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 + idx * 0.1 }}
-                        style={{ width: 900, maxWidth: "100%" }} // width fixed, height auto
-                    >
-                        <img
-                            src={img.src}
-                            alt={img.alt}
-                            className="w-full h-auto rounded-2xl shadow-2xl border border-white/10 object-top object-contain"
-                            style={{ background: "#18181b" }}
-                        />
-                    </motion.div>
-                ))}
-            </div>
+                </StaggerContainer>
+            </ScrollAnimatedSection>
         </div>
     </section>
 ));
 
-// Key Features Component
-const KeyFeatures = memo(() => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+// --- Enhanced Technology Stack ---
+const TechnologyStack = memo(() => (
+    <section className="py-16 sm:py-20 md:py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <SectionHeader
+                icon={Zap}
+                badge="TECH STACK"
+                title="Built With Excellence"
+                subtitle="Cutting-edge technologies and frameworks powering exceptional digital experiences"
+            />
 
-    return (
-        <section className="py-20">
-            <div className="max-w-6xl mx-auto">
-                <motion.div
-                    className="text-left mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                        Core Capabilities
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-[1.15]">
-                        Key Features
-                    </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
-                        Comprehensive solutions designed to transform user experience and drive engagement
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projectData.features.map((feature, index) => (
-                        <motion.div
-                            key={feature.title}
-                            className="group relative"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            onMouseEnter={() => setHoveredIndex(index)}
-                            onMouseLeave={() => setHoveredIndex(null)}
-                            whileHover={{ y: -8 }}
-                        >
-                            {/* Glow effect */}
-                            <AnimatePresence>
-                                {hoveredIndex === index && (
-                                    <motion.div
-                                        className="absolute -inset-4 bg-gradient-to-r from-[#ff75df]/30 to-purple-500/30 rounded-3xl blur-2xl"
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                )}
-                            </AnimatePresence>
-
-                            <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 h-full hover:bg-white/15 hover:border-white/30 transition-all duration-300">
-                                {/* Icon */}
-                                <div className="w-16 h-16 bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 border border-[#ff75df]/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                    <feature.icon className="w-8 h-8 text-[#ff75df]" />
-                                </div>
-
-                                {/* Content */}
-                                <h3 className="text-white text-2xl font-black italic mb-4">{feature.title}</h3>
-                                <p className="text-white/70 text-lg leading-relaxed mb-6">{feature.description}</p>
-
-                                {/* Learn More Link */}
-                                <div className="flex items-center text-[#ff75df] font-black italic group-hover:translate-x-2 transition-transform duration-300">
-                                    <span className="mr-2">Learn more</span>
-                                    <ArrowRight className="w-4 h-4" />
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-});
-
-// Project Showcase Component
-const ProjectShowcase = memo(() => {
-    return (
-        <section className="py-20">
-            <div className="max-w-7xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden shadow-lg shadow-[#ff75df]/10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-                        {/* Left Side - Content */}
-                        <div className="p-12 lg:p-16 flex flex-col justify-center">
-                            <motion.div
-                                initial={{ opacity: 0, x: -50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                                    Project Highlight
-                                </span>
-                                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
-                                    Lead the way.<br />
-                                    <span className="text-white/60">Innovation to follow.</span>
-                                </h2>
-                                <p className="text-white/80 text-xl leading-relaxed mb-8">
-                                    Our innovative approach combines cutting-edge design principles with advanced
-                                    technology implementation. This results in a navigation experience that not only
-                                    meets current user expectations but anticipates future needs.
-                                </p>
-
-                                <div className="space-y-4 mb-8">
-                                    {projectData.highlights.map((highlight, index) => (
-                                        <motion.div
-                                            key={index}
-                                            className="flex items-center gap-4"
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                                        >
-                                            <div className="w-2 h-2 bg-[#ff75df] rounded-full flex-shrink-0" />
-                                            <span className="text-white/70">{highlight}</span>
-                                        </motion.div>
-                                    ))}
-                                </div>
-
-                                <div className="flex flex-wrap gap-4">
-                                    <motion.button
-                                        className="bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-[#ff75df]/25 transition-all duration-300 flex items-center gap-2"
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <Eye className="w-5 h-5" />
-                                        View Case Study
-                                    </motion.button>
-                                    <motion.button
-                                        className="border border-white/20 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300"
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        Documentation
-                                    </motion.button>
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        {/* Right Side - Visual */}
-                        <div className="relative bg-gradient-to-br from-gray-900 to-black p-12 lg:p-16 flex items-center justify-center">
-                            <motion.div
-                                className="relative w-full max-w-md"
-                                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                            >
-                                {/* Main showcase mockup */}
-                                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-8 text-center shadow-lg shadow-[#ff75df]/10">
-                                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-[#ff75df]/30 to-purple-500/30 rounded-2xl flex items-center justify-center border border-[#ff75df]/40">
-                                        <Monitor className="w-12 h-12 text-[#ff75df]" />
-                                    </div>
-                                    <h3 className="text-white text-2xl font-black italic mb-4">Interactive Demo</h3>
-                                    <p className="text-white/70 mb-6">Experience the full navigation system with live interactions and real-time feedback</p>
-                                    <div className="bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 rounded-xl p-4 border border-[#ff75df]/30">
-                                        <div className="text-white font-black italic mb-2">User Engagement</div>
-                                        <div className="text-3xl font-black text-[#ff75df]">+150%</div>
-                                        <div className="text-white/60 text-sm">improvement</div>
-                                    </div>
-                                </div>
-
-                                {/* Floating elements */}
-                                <motion.div
-                                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-2xl border border-purple-500/40 flex items-center justify-center"
-                                    animate={{
-                                        y: [0, -10, 0],
-                                        rotate: [0, 5, -5, 0]
-                                    }}
-                                    transition={{
-                                        duration: 4,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }}
-                                >
-                                    <Zap className="w-8 h-8 text-purple-400" />
-                                </motion.div>
-
-                                <motion.div
-                                    className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#ff75df]/30 to-red-500/30 rounded-xl border border-[#ff75df]/40 flex items-center justify-center"
-                                    animate={{
-                                        y: [0, 10, 0],
-                                        rotate: [0, -5, 5, 0]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                        delay: 1
-                                    }}
-                                >
-                                    <Star className="w-6 h-6 text-[#ff75df]" />
-                                </motion.div>
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-});
-
-// Mobile Experience Component
-const MobileExperience = memo(() => {
-    const mobileMockups = useMemo(() =>
-        projectData.mobileFeatures.map((feature, index) => (
-            <motion.div
-                key={feature.title}
-                className="w-64 flex-shrink-0"
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.8, type: "spring", stiffness: 100 }}
-                whileHover={{ y: -8, scale: 1.02 }}
+            <StaggerContainer
+                staggerDelay={0.2}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
             >
-                <div className="bg-black rounded-3xl p-3 shadow-2xl">
-                    <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl overflow-hidden h-96 border border-white/20">
-                        <div className="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-6 h-full flex flex-col">
-                            <div className="flex-1 flex flex-col justify-center">
-                                <motion.h4
-                                    className="text-2xl font-black italic mb-4"
-                                    style={{ color: feature.color }}
-                                >
-                                    {feature.title}
-                                </motion.h4>
-                                <p className="text-gray-300 mb-6 text-sm leading-relaxed">
-                                    {feature.description}
-                                </p>
-                                <motion.button
-                                    className="self-start px-6 py-3 rounded-lg font-black italic text-white"
-                                    style={{ backgroundColor: feature.color }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    Explore
-                                </motion.button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
-        )), []
-    );
-
-    return (
-        <section className="py-20 overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                <motion.div
-                    className="text-left mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                        Cross-Platform
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4">
-                        Mobile Experience
-                    </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
-                        Seamless navigation across all devices with native app functionality and performance
-                    </p>
-                </motion.div>
-
-                {/* Mobile mockups carousel */}
-                <div className="flex justify-center items-center gap-8 px-8">
-                    {mobileMockups}
-                </div>
-
-                {/* Mobile features grid */}
-                <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16"
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                    {projectData.mobileFeatures.map((feature, index) => (
+                {projectData.techStack.map((tech, index) => (
+                    <motion.div
+                        key={tech.name}
+                        className="group relative"
+                        whileHover={{
+                            y: -8,
+                            scale: 1.02,
+                            transition: { type: "spring", stiffness: 300, damping: 20 }
+                        }}
+                    >
                         <motion.div
-                            key={feature.title}
-                            className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-xl p-6 text-center hover:bg-white/15 hover:border-white/30 transition-all duration-300"
-                            whileHover={{ y: -4, scale: 1.02 }}
-                        >
-                            <div
-                                className="w-3 h-3 rounded-full mx-auto mb-4"
-                                style={{ backgroundColor: feature.color }}
+                            className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl"
+                            style={{ background: tech.color }}
+                        />
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl group-hover:shadow-3xl group-hover:border-white/30 transition-all duration-500 text-center h-full flex flex-col justify-center">
+                            <motion.div
+                                className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center relative overflow-hidden"
+                                style={{
+                                    background: `linear-gradient(135deg, ${tech.color}20, ${tech.color}10)`,
+                                    border: `1px solid ${tech.color}30`
+                                }}
+                                whileHover={{ rotate: [0, -5, 5, 0] }}
+                                transition={{ duration: 0.6 }}
+                            >
+                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain relative z-10" />
+                            </motion.div>
+                            <h3 className="text-white font-black italic text-xl mb-3 group-hover:text-white transition-colors duration-300">{tech.name}</h3>
+                            <motion.div
+                                className="w-12 h-1 rounded-full mx-auto"
+                                style={{ backgroundColor: tech.color }}
+                                initial={{ width: 0 }}
+                                whileInView={{ width: 48 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 + 0.5, duration: 0.8 }}
                             />
-                            <h4 className="text-white font-black italic mb-2">{feature.title}</h4>
-                            <p className="text-white/60 text-sm">{feature.description}</p>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            </div>
-        </section >
-    );
-});
+                        </div>
+                    </motion.div>
+                ))}
+            </StaggerContainer>
+        </div>
+    </section>
+));
 
-// Project Impact Component
-const ProjectImpact = memo(() => {
-    return (
-        <section className="py-20">
-            <div className="max-w-6xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-12 lg:p-16 shadow-lg shadow-[#ff75df]/10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+// --- Enhanced Screenshot Gallery ---
+const ScreenshotGallery = memo(({ images }) => (
+    <section className="py-16 sm:py-20 md:py-32">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+            <SectionHeader
+                icon={Target}
+                badge="LIVE PREVIEW"
+                title="Visual Showcase"
+                subtitle="Screenshots of the delivered website in all its glory"
+            />
+
+            <StaggerContainer
+                staggerDelay={0.3}
+                className="space-y-12 md:space-y-16"
+            >
+                {images.map((img, idx) => (
+                    <motion.div
+                        key={img.src}
+                        className="relative group"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
-                                Project Impact
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
-                                Where Innovation Meets Excellence
-                            </h2>
-                            <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
-                            <p className="text-white/80 text-lg leading-relaxed mb-6">
-                                This project picks up where competitors left off. These innovative design approaches
-                                were combined with comprehensive app redesign and new website development, all working
-                                in parallel to modernize the complete user experience ecosystem.
-                            </p>
-                            <p className="text-white/70 leading-relaxed mb-8">
-                                The versatility of this navigation system extends far beyond initial expectations.
-                                It provides exceptional value across multiple industries, from public services to
-                                professional applications, demonstrating scalability and adaptability.
-                            </p>
+                            className="absolute -inset-4 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+                        />
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 group-hover:border-[#ff75df]/30 rounded-3xl p-3 shadow-2xl overflow-hidden transition-all duration-500">
+                            <ScrollAnimatedSection
+                                animationType="scale"
+                                delay={idx * 0.2}
+                            >
+                                <img
+                                    src={img.src}
+                                    alt={img.alt}
+                                    className="w-full h-auto rounded-2xl shadow-2xl border border-white/10"
+                                    style={{ background: "#18181b" }}
+                                />
+                            </ScrollAnimatedSection>
+                        </div>
+                    </motion.div>
+                ))}
+            </StaggerContainer>
+        </div>
+    </section>
+));
 
-                            <div className="flex items-center gap-2 text-white/70">
-                                <span>Interested in similar solutions?</span>
-                                <motion.a
-                                    href="#"
-                                    className="text-[#ff75df] hover:text-purple-400 font-black italic flex items-center gap-2 group"
-                                    whileHover={{ x: 4 }}
-                                >
-                                    Let's collaborate!
-                                    <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                                </motion.a>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            className="space-y-6"
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                        >
-                            {/* Impact metrics */}
-                            <div className="grid grid-cols-2 gap-4">
-                                {[
-                                    { metric: "150%", label: "User Engagement", icon: Users },
-                                    { metric: "98%", label: "Performance Score", icon: Zap },
-                                    { metric: "45%", label: "Load Time Reduction", icon: Globe },
-                                    { metric: "5★", label: "Client Rating", icon: Star }
-                                ].map((item, index) => (
-                                    <motion.div
-                                        key={item.label}
-                                        className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-xl p-4 text-center"
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.6, delay: index * 0.1 }}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                    >
-                                        <item.icon className="w-6 h-6 text-[#ff75df] mx-auto mb-2" />
-                                        <div className="text-2xl font-black text-white mb-1">{item.metric}</div>
-                                        <div className="text-white/60 text-sm">{item.label}</div>
-                                    </motion.div>
-                                ))}
-                            </div>
-
-                            {/* Additional info */}
-                            <div className="bg-gradient-to-r from-[#ff75df]/10 to-purple-500/10 border border-[#ff75df]/20 rounded-xl p-6">
-                                <h4 className="text-white font-black italic mb-3 flex items-center gap-2">
-                                    <Award className="w-5 h-5 text-[#ff75df]" />
-                                    Recognition
-                                </h4>
-                                <p className="text-white/70 text-sm leading-relaxed">
-                                    This project has been recognized for its innovative approach to digital navigation
-                                    and has set new benchmarks in the industry for user experience design.
-                                </p>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-});
-
-
-// Main LavaCraze Component
+// --- Main LavaCraze Component ---
 function LavaCraze() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
+
     return (
         <motion.div
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -40 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="min-h-screen relative overflow-hidden"
         >
             <div className="min-h-screen relative overflow-hidden">
-                {/* Background Effects */}
+                {/* Enhanced Background Effects */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
                         className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#ff75df]/10 to-purple-500/10 rounded-full blur-3xl"
@@ -922,7 +456,7 @@ function LavaCraze() {
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.6, 0.3]
                         }}
-                        transition={{ duration: 8, repeat: Infinity }}
+                        transition={{ duration: 12, repeat: Infinity }}
                     />
                     <motion.div
                         className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
@@ -930,42 +464,20 @@ function LavaCraze() {
                             scale: [1, 1.3, 1],
                             opacity: [0.2, 0.5, 0.2]
                         }}
-                        transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+                        transition={{ duration: 15, repeat: Infinity, delay: 3 }}
                     />
                 </div>
 
                 {/* Back Button */}
                 <BackButton />
 
-                {/* Hero Section (keeping original) */}
+                {/* Hero Section with immediate animation on mount */}
                 <motion.div
                     className="relative flex flex-col justify-center pt-20"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2 }}
                 >
-                    {/* <motion.div
-                    className="absolute z-20"
-                    style={{
-                        top: '14%',
-                        right: '20%',
-                        transform: 'translate(-50%, -50%)'
-                    }}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
-                >
-                    <h1
-                        className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl italic tracking-tight font-black text-transparent select-none pointer-events-none"
-                        style={{
-                            WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
-                        }}
-                    >
-                        {projectData.title}
-                    </h1>
-                </motion.div> */}
-
-                    {/* Hero Image */}
                     <motion.div
                         className="relative overflow-hidden ml-[calc(-50vw+50%)]"
                         style={{
@@ -977,48 +489,36 @@ function LavaCraze() {
                             backgroundPosition: 'top',
                             backgroundSize: 'cover'
                         }}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
                     >
                         <img
                             src={BackgroundImage}
                             alt="Project showcase"
                             className="w-full h-full object-cover object-center"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        <motion.div 
+                            className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.8, duration: 0.8 }}
+                        />
                     </motion.div>
                 </motion.div>
 
                 {/* Main Content */}
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
-
-                    {/* Project Statistics */}
-                    {/* <ProjectStatistics /> */}
-
-                    {/* Project Overview */}
+                <div className="relative z-10">
                     <ProjectOverview />
-
-                    {/* Technology Stack */}
                     <TechnologyStack />
-
-                    {/* Screenshot Gallery */}
                     <ScreenshotGallery images={screenshots} />
-
-                    {/* Key Features */}
-                    {/* <KeyFeatures /> */}
-
-                    {/* Project Showcase */}
-                    {/* <ProjectShowcase /> */}
-
-                    {/* Mobile Experience */}
-                    {/* <MobileExperience /> */}
-
-                    {/* Project Impact */}
-                    {/* <ProjectImpact /> */}
-
-                    <NextProjectSection />
-
+                    <ScrollAnimatedSection
+                        animationType="fadeUp"
+                        delay={0.3}
+                        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-20"
+                    >
+                        <NextProjectSection />
+                    </ScrollAnimatedSection>
                 </div>
             </div>
         </motion.div>

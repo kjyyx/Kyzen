@@ -3,18 +3,10 @@ import { Routes, Route } from 'react-router-dom'
 import { AnimatePresence } from "framer-motion";
 import Navbar from '../Navbar/Navbar.jsx'
 import Footer from '../Footer/Footer.jsx'
-import ClarkNav from './ClarkNav/ClarkNav.jsx'
-import LavaCraze from './LavaCraze/LavaCraze.jsx'
-import RailroadEd from './Railroad-ed/Railroad-ed.jsx'
-import ITSATS from './ITS ATS/ITSATS.jsx';
-import Brisk from './Brisk/Brisk.jsx'
-import GPT from './GPT/GPT.jsx';
-import Kairos from './Kairos/Kairos.jsx'
-import Sprint from './Sprint/Sprint.jsx'
 
-// import ProjectPage from './ProjectPage.jsx';
+import ProjectPage from './ProjectPage.jsx';
 
-function    MainPage() {
+function MainPage() {
     return (
         <div className="relative h-full w-full bg-[#131313] min-h-screen">
             {/* Subtle gradient with your custom colors */}
@@ -28,14 +20,7 @@ function    MainPage() {
             <div className="relative z-20 mx-auto min-h-screen">
                 <AnimatePresence mode="wait">
                     <Routes>
-                        <Route path="clarknav" element={<ClarkNav />} />
-                        <Route path="lavacraze" element={<LavaCraze />} />
-                        <Route path="railroaded" element={<RailroadEd />} />
-                        <Route path="itsats" element={<ITSATS />} />
-                        <Route path="brisk" element={<Brisk />} />
-                        <Route path="gpt" element={<GPT/>}/>
-                        <Route path="kairos" element={<Kairos />} />
-                        <Route path="sprint" element={<Sprint />} />
+                        <Route path=":slug" element={<ProjectPage />} />
                     </Routes>
                 </AnimatePresence>
             </div>

@@ -1,0 +1,383 @@
+import React, { useEffect, memo, useCallback, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import {
+    ArrowLeft,
+    ExternalLink,
+    Github,
+    Award,
+    Globe,
+    Play,
+    Users,
+    Sparkles
+} from 'lucide-react';
+import NextProjectSection from '../NextProjectSection';
+import BackgroundImage from '../../../assets/Projects_Icons/Lavacraze_bg.png';
+
+// --- Project Data ---
+const projectData = {
+    title: "LAVACRAZE",
+    meta: {
+        year: "2024",
+        status: "Completed"
+    },
+    techStack: [
+        { name: "WordPress", color: "#21759b", icon: "https://cdn-icons-png.flaticon.com/512/174/174881.png" },
+        { name: "Elementor", color: "#92003B", icon: "https://cdn-icons-png.flaticon.com/512/5968/5968699.png" },
+        { name: "Hostinger", color: "#673de6", icon: "https://www.cdnlogo.com/logos/h/24/hostinger.svg" },
+        { name: "Google Analytics", color: "#fbbc05", icon: "https://images.seeklogo.com/logo-png/43/2/google-analytics-2022-logo-png_seeklogo-435447.png" },
+    ],
+    links: {
+        website: "https://www.lavacraze.com",
+        github: "https://github.com/example",
+        live: "https://demo.example.com"
+    },
+    teamMembers: [
+        { name: "Kenji Jaculbia", role: "Full-Stack Developer" },
+        { name: "Jane Doe", role: "UI/UX Designer" },
+        { name: "John Smith", role: "Content Strategist" },
+        { name: "Alex Lee", role: "SEO Specialist" },
+        { name: "Maria Cruz", role: "Project Manager" }
+    ]
+};
+
+const screenshots = [
+    {
+        src: "../src/assets/Webpage_Screenshots/LC (1).png",
+        alt: "LavaCraze Homepage Fullpage Screenshot"
+    },
+    {
+        src: "../src/assets/Webpage_Screenshots/LC (2).png",
+        alt: "LavaCraze Articles Fullpage Screenshot"
+    },
+];
+
+// --- Back Button ---
+const BackButton = memo(() => {
+    const navigate = useNavigate();
+    const handleBack = useCallback(() => navigate('/'), []);
+    return (
+        <motion.button
+            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
+            onClick={handleBack}
+            whileHover={{ scale: 1.15, x: -5 }}
+            whileTap={{ scale: 0.9 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.5, type: "spring" }}
+        >
+            <ArrowLeft className="w-6 h-6 group-hover:scale-110 transition-transform" />
+            <motion.div
+                className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                initial={{ x: -10 }}
+                animate={{ x: 0 }}
+            >
+                Back
+            </motion.div>
+        </motion.button>
+    );
+});
+
+// --- Project Overview ---
+const ProjectOverview = memo(() => (
+    <section className="py-20">
+        <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+                {/* Main Content */}
+                <motion.div
+                    className="lg:col-span-3 space-y-8"
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                        About This Project
+                    </span>
+                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
+                        A Seamless WordPress Experience for a Modern Brand
+                    </h2>
+                    <div className="prose prose-lg prose-invert">
+                        <p className="text-white/80 text-xl leading-relaxed mb-6">
+                            Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design, promising a delightful and user-friendly experience.
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap gap-4 pt-4">
+                        <motion.a
+                            href={projectData.links.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-[#ff75df]/25 transition-all duration-300 flex items-center gap-2"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Play className="w-5 h-5" />
+                            Live Demo
+                        </motion.a>
+                        <motion.a
+                            href={projectData.links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="border border-white/20 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Github className="w-5 h-5" />
+                            View Code
+                        </motion.a>
+                    </div>
+                </motion.div>
+
+                {/* Sidebar */}
+                <motion.div
+                    className="lg:col-span-2"
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                    <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 space-y-8 shadow-lg shadow-[#ff75df]/10">
+                        {/* Project Links */}
+                        <div>
+                            <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <Globe className="w-5 h-5 text-[#ff75df]" />
+                                Project Links
+                            </h3>
+                            <div className="space-y-3">
+                                <a
+                                    href={projectData.links.website}
+                                    className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
+                                >
+                                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    www.lavacraze.com
+                                </a>
+                                <a
+                                    href={projectData.links.github}
+                                    className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
+                                >
+                                    <Github className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                                    GitHub Repository
+                                </a>
+                            </div>
+                        </div>
+                        {/* Team Members */}
+                        <div>
+                            <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <Users className="w-5 h-5 text-[#ff75df]" />
+                                Team Members
+                            </h3>
+                            <div className="space-y-2">
+                                {projectData.teamMembers.map((member, idx) => (
+                                    <div key={member.name} className="flex items-center gap-2">
+                                        <span className="px-2 py-1 rounded-full bg-gradient-to-r from-[#ff75df]/20 to-purple-400/20 text-white/90 font-bold text-xs">{member.name}</span>
+                                        <span className="text-white/60 text-xs italic">{member.role}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Status */}
+                        <div>
+                            <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <Award className="w-5 h-5 text-[#ff75df]" />
+                                Status
+                            </h3>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                                <span className="text-white/70">{projectData.meta.status}</span>
+                                <span className="text-white/40 text-xs ml-2">({projectData.meta.year})</span>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </div>
+    </section>
+));
+
+// --- Technology Stack ---
+const TechnologyStack = memo(() => (
+    <section className="py-20">
+        <div className="max-w-6xl mx-auto">
+            <motion.div
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+            >
+                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    Built With
+                </span>
+                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-[1.15]">
+                    Technology Stack
+                </h2>
+                <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4 mx-auto" />
+                <p className="text-white/70 text-lg max-w-2xl mx-auto">
+                    Modern technologies and frameworks powering exceptional digital experiences
+                </p>
+            </motion.div>
+            <div className="flex flex-wrap justify-center gap-8">
+                {projectData.techStack.map((tech, index) => (
+                    <motion.div
+                        key={tech.name}
+                        className="group relative flex flex-col items-center justify-center w-40 h-48 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-[#ff75df]/10 hover:shadow-2xl hover:shadow-[#ff75df]/20 transition-all duration-300"
+                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: index * 0.08 }}
+                        whileHover={{ y: -10, scale: 1.07 }}
+                    >
+                        <motion.div
+                            className="absolute -inset-2 rounded-2xl pointer-events-none z-0"
+                            style={{
+                                background: `radial-gradient(circle at 60% 40%, ${tech.color}33 0%, transparent 80%)`
+                            }}
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        />
+                        <div
+                            className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-white/10 border border-white/20 shadow-inner"
+                            style={{
+                                backgroundColor: `${tech.color}22`,
+                                borderColor: `${tech.color}44`
+                            }}
+                        >
+                            <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain" />
+                        </div>
+                        <h3 className="text-white font-black italic mb-1 text-lg z-10">{tech.name}</h3>
+                        <div
+                            className="w-10 h-1 rounded-full mt-3 opacity-60 group-hover:opacity-100 transition-opacity mx-auto z-10"
+                            style={{ backgroundColor: tech.color }}
+                        />
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    </section>
+));
+
+// --- Screenshot Gallery ---
+const ScreenshotGallery = memo(({ images }) => (
+    <section className="py-20">
+        <div className="max-w-5xl mx-auto">
+            <motion.div
+                className="mb-10 text-left"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+            >
+                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    Website Preview
+                </span>
+                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-tight">
+                    Screenshots
+                </h2>
+                <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                <p className="text-white/70 text-lg max-w-2xl">
+                    Visual overviews of the live site as delivered.
+                </p>
+            </motion.div>
+            <div className="flex flex-col gap-12">
+                {images.map((img, idx) => (
+                    <motion.div
+                        key={img.src}
+                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg shadow-[#ff75df]/10 overflow-auto flex justify-center items-center"
+                        initial={{ opacity: 0, scale: 0.97 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.2 + idx * 0.1 }}
+                        style={{ width: 900, maxWidth: "100%" }}
+                    >
+                        <img
+                            src={img.src}
+                            alt={img.alt}
+                            className="w-full h-auto rounded-2xl shadow-2xl border border-white/10 object-top object-contain"
+                            style={{ background: "#18181b" }}
+                        />
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    </section>
+));
+
+// --- Main LavaCraze Component ---
+function LavaCraze() {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -40 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="min-h-screen relative overflow-hidden"
+        >
+            <div className="min-h-screen relative overflow-hidden">
+                {/* Background Effects */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <motion.div
+                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#ff75df]/10 to-purple-500/10 rounded-full blur-3xl"
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.3, 0.6, 0.3]
+                        }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                    />
+                    <motion.div
+                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
+                        animate={{
+                            scale: [1, 1.3, 1],
+                            opacity: [0.2, 0.5, 0.2]
+                        }}
+                        transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+                    />
+                </div>
+                {/* Back Button */}
+                <BackButton />
+                {/* Hero Section */}
+                <motion.div
+                    className="relative flex flex-col justify-center pt-20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                >
+                    <motion.div
+                        className="relative overflow-hidden ml-[calc(-50vw+50%)]"
+                        style={{
+                            position: 'relative',
+                            width: '100%',
+                            height: 'calc(85vh - 236px)',
+                            margin: 'calc(108px - 1.5vh) 0 calc(40px)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'top',
+                            backgroundSize: 'cover'
+                        }}
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                    >
+                        <img
+                            src={BackgroundImage}
+                            alt="Project showcase"
+                            className="w-full h-full object-cover object-center"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                    </motion.div>
+                </motion.div>
+                {/* Main Content */}
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
+                    <ProjectOverview />
+                    <TechnologyStack />
+                    <ScreenshotGallery images={screenshots} />
+                    <NextProjectSection />
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
+export default memo(LavaCraze);

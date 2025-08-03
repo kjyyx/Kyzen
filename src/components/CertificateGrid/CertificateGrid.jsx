@@ -13,22 +13,22 @@ import {
 } from 'lucide-react';
 import './CertificateGrid.css'
 
-import AWSCertImage from '../../assets/Certificates/AWS_Academy_Cloud_Foundations-1.png';
+import AWSCertImage from '../../assets/Certificates/AWS_Academy_Cloud_Foundations-1.webp';
 import AWSCertPDF from '../../assets/Certificates/AWS_Academy_Cloud_Foundations.pdf';
-import CyberSecurityCertImage from '../../assets/Certificates/Introduction_to_Cybersecurity-1.png';
+import CyberSecurityCertImage from '../../assets/Certificates/Introduction_to_Cybersecurity-1.webp';
 import CyberSecurityCertPDF from '../../assets/Certificates/Introduction_to_Cybersecurity.pdf';
-import IoTCertImage from '../../assets/Certificates/Introduction_to_IoT-1.png';
+import IoTCertImage from '../../assets/Certificates/Introduction_to_IoT-1.webp';
 import IoTCertPDF from '../../assets/Certificates/Introduction_to_IoT.pdf';
-import JSCertImage from '../../assets/Certificates/JavaScriptEssentials-1.png';
+import JSCertImage from '../../assets/Certificates/JavaScriptEssentials-1.webp';
 import JSCertPDF from '../../assets/Certificates/JavaScriptEssentials.pdf';
-import CyberOpsCertImage from '../../assets/Certificates/CyberOps_Associate-1.png';
+import CyberOpsCertImage from '../../assets/Certificates/CyberOps_Associate-1.webp';
 import CyberOpsCertPDF from '../../assets/Certificates/CyberOps_Associate.pdf';
 
-import RedHatSeminar from '../../assets/Seminars/RedHat_Certificate.png';
-import CybersecurityAISeminar from '../../assets/Seminars/Cybersecurity_AI_Certificate.jpg';
-import GitSeminar from '../../assets/Seminars/Git_Certificate.png';
-import BlockchainSeminar from '../../assets/Seminars/Blockchain_Certificate.jpg';
-import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certificate.JPG';
+import RedHatSeminar from '../../assets/Seminars/RedHat_Certificate.webp';
+import CybersecurityAISeminar from '../../assets/Seminars/Cybersecurity_AI_Certificate.webp';
+import GitSeminar from '../../assets/Seminars/Git_Certificate.webp';
+import BlockchainSeminar from '../../assets/Seminars/Blockchain_Certificate.webp';
+import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certificate.webp';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';

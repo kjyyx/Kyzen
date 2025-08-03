@@ -3,10 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code, Calendar, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import CNImage from '../../assets/CN-3.png';
-import ITSImage from '../../assets/ITS-1.png';
-import LCImage from '../../assets/LC-1.png';
-import REImage from '../../assets/RE-1.png';
+import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.png';
+import AtsIcon from '../../assets/Projects_Icons/ATS_ico.png';
+import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.png';
+import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.png';
+
+import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.png';
+import GPTIcon from '../../assets/Projects_Icons/GPT_ico.png';
+import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.png';
+import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.png';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
@@ -15,7 +20,7 @@ import StaggerContainer from '../../common/StaggerContainer';
 const projects = [
     {
         title: "Clarknav",
-        image: CNImage,
+        image: ClarknavIcon,
         link: "/projects/clarknav",
         description: "Navigation system",
         tech: ["Angular", "Laravel", "PostgreSQL"],
@@ -25,7 +30,7 @@ const projects = [
     },
     {
         title: "ITS ATS",
-        image: ITSImage,
+        image: AtsIcon,
         link: "/projects/itsats",
         description: "Applicant tracking system",
         tech: ["Angular", ".NET", "PostgreSQL"],
@@ -35,7 +40,7 @@ const projects = [
     },
     {
         title: "Lavacraze",
-        image: LCImage,
+        image: LavaCrazeIcon,
         link: "/projects/lavacraze",
         description: "E-commerce platform",
         tech: ["Wordpress", "Elementor"],
@@ -45,7 +50,7 @@ const projects = [
     },
     {
         title: "Railroad-ed",
-        image: REImage,
+        image: RailroadedIcon,
         link: "/projects/railroaded",
         description: "Educational rail system",
         tech: ["Wordpress", "D3.js", "Firebase"],
@@ -58,25 +63,25 @@ const projects = [
 const remainingProjects = [
     {
         name: "Brisk",
-        logo: "/src/assets/Projects_Icons/Brisk_ico.png",
+        logo: BriskIcon,
         alt: "Brisk Logo",
         link: "/projects/brisk"
     },
     {
         name: "GPT",
-        logo: "/src/assets/Projects_Icons/GPT_ico.png",
+        logo: GPTIcon,
         alt: "GPT Logo",
         link: "/projects/gpt"
     },
     {
         name: "Kairos",
-        logo: "/src/assets/Projects_Icons/Kairos_ico.png",
+        logo: KairosIcon,
         alt: "Kairos Logo",
         link: "/projects/kairos"
     },
     {
         name: "Sprint",
-        logo: "/src/assets/Projects_Icons/Sprint_ico.png",
+        logo: SprintIcon,
         alt: "Sprint Logo",
         link: "/projects/sprint"
     }
