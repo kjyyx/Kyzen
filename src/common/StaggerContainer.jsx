@@ -3,18 +3,33 @@ import { motion } from 'framer-motion';
 import { useStaggerScrollAnimation } from '../hooks/useScrollAnimation';
 
 /**
- * Container for staggered animations
+ * Optimized container for staggered animations
  */
 const StaggerContainer = memo(({ 
     children, 
-    staggerDelay = 0.1,
+    staggerDelay = 0.05,
     className = '',
     as = 'div',
+    priority = 'medium',
     ...props 
 }) => {
-    const { ref, variants, controls, childVariants } = useStaggerScrollAnimation(staggerDelay);
+    const { ref, variants, controls, childVariants, shouldAnimate } = useStaggerScrollAnimation(staggerDelay);
 
     const MotionComponent = motion[as];
+
+    // Skip animation wrapper if animations are disabled
+    if (!shouldAnimate) {
+        const Component = as === 'div' ? 'div' : as;
+        return (
+            <Component
+                ref={ref}
+                className={className}
+                {...props}
+            >
+                {children}
+            </Component>
+        );
+    }
 
     return (
         <MotionComponent
@@ -27,7 +42,7 @@ const StaggerContainer = memo(({
         >
             {React.Children.map(children, (child, index) => (
                 <motion.div
-                    key={index}
+                    key={child?.key || index}
                     variants={childVariants}
                 >
                     {child}
@@ -36,5 +51,7 @@ const StaggerContainer = memo(({
         </MotionComponent>
     );
 });
+
+StaggerContainer.displayName = 'StaggerContainer';
 
 export default StaggerContainer;

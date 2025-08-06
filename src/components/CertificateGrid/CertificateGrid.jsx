@@ -34,6 +34,17 @@ import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
 import { useScrollAnimation, useStaggerScrollAnimation } from '../../hooks/useScrollAnimation';
 
+import { 
+    getAnimationConfig, 
+    canAnimate, 
+    createStaggerDelay 
+} from '../../utils/helpers';
+import { 
+    ANIMATION_DURATION, 
+    EASING, 
+    PERFORMANCE 
+} from '../../utils/constants';
+
 // ===== DATA CONFIGURATION =====
 const certificates = [
     {
@@ -224,46 +235,6 @@ const getTypeColor = (type) => {
     };
 };
 
-// ===== ANIMATION VARIANTS =====
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const cardVariants = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-        scale: 0.9
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            type: "spring",
-            stiffness: 100,
-            damping: 15
-        }
-    }
-};
-
-const flipVariants = {
-    front: {
-        rotateY: 0,
-        transition: { duration: 0.6, ease: "easeInOut" }
-    },
-    back: {
-        rotateY: 180,
-        transition: { duration: 0.6, ease: "easeInOut" }
-    }
-};
-
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
 // Bottom Decoration Component
@@ -278,58 +249,82 @@ const BottomDecoration = memo(() => (
 ));
 
 // Category Filter Buttons Component
-const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }) => (
-    <ScrollAnimatedSection
-        animationType="fadeUp"
-        delay={0.3}
-        className="w-full relative z-20 px-2"
-    >
-        <StaggerContainer
-            staggerDelay={0.1}
-            className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-12 sm:mb-16"
-        >
-            {categories.map((category) => {
-                const categoryStyle = category.name !== "All" ? getCategoryStyle(category.name) : null;
+const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const buttonHoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.02 };
+        }
+        
+        return { scale: 1.05, y: -2 };
+    }, [animationConfig.reduce]);
 
-                return (
-                    <motion.button
-                        key={category.name}
-                        onClick={() => onCategorySelect(category.name)}
-                        className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-full italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
-                            ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] shadow-lg shadow-[#ff75df]/20'
-                            : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
-                            }`}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <category.icon
-                            className={`w-3 h-3 sm:w-4 sm:h-4 ${category.name !== "All" && categoryStyle
-                                ? categoryStyle.accent
-                                : selectedCategory === category.name
-                                    ? 'text-[#ff75df]'
-                                    : 'text-white/70'
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeUp"
+            delay={0.3}
+            className="w-full relative z-20 px-2"
+            priority="high"
+        >
+            <StaggerContainer
+                staggerDelay={animationConfig.reduce ? 0.05 : 0.1}
+                className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-12 sm:mb-16"
+            >
+                {categories.map((category) => {
+                    const categoryStyle = category.name !== "All" ? getCategoryStyle(category.name) : null;
+
+                    return (
+                        <motion.button
+                            key={category.name}
+                            onClick={() => onCategorySelect(category.name)}
+                            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-full italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
+                                ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] shadow-lg shadow-[#ff75df]/20'
+                                : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
                                 }`}
-                        />
-                        <span className="relative z-10">{category.name}</span>
-                        <span className="text-xs bg-white/20 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
-                            {category.count}
-                        </span>
-                    </motion.button>
-                );
-            })}
-        </StaggerContainer>
-    </ScrollAnimatedSection>
-));
+                            whileHover={buttonHoverVariants}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <category.icon
+                                className={`w-3 h-3 sm:w-4 sm:h-4 ${category.name !== "All" && categoryStyle
+                                    ? categoryStyle.accent
+                                    : selectedCategory === category.name
+                                        ? 'text-[#ff75df]'
+                                        : 'text-white/70'
+                                    }`}
+                            />
+                            <span className="relative z-10">{category.name}</span>
+                            <span className="text-xs bg-white/20 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
+                                {category.count}
+                            </span>
+                        </motion.button>
+                    );
+                })}
+            </StaggerContainer>
+        </ScrollAnimatedSection>
+    );
+});
 
 // Certificate Card Component
-const CertificateCard = memo(({ certificate, index }) => {
+const CertificateCard = memo(({ certificate, index, flipVariants }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const animationConfig = getAnimationConfig();
+    const shouldAnimate = canAnimate();
+    
     const categoryStyle = useMemo(() => getCategoryStyle(certificate.category), [certificate.category]);
     const CategoryIcon = useMemo(() => getCategoryIcon(certificate.category), [certificate.category]);
+
+    const cardHoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { y: -2, scale: 1.01 };
+        }
+        
+        return { y: -5, scale: 1.01 };
+    }, [animationConfig.reduce]);
 
     const handleVerificationClick = useCallback((e) => {
         e.stopPropagation();
@@ -337,16 +332,17 @@ const CertificateCard = memo(({ certificate, index }) => {
     }, []);
 
     const handleFlip = useCallback(() => {
+        if (!shouldAnimate) return; // Prevent flip on low-end devices
         setIsFlipped(!isFlipped);
-    }, [isFlipped]);
+    }, [isFlipped, shouldAnimate]);
 
     const handleImageLoad = useCallback(() => {
         setImageLoaded(true);
     }, []);
 
     const handleMouseEnter = useCallback(() => {
-        setIsHovered(true);
-    }, []);
+        if (shouldAnimate) setIsHovered(true);
+    }, [shouldAnimate]);
 
     const handleMouseLeave = useCallback(() => {
         setIsHovered(false);
@@ -360,28 +356,28 @@ const CertificateCard = memo(({ certificate, index }) => {
         <>
             <motion.div
                 className="relative group perspective-1000"
-                whileHover={{ y: -5, scale: 1.01 }}
+                whileHover={cardHoverVariants}
                 layout
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                {/* Enhanced background glow with category color */}
-                {isHovered && (
+                {/* Enhanced background glow - Only on capable devices */}
+                {isHovered && shouldAnimate && (
                     <motion.div
                         className={`absolute -inset-2 sm:-inset-4 bg-gradient-to-r ${categoryStyle.gradient} rounded-2xl blur-xl`}
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.4 }}
+                        animate={{ opacity: animationConfig.reduce ? 0.2 : 0.4 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: animationConfig.reduce ? 0.2 : 0.3 }}
                     />
                 )}
 
                 <motion.div
                     className="relative w-full h-[350px] sm:h-[400px] md:h-[420px] transition-all duration-700 preserve-3d cursor-pointer"
                     onClick={handleFlip}
-                    animate={isFlipped ? "back" : "front"}
-                    variants={flipVariants}
-                    style={{ transformStyle: "preserve-3d" }}
+                    animate={isFlipped && shouldAnimate ? "back" : "front"}
+                    variants={flipVariants} // Use the passed variants
+                    style={{ transformStyle: shouldAnimate ? "preserve-3d" : "flat" }}
                 >
                     {/* Front of card */}
                     <CertificateCardFront
@@ -391,15 +387,18 @@ const CertificateCard = memo(({ certificate, index }) => {
                         imageLoaded={imageLoaded}
                         onImageLoad={handleImageLoad}
                         onVerificationClick={handleVerificationClick}
+                        shouldAnimate={shouldAnimate}
                     />
 
-                    {/* Back of card */}
-                    <CertificateCardBack
-                        certificate={certificate}
-                        categoryStyle={categoryStyle}
-                        CategoryIcon={CategoryIcon}
-                        onVerificationClick={handleVerificationClick}
-                    />
+                    {/* Back of card - Only render if animations are enabled */}
+                    {shouldAnimate && (
+                        <CertificateCardBack
+                            certificate={certificate}
+                            categoryStyle={categoryStyle}
+                            CategoryIcon={CategoryIcon}
+                            onVerificationClick={handleVerificationClick}
+                        />
+                    )}
                 </motion.div>
             </motion.div>
 
@@ -413,90 +412,109 @@ const CertificateCard = memo(({ certificate, index }) => {
 });
 
 // Certificate Card Back Component
-const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, onVerificationClick }) => (
-    <motion.div className="absolute inset-0 backface-hidden rotate-y-180">
-        <div className={`relative w-full h-full bg-black/20 rounded-xl border ${categoryStyle.border} backdrop-blur-[15px] overflow-hidden`}>
-            <div className="relative z-10 h-full flex flex-col">
-                {/* Header */}
-                <div className={`flex-shrink-0 bg-gradient-to-r ${categoryStyle.gradient} backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 border-b ${categoryStyle.border}`}>
-                    <h4 className="text-white text-base sm:text-lg italic tracking-tight font-black flex items-center gap-2">
-                        <CategoryIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${categoryStyle.accent}`} />
-                        <span className="hidden sm:inline">Certificate Details</span>
-                        <span className="sm:hidden">Details</span>
-                    </h4>
-                </div>
+const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, onVerificationClick }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const buttonHoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.01 };
+        }
+        
+        return { scale: 1.02, y: -2 };
+    }, [animationConfig.reduce]);
 
-                {/* Content */}
-                <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-3 sm:py-4 space-y-3 sm:space-y-4">
-                    <p className="text-white/90 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">
-                        {certificate.description}
-                    </p>
-
-                    <div>
-                        <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
-                            Skills & Competencies
-                        </h5>
-                        <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 max-h-20 sm:max-h-none overflow-y-auto">
-                            {certificate.skills.map((skill) => (
-                                <span
-                                    key={skill}
-                                    className={`px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-white/90 ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex-shrink-0`}
-                                >
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
+    return (
+        <motion.div className="absolute inset-0 backface-hidden rotate-y-180">
+            <div className={`relative w-full h-full bg-black/20 rounded-xl border ${categoryStyle.border} backdrop-blur-[15px] overflow-hidden`}>
+                <div className="relative z-10 h-full flex flex-col">
+                    {/* Header */}
+                    <div className={`flex-shrink-0 bg-gradient-to-r ${categoryStyle.gradient} backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 border-b ${categoryStyle.border}`}>
+                        <h4 className="text-white text-base sm:text-lg italic tracking-tight font-black flex items-center gap-2">
+                            <CategoryIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${categoryStyle.accent}`} />
+                            <span className="hidden sm:inline">Certificate Details</span>
+                            <span className="sm:hidden">Details</span>
+                        </h4>
                     </div>
 
-                    {/* Verification details */}
-                    <div>
-                        <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
-                            Verification Details
-                        </h5>
-                        <div className={`space-y-2 sm:space-y-3 p-3 sm:p-4 ${categoryStyle.bg} rounded-lg border ${categoryStyle.border}`}>
-                            <div className="flex items-center justify-between">
-                                <span className="text-white/70 text-xs">Issued:</span>
-                                <span className="text-white/90 text-xs font-medium">{formatDate(certificate.date)}</span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
-                                <span className="text-white/70 text-xs">Credential ID:</span>
-                                <span className="text-white/90 text-xs font-mono break-all sm:max-w-[150px] truncate">{certificate.credentialId}</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <span className="text-white/70 text-xs">Status:</span>
-                                <span className="text-green-400 text-xs font-medium flex items-center gap-1">
-                                    <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                                    Verified
-                                </span>
+                    {/* Content */}
+                    <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-3 sm:py-4 space-y-3 sm:space-y-4">
+                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">
+                            {certificate.description}
+                        </p>
+
+                        <div>
+                            <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
+                                Skills & Competencies
+                            </h5>
+                            <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 max-h-20 sm:max-h-none overflow-y-auto">
+                                {certificate.skills.map((skill) => (
+                                    <span
+                                        key={skill}
+                                        className={`px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-white/90 ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex-shrink-0`}
+                                    >
+                                        {skill}
+                                    </span>
+                                ))}
                             </div>
                         </div>
-                    </div>
 
-                    {/* View button */}
-                    <motion.button
-                        onClick={onVerificationClick}
-                        className={`w-full py-2 sm:py-3 px-3 sm:px-4 bg-gradient-to-r ${categoryStyle.gradient} hover:opacity-80 border ${categoryStyle.border} rounded-lg text-white italic tracking-tight font-black text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2`}
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span className="hidden sm:inline">View Certificate</span>
-                        <span className="sm:hidden">View</span>
-                    </motion.button>
+                        {/* Verification details */}
+                        <div>
+                            <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
+                                Verification Details
+                            </h5>
+                            <div className={`space-y-2 sm:space-y-3 p-3 sm:p-4 ${categoryStyle.bg} rounded-lg border ${categoryStyle.border}`}>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-white/70 text-xs">Issued:</span>
+                                    <span className="text-white/90 text-xs font-medium">{formatDate(certificate.date)}</span>
+                                </div>
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
+                                    <span className="text-white/70 text-xs">Credential ID:</span>
+                                    <span className="text-white/90 text-xs font-mono break-all sm:max-w-[150px] truncate">{certificate.credentialId}</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-white/70 text-xs">Status:</span>
+                                    <span className="text-green-400 text-xs font-medium flex items-center gap-1">
+                                        <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                                        Verified
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="text-center py-2 sm:py-4">
-                        <span className="text-white/50 text-xs font-light italic">
-                            Tap to flip back
-                        </span>
+                        {/* View button */}
+                        <motion.button
+                            onClick={onVerificationClick}
+                            className={`w-full py-2 sm:py-3 px-3 sm:px-4 bg-gradient-to-r ${categoryStyle.gradient} hover:opacity-80 border ${categoryStyle.border} rounded-lg text-white italic tracking-tight font-black text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2`}
+                            whileHover={buttonHoverVariants}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+                            <span className="hidden sm:inline">View Certificate</span>
+                            <span className="sm:hidden">View</span>
+                        </motion.button>
+
+                        <div className="text-center py-2 sm:py-4">
+                            <span className="text-white/50 text-xs font-light italic">
+                                Tap to flip back
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </motion.div>
-));
-
+        </motion.div>
+    );
+});
 // Certificate Card Front Component
-const CertificateCardFront = memo(({ certificate, categoryStyle, CategoryIcon, imageLoaded, onImageLoad, onVerificationClick }) => (
+const CertificateCardFront = memo(({ 
+    certificate, 
+    categoryStyle, 
+    CategoryIcon, 
+    imageLoaded, 
+    onImageLoad, 
+    onVerificationClick,
+    shouldAnimate 
+}) => (
     <motion.div className="absolute inset-0 backface-hidden">
         <div className={`relative w-full h-full bg-white/15 rounded-xl border ${categoryStyle.border} backdrop-blur-[20px] overflow-hidden`}>
             {/* Certificate image background */}
@@ -510,9 +528,13 @@ const CertificateCardFront = memo(({ certificate, categoryStyle, CategoryIcon, i
                 <div className="absolute inset-0 bg-black/60" />
             </div>
 
-            {/* Corner decorations */}
-            <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 ${categoryStyle.border} rounded-tr-lg opacity-50`} />
-            <div className={`absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 ${categoryStyle.border} rounded-bl-lg opacity-50`} />
+            {/* Corner decorations - Only on capable devices */}
+            {shouldAnimate && (
+                <>
+                    <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 ${categoryStyle.border} rounded-tr-lg opacity-50`} />
+                    <div className={`absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 ${categoryStyle.border} rounded-bl-lg opacity-50`} />
+                </>
+            )}
 
             {/* Content overlay */}
             <div className="relative z-10 p-4 sm:p-6 h-full flex flex-col justify-between">
@@ -562,7 +584,7 @@ const CertificateCardFront = memo(({ certificate, categoryStyle, CategoryIcon, i
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 sm:gap-2" onClick={onVerificationClick}>
                         <span className="text-white/70 text-xs italic">
-                            Click to view
+                            {shouldAnimate ? "Click to view" : "Tap to view"}
                         </span>
                         <ExternalLink className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${categoryStyle.accent}`} />
                     </div>
@@ -577,37 +599,50 @@ const CertificateCardFront = memo(({ certificate, categoryStyle, CategoryIcon, i
 ));
 
 // Certificate Grid Display Component
-const CertificatesGrid = memo(({ certificates, selectedCategory }) => (
-    <ScrollAnimatedSection
-        animationType="fadeUp"
-        delay={0.1}
-        className="w-full relative px-2 sm:px-0"
-    >
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={selectedCategory}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-            >
-                <StaggerContainer
-                    staggerDelay={0.15}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
-                >
-                    {certificates.map((certificate, index) => (
-                        <CertificateCard
-                            key={certificate.credentialId}
-                            certificate={certificate}
-                            index={index}
-                        />
-                    ))}
-                </StaggerContainer>
-            </motion.div>
-        </AnimatePresence>
-    </ScrollAnimatedSection>
-));
+const CertificatesGrid = memo(({ certificates, selectedCategory, containerVariants, cardVariants, flipVariants }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const gridTransition = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { duration: 0.2 };
+        }
+        
+        return { duration: 0.4 };
+    }, [animationConfig.reduce]);
 
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeUp"
+            delay={0.1}
+            className="w-full relative px-2 sm:px-0"
+            priority="high"
+        >
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={selectedCategory}
+                    initial={{ opacity: 0, y: animationConfig.reduce ? 10 : 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: animationConfig.reduce ? -10 : -20 }}
+                    transition={gridTransition}
+                >
+                    <StaggerContainer
+                        staggerDelay={animationConfig.reduce ? 0.08 : 0.15}
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
+                    >
+                        {certificates.map((certificate, index) => (
+                            <CertificateCard
+                                key={certificate.credentialId}
+                                certificate={certificate}
+                                index={index}
+                                flipVariants={flipVariants}
+                            />
+                        ))}
+                    </StaggerContainer>
+                </motion.div>
+            </AnimatePresence>
+        </ScrollAnimatedSection>
+    );
+});
 // Certificate Modal Component
 const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -675,37 +710,78 @@ const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
 });
 
 // Page Header Component
-const PageHeader = memo(() => (
-    <ScrollAnimatedSection
-        animationType="fadeDown"
-        delay={0.2}
-        className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
-    >
-        <div className="relative">
-            <motion.h2
-                className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
-                initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1 }}
-                style={{
-                    textShadow: '0 0 40px rgba(255, 117, 223, 0.3)'
-                }}
-            >
-                Certifications<span className="text-[#ff75df]">_</span>
-                <br />
-                earned<span className="text-[#ff75df]">:</span>
-            </motion.h2>
+const PageHeader = memo(() => {
+    const animationConfig = getAnimationConfig();
+    
+    const titleVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.4 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, x: -100 },
+            animate: { 
+                opacity: 1, 
+                x: 0,
+                transition: { duration: 1 }
+            }
+        };
+    }, [animationConfig.reduce]);
 
-            {/* Enhanced underline with gradient */}
-            <motion.div
-                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: "10rem" }}
-                transition={{ duration: 1, delay: 0.5 }}
-            />
-        </div>
-    </ScrollAnimatedSection>
-));
+    const underlineVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { width: 0 },
+                animate: { 
+                    width: "8rem",
+                    transition: { duration: 0.4, delay: 0.2 }
+                }
+            };
+        }
+        
+        return {
+            initial: { width: 0 },
+            animate: { 
+                width: "10rem",
+                transition: { duration: 1, delay: 0.5 }
+            }
+        };
+    }, [animationConfig.reduce]);
+
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeDown"
+            delay={0.2}
+            className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
+            priority="critical"
+        >
+            <div className="relative">
+                <motion.h2
+                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
+                    {...titleVariants}
+                    style={{
+                        textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(255, 117, 223, 0.3)'
+                    }}
+                >
+                    Certifications<span className="text-[#ff75df]">_</span>
+                    <br />
+                    earned<span className="text-[#ff75df]">:</span>
+                </motion.h2>
+
+                <motion.div
+                    className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
+                    {...underlineVariants}
+                />
+            </div>
+        </ScrollAnimatedSection>
+    );
+});
 
 // Seminar Card Component
 const SeminarCard = memo(({ seminar, index }) => {
@@ -713,15 +789,26 @@ const SeminarCard = memo(({ seminar, index }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const animationConfig = getAnimationConfig();
+    const shouldAnimate = canAnimate();
+    
     const typeStyle = useMemo(() => getTypeColor(seminar.type), [seminar.type]);
+
+    const cardHoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { y: -2, scale: 1.01 };
+        }
+        
+        return { y: -5, scale: 1.01 };
+    }, [animationConfig.reduce]);
 
     const handleImageLoad = useCallback(() => {
         setImageLoaded(true);
     }, []);
 
     const handleMouseEnter = useCallback(() => {
-        setIsHovered(true);
-    }, []);
+        if (shouldAnimate) setIsHovered(true);
+    }, [shouldAnimate]);
 
     const handleMouseLeave = useCallback(() => {
         setIsHovered(false);
@@ -739,29 +826,30 @@ const SeminarCard = memo(({ seminar, index }) => {
         <>
             <motion.div
                 className="group relative cursor-pointer"
-                whileHover={{
-                    y: -5,
-                    scale: 1.01
-                }}
+                whileHover={cardHoverVariants}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}
             >
-                {/* Simplified background glow */}
-                {isHovered && (
+                {/* Background glow - Only on capable devices */}
+                {isHovered && shouldAnimate && (
                     <motion.div
                         className={`absolute -inset-1 sm:-inset-2 bg-gradient-to-r ${typeStyle.gradient} rounded-2xl blur-md`}
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.7 }}
+                        animate={{ opacity: animationConfig.reduce ? 0.4 : 0.7 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: animationConfig.reduce ? 0.2 : 0.3 }}
                     />
                 )}
 
                 <div className={`relative bg-gradient-to-br ${typeStyle.gradient} backdrop-blur-lg border ${typeStyle.border} rounded-xl p-4 sm:p-6 h-full transition-all duration-300`}>
-                    {/* Corner decorations */}
-                    <div className={`absolute top-2 sm:top-3 right-2 sm:right-3 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-r-2 ${typeStyle.border} rounded-tr-lg opacity-30`} />
-                    <div className={`absolute bottom-2 sm:bottom-3 left-2 sm:left-3 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-l-2 ${typeStyle.border} rounded-bl-lg opacity-30`} />
+                    {/* Corner decorations - Only on capable devices */}
+                    {shouldAnimate && (
+                        <>
+                            <div className={`absolute top-2 sm:top-3 right-2 sm:right-3 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-r-2 ${typeStyle.border} rounded-tr-lg opacity-30`} />
+                            <div className={`absolute bottom-2 sm:bottom-3 left-2 sm:left-3 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-l-2 ${typeStyle.border} rounded-bl-lg opacity-30`} />
+                        </>
+                    )}
 
                     {/* Type badge */}
                     <span className={`absolute -top-2 sm:-top-3 -right-2 sm:-right-3 px-2 sm:px-4 py-1 sm:py-2 text-xs italic tracking-tight font-black text-white bg-gradient-to-r ${typeStyle.gradient} backdrop-blur-sm rounded-full border ${typeStyle.border} shadow-lg`}>
@@ -779,8 +867,8 @@ const SeminarCard = memo(({ seminar, index }) => {
                             />
                             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/30" />
 
-                            {/* Responsive view indicator */}
-                            {isHovered && (
+                            {/* View indicator - Only on hover and capable devices */}
+                            {isHovered && shouldAnimate && (
                                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                                     <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
                                         <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
@@ -789,7 +877,7 @@ const SeminarCard = memo(({ seminar, index }) => {
                             )}
                         </div>
 
-                        {/* Responsive content */}
+                        {/* Content */}
                         <div className="flex-1 min-w-0">
                             <h4 className="text-white italic tracking-tight font-black text-sm sm:text-base leading-tight mb-2 sm:mb-3 line-clamp-2">
                                 {seminar.title}
@@ -944,36 +1032,55 @@ const SeminarsSection = memo(() => (
 ));
 
 // Statistics Display Component
-const StatisticsDisplay = memo(({ statistics }) => (
-    <ScrollAnimatedSection
-        animationType="fadeUp"
-        delay={0.2}
-        className="w-full mt-12 sm:mt-16 md:mt-20 relative z-10"
-    >
-        <StaggerContainer
-            staggerDelay={0.1}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-8 px-2 sm:px-0"
+const StatisticsDisplay = memo(({ statistics }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const statHoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { 
+                scale: 1.02, 
+                backgroundColor: "rgba(255, 255, 255, 0.08)" 
+            };
+        }
+        
+        return { 
+            scale: 1.05, 
+            backgroundColor: "rgba(255, 255, 255, 0.1)" 
+        };
+    }, [animationConfig.reduce]);
+
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeUp"
+            delay={0.2}
+            className="w-full mt-12 sm:mt-16 md:mt-20 relative z-10"
+            priority="medium"
         >
-            {statistics.map((stat) => (
-                <motion.div
-                    key={stat.label}
-                    className="text-center p-3 sm:p-4 bg-white/5 rounded-xl border border-white/20 backdrop-blur-sm"
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                >
-                    <div className="flex justify-center mb-1 sm:mb-2">
-                        <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff75df]" />
-                    </div>
-                    <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">
-                        {stat.value}
-                    </div>
-                    <div className="text-white/60 text-xs sm:text-sm md:text-base font-medium">
-                        {stat.label}
-                    </div>
-                </motion.div>
-            ))}
-        </StaggerContainer>
-    </ScrollAnimatedSection>
-));
+            <StaggerContainer
+                staggerDelay={animationConfig.reduce ? 0.05 : 0.1}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-8 px-2 sm:px-0"
+            >
+                {statistics.map((stat) => (
+                    <motion.div
+                        key={stat.label}
+                        className="text-center p-3 sm:p-4 bg-white/5 rounded-xl border border-white/20 backdrop-blur-sm"
+                        whileHover={statHoverVariants}
+                    >
+                        <div className="flex justify-center mb-1 sm:mb-2">
+                            <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff75df]" />
+                        </div>
+                        <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">
+                            {stat.value}
+                        </div>
+                        <div className="text-white/60 text-xs sm:text-sm md:text-base font-medium">
+                            {stat.label}
+                        </div>
+                    </motion.div>
+                ))}
+            </StaggerContainer>
+        </ScrollAnimatedSection>
+    );
+});
 
 // ===== MAIN COMPONENT =====
 
@@ -997,6 +1104,74 @@ const StatisticsDisplay = memo(({ statistics }) => (
  */
 function CertificateGrid() {
     const [selectedCategory, setSelectedCategory] = useState("All");
+
+    // Move animation variants inside the component
+    const containerVariants = useMemo(() => {
+        const animationConfig = getAnimationConfig();
+        
+        if (animationConfig.reduce) {
+            return {
+                hidden: { opacity: 0 },
+                visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.05 }
+                }
+            };
+        }
+        
+        return {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 }
+            }
+        };
+    }, []);
+
+    const cardVariants = useMemo(() => {
+        const animationConfig = getAnimationConfig();
+        
+        if (animationConfig.reduce) {
+            return {
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.3 }
+                }
+            };
+        }
+        
+        return {
+            hidden: { opacity: 0, y: 50, scale: 0.9 },
+            visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                }
+            }
+        };
+    }, []);
+
+    const flipVariants = useMemo(() => {
+        const animationConfig = getAnimationConfig();
+        
+        if (animationConfig.reduce) {
+            return {
+                front: { rotateY: 0, transition: { duration: 0.3 } },
+                back: { rotateY: 180, transition: { duration: 0.3 } }
+            };
+        }
+        
+        return {
+            front: { rotateY: 0, transition: { duration: 0.6, ease: "easeInOut" } },
+            back: { rotateY: 180, transition: { duration: 0.6, ease: "easeInOut" } }
+        };
+    }, []);
 
     // Memoized categories computation
     const categories = useMemo(() => [
@@ -1048,6 +1223,9 @@ function CertificateGrid() {
             <CertificatesGrid
                 certificates={filteredCertificates}
                 selectedCategory={selectedCategory}
+                containerVariants={containerVariants}
+                cardVariants={cardVariants}
+                flipVariants={flipVariants}
             />
 
             {/* Seminars Section */}

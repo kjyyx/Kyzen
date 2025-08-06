@@ -1,18 +1,21 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback, useMemo } from 'react';
 import { useInView, useAnimation } from 'framer-motion';
-import { SCROLL_THRESHOLDS, ANIMATION_DURATION, EASING } from '../utils/constants';
-import { throttle } from '../utils/helpers';
+import { 
+    SCROLL_THRESHOLDS, 
+    ANIMATION_DURATION, 
+    EASING, 
+    PERFORMANCE 
+} from '../utils/constants';
+import { 
+    throttle, 
+    getAnimationConfig, 
+    canAnimate, 
+    registerAnimation, 
+    unregisterAnimation 
+} from '../utils/helpers';
 
 /**
- * Custom hook for smooth scroll animations with performance optimization
- * @param {Object} options - Configuration options
- * @param {number} options.threshold - Intersection threshold (0-1)
- * @param {boolean} options.triggerOnce - Whether to trigger animation only once
- * @param {number} options.delay - Animation delay in seconds
- * @param {string} options.animationType - Type of animation preset
- * @param {Object} options.customVariants - Custom animation variants
- * @param {boolean} options.enableStagger - Enable stagger animation for children
- * @param {number} options.staggerDelay - Delay between staggered animations
+ * Optimized scroll animation hook with performance monitoring
  */
 export const useScrollAnimation = (options = {}) => {
     const {
@@ -22,181 +25,208 @@ export const useScrollAnimation = (options = {}) => {
         animationType = 'fadeUp',
         customVariants = null,
         enableStagger = false,
-        staggerDelay = 0.1,
-        rootMargin = '-50px'
+        staggerDelay = 0.05,
+        rootMargin = PERFORMANCE.intersectionRootMargin,
+        priority = 'medium'
     } = options;
 
     const ref = useRef(null);
     const controls = useAnimation();
+    const animationConfig = useMemo(() => getAnimationConfig(), []);
     
-    // Use Framer Motion's useInView with performance optimizations
+    // Check if we should run animations
+    const shouldAnimate = useMemo(() => {
+        if (!canAnimate()) return false;
+        if (animationConfig.reduce && priority === 'low') return false;
+        return true;
+    }, [animationConfig.reduce, priority]);
+    
+    // Optimized intersection observer
     const isInView = useInView(ref, {
-        threshold,
+        threshold: animationConfig.reduce ? SCROLL_THRESHOLDS.minimal : threshold,
         triggerOnce,
         rootMargin
     });
 
-    // Predefined animation variants
-    const animationVariants = {
-        fadeUp: {
-            hidden: { 
-                opacity: 0, 
-                y: 60,
-                scale: 0.95
-            },
-            visible: { 
-                opacity: 1, 
-                y: 0,
-                scale: 1,
-                transition: {
-                    duration: ANIMATION_DURATION.slow,
-                    delay,
-                    ease: EASING.easeOut,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
+    // Simplified animation variants for performance
+    const animationVariants = useMemo(() => {
+        const baseDelay = animationConfig.reduce ? delay * 0.5 : delay;
+        const baseDuration = animationConfig.reduce ? ANIMATION_DURATION.fast : ANIMATION_DURATION.slow;
+        const baseStagger = animationConfig.reduce ? staggerDelay * 0.5 : staggerDelay;
+        
+        if (animationConfig.reduce) {
+            return {
+                fadeUp: {
+                    hidden: { opacity: 0 },
+                    visible: { 
+                        opacity: 1,
+                        transition: {
+                            duration: baseDuration,
+                            delay: baseDelay,
+                            ease: EASING.easeOut
+                        }
+                    }
                 }
-            }
-        },
-        fadeDown: {
-            hidden: { 
-                opacity: 0, 
-                y: -60,
-                scale: 0.95
-            },
-            visible: { 
-                opacity: 1, 
-                y: 0,
-                scale: 1,
-                transition: {
-                    duration: ANIMATION_DURATION.slow,
-                    delay,
-                    ease: EASING.easeOut,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
-                }
-            }
-        },
-        fadeLeft: {
-            hidden: { 
-                opacity: 0, 
-                x: -60,
-                scale: 0.95
-            },
-            visible: { 
-                opacity: 1, 
-                x: 0,
-                scale: 1,
-                transition: {
-                    duration: ANIMATION_DURATION.slow,
-                    delay,
-                    ease: EASING.easeOut,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
-                }
-            }
-        },
-        fadeRight: {
-            hidden: { 
-                opacity: 0, 
-                x: 60,
-                scale: 0.95
-            },
-            visible: { 
-                opacity: 1, 
-                x: 0,
-                scale: 1,
-                transition: {
-                    duration: ANIMATION_DURATION.slow,
-                    delay,
-                    ease: EASING.easeOut,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
-                }
-            }
-        },
-        scale: {
-            hidden: { 
-                opacity: 0, 
-                scale: 0.8
-            },
-            visible: { 
-                opacity: 1, 
-                scale: 1,
-                transition: {
-                    duration: ANIMATION_DURATION.slow,
-                    delay,
-                    ease: EASING.bounce,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
-                }
-            }
-        },
-        slide: {
-            hidden: { 
-                opacity: 0, 
-                y: 100,
-                rotateX: -15
-            },
-            visible: { 
-                opacity: 1, 
-                y: 0,
-                rotateX: 0,
-                transition: {
-                    duration: ANIMATION_DURATION.slower,
-                    delay,
-                    ease: EASING.easeOut,
-                    ...(enableStagger && {
-                        staggerChildren: staggerDelay,
-                        delayChildren: delay
-                    })
-                }
-            }
+            };
         }
-    };
+        
+        return {
+            fadeUp: {
+                hidden: { 
+                    opacity: 0, 
+                    y: 20
+                },
+                visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            },
+            fadeDown: {
+                hidden: { 
+                    opacity: 0, 
+                    y: -20
+                },
+                visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            },
+            fadeLeft: {
+                hidden: { 
+                    opacity: 0, 
+                    x: -20
+                },
+                visible: { 
+                    opacity: 1, 
+                    x: 0,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            },
+            fadeRight: {
+                hidden: { 
+                    opacity: 0, 
+                    x: 20
+                },
+                visible: { 
+                    opacity: 1, 
+                    x: 0,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            },
+            scale: {
+                hidden: { 
+                    opacity: 0, 
+                    scale: 0.95
+                },
+                visible: { 
+                    opacity: 1, 
+                    scale: 1,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            },
+            slide: {
+                hidden: { 
+                    opacity: 0, 
+                    y: 30
+                },
+                visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                        duration: baseDuration,
+                        delay: baseDelay,
+                        ease: EASING.easeOut,
+                        ...(enableStagger && {
+                            staggerChildren: baseStagger,
+                            delayChildren: baseDelay
+                        })
+                    }
+                }
+            }
+        };
+    }, [animationConfig, delay, staggerDelay, enableStagger]);
 
     // Get the variants to use
     const variants = customVariants || animationVariants[animationType] || animationVariants.fadeUp;
 
-    // Throttled animation trigger for performance
-    const throttledAnimate = throttle(() => {
-        if (isInView) {
-            controls.start('visible');
-        } else if (!triggerOnce) {
-            controls.start('hidden');
-        }
-    }, 16); // ~60fps
+    // Optimized animation trigger with registration
+    const throttledAnimate = useCallback(
+        throttle(() => {
+            if (!shouldAnimate) return;
+            
+            if (isInView) {
+                registerAnimation();
+                controls.start('visible').finally(() => {
+                    unregisterAnimation();
+                });
+            } else if (!triggerOnce) {
+                controls.start('hidden');
+            }
+        }, PERFORMANCE.throttleDelay),
+        [isInView, shouldAnimate, triggerOnce, controls]
+    );
 
     useEffect(() => {
         throttledAnimate();
-    }, [isInView, throttledAnimate]);
+    }, [throttledAnimate]);
 
-    // Child animation variants for stagger effects
-    const childVariants = {
+    // Simplified child variants for stagger effects
+    const childVariants = useMemo(() => ({
         hidden: { 
             opacity: 0, 
-            y: 20,
-            scale: 0.95
+            y: animationConfig.reduce ? 5 : 10
         },
         visible: { 
             opacity: 1, 
             y: 0,
-            scale: 1,
             transition: {
-                duration: ANIMATION_DURATION.normal,
+                duration: animationConfig.reduce ? ANIMATION_DURATION.fast : ANIMATION_DURATION.normal,
                 ease: EASING.easeOut
             }
         }
-    };
+    }), [animationConfig.reduce]);
 
     return {
         ref,
@@ -204,7 +234,8 @@ export const useScrollAnimation = (options = {}) => {
         variants,
         childVariants,
         isInView,
-        animate: controls.start
+        animate: controls.start,
+        shouldAnimate
     };
 };
 
@@ -215,29 +246,32 @@ export const useSimpleScrollAnimation = (delay = 0) => {
     return useScrollAnimation({
         animationType: 'fadeUp',
         delay,
-        threshold: SCROLL_THRESHOLDS.minimal
+        threshold: SCROLL_THRESHOLDS.minimal,
+        priority: 'low'
     });
 };
 
 /**
- * Hook for stagger animations on lists/grids
+ * Optimized hook for stagger animations
  */
-export const useStaggerScrollAnimation = (staggerDelay = 0.1) => {
+export const useStaggerScrollAnimation = (staggerDelay = 0.05) => {
     return useScrollAnimation({
         animationType: 'fadeUp',
         enableStagger: true,
         staggerDelay,
-        threshold: SCROLL_THRESHOLDS.partial
+        threshold: SCROLL_THRESHOLDS.partial,
+        priority: 'medium'
     });
 };
 
 /**
- * Hook for hero/header sections with dramatic entrance
+ * High-priority hook for hero/header sections
  */
 export const useHeroScrollAnimation = () => {
     return useScrollAnimation({
         animationType: 'slide',
         threshold: SCROLL_THRESHOLDS.minimal,
-        delay: 0.2
+        delay: 0.1,
+        priority: 'critical'
     });
 };

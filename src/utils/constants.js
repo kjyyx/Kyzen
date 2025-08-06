@@ -7,24 +7,49 @@ export const BREAKPOINTS = {
     xl: 1536
 };
 
-// Animation durations
+// Optimized animation durations - reduced for better performance
 export const ANIMATION_DURATION = {
-    fast: 0.2,
-    normal: 0.3,
-    slow: 0.6,
-    slower: 1.0
+    fast: 0.15,
+    normal: 0.25,
+    slow: 0.4,
+    slower: 0.6
 };
 
-// Common easing curves
+// Optimized easing curves - using simpler curves for better performance
 export const EASING = {
     easeOut: [0.25, 0.46, 0.45, 0.94],
     easeIn: [0.42, 0, 1, 1],
     easeInOut: [0.42, 0, 0.58, 1],
     bounce: [0.68, -0.55, 0.265, 1.55],
-    elastic: [0.25, 0.46, 0.45, 0.94]
+    elastic: [0.25, 0.46, 0.45, 0.94] // Simplified from complex elastic
 };
 
-// Color palette
+// Performance settings
+export const PERFORMANCE = {
+    reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    isLowEndDevice: navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4,
+    maxConcurrentAnimations: 10,
+    throttleDelay: 16, // 60fps
+    intersectionRootMargin: '50px'
+};
+
+// Optimized scroll thresholds
+export const SCROLL_THRESHOLDS = {
+    minimal: 0.1,
+    partial: 0.2,
+    half: 0.5,
+    full: 1.0
+};
+
+// Animation priority levels
+export const ANIMATION_PRIORITY = {
+    critical: 1,    // Hero sections, main navigation
+    high: 2,        // Above fold content
+    medium: 3,      // Below fold but visible
+    low: 4          // Far below fold
+};
+
+// Color palette (unchanged)
 export const COLORS = {
     primary: '#ff75df',
     secondary: '#e2dbd2',
@@ -45,7 +70,7 @@ export const COLORS = {
     }
 };
 
-// Z-index layers
+// Z-index layers (unchanged)
 export const Z_INDEX = {
     background: -1,
     base: 0,
@@ -57,7 +82,7 @@ export const Z_INDEX = {
     navbar: 1000
 };
 
-// Common spacing values
+// Common spacing values (unchanged)
 export const SPACING = {
     xs: '0.25rem',
     sm: '0.5rem',
@@ -68,7 +93,7 @@ export const SPACING = {
     '3xl': '4rem'
 };
 
-// Typography scales
+// Typography scales (unchanged)
 export const TYPOGRAPHY = {
     fontSize: {
         xs: '0.75rem',
@@ -93,7 +118,7 @@ export const TYPOGRAPHY = {
     }
 };
 
-// Common border radius values
+// Common border radius values (unchanged)
 export const BORDER_RADIUS = {
     none: '0',
     sm: '0.125rem',
@@ -104,19 +129,11 @@ export const BORDER_RADIUS = {
     full: '9999px'
 };
 
-// Shadow presets
+// Shadow presets (unchanged)
 export const SHADOWS = {
     sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
     lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
     xl: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
     glow: '0 0 40px rgba(255, 117, 223, 0.3)'
-};
-
-// Scroll animation thresholds
-export const SCROLL_THRESHOLDS = {
-    minimal: 0.05,
-    partial: 0.1,
-    half: 0.5,
-    full: 1.0
 };

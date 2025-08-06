@@ -3,18 +3,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code, Calendar, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.png';
-import AtsIcon from '../../assets/Projects_Icons/ATS_ico.png';
-import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.png';
-import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.png';
+import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.webp';
+import AtsIcon from '../../assets/Projects_Icons/ATS_ico.webp';
+import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.webp';
+import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.webp';
 
-import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.png';
-import GPTIcon from '../../assets/Projects_Icons/GPT_ico.png';
-import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.png';
-import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.png';
+import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
+import GPTIcon from '../../assets/Projects_Icons/GPT_ico.webp';
+import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
+import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.webp';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
+
+import { 
+    getAnimationConfig, 
+    canAnimate, 
+    createStaggerDelay 
+} from '../../utils/helpers';
+import { 
+    ANIMATION_DURATION, 
+    EASING, 
+    PERFORMANCE 
+} from '../../utils/constants';
 
 // ===== DATA CONFIGURATION =====
 const projects = [
@@ -90,24 +101,40 @@ const remainingProjects = [
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
 // Background Effects Component
-const BackgroundEffects = memo(() => (
-    <ScrollAnimatedSection
-        animationType="fadeIn"
-        delay={0.1}
-        className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"
-    >
-        <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity }}
-        />
-        <motion.div
-            className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-pink-500/10 to-red-500/10 rounded-full blur-3xl"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
-            transition={{ duration: 12, repeat: Infinity }}
-        />
-    </ScrollAnimatedSection>
-));
+const BackgroundEffects = memo(() => {
+    const animationConfig = getAnimationConfig();
+    
+    // Skip background effects on low-end devices
+    if (!canAnimate() || animationConfig.reduce) {
+        return null;
+    }
+    
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeIn"
+            delay={0.1}
+            className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"
+            priority="low"
+        >
+            <motion.div
+                className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
+                animate={{ 
+                    scale: [1, 1.1, 1], // Reduced from 1.2
+                    opacity: [0.3, 0.5, 0.3] // Reduced max opacity
+                }}
+                transition={{ duration: 6, repeat: Infinity }} // Reduced from 8
+            />
+            <motion.div
+                className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-pink-500/10 to-red-500/10 rounded-full blur-3xl"
+                animate={{ 
+                    scale: [1, 1.2, 1], // Reduced from 1.3
+                    opacity: [0.2, 0.4, 0.2] // Reduced max opacity
+                }}
+                transition={{ duration: 9, repeat: Infinity }} // Reduced from 12
+            />
+        </ScrollAnimatedSection>
+    );
+});
 
 // Bottom Decoration Component
 const BottomDecoration = memo(() => (
@@ -121,123 +148,213 @@ const BottomDecoration = memo(() => (
 ));
 
 // Page Header Component
-const PageHeader = memo(() => (
-    <ScrollAnimatedSection
-        animationType="fadeDown"
-        delay={0.2}
-        className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
-    >
-        <div className="relative w-full">
-            <motion.h2
-                className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
-                initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1 }}
-                style={{
-                    textShadow: '0 0 40px rgba(255, 117, 223, 0.3)'
-                }}
-            >
-                Featured<span className="text-[#ff75df]">_</span>
-                <br />
-                works<span className="text-[#ff75df]">:</span>
-            </motion.h2>
+const PageHeader = memo(() => {
+    const animationConfig = getAnimationConfig();
+    
+    const titleVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.4 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, x: -50 }, // Reduced from -100
+            animate: { 
+                opacity: 1, 
+                x: 0,
+                transition: { duration: 0.6 } // Reduced from 1
+            }
+        };
+    }, [animationConfig.reduce]);
 
-            <motion.div
-                className="absolute -bottom-1 sm:-bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: "10rem" }}
-                transition={{ duration: 1, delay: 0.5 }}
-            />
-        </div>
-    </ScrollAnimatedSection>
-));
+    const underlineVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { width: 0 },
+                animate: { 
+                    width: "8rem", // Reduced width
+                    transition: { duration: 0.4, delay: 0.2 }
+                }
+            };
+        }
+        
+        return {
+            initial: { width: 0 },
+            animate: { 
+                width: "10rem",
+                transition: { duration: 0.8, delay: 0.3 } // Reduced delay
+            }
+        };
+    }, [animationConfig.reduce]);
+
+    return (
+        <ScrollAnimatedSection
+            animationType="fadeDown"
+            delay={0.2}
+            className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
+            priority="high"
+        >
+            <div className="relative w-full">
+                <motion.h2
+                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
+                    {...titleVariants}
+                    style={{
+                        textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(255, 117, 223, 0.3)'
+                    }}
+                >
+                    Featured<span className="text-[#ff75df]">_</span>
+                    <br />
+                    works<span className="text-[#ff75df]">:</span>
+                </motion.h2>
+
+                <motion.div
+                    className="absolute -bottom-1 sm:-bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
+                    {...underlineVariants}
+                />
+            </div>
+        </ScrollAnimatedSection>
+    );
+});
 
 // Project Card Background Glow Component
-const ProjectCardGlow = memo(({ showEffects }) => (
-    <AnimatePresence>
-        {showEffects && (
-            <motion.div
-                className="absolute -inset-3 sm:-inset-4 md:-inset-6 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 rounded-2xl blur-xl"
-                initial={{ opacity: 0, scale: 1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{ duration: 0.3 }}
-            />
-        )}
-    </AnimatePresence>
-));
+const ProjectCardGlow = memo(({ showEffects }) => {
+    const animationConfig = getAnimationConfig();
+    
+    // Skip glow effects on low-end devices
+    if (animationConfig.reduce) {
+        return null;
+    }
+    
+    return (
+        <AnimatePresence>
+            {showEffects && (
+                <motion.div
+                    className="absolute -inset-3 sm:-inset-4 md:-inset-6 bg-gradient-to-r from-purple-500/15 via-pink-500/15 to-orange-500/15 rounded-2xl blur-xl" // Reduced opacity
+                    initial={{ opacity: 0, scale: 1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1 }}
+                    transition={{ duration: 0.2 }} // Reduced duration
+                />
+            )}
+        </AnimatePresence>
+    );
+});
 
 // Project Card Corner Accents Component
-const ProjectCardCornerAccents = memo(({ showEffects }) => (
-    <AnimatePresence>
-        {showEffects && (
-            <>
-                <motion.div
-                    className="absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-[#ff75df]/80 rounded-tr-lg z-30"
-                    initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
-                    transition={{ duration: 0.15, ease: "easeOut" }}
-                />
-                <motion.div
-                    className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-[#ff75df]/80 rounded-bl-lg z-30"
-                    initial={{ opacity: 0, scale: 0.5, rotate: 45 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0.5, rotate: -45 }}
-                    transition={{ duration: 0.15, delay: 0.02, ease: "easeOut" }}
-                />
-            </>
-        )}
-    </AnimatePresence>
-));
+const ProjectCardCornerAccents = memo(({ showEffects }) => {
+    const animationConfig = getAnimationConfig();
+    
+    // Skip corner accents on low-end devices
+    if (animationConfig.reduce) {
+        return null;
+    }
+    
+    return (
+        <AnimatePresence>
+            {showEffects && (
+                <>
+                    <motion.div
+                        className="absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-[#ff75df]/80 rounded-tr-lg z-30"
+                        initial={{ opacity: 0, scale: 0.5, rotate: -30 }} // Reduced rotation
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        exit={{ opacity: 0, scale: 0.5, rotate: 30 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }} // Faster transition
+                    />
+                    <motion.div
+                        className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-[#ff75df]/80 rounded-bl-lg z-30"
+                        initial={{ opacity: 0, scale: 0.5, rotate: 30 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        exit={{ opacity: 0, scale: 0.5, rotate: -30 }}
+                        transition={{ duration: 0.2, delay: 0.01, ease: "easeOut" }} // Reduced delay
+                    />
+                </>
+            )}
+        </AnimatePresence>
+    );
+});
 
 // Project Card Description Overlay Component
-const ProjectCardDescription = memo(({ project, showEffects }) => (
-    <AnimatePresence>
-        {showEffects && (
-            <motion.div
-                className="absolute bottom-16 sm:bottom-20 left-4 sm:left-6 right-4 sm:right-6 z-30"
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{
-                    duration: 0.15,
-                    ease: "easeOut"
-                }}
-            >
+const ProjectCardDescription = memo(({ project, showEffects }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const descriptionVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.2 }
+                },
+                exit: { 
+                    opacity: 0,
+                    transition: { duration: 0.15 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, y: 15, scale: 0.98 }, // Reduced values
+            animate: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: { duration: 0.2, ease: "easeOut" }
+            },
+            exit: { 
+                opacity: 0, 
+                y: 8, 
+                scale: 0.98,
+                transition: { duration: 0.15 }
+            }
+        };
+    }, [animationConfig.reduce]);
+
+    return (
+        <AnimatePresence>
+            {showEffects && (
                 <motion.div
-                    className="p-3 sm:p-4 border border-white/30 rounded-lg sm:rounded-xl backdrop-blur-md bg-black/20"
-                    initial={{ backdropFilter: "blur(0px)" }}
-                    animate={{ backdropFilter: "blur(12px)" }}
-                    transition={{ duration: 0.1 }}
+                    className="absolute bottom-16 sm:bottom-20 left-4 sm:left-6 right-4 sm:right-6 z-30"
+                    {...descriptionVariants}
                 >
-                    <motion.p
-                        className="text-white/90 text-base sm:text-lg font-normal italic tracking-wide mb-2 sm:mb-3"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.15, delay: 0.05 }}
-                    >
-                        {project.description}
-                    </motion.p>
                     <motion.div
-                        className="flex flex-wrap gap-1.5 sm:gap-2"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15, delay: 0.08 }}
+                        className="p-3 sm:p-4 border border-white/30 rounded-lg sm:rounded-xl backdrop-blur-md bg-black/20"
+                        initial={{ backdropFilter: animationConfig.reduce ? "blur(8px)" : "blur(0px)" }}
+                        animate={{ backdropFilter: "blur(12px)" }}
+                        transition={{ duration: animationConfig.reduce ? 0 : 0.1 }}
                     >
-                        {project.tech.map((tech, techIndex) => (
-                            <ProjectTechBadge
-                                key={tech}
-                                tech={tech}
-                                index={techIndex}
-                            />
-                        ))}
+                        <motion.p
+                            className="text-white/90 text-base sm:text-lg font-normal italic tracking-wide mb-2 sm:mb-3"
+                            initial={{ opacity: 0, x: animationConfig.reduce ? 0 : -5 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.15, delay: animationConfig.reduce ? 0 : 0.05 }}
+                        >
+                            {project.description}
+                        </motion.p>
+                        <motion.div
+                            className="flex flex-wrap gap-1.5 sm:gap-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.15, delay: animationConfig.reduce ? 0 : 0.08 }}
+                        >
+                            {project.tech.map((tech, techIndex) => (
+                                <ProjectTechBadge
+                                    key={tech}
+                                    tech={tech}
+                                    index={techIndex}
+                                />
+                            ))}
+                        </motion.div>
                     </motion.div>
                 </motion.div>
-            </motion.div>
-        )}
-    </AnimatePresence>
-));
+            )}
+        </AnimatePresence>
+    );
+});
 
 // Project Card Floating Button Component
 const ProjectCardFloatingButton = memo(({
@@ -247,105 +364,160 @@ const ProjectCardFloatingButton = memo(({
     isTablet,
     verticalRectangle,
     onProjectClick
-}) => (
-    <motion.div
-        className={`absolute ${isMobile || isTablet
-            ? "top-3 sm:top-4 -right-3 sm:-right-4"
-            : verticalRectangle
-                ? "top-12 sm:top-16 -right-12 sm:-right-16"
-                : "top-8 sm:top-10 -left-12 sm:-left-16"
-            } z-40`}
-        initial={{
-            opacity: 1,
-            scale: 1,
-            x: (isMobile || isTablet) ? -150 : 0,
-            y: (isMobile || isTablet) ? -5 : 0,
-        }}
-        animate={{
-            opacity: 1,
-            scale: showEffects ? 1.02 : 1,
-            x: (isMobile || isTablet)
-                ? (showEffects ? -120 : -200)
-                : showEffects
-                    ? (verticalRectangle ? 0 : -80)
-                    : 0,
-            y: (isMobile || isTablet)
-                ? (showEffects ? 20 : 15)
-                : showEffects
-                    ? (verticalRectangle ? -80 : 0)
-                    : 0,
-        }}
-        transition={{
+}) => {
+    const animationConfig = getAnimationConfig();
+    
+    const buttonVariants = useMemo(() => {
+        const baseTransition = {
             type: "spring",
-            stiffness: (isMobile || isTablet) ? 200 : 150,
-            damping: (isMobile || isTablet) ? 25 : 20,
-            duration: (isMobile || isTablet) ? 0.3 : 0.4,
-        }}
-    >
+            stiffness: animationConfig.reduce ? 250 : (isMobile || isTablet) ? 200 : 150,
+            damping: animationConfig.reduce ? 30 : (isMobile || isTablet) ? 25 : 20,
+            duration: animationConfig.reduce ? 0.2 : (isMobile || isTablet) ? 0.3 : 0.4,
+        };
+        
+        return {
+            initial: {
+                opacity: 1,
+                scale: 1,
+                x: (isMobile || isTablet) ? -150 : 0,
+                y: (isMobile || isTablet) ? -5 : 0,
+            },
+            animate: {
+                opacity: 1,
+                scale: showEffects ? (animationConfig.reduce ? 1.01 : 1.02) : 1,
+                x: (isMobile || isTablet)
+                    ? (showEffects ? -120 : -200)
+                    : showEffects
+                        ? (verticalRectangle ? 0 : (animationConfig.reduce ? -60 : -80))
+                        : 0,
+                y: (isMobile || isTablet)
+                    ? (showEffects ? 20 : 15)
+                    : showEffects
+                        ? (verticalRectangle ? (animationConfig.reduce ? -60 : -80) : 0)
+                        : 0,
+            },
+            transition: baseTransition
+        };
+    }, [animationConfig.reduce, isMobile, isTablet, showEffects, verticalRectangle]);
+
+    return (
         <motion.div
-            className={`rounded-lg sm:rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile
-                ? "w-[240px] h-[40px]"
-                : isTablet
-                    ? "w-[260px] h-[45px]"
-                    : "w-[340px] h-[60px]"
-                } ${verticalRectangle && !isMobile && !isTablet ? "rotate-90" : ""}`}
-            animate={{
-                borderColor: showEffects ? "rgba(255, 117, 223, 0.6)" : "rgba(255, 255, 255, 0.5)",
-                boxShadow: showEffects
-                    ? "0 25px 50px -12px rgba(255, 117, 223, 0.25)"
-                    : "0 25px 50px -12px rgba(255, 255, 255, 0.1)"
-            }}
-            transition={{ duration: 0.2 }}
-            whileHover={{ scale: 1.02 }}
-            onClick={onProjectClick}
+            className={`absolute ${isMobile || isTablet
+                ? "top-3 sm:top-4 -right-3 sm:-right-4"
+                : verticalRectangle
+                    ? "top-12 sm:top-16 -right-12 sm:-right-16"
+                    : "top-8 sm:top-10 -left-12 sm:-left-16"
+                } z-40`}
+            {...buttonVariants}
         >
-            <div className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between h-full`}>
-                <ProjectFloatingButtonText showEffects={showEffects} isMobile={isMobile} isTablet={isTablet} />
-                <ProjectFloatingButtonIcon showEffects={showEffects} isMobile={isMobile} isTablet={isTablet} />
-            </div>
+            <motion.div
+                className={`rounded-lg sm:rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile
+                    ? "w-[240px] h-[40px]"
+                    : isTablet
+                        ? "w-[260px] h-[45px]"
+                        : "w-[340px] h-[60px]"
+                    } ${verticalRectangle && !isMobile && !isTablet ? "rotate-90" : ""}`}
+                animate={{
+                    borderColor: showEffects ? "rgba(255, 117, 223, 0.6)" : "rgba(255, 255, 255, 0.5)",
+                    boxShadow: showEffects
+                        ? "0 25px 50px -12px rgba(255, 117, 223, 0.25)"
+                        : "0 25px 50px -12px rgba(255, 255, 255, 0.1)"
+                }}
+                transition={{ duration: 0.2 }}
+                whileHover={animationConfig.reduce ? {} : { scale: 1.02 }}
+                onClick={onProjectClick}
+            >
+                <div className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between h-full`}>
+                    <ProjectFloatingButtonText 
+                        showEffects={showEffects} 
+                        isMobile={isMobile} 
+                        isTablet={isTablet} 
+                    />
+                    <ProjectFloatingButtonIcon 
+                        showEffects={showEffects} 
+                        isMobile={isMobile} 
+                        isTablet={isTablet} 
+                    />
+                </div>
+            </motion.div>
         </motion.div>
-    </motion.div>
-));
+    );
+});
 
 // Project Card Image Component
-const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, setImageLoaded }) => (
-    <motion.div
-        className="relative w-full h-full rounded-lg sm:rounded-xl overflow-hidden border border-white/20 backdrop-blur-sm"
-        animate={{
-            scale: showEffects ? (isMobile ? 1.01 : 1.02) : 1,
-            borderColor: showEffects
-                ? "rgba(255, 117, 223, 0.4)"
-                : "rgba(255, 255, 255, 0.2)",
-        }}
-        transition={{ duration: 0.3 }}
-    >
-        <motion.img
-            src={project.image}
-            alt={project.title}
-            className={`w-full h-full object-cover object-center transition-all duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-            onLoad={() => setImageLoaded(true)}
-            style={{
-                filter: showEffects
-                    ? "grayscale(0.2) saturate(1.1) brightness(1.1)"
-                    : "grayscale(0.8) saturate(0.7) brightness(0.9)",
-            }}
-            animate={{
-                scale: showEffects ? (isMobile ? 1.02 : 1.05) : 1,
-            }}
-            transition={{ duration: 0.3 }}
-        />
+const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, setImageLoaded }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const imageVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                animate: {
+                    scale: showEffects ? 1.01 : 1,
+                    borderColor: showEffects
+                        ? "rgba(255, 117, 223, 0.4)"
+                        : "rgba(255, 255, 255, 0.2)",
+                },
+                transition: { duration: 0.2 }
+            };
+        }
+        
+        return {
+            animate: {
+                scale: showEffects ? (isMobile ? 1.01 : 1.02) : 1,
+                borderColor: showEffects
+                    ? "rgba(255, 117, 223, 0.4)"
+                    : "rgba(255, 255, 255, 0.2)",
+            },
+            transition: { duration: 0.3 }
+        };
+    }, [animationConfig.reduce, showEffects, isMobile]);
 
+    const innerImageVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                animate: { scale: 1 },
+                transition: { duration: 0 }
+            };
+        }
+        
+        return {
+            animate: {
+                scale: showEffects ? (isMobile ? 1.02 : 1.05) : 1,
+            },
+            transition: { duration: 0.3 }
+        };
+    }, [animationConfig.reduce, showEffects, isMobile]);
+
+    return (
         <motion.div
-            className="absolute inset-0 pointer-events-none"
-            animate={{
-                background: showEffects
-                    ? "linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(255,117,223,0.2) 50%, rgba(0,0,0,0.8) 100%)"
-                    : "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, transparent 50%, rgba(0,0,0,0.6) 100%)",
-            }}
-            transition={{ duration: 0.3 }}
-        />
-    </motion.div>
-));
+            className="relative w-full h-full rounded-lg sm:rounded-xl overflow-hidden border border-white/20 backdrop-blur-sm"
+            {...imageVariants}
+        >
+            <motion.img
+                src={project.image}
+                alt={project.title}
+                className={`w-full h-full object-cover object-center transition-all duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                onLoad={() => setImageLoaded(true)}
+                style={{
+                    filter: showEffects && !animationConfig.reduce
+                        ? "grayscale(0.2) saturate(1.1) brightness(1.1)"
+                        : "grayscale(0.8) saturate(0.7) brightness(0.9)",
+                }}
+                {...innerImageVariants}
+            />
+
+            <motion.div
+                className="absolute inset-0 pointer-events-none"
+                animate={{
+                    background: showEffects
+                        ? "linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(255,117,223,0.2) 50%, rgba(0,0,0,0.8) 100%)"
+                        : "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, transparent 50%, rgba(0,0,0,0.6) 100%)",
+                }}
+                transition={{ duration: animationConfig.reduce ? 0.2 : 0.3 }}
+            />
+        </motion.div>
+    );
+});
 
 // Project Card Status Badge Component
 const ProjectCardStatusBadge = memo(({ project, statusStyle, showEffects }) => (
@@ -523,20 +695,43 @@ const ProjectNumberIndicator = memo(({ index, isMobile, isTablet }) => (
 ));
 
 // Project Tech Badge Component
-const ProjectTechBadge = memo(({ tech, index }) => (
-    <motion.span
-        className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-normal text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-            duration: 0.1,
-            delay: 0.1 + (index * 0.02)
-        }}
-        whileHover={{ scale: 1.05 }}
-    >
-        {tech}
-    </motion.span>
-));
+const ProjectTechBadge = memo(({ tech, index }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const badgeVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.2, delay: index * 0.02 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, scale: 0.8 },
+            animate: { 
+                opacity: 1, 
+                scale: 1,
+                transition: {
+                    duration: 0.2,
+                    delay: 0.1 + (index * 0.02)
+                }
+            }
+        };
+    }, [animationConfig.reduce, index]);
+
+    return (
+        <motion.span
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-normal text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
+            {...badgeVariants}
+            whileHover={animationConfig.reduce ? {} : { scale: 1.05 }}
+        >
+            {tech}
+        </motion.span>
+    );
+});
 
 // Statistics Section Component (Optional)
 const StatisticsSection = memo(({ statistics }) => (
@@ -673,13 +868,64 @@ const ProjectCard = memo(({
 
 const RemainingProjectsRow = memo(() => {
     const navigate = useNavigate();
+    const animationConfig = getAnimationConfig();
+    
+    const containerVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.4 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, y: 30 }, // Reduced from 40
+            animate: { 
+                opacity: 1, 
+                y: 0,
+                transition: { duration: 0.5, delay: 0.2 }
+            }
+        };
+    }, [animationConfig.reduce]);
+
+    const itemVariants = useMemo(() => (idx) => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.3, delay: idx * 0.05 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, y: 20, scale: 0.95 }, // Reduced values
+            animate: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: { duration: 0.4, delay: 0.1 + idx * 0.08 }
+            }
+        };
+    }, [animationConfig.reduce]);
+
+    const hoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.02 };
+        }
+        
+        return { scale: 1.08, y: -6 };
+    }, [animationConfig.reduce]);
+
     return (
         <motion.div
             className="w-full flex flex-col items-center mt-20"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            {...containerVariants}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
         >
             <span className="text-white/60 text-base uppercase tracking-wider font-medium mb-8 block">
                 Other Projects
@@ -689,11 +935,9 @@ const RemainingProjectsRow = memo(() => {
                     <motion.div
                         key={proj.name}
                         className="flex flex-col items-center cursor-pointer"
-                        initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        {...itemVariants(idx)}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 + idx * 0.08 }}
-                        whileHover={{ scale: 1.08, y: -6 }}
+                        whileHover={hoverVariants}
                         onClick={() => navigate(proj.link)}
                     >
                         <img
@@ -701,9 +945,6 @@ const RemainingProjectsRow = memo(() => {
                             alt={proj.alt}
                             className="w-34 h-24 md:w-38 md:h-28 object-contain"
                         />
-                        {/* <span className="mt-4 text-sm md:text-base text-white/80 font-semibold tracking-wide text-center">
-                            {proj.name}
-                        </span> */}
                     </motion.div>
                 ))}
             </div>

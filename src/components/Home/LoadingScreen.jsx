@@ -10,8 +10,8 @@ const LoadingScreen = ({ onLoadingComplete }) => {
             // Wait for fade animation to complete before calling onLoadingComplete
             setTimeout(() => {
                 onLoadingComplete && onLoadingComplete();
-            }, 600); // Match the fade duration
-        }, 1500);
+            }, 500); // Match the fade duration
+        }, 2500);
 
         return () => clearTimeout(timer);
     }, [onLoadingComplete]);

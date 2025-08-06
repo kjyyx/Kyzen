@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 /**
- * Wrapper component for scroll animations
+ * Optimized wrapper component for scroll animations
  */
 const ScrollAnimatedSection = memo(({ 
     children, 
@@ -12,17 +12,33 @@ const ScrollAnimatedSection = memo(({
     className = '',
     enableStagger = false,
     threshold = 0.1,
+    priority = 'medium',
     as = 'div',
     ...props 
 }) => {
-    const { ref, variants, controls } = useScrollAnimation({
+    const { ref, variants, controls, shouldAnimate } = useScrollAnimation({
         animationType,
         delay,
         enableStagger,
-        threshold
+        threshold,
+        priority
     });
 
     const MotionComponent = motion[as];
+
+    // Skip animation wrapper if animations are disabled
+    if (!shouldAnimate) {
+        const Component = as === 'div' ? 'div' : as;
+        return (
+            <Component
+                ref={ref}
+                className={className}
+                {...props}
+            >
+                {children}
+            </Component>
+        );
+    }
 
     return (
         <MotionComponent
@@ -37,5 +53,7 @@ const ScrollAnimatedSection = memo(({
         </MotionComponent>
     );
 });
+
+ScrollAnimatedSection.displayName = 'ScrollAnimatedSection';
 
 export default ScrollAnimatedSection;

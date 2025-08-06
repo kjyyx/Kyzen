@@ -1,98 +1,139 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Code2, Zap, AlertTriangle } from 'lucide-react';
+import { X, Code2, AlertTriangle } from 'lucide-react';
+import { ANIMATION_DURATION, EASING } from '../../utils/constants';
 
 const DevelopmentModal = ({ onClose }) => {
+    const [shouldShow, setShouldShow] = useState(false);
+
+    // Show modal after 3 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShouldShow(true);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (!shouldShow) return null;
+
+    // Optimized animation variants
+    const modalVariants = {
+        hidden: { 
+            opacity: 0, 
+            scale: 0.9,
+            y: 20
+        },
+        visible: { 
+            opacity: 1, 
+            scale: 1,
+            y: 0,
+            transition: {
+                duration: ANIMATION_DURATION.normal,
+                ease: EASING.easeOut
+            }
+        },
+        exit: { 
+            opacity: 0, 
+            scale: 0.9,
+            y: 20,
+            transition: {
+                duration: ANIMATION_DURATION.fast,
+                ease: EASING.easeIn
+            }
+        }
+    };
+
+    const backdropVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+            opacity: 1,
+            transition: { duration: ANIMATION_DURATION.fast }
+        },
+        exit: { 
+            opacity: 0,
+            transition: { duration: ANIMATION_DURATION.fast }
+        }
+    };
+
+    const contentVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+            opacity: 1,
+            transition: {
+                duration: ANIMATION_DURATION.normal,
+                staggerChildren: 0.05,
+                delayChildren: 0.1
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: {
+                duration: ANIMATION_DURATION.fast,
+                ease: EASING.easeOut
+            }
+        }
+    };
+
     return (
         <AnimatePresence>
             <motion.div
                 className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                variants={backdropVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
             >
                 {/* Backdrop */}
                 <motion.div
                     className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
                     onClick={onClose}
                 />
 
                 {/* Modal Content */}
                 <motion.div
                     className="relative w-full max-w-md sm:max-w-lg bg-gradient-to-br from-[#2e175c]/90 via-[#1a1a1a]/95 to-black/90 border border-[#ff75df]/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-[#ff75df]/20"
-                    initial={{ scale: 0.8, y: 50, opacity: 0 }}
-                    animate={{ scale: 1, y: 0, opacity: 1 }}
-                    exit={{ scale: 0.8, y: 50, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    variants={modalVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
                 >
                     {/* Close Button */}
                     <motion.button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        className="absolute top-4 right-4 p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors duration-200"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <X className="w-5 h-5" />
                     </motion.button>
 
-                    {/* Icon and Animation */}
-                    <div className="flex justify-center mb-6">
-                        <motion.div
-                            className="relative"
-                            animate={{
-                                rotate: [0, 360],
-                            }}
-                            transition={{
-                                duration: 8,
-                                repeat: Infinity,
-                                ease: "linear"
-                            }}
-                        >
-                            <div className="w-16 h-16 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full flex items-center justify-center">
-                                <Code2 className="w-8 h-8 text-white" />
-                            </div>
-                            
-                            {/* Floating particles around icon */}
-                            <motion.div
-                                className="absolute -top-1 -right-1 w-3 h-3 bg-[#ff75df] rounded-full"
-                                animate={{
-                                    scale: [1, 1.5, 1],
-                                    opacity: [0.7, 1, 0.7],
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                            />
-                            <motion.div
-                                className="absolute -bottom-1 -left-1 w-2 h-2 bg-purple-400 rounded-full"
-                                animate={{
-                                    scale: [1, 1.3, 1],
-                                    opacity: [0.6, 1, 0.6],
-                                }}
-                                transition={{
-                                    duration: 2.5,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                    delay: 0.5
-                                }}
-                            />
-                        </motion.div>
-                    </div>
+                    {/* Simplified Icon */}
+                    <motion.div 
+                        className="flex justify-center mb-6"
+                        variants={itemVariants}
+                    >
+                        <div className="w-16 h-16 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full flex items-center justify-center">
+                            <Code2 className="w-8 h-8 text-white" />
+                        </div>
+                    </motion.div>
 
-                    {/* Content */}
-                    <div className="text-center space-y-4">
+                    {/* Content with stagger */}
+                    <motion.div 
+                        className="text-center space-y-4"
+                        variants={contentVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
                         {/* Title */}
                         <motion.h2
                             className="text-2xl sm:text-3xl font-black italic tracking-tight bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text text-transparent"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
+                            variants={itemVariants}
                         >
                             Under Development
                         </motion.h2>
@@ -100,21 +141,15 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Subtitle */}
                         <motion.div
                             className="flex items-center justify-center gap-2 text-[#ff75df]/80"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
+                            variants={itemVariants}
                         >
-                            <Zap className="w-4 h-4" />
                             <span className="text-sm font-medium tracking-wide">Digital Portfolio v2.0</span>
-                            <Zap className="w-4 h-4" />
                         </motion.div>
 
                         {/* Message */}
                         <motion.p
                             className="text-white/80 text-sm sm:text-base leading-relaxed px-2"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
+                            variants={itemVariants}
                         >
                             This portfolio is currently being enhanced with new features, 
                             improved animations, and fresh content. Some sections may be 
@@ -124,9 +159,7 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Features List */}
                         <motion.div
                             className="text-left bg-white/5 rounded-xl p-4 border border-white/10"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
+                            variants={itemVariants}
                         >
                             <div className="flex items-center gap-2 mb-3">
                                 <AlertTriangle className="w-4 h-4 text-[#ff75df]" />
@@ -155,12 +188,10 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Action Button */}
                         <motion.button
                             onClick={onClose}
-                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-[#ff75df] to-purple-400 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-[#ff75df]/30 transition-all duration-300"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 }}
+                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-[#ff75df] to-purple-400 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-[#ff75df]/30 transition-all duration-200"
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            variants={itemVariants}
                         >
                             Continue Exploring
                         </motion.button>
@@ -168,13 +199,11 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Footer Note */}
                         <motion.p
                             className="text-xs text-white/50 mt-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
+                            variants={itemVariants}
                         >
                             Thank you for your patience! 🚀
                         </motion.p>
-                    </div>
+                    </motion.div>
                 </motion.div>
             </motion.div>
         </AnimatePresence>

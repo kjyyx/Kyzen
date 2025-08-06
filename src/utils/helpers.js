@@ -1,4 +1,24 @@
-// Device detection helpers
+import { PERFORMANCE } from './constants';
+
+// Performance optimization utilities
+let animationCount = 0;
+const maxAnimations = PERFORMANCE.maxConcurrentAnimations;
+
+export const canAnimate = () => {
+    if (PERFORMANCE.reducedMotion) return false;
+    if (animationCount >= maxAnimations) return false;
+    return true;
+};
+
+export const registerAnimation = () => {
+    animationCount++;
+};
+
+export const unregisterAnimation = () => {
+    animationCount = Math.max(0, animationCount - 1);
+};
+
+// Device detection helpers with performance considerations
 export const getDeviceType = () => {
     const width = window.innerWidth;
     
@@ -12,7 +32,101 @@ export const isMobile = () => window.innerWidth < 640;
 export const isTablet = () => window.innerWidth >= 640 && window.innerWidth < 1024;
 export const isDesktop = () => window.innerWidth >= 1024;
 
-// Scroll utilities
+// Performance-aware animation config
+export const getAnimationConfig = () => {
+    const isLowEnd = PERFORMANCE.isLowEndDevice;
+    const isMobileDevice = isMobile();
+    const reducedMotion = PERFORMANCE.reducedMotion;
+    
+    return {
+        reduce: reducedMotion || isLowEnd || isMobileDevice,
+        enableComplex: !isLowEnd && !isMobileDevice && !reducedMotion,
+        staggerDelay: isLowEnd ? 0.05 : isMobileDevice ? 0.08 : 0.1,
+        duration: isLowEnd ? 0.2 : isMobileDevice ? 0.3 : 0.4
+    };
+};
+
+// Optimized throttle with RAF
+export const throttle = (func, limit = PERFORMANCE.throttleDelay) => {
+    let inThrottle;
+    let lastFunc;
+    let lastRan;
+    
+    return function() {
+        const context = this;
+        const args = arguments;
+        
+        if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+        } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function() {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, limit - (Date.now() - lastRan));
+        }
+    };
+};
+
+// RAF-based debounce for smooth animations
+export const debounce = (func, wait) => {
+    let timeout;
+    let rafId;
+    
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => func(...args));
+        };
+        
+        clearTimeout(timeout);
+        cancelAnimationFrame(rafId);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+// Intersection Observer with performance optimizations
+export const createOptimizedObserver = (callback, options = {}) => {
+    const defaultOptions = {
+        rootMargin: PERFORMANCE.intersectionRootMargin,
+        threshold: [0, 0.1, 0.25, 0.5],
+        ...options
+    };
+    
+    if (!window.IntersectionObserver) {
+        // Fallback for older browsers
+        return {
+            observe: () => {},
+            unobserve: () => {},
+            disconnect: () => {}
+        };
+    }
+    
+    return new IntersectionObserver(throttle(callback, 100), defaultOptions);
+};
+
+// Memory-efficient animation variants creator
+export const createMobileOptimizedVariants = (baseVariants) => {
+    const config = getAnimationConfig();
+    
+    if (config.reduce) {
+        return {
+            hidden: { opacity: 0 },
+            visible: { 
+                opacity: 1,
+                transition: { duration: config.duration }
+            }
+        };
+    }
+    
+    return baseVariants;
+};
+
+// Scroll utilities (optimized)
 export const scrollToElement = (elementId, offset = 0) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -30,34 +144,7 @@ export const getScrollPercentage = () => {
     return (scrollTop / scrollHeight) * 100;
 };
 
-// Debounce function for performance optimization
-export const debounce = (func, wait) => {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-};
-
-// Throttle function for scroll events
-export const throttle = (func, limit) => {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-};
-
-// Format date helpers
+// Format date helpers (unchanged)
 export const formatDate = (dateString, options = {}) => {
     const defaultOptions = {
         year: 'numeric',
@@ -95,7 +182,7 @@ export const getTimeAgo = (dateString) => {
     return 'just now';
 };
 
-// String utilities
+// String utilities (unchanged)
 export const truncateText = (text, maxLength, suffix = '...') => {
     if (text.length <= maxLength) return text;
     return text.slice(0, maxLength - suffix.length) + suffix;
@@ -113,7 +200,7 @@ export const slugify = (text) => {
         .replace(/^-+|-+$/g, '');
 };
 
-// Array utilities
+// Array utilities (unchanged)
 export const shuffleArray = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -131,7 +218,7 @@ export const chunkArray = (array, size) => {
     return chunks;
 };
 
-// Local storage utilities
+// Local storage utilities (unchanged)
 export const setLocalStorage = (key, value) => {
     try {
         localStorage.setItem(key, JSON.stringify(value));
@@ -162,7 +249,7 @@ export const removeLocalStorage = (key) => {
     }
 };
 
-// Performance utilities
+// Performance utilities (enhanced)
 export const preloadImage = (src) => {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -182,7 +269,7 @@ export const preloadImages = async (srcArray) => {
     }
 };
 
-// URL utilities
+// URL utilities (unchanged)
 export const isValidUrl = (string) => {
     try {
         new URL(string);
@@ -202,16 +289,19 @@ export const setQueryParam = (key, value) => {
     window.history.pushState({}, '', url);
 };
 
-// Animation utilities
+// Optimized animation utilities
 export const createStaggerDelay = (index, baseDelay = 0.1) => {
-    return index * baseDelay;
+    const config = getAnimationConfig();
+    return index * (config.reduce ? baseDelay * 0.5 : baseDelay);
 };
 
 export const getRandomDelay = (min = 0, max = 0.5) => {
+    const config = getAnimationConfig();
+    if (config.reduce) return 0;
     return Math.random() * (max - min) + min;
 };
 
-// Color utilities
+// Color utilities (unchanged)
 export const hexToRgb = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {

@@ -27,7 +27,19 @@ import ResumePDF from '../../assets/KenjiJaculbia_Curriculum_Vitae.pdf';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
+
 import { useScrollAnimation, useStaggerScrollAnimation } from '../../hooks/useScrollAnimation';
+
+import { 
+    getAnimationConfig, 
+    canAnimate, 
+    createStaggerDelay 
+} from '../../utils/helpers';
+import { 
+    ANIMATION_DURATION, 
+    EASING, 
+    PERFORMANCE 
+} from '../../utils/constants';
 
 // Static data moved outside component
 const techStacks = [
@@ -194,151 +206,251 @@ const socialLinks = [
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
 // Current Tech Skills Display Component
-const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => (
-    <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start">
-        {currentTechSkills.map((skill, index) => (
-            <motion.div
-                key={skill.name}
-                className="relative group cursor-pointer flex flex-col items-center gap-2 sm:gap-3"
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 1.1 + index * 0.1, type: "spring" }}
-                whileHover={{
-                    scale: 1.1,
-                    y: -5,
-                    transition: { type: "spring", stiffness: 300, damping: 20 }
-                }}
-                onMouseEnter={() => onHover(skill.name)}
-                onMouseLeave={onLeave}
-            >
-                <motion.div
-                    className="absolute -inset-2 rounded-full opacity-0 blur-lg"
-                    style={{ backgroundColor: skill.color }}
-                    animate={{
-                        opacity: hoveredSkill === skill.name ? 0.1 : 0,
-                        scale: hoveredSkill === skill.name ? 1.1 : 1
-                    }}
-                    transition={{ duration: 0.3 }}
-                />
+const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const skillVariants = useMemo(() => (index) => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.3, delay: index * 0.05 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, scale: 0.8, y: 20 },
+            animate: { 
+                opacity: 1, 
+                scale: 1, 
+                y: 0,
+                transition: { 
+                    delay: 1.1 + index * 0.1, 
+                    type: "spring" 
+                }
+            }
+        };
+    }, [animationConfig.reduce]);
 
-                <motion.div
-                    className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
-                    animate={{
-                        rotate: hoveredSkill === skill.name ? [0, 5, -5, 0] : 0
-                    }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <motion.img
-                        src={skill.icon}
-                        alt={skill.name}
-                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10 object-contain"
-                        style={{
-                            filter: hoveredSkill === skill.name
-                                ? 'brightness(1.1) saturate(1.1) drop-shadow(0 0 2px currentColor)'
-                                : 'brightness(1) saturate(1)'
-                        }}
-                    />
-                </motion.div>
+    const hoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.05 };
+        }
+        
+        return {
+            scale: 1.1,
+            y: -5,
+            transition: { type: "spring", stiffness: 300, damping: 20 }
+        };
+    }, [animationConfig.reduce]);
 
+    return (
+        <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start">
+            {currentTechSkills.map((skill, index) => (
                 <motion.div
-                    className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ color: skill.color }}
+                    key={skill.name}
+                    className="relative group cursor-pointer flex flex-col items-center gap-2 sm:gap-3"
+                    {...skillVariants(index)}
+                    whileHover={hoverVariants}
+                    onMouseEnter={() => onHover(skill.name)}
+                    onMouseLeave={onLeave}
                 >
-                    {skill.name}
+                    {/* Glow effect - Only on capable devices */}
+                    {!animationConfig.reduce && (
+                        <motion.div
+                            className="absolute -inset-2 rounded-full opacity-0 blur-lg"
+                            style={{ backgroundColor: skill.color }}
+                            animate={{
+                                opacity: hoveredSkill === skill.name ? 0.1 : 0,
+                                scale: hoveredSkill === skill.name ? 1.1 : 1
+                            }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    )}
+
+                    <motion.div
+                        className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
+                        animate={!animationConfig.reduce && hoveredSkill === skill.name ? 
+                            { rotate: [0, 5, -5, 0] } : 
+                            { rotate: 0 }
+                        }
+                        transition={{ duration: 0.6 }}
+                    >
+                        <motion.img
+                            src={skill.icon}
+                            alt={skill.name}
+                            className="w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10 object-contain"
+                            style={{
+                                filter: hoveredSkill === skill.name && !animationConfig.reduce
+                                    ? 'brightness(1.1) saturate(1.1) drop-shadow(0 0 2px currentColor)'
+                                    : 'brightness(1) saturate(1)'
+                            }}
+                        />
+                    </motion.div>
+
+                    {/* Tooltip */}
+                    <motion.div
+                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        style={{ color: skill.color }}
+                    >
+                        {skill.name}
+                    </motion.div>
                 </motion.div>
-            </motion.div>
-        ))}
-    </div>
-));
+            ))}
+        </div>
+    );
+});
 
 // Enhanced Avatar Component
-const EnhancedAvatar = memo(() => (
-    <motion.div
-        className="relative"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-    >
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
-            <motion.div
-                className="absolute inset-0 rounded-full border-2 border-[#ff75df]/30"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-                className="absolute inset-2 rounded-full border border-purple-400/20"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            />
+const EnhancedAvatar = memo(() => {
+    const animationConfig = getAnimationConfig();
+    const shouldAnimate = canAnimate();
+    
+    const avatarVariants = useMemo(() => {
+        if (animationConfig.reduce || !shouldAnimate) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { duration: 0.4, delay: 0.3 }
+                }
+            };
+        }
+        
+        return {
+            initial: { scale: 0.8, opacity: 0 },
+            animate: { 
+                scale: 1, 
+                opacity: 1,
+                transition: { 
+                    duration: ANIMATION_DURATION.slower, 
+                    delay: 0.3 
+                }
+            }
+        };
+    }, [animationConfig.reduce, shouldAnimate]);
 
-            <motion.div
-                className="absolute inset-4 rounded-full bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 blur-xl"
-                animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-            />
+    const rotatingRingVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { rotate: 0 };
+        }
+        
+        return { rotate: 360 };
+    }, [animationConfig.reduce]);
 
-            <motion.div
-                className="absolute inset-4 rounded-full overflow-hidden border-3 border-white/30 shadow-2xl"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                    boxShadow: '0 0 50px rgba(255, 117, 223, 0.3)'
-                }}
-            >
-                <img
-                    src={ProfileImage}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
+    const glowVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                scale: 1,
+                opacity: 0.3
+            };
+        }
+        
+        return {
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.6, 0.3]
+        };
+    }, [animationConfig.reduce]);
+
+    return (
+        <motion.div
+            className="relative"
+            {...avatarVariants}
+        >
+            <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+                {/* Rotating rings - Only on capable devices */}
+                {shouldAnimate && (
+                    <>
+                        <motion.div
+                            className="absolute inset-0 rounded-full border-2 border-[#ff75df]/30"
+                            animate={rotatingRingVariants}
+                            transition={{ 
+                                duration: animationConfig.reduce ? 0 : 20, 
+                                repeat: animationConfig.reduce ? 0 : Infinity, 
+                                ease: "linear" 
+                            }}
+                        />
+                        <motion.div
+                            className="absolute inset-2 rounded-full border border-purple-400/20"
+                            animate={{ rotate: animationConfig.reduce ? 0 : -360 }}
+                            transition={{ 
+                                duration: animationConfig.reduce ? 0 : 15, 
+                                repeat: animationConfig.reduce ? 0 : Infinity, 
+                                ease: "linear" 
+                            }}
+                        />
+                    </>
+                )}
+
+                {/* Glow effect - Simplified */}
+                <motion.div
+                    className="absolute inset-4 rounded-full bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 blur-xl"
+                    animate={glowVariants}
+                    transition={{ 
+                        duration: animationConfig.reduce ? 0 : 4, 
+                        repeat: animationConfig.reduce ? 0 : Infinity 
+                    }}
                 />
-            </motion.div>
-        </div>
-    </motion.div>
-));
+
+                {/* Profile image container */}
+                <motion.div
+                    className="absolute inset-4 rounded-full overflow-hidden border-3 border-white/30 shadow-2xl"
+                    whileHover={animationConfig.reduce ? {} : { scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                        boxShadow: shouldAnimate ? '0 0 50px rgba(255, 117, 223, 0.3)' : 'none'
+                    }}
+                >
+                    <img
+                        src={ProfileImage}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                    />
+                </motion.div>
+            </div>
+        </motion.div>
+    );
+});
 
 // Floating Particles Background Component
-const FloatingParticles = memo(() => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-            className="absolute w-2 h-2 bg-[#ff75df] rounded-full top-20 left-1/4"
-            animate={{
-                y: [0, -20, 0],
-                opacity: [0.3, 1, 0.3],
-                scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
-        />
-        <motion.div
-            className="absolute w-1 h-1 bg-blue-400 rounded-full top-40 right-1/3"
-            animate={{
-                y: [0, -30, 0],
-                opacity: [0.5, 1, 0.5],
-                x: [0, 10, 0]
-            }}
-            transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-        />
-        <motion.div
-            className="absolute w-3 h-3 bg-purple-400 rounded-full bottom-32 left-1/3"
-            animate={{
-                y: [0, -25, 0],
-                opacity: [0.2, 0.8, 0.2],
-                rotate: [0, 180, 360]
-            }}
-            transition={{ duration: 5, repeat: Infinity, delay: 2 }}
-        />
-        <motion.div
-            className="absolute w-1.5 h-1.5 bg-green-400 rounded-full top-1/2 left-1/6"
-            animate={{
-                y: [0, -15, 0],
-                x: [0, 15, 0],
-                opacity: [0.4, 0.9, 0.4]
-            }}
-            transition={{ duration: 6, repeat: Infinity, delay: 3 }}
-        />
-    </div>
-));
+const FloatingParticles = memo(() => {
+    const animationConfig = getAnimationConfig();
+    
+    // Skip particles entirely on low-end devices
+    if (!canAnimate() || animationConfig.reduce) {
+        return null;
+    }
+
+    const particles = useMemo(() => [
+        { id: 1, size: 'w-2 h-2', color: 'bg-[#ff75df]', top: 'top-20', left: 'left-1/4', duration: 3 },
+        { id: 2, size: 'w-1 h-1', color: 'bg-blue-400', top: 'top-40', left: 'right-1/3', duration: 4, delay: 1 },
+        { id: 3, size: 'w-3 h-3', color: 'bg-purple-400', top: 'bottom-32', left: 'left-1/3', duration: 5, delay: 2 },
+        { id: 4, size: 'w-1.5 h-1.5', color: 'bg-green-400', top: 'top-1/2', left: 'left-1/6', duration: 6, delay: 3 }
+    ], []);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {particles.map((particle) => (
+                <motion.div
+                    key={particle.id}
+                    className={`absolute ${particle.size} ${particle.color} rounded-full ${particle.top} ${particle.left}`}
+                    animate={{
+                        y: [0, -15, 0], // Reduced movement
+                        opacity: [0.3, 0.8, 0.3], // Reduced max opacity
+                        scale: [1, 1.1, 1] // Reduced scaling
+                    }}
+                    transition={{ 
+                        duration: particle.duration, 
+                        repeat: Infinity,
+                        delay: particle.delay || 0
+                    }}
+                />
+            ))}
+        </div>
+    );
+});
 
 // Hero Section Title Component
 const HeroTitle = memo(() => (
@@ -364,97 +476,123 @@ const HeroTitle = memo(() => (
 ));
 
 // Hobby Card Component
-const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => (
-    <motion.div
-        className="group relative cursor-pointer"
-        initial={{ opacity: 0, y: 20, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{
-            delay: index * 0.1,
-            type: "spring",
-            stiffness: 100,
-            damping: 15
-        }}
-        whileHover={{
+const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const cardVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { delay: index * 0.05 }
+                }
+            };
+        }
+        
+        return {
+            initial: { opacity: 0, y: 20, scale: 0.9 },
+            animate: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: {
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                }
+            }
+        };
+    }, [animationConfig.reduce, index]);
+
+    const hoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.02 };
+        }
+        
+        return {
             y: -5,
             scale: 1.05,
             transition: { type: "spring", stiffness: 300, damping: 20 }
-        }}
-        onMouseEnter={() => onHover(hobby.name)}
-        onMouseLeave={onLeave}
-    >
+        };
+    }, [animationConfig.reduce]);
+
+    return (
         <motion.div
-            className={`absolute -inset-3 bg-gradient-to-r ${hobby.gradient} rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-500`}
-            animate={{
-                scale: isHovered ? [1, 1.05, 1] : 1,
-                opacity: isHovered ? [0.5, 0.8, 0.5] : 0
-            }}
-            transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
-        />
-
-        <div className={`relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
-            <motion.span
-                className="text-lg sm:text-xl md:text-2xl"
-                animate={{
-                    scale: isHovered ? [1, 1.2, 1] : 1,
-                    rotate: isHovered ? [0, 10, -10, 0] : 0
-                }}
-                transition={{ duration: 0.6, repeat: isHovered ? Infinity : 0 }}
-            >
-                {hobby.emoji}
-            </motion.span>
-
-            <motion.span
-                className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
-                style={{ color: hobby.color }}
-                animate={{
-                    x: isHovered ? 3 : 0,
-                    color: isHovered ? '#ffffff' : hobby.color
-                }}
-                transition={{ duration: 0.3 }}
-            >
-                {hobby.name}
-            </motion.span>
-
-            {isHovered && (
-                <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(3)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: hobby.color }}
-                            initial={{
-                                x: '50%',
-                                y: '50%',
-                                opacity: 0
-                            }}
-                            animate={{
-                                x: [20, 80, 20][i % 3] + '%',
-                                y: [20, 80, 20][i % 3] + '%',
-                                opacity: [0, 0.8, 0]
-                            }}
-                            transition={{
-                                duration: 1.5,
-                                delay: i * 0.2,
-                                repeat: Infinity
-                            }}
-                        />
-                    ))}
-                </div>
+            className="group relative cursor-pointer"
+            {...cardVariants}
+            whileHover={hoverVariants}
+            onMouseEnter={() => onHover(hobby.name)}
+            onMouseLeave={onLeave}
+        >
+            {/* Background glow - Only on capable devices */}
+            {!animationConfig.reduce && (
+                <motion.div
+                    className={`absolute -inset-3 bg-gradient-to-r ${hobby.gradient} rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-500`}
+                    animate={{
+                        scale: isHovered ? [1, 1.05, 1] : 1,
+                        opacity: isHovered ? [0.5, 0.8, 0.5] : 0
+                    }}
+                    transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
+                />
             )}
 
-            <motion.div
-                className="absolute inset-0 rounded-2xl pointer-events-none"
-                animate={{
-                    background: isHovered
-                        ? `linear-gradient(45deg, transparent, rgba(255, 117, 223, 0.1), transparent)`
-                        : 'transparent'
-                }}
-                transition={{ duration: 0.3 }}
-            />
-        </div>
-    </motion.div>
-));
+            <div className={`relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
+                <motion.span
+                    className="text-lg sm:text-xl md:text-2xl"
+                    animate={!animationConfig.reduce && isHovered ? {
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 10, -10, 0]
+                    } : { scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, repeat: isHovered && !animationConfig.reduce ? Infinity : 0 }}
+                >
+                    {hobby.emoji}
+                </motion.span>
+
+                <motion.span
+                    className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
+                    style={{ color: hobby.color }}
+                    animate={{
+                        x: isHovered ? 3 : 0,
+                        color: isHovered && !animationConfig.reduce ? '#ffffff' : hobby.color
+                    }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {hobby.name}
+                </motion.span>
+
+                {/* Floating particles - Only on capable devices when hovered */}
+                {isHovered && !animationConfig.reduce && (
+                    <div className="absolute inset-0 pointer-events-none">
+                        {[...Array(3)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                className="absolute w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: hobby.color }}
+                                initial={{
+                                    x: '50%',
+                                    y: '50%',
+                                    opacity: 0
+                                }}
+                                animate={{
+                                    x: [20, 80, 20][i % 3] + '%',
+                                    y: [20, 80, 20][i % 3] + '%',
+                                    opacity: [0, 0.8, 0]
+                                }}
+                                transition={{
+                                    duration: 1.5,
+                                    delay: i * 0.2,
+                                    repeat: Infinity
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+});
 
 // Hobbies Section Component
 const HobbiesSection = memo(({ hoveredHobby, onHobbyHover, onHobbyLeave }) => {
@@ -806,127 +944,157 @@ const SectionDivider = memo(() => (
 ));
 
 // Skill Card Component
-const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => (
-    <motion.div
-        className="group relative cursor-pointer"
-        initial={{
-            opacity: 0,
-            scale: 0,
-            rotateY: -90
-        }}
-        animate={{
-            opacity: 1,
-            scale: 1,
-            rotateY: 0
-        }}
-        transition={{
-            delay: index * 0.1,
-            duration: 0.6,
-            type: "spring",
-            stiffness: 100
-        }}
-        whileHover={{
+const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
+    const animationConfig = getAnimationConfig();
+    
+    const cardVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return {
+                initial: { opacity: 0 },
+                animate: { 
+                    opacity: 1,
+                    transition: { delay: index * 0.05 }
+                }
+            };
+        }
+        
+        return {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotateY: -90
+            },
+            animate: {
+                opacity: 1,
+                scale: 1,
+                rotateY: 0,
+                transition: {
+                    delay: index * 0.1,
+                    duration: 0.6,
+                    type: "spring",
+                    stiffness: 100
+                }
+            }
+        };
+    }, [animationConfig.reduce, index]);
+
+    const hoverVariants = useMemo(() => {
+        if (animationConfig.reduce) {
+            return { scale: 1.05 };
+        }
+        
+        return {
             scale: 1.1,
             y: -8,
             rotateY: 10,
             transition: { type: "spring", stiffness: 300, damping: 20 }
-        }}
-        onMouseEnter={() => onHover(skill.name)}
-        onMouseLeave={onLeave}
-    >
-        <motion.div
-            className="absolute -inset-6 rounded-3xl opacity-0 blur-xl"
-            style={{ backgroundColor: skill.color }}
-            animate={{
-                opacity: isHovered ? 0.05 : 0,
-                scale: isHovered ? 1.2 : 1
-            }}
-            transition={{ duration: 0.3 }}
-        />
+        };
+    }, [animationConfig.reduce]);
 
+    return (
         <motion.div
-            className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center text-center space-y-2 sm:space-y-3 md:space-y-4 overflow-hidden"
-            style={{
-                borderColor: isHovered ? skill.color + '30' : 'rgba(255,255,255,0.2)'
-            }}
+            className="group relative cursor-pointer"
+            {...cardVariants}
+            whileHover={hoverVariants}
+            onMouseEnter={() => onHover(skill.name)}
+            onMouseLeave={onLeave}
         >
-            <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                    background: `radial-gradient(circle at center, ${skill.color}05, transparent 70%)`
-                }}
-            />
-
-            <motion.div
-                className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center"
-                animate={{
-                    rotate: isHovered ? [0, 5, -5, 0] : 0
-                }}
-                transition={{ duration: 0.6 }}
-            >
-                <motion.img
-                    src={skill.logo}
-                    alt={skill.name}
-                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain relative z-10"
-                    style={{
-                        filter: isHovered
-                            ? 'brightness(1.2) saturate(1.3)'
-                            : 'brightness(1) saturate(1)'
-                    }}
-                />
-
+            {/* Background glow - Only on capable devices */}
+            {!animationConfig.reduce && (
                 <motion.div
-                    className="absolute inset-0 rounded-full blur-lg"
+                    className="absolute -inset-6 rounded-3xl opacity-0 blur-xl"
                     style={{ backgroundColor: skill.color }}
                     animate={{
-                        opacity: isHovered ? 0.15 : 0,
-                        scale: isHovered ? 1.1 : 0.8
+                        opacity: isHovered ? 0.05 : 0,
+                        scale: isHovered ? 1.2 : 1
                     }}
+                    transition={{ duration: 0.3 }}
                 />
-            </motion.div>
+            )}
 
-            <motion.div className="relative z-10 space-y-1 sm:space-y-2">
-                <motion.h5
-                    className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
-                    style={{
-                        color: isHovered ? skill.color : '#ffffff'
-                    }}
-                    animate={{
-                        scale: isHovered ? 1.05 : 1
-                    }}
+            <motion.div
+                className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center text-center space-y-2 sm:space-y-3 md:space-y-4 overflow-hidden"
+                style={{
+                    borderColor: isHovered ? skill.color + '30' : 'rgba(255,255,255,0.2)'
+                }}
+            >
+                {/* Skill icon */}
+                <motion.div
+                    className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center"
+                    animate={!animationConfig.reduce && isHovered ? 
+                        { rotate: [0, 5, -5, 0] } : 
+                        { rotate: 0 }
+                    }
+                    transition={{ duration: 0.6 }}
                 >
-                    {skill.name}
-                </motion.h5>
-            </motion.div>
+                    <motion.img
+                        src={skill.logo}
+                        alt={skill.name}
+                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain relative z-10"
+                        style={{
+                            filter: isHovered && !animationConfig.reduce
+                                ? 'brightness(1.2) saturate(1.3)'
+                                : 'brightness(1) saturate(1)'
+                        }}
+                    />
 
-            {isHovered && (
-                <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(5)].map((_, i) => (
+                    {!animationConfig.reduce && (
                         <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 rounded-full"
-                            style={{
-                                backgroundColor: skill.color,
-                                left: `${20 + i * 15}%`,
-                                top: `${20 + (i % 2) * 40}%`
-                            }}
+                            className="absolute inset-0 rounded-full blur-lg"
+                            style={{ backgroundColor: skill.color }}
                             animate={{
-                                y: [-10, -30, -10],
-                                opacity: [0, 1, 0],
-                                scale: [0, 1, 0]
-                            }}
-                            transition={{
-                                duration: 2,
-                                delay: i * 0.2,
-                                repeat: Infinity
+                                opacity: isHovered ? 0.15 : 0,
+                                scale: isHovered ? 1.1 : 0.8
                             }}
                         />
-                    ))}
-                </div>
-            )}
+                    )}
+                </motion.div>
+
+                {/* Skill name */}
+                <motion.div className="relative z-10 space-y-1 sm:space-y-2">
+                    <motion.h5
+                        className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
+                        style={{
+                            color: isHovered ? skill.color : '#ffffff'
+                        }}
+                        animate={{
+                            scale: isHovered && !animationConfig.reduce ? 1.05 : 1
+                        }}
+                    >
+                        {skill.name}
+                    </motion.h5>
+                </motion.div>
+
+                {/* Floating particles - Only on capable devices when hovered */}
+                {isHovered && !animationConfig.reduce && (
+                    <div className="absolute inset-0 pointer-events-none">
+                        {[...Array(5)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                className="absolute w-1 h-1 rounded-full"
+                                style={{
+                                    backgroundColor: skill.color,
+                                    left: `${20 + i * 15}%`,
+                                    top: `${20 + (i % 2) * 40}%`
+                                }}
+                                animate={{
+                                    y: [-10, -30, -10],
+                                    opacity: [0, 1, 0],
+                                    scale: [0, 1, 0]
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    delay: i * 0.2,
+                                    repeat: Infinity
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
+            </motion.div>
         </motion.div>
-    </motion.div>
-));
+    );
+});
 
 // Social Link Component
 const SocialLink = memo(({ social, index }) => (

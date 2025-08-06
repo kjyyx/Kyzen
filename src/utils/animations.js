@@ -1,108 +1,147 @@
-import { ANIMATION_DURATION, EASING } from './constants';
+import { ANIMATION_DURATION, EASING, PERFORMANCE } from './constants';
+import { getAnimationConfig } from './helpers';
 
-// Scroll animation presets
+// Simplified animation presets for better performance
 export const scrollAnimationPresets = {
-    // Standard fade animations
+    // Minimal fade animations
     fadeIn: {
         hidden: { opacity: 0 },
         visible: { 
             opacity: 1,
-            transition: { duration: ANIMATION_DURATION.normal, ease: EASING.easeOut }
+            transition: { 
+                duration: ANIMATION_DURATION.normal, 
+                ease: EASING.easeOut
+            }
         }
     },
     
     fadeInUp: {
-        hidden: { opacity: 0, y: 40 },
+        hidden: { opacity: 0, y: 20 }, // Reduced from 40
         visible: { 
             opacity: 1, 
             y: 0,
-            transition: { duration: ANIMATION_DURATION.slow, ease: EASING.easeOut }
+            transition: { 
+                duration: ANIMATION_DURATION.slow, 
+                ease: EASING.easeOut
+            }
         }
     },
     
     fadeInDown: {
-        hidden: { opacity: 0, y: -40 },
+        hidden: { opacity: 0, y: -20 }, // Reduced from -40
         visible: { 
             opacity: 1, 
             y: 0,
-            transition: { duration: ANIMATION_DURATION.slow, ease: EASING.easeOut }
+            transition: { 
+                duration: ANIMATION_DURATION.slow, 
+                ease: EASING.easeOut
+            }
         }
     },
     
     fadeInLeft: {
-        hidden: { opacity: 0, x: -40 },
+        hidden: { opacity: 0, x: -20 }, // Reduced from -40
         visible: { 
             opacity: 1, 
             x: 0,
-            transition: { duration: ANIMATION_DURATION.slow, ease: EASING.easeOut }
+            transition: { 
+                duration: ANIMATION_DURATION.slow, 
+                ease: EASING.easeOut
+            }
         }
     },
     
     fadeInRight: {
-        hidden: { opacity: 0, x: 40 },
+        hidden: { opacity: 0, x: 20 }, // Reduced from 40
         visible: { 
             opacity: 1, 
             x: 0,
-            transition: { duration: ANIMATION_DURATION.slow, ease: EASING.easeOut }
+            transition: { 
+                duration: ANIMATION_DURATION.slow, 
+                ease: EASING.easeOut
+            }
         }
     },
     
-    // Scale animations
+    // Simplified scale animations
     scaleIn: {
-        hidden: { opacity: 0, scale: 0.8 },
+        hidden: { opacity: 0, scale: 0.95 }, // Less dramatic scaling
         visible: { 
             opacity: 1, 
             scale: 1,
-            transition: { duration: ANIMATION_DURATION.slow, ease: EASING.bounce }
+            transition: { 
+                duration: ANIMATION_DURATION.slow, 
+                ease: EASING.easeOut // Removed bounce for performance
+            }
         }
     },
     
-    // Slide animations
+    // Simplified slide animations
     slideInUp: {
-        hidden: { opacity: 0, y: 100, rotateX: -15 },
+        hidden: { opacity: 0, y: 30 }, // Reduced from 100
         visible: { 
             opacity: 1, 
-            y: 0, 
-            rotateX: 0,
-            transition: { duration: ANIMATION_DURATION.slower, ease: EASING.easeOut }
+            y: 0,
+            transition: { 
+                duration: ANIMATION_DURATION.slower, 
+                ease: EASING.easeOut
+            }
         }
     },
     
-    // Stagger container
+    // Optimized stagger container
     staggerContainer: {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
+                staggerChildren: 0.05, // Reduced from 0.1
+                delayChildren: 0.1
             }
         }
     },
     
-    // Stagger child
+    // Optimized stagger child
     staggerChild: {
-        hidden: { opacity: 0, y: 20, scale: 0.95 },
+        hidden: { opacity: 0, y: 10 }, // Reduced from 20
         visible: { 
             opacity: 1, 
-            y: 0, 
-            scale: 1,
-            transition: { duration: ANIMATION_DURATION.normal, ease: EASING.easeOut }
+            y: 0,
+            transition: { 
+                duration: ANIMATION_DURATION.normal, 
+                ease: EASING.easeOut
+            }
         }
     }
 };
 
-// Performance optimized scroll variants
+// Performance-aware scroll variants creator
 export const createScrollVariants = (type = 'fadeInUp', options = {}) => {
+    const config = getAnimationConfig();
     const {
         delay = 0,
-        duration = ANIMATION_DURATION.slow,
+        duration = config.duration,
         ease = EASING.easeOut,
         stagger = false,
-        staggerDelay = 0.1
+        staggerDelay = config.staggerDelay
     } = options;
 
     const baseVariant = scrollAnimationPresets[type] || scrollAnimationPresets.fadeInUp;
+    
+    // Return simplified variant for low-end devices
+    if (config.reduce) {
+        return {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: {
+                    duration: duration * 0.5,
+                    delay: delay * 0.5,
+                    ease: EASING.easeOut
+                }
+            }
+        };
+    }
     
     return {
         hidden: baseVariant.hidden,
@@ -122,26 +161,39 @@ export const createScrollVariants = (type = 'fadeInUp', options = {}) => {
     };
 };
 
-// Smooth reveal animation for sections
+// Lightweight section reveal for performance
 export const createSectionReveal = (direction = 'up', options = {}) => {
+    const config = getAnimationConfig();
+    
+    if (config.reduce) {
+        return {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: {
+                    duration: config.duration,
+                    ease: EASING.easeOut
+                }
+            }
+        };
+    }
+    
     const directions = {
-        up: { y: 60 },
-        down: { y: -60 },
-        left: { x: -60 },
-        right: { x: 60 }
+        up: { y: 20 },    // Reduced from 60
+        down: { y: -20 },  // Reduced from -60
+        left: { x: -20 },  // Reduced from -60
+        right: { x: 20 }   // Reduced from 60
     };
 
     return {
         hidden: {
             opacity: 0,
-            ...directions[direction],
-            scale: 0.95
+            ...directions[direction]
         },
         visible: {
             opacity: 1,
             x: 0,
             y: 0,
-            scale: 1,
             transition: {
                 duration: ANIMATION_DURATION.slow,
                 ease: EASING.easeOut,
@@ -151,32 +203,85 @@ export const createSectionReveal = (direction = 'up', options = {}) => {
     };
 };
 
-// Create stagger animation for lists
-export const createStaggerAnimation = (childDelay = 0.1) => ({
-    container: {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: childDelay,
-                delayChildren: 0.1
+// Optimized stagger animation with performance considerations
+export const createStaggerAnimation = (childDelay = 0.05) => {
+    const config = getAnimationConfig();
+    const actualDelay = config.reduce ? childDelay * 0.5 : childDelay;
+    
+    return {
+        container: {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: {
+                    staggerChildren: actualDelay,
+                    delayChildren: 0.05
+                }
+            }
+        },
+        item: {
+            hidden: { 
+                opacity: 0, 
+                y: config.reduce ? 5 : 10
+            },
+            visible: { 
+                opacity: 1, 
+                y: 0,
+                transition: {
+                    duration: config.duration,
+                    ease: EASING.easeOut
+                }
             }
         }
-    },
-    item: {
+    };
+};
+
+// Hero animation with performance optimization
+export const createHeroAnimation = () => {
+    const config = getAnimationConfig();
+    
+    if (config.reduce) {
+        return {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: { duration: 0.3 }
+            }
+        };
+    }
+    
+    return {
         hidden: { 
             opacity: 0, 
-            y: 20,
-            scale: 0.95
+            y: 30,
+            scale: 0.98
         },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             scale: 1,
             transition: {
-                duration: ANIMATION_DURATION.normal,
-                ease: EASING.easeOut
+                duration: ANIMATION_DURATION.slower,
+                ease: EASING.easeOut,
+                staggerChildren: 0.1,
+                delayChildren: 0.2
             }
         }
+    };
+};
+
+// Hover animation presets (simplified for performance)
+export const hoverAnimations = {
+    lift: {
+        y: -2,
+        transition: { duration: 0.2, ease: EASING.easeOut }
+    },
+    scale: {
+        scale: 1.02,
+        transition: { duration: 0.2, ease: EASING.easeOut }
+    },
+    glow: {
+        boxShadow: '0 10px 25px rgba(255, 117, 223, 0.3)',
+        transition: { duration: 0.3, ease: EASING.easeOut }
     }
-});
+};
