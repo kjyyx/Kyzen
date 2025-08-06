@@ -665,7 +665,7 @@ function Footer() {
                 className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
             >
                 <BackgroundEffects />
-                <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
+                <div className="mx-auto max-w-11/12 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
                     <AnimatedMarqueeText />
                     <CallToActionSection />
                     

@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 import ProfileImage from '../../assets/PROFILE-2.jpg';
-import ResumePDF from '../../assets/KenjiJaculbia_Curriculum_Vitae.pdf';
+import ResumePDF from '../../assets/KenjiJaculbia_Resume.pdf';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
