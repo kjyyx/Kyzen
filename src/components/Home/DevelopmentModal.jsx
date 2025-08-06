@@ -166,7 +166,7 @@ const DevelopmentModal = ({ onClose }) => {
 
                 {/* Modal Content */}
                 <motion.div
-                    className="relative mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 bg-gradient-to-br from-[#2e175c]/90 via-[#1a1a1a]/95 to-black/90 border border-[#ff75df]/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-[#ff75df]/20"
+                    className="relative w-full max-w-11/12 sm:max-w-lg bg-gradient-to-br from-[#2e175c]/90 via-[#1a1a1a]/95 to-black/90 border border-[#ff75df]/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-[#ff75df]/20"
                     variants={modalVariants}
                     initial="hidden"
                     animate="visible"
