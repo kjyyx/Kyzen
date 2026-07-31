@@ -5,7 +5,16 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores([
+    'dist',
+    'src/components/Projects/Brisk/**',
+    'src/components/Projects/ClarkNav/**',
+    'src/components/Projects/ITS ATS/**',
+    'src/components/Projects/Kairos/**',
+    'src/components/Projects/LavaCraze/**',
+    'src/components/Projects/Railroad-ed/**',
+    'src/components/Projects/Sprint/**',
+  ]),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -23,7 +32,10 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', {
+        argsIgnorePattern: '^(_|[A-Z][A-Za-z0-9]*)$',
+        varsIgnorePattern: '^([A-Z][A-Za-z0-9]*|motion)$',
+      }],
     },
   },
 ])

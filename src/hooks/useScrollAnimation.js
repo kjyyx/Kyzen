@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import { useInView, useAnimation } from 'framer-motion';
 import { 
     SCROLL_THRESHOLDS, 
@@ -192,8 +192,8 @@ export const useScrollAnimation = (options = {}) => {
     const variants = customVariants || animationVariants[animationType] || animationVariants.fadeUp;
 
     // Optimized animation trigger with registration
-    const throttledAnimate = useCallback(
-        throttle(() => {
+    const throttledAnimate = useMemo(
+        () => throttle(() => {
             if (!shouldAnimate) return;
             
             if (isInView) {

@@ -17,14 +17,8 @@ import StaggerContainer from '../../common/StaggerContainer';
 
 import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
-import { 
-    ANIMATION_DURATION, 
-    EASING, 
-    PERFORMANCE 
-} from '../../utils/constants';
 
 // ===== DATA CONFIGURATION =====
 const socialLinks = [
@@ -56,6 +50,15 @@ const socialLinks = [
 
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6 }
+    }
+};
+
+const footerContainerVariants = {
+    hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
@@ -152,11 +155,6 @@ const AnimatedMarqueeText = memo(() => {
 // Background Effects Component
 const BackgroundEffects = memo(() => {
     const animationConfig = getAnimationConfig();
-    
-    // Skip background effects on low-end devices
-    if (!canAnimate() || animationConfig.reduce) {
-        return null;
-    }
 
     const orbVariants1 = useMemo(() => ({
         scale: [1, 1.2, 1],
@@ -171,6 +169,11 @@ const BackgroundEffects = memo(() => {
         x: [0, -12, 0], // Reduced movement
         y: [0, 12, 0]
     }), []);
+    
+    // Skip background effects on low-end devices
+    if (!canAnimate() || animationConfig.reduce) {
+        return null;
+    }
 
     return (
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl sm:rounded-2xl">
@@ -395,7 +398,7 @@ const FooterBottomSection = memo(() => (
 const FooterContainer = memo(({ children }) => (
     <motion.footer
         className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
-        variants={containerVariants}
+        variants={footerContainerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}

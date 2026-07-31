@@ -1,22 +1,16 @@
-import React, { useEffect, useRef, memo, useMemo } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import React, { memo, useMemo } from "react";
+import { motion } from "framer-motion";
 import Avatar from '../../assets/Avatar-2.png';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
 import { 
-    useHeroScrollAnimation, 
-    useSimpleScrollAnimation 
-} from '../../hooks/useScrollAnimation';
-import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
 import { 
     ANIMATION_DURATION, 
-    EASING, 
-    PERFORMANCE 
+    EASING
 } from '../../utils/constants';
 
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====

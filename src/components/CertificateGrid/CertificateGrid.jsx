@@ -32,18 +32,11 @@ import CyberResilienceSeminar from '../../assets/Seminars/Cyber_Resilience_Certi
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
-import { useScrollAnimation, useStaggerScrollAnimation } from '../../hooks/useScrollAnimation';
 
 import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
-import { 
-    ANIMATION_DURATION, 
-    EASING, 
-    PERFORMANCE 
-} from '../../utils/constants';
 
 // ===== DATA CONFIGURATION =====
 const certificates = [
@@ -306,7 +299,7 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
 });
 
 // Certificate Card Component
-const CertificateCard = memo(({ certificate, index, flipVariants }) => {
+const CertificateCard = memo(({ certificate, flipVariants }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -599,7 +592,7 @@ const CertificateCardFront = memo(({
 ));
 
 // Certificate Grid Display Component
-const CertificatesGrid = memo(({ certificates, selectedCategory, containerVariants, cardVariants, flipVariants }) => {
+const CertificatesGrid = memo(({ certificates, selectedCategory, flipVariants }) => {
     const animationConfig = getAnimationConfig();
     
     const gridTransition = useMemo(() => {
@@ -629,11 +622,10 @@ const CertificatesGrid = memo(({ certificates, selectedCategory, containerVarian
                         staggerDelay={animationConfig.reduce ? 0.08 : 0.15}
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
                     >
-                        {certificates.map((certificate, index) => (
+                        {certificates.map((certificate) => (
                             <CertificateCard
                                 key={certificate.credentialId}
                                 certificate={certificate}
-                                index={index}
                                 flipVariants={flipVariants}
                             />
                         ))}
@@ -784,7 +776,7 @@ const PageHeader = memo(() => {
 });
 
 // Seminar Card Component
-const SeminarCard = memo(({ seminar, index }) => {
+const SeminarCard = memo(({ seminar }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1020,11 +1012,10 @@ const SeminarsSection = memo(() => (
             staggerDelay={0.12}
             className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-0"
         >
-            {seminars.map((seminar, index) => (
+            {seminars.map((seminar) => (
                 <SeminarCard
                     key={`${seminar.title}-${seminar.date}`}
                     seminar={seminar}
-                    index={index}
                 />
             ))}
         </StaggerContainer>
@@ -1105,58 +1096,6 @@ const StatisticsDisplay = memo(({ statistics }) => {
 function CertificateGrid() {
     const [selectedCategory, setSelectedCategory] = useState("All");
 
-    // Move animation variants inside the component
-    const containerVariants = useMemo(() => {
-        const animationConfig = getAnimationConfig();
-        
-        if (animationConfig.reduce) {
-            return {
-                hidden: { opacity: 0 },
-                visible: {
-                    opacity: 1,
-                    transition: { staggerChildren: 0.05 }
-                }
-            };
-        }
-        
-        return {
-            hidden: { opacity: 0 },
-            visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 }
-            }
-        };
-    }, []);
-
-    const cardVariants = useMemo(() => {
-        const animationConfig = getAnimationConfig();
-        
-        if (animationConfig.reduce) {
-            return {
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.3 }
-                }
-            };
-        }
-        
-        return {
-            hidden: { opacity: 0, y: 50, scale: 0.9 },
-            visible: {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: {
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15
-                }
-            }
-        };
-    }, []);
-
     const flipVariants = useMemo(() => {
         const animationConfig = getAnimationConfig();
         
@@ -1223,8 +1162,6 @@ function CertificateGrid() {
             <CertificatesGrid
                 certificates={filteredCertificates}
                 selectedCategory={selectedCategory}
-                containerVariants={containerVariants}
-                cardVariants={cardVariants}
                 flipVariants={flipVariants}
             />
 

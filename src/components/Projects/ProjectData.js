@@ -6,6 +6,19 @@ import LavaCrazeBg from '../../assets/Projects_Icons/Lavacraze_bg.webp';
 import SprintBg from '../../assets/Projects_Icons/Sprint_bg.webp';
 import RailroadedBg from '../../assets/Projects_Icons/Railroaded_bg.webp';
 import KairosBg from '../../assets/Projects_Icons/Kairos_bg.webp';
+import PlaceholderBg from '../../assets/BG-static.png';
+import AtsIcon from '../../assets/Projects_Icons/ATS_ico.webp';
+import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.webp';
+import GptIcon from '../../assets/Projects_Icons/GPT_ico.webp';
+import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
+import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.webp';
+import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
+import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.webp';
+import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.webp';
+import BrainboxLogo from '../../assets/Projects_Icons/BB_Logo.webp';
+import RazorPaymentsLogo from '../../assets/Projects_Icons/RP_Logo.webp';
+import SbnLogo from '../../assets/Projects_Icons/SBN_Logo.webp';
+import WeldEastLogo from '../../assets/Projects_Icons/WE_Logo.webp';
 
 import BriskSS1 from '../../assets/Webpage_Screenshots/Brisk_ss1.webp';
 import BriskSS2 from '../../assets/Webpage_Screenshots/Brisk_ss2.webp';
@@ -37,8 +50,149 @@ import SprintSS2 from '../../assets/Webpage_Screenshots/Sprint_ss2.webp';
 
 export const projects = [
     {
+        slug: "razor-payments",
+        title: "Razor Payments",
+        subtitle: "Payments Website, DNS, and Lead Pipeline",
+        category: "WordPress Development",
+        description: "Built and deployed the Razor Payments website from staging to production using WordPress, Elementor Pro, and the Blocksy theme. The work covered front-end alignment, custom landing pages, GoHighLevel lead capture, DNS subdomain setup, Mailgun sender authentication, SSL, and SiteGround production management.",
+        backgroundImage: RazorPaymentsLogo,
+        meta: {
+            year: "2026",
+            status: "Live"
+        },
+        techStack: [
+            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Elementor Pro", color: "#92003B", icon: "https://elementor.com/favicon.ico" },
+            { name: "Blocksy", color: "#0ea5e9", icon: "https://creativethemes.com/blocksy/wp-content/uploads/2021/10/favicon.png" },
+            { name: "GoHighLevel", color: "#38bdf8", icon: "https://www.gohighlevel.com/favicon.ico" },
+            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" },
+            { name: "Mailgun", color: "#ef4444", icon: "https://www.mailgun.com/favicon.ico" }
+        ],
+        links: {
+            website: "https://razorpayments.com.au",
+            live: "https://razorpayments.com.au"
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Built the site from scratch on a staging environment",
+            "Promoted staging to SiteGround production with SSL configured",
+            "Integrated Elementor Forms with GoHighLevel inbound webhooks",
+            "Configured go, books, links, and mail subdomains for GHL",
+            "Set up Mailgun/LC Email SPF, DKIM, and MX records",
+            "Resolved email authentication and Outlook formatting issues"
+        ]
+    },
+    {
+        slug: "superior-business-networks",
+        title: "SBN",
+        subtitle: "Custom WordPress Block Theme Migration",
+        category: "WordPress Full Site Editing",
+        description: "Designed and built a custom WordPress Full Site Editing block theme from scratch in VS Code, migrating a Divi-based site into a modern block architecture for a Perth business networking organisation. The build supports dynamic directory and event workflows with ACF, The Events Calendar, and Event Tickets.",
+        backgroundImage: SbnLogo,
+        meta: {
+            year: "2026",
+            status: "Live"
+        },
+        techStack: [
+            { name: "WordPress FSE", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Custom Block Theme", color: "#6366f1", icon: "https://wordpress.org/favicon.ico" },
+            { name: "ACF", color: "#00d084", icon: "https://www.advancedcustomfields.com/favicon.ico" },
+            { name: "The Events Calendar", color: "#f97316", icon: "https://theeventscalendar.com/favicon.ico" },
+            { name: "Event Tickets", color: "#ec4899", icon: "https://theeventscalendar.com/favicon.ico" },
+            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" }
+        ],
+        links: {
+            website: "https://superiorbusinessnetworks.com.au",
+            live: "https://superiorbusinessnetworks.com.au"
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Migrated from legacy Divi setup to custom block architecture",
+            "Built a custom FSE theme from scratch in VS Code",
+            "Implemented ACF-powered content management",
+            "Added events and ticketing functionality",
+            "Promoted staging to production with zero downtime",
+            "Performed broken-link audits, QA checks, and handover documentation"
+        ]
+    },
+    {
+        slug: "weld-east",
+        title: "Weld East",
+        subtitle: "WordPress Performance and Hosting Support",
+        category: "WordPress Maintenance",
+        description: "Supported Weld East's WordPress site with domain configuration, Full Site Editing page updates, and performance optimisation for an Australian custom metal solutions brand. The work focused on Core Web Vitals, blog template fixes, LCP image preloading, and delayed non-critical scripts.",
+        backgroundImage: WeldEastLogo,
+        meta: {
+            year: "2026",
+            status: "Live"
+        },
+        techStack: [
+            { name: "WordPress FSE", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Crazy Domains", color: "#f59e0b", icon: "https://www.crazydomains.com.au/favicon.ico" },
+            { name: "PageSpeed Insights", color: "#4285f4", icon: "https://pagespeed.web.dev/favicon.ico" },
+            { name: "Flying Scripts", color: "#8b5cf6", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Speed Optimizer", color: "#22c55e", icon: "https://www.siteground.com/favicon.ico" }
+        ],
+        links: {
+            website: "https://www.weldeast.com.au",
+            live: "https://www.weldeast.com.au"
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Managed domain configuration through Crazy Domains",
+            "Handled new-page requests using WordPress Full Site Editing",
+            "Improved PageSpeed Insights scores to 90+",
+            "Fixed blog template performance issues",
+            "Preloaded LCP hero images and delayed non-critical scripts"
+        ]
+    },
+    {
+        slug: "brainbox-corporate-sites",
+        title: "Brainbox",
+        subtitle: "Multi-Site WordPress Maintenance and UX Modernisation",
+        category: "WordPress Operations",
+        description: "Maintained and modernised multiple Brainbox ecosystem sites, including Brainbox, Blue Zoo, and Governance Manager. The work included landing-page restructuring, mobile UX improvements, security audits, plugin compatibility updates, asset compression, backups, staging workflows, and SiteGround administration.",
+        backgroundImage: BrainboxLogo,
+        meta: {
+            year: "2026",
+            status: "Maintained"
+        },
+        techStack: [
+            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
+            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" },
+            { name: "Mobile UX", color: "#06b6d4", icon: "https://developer.mozilla.org/favicon-48x48.cbbd161b.png" },
+            { name: "Security Audits", color: "#ef4444", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Image Optimisation", color: "#22c55e", icon: "https://developer.mozilla.org/favicon-48x48.cbbd161b.png" }
+        ],
+        links: {
+            website: "https://brain-box.com.au",
+            live: "https://brain-box.com.au",
+            additional: [
+                { label: "Blue Zoo", url: "https://bluezoo.com.au" },
+                { label: "Governance Manager", url: "https://governancemanager.org" }
+            ]
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Maintained Blue Zoo, Brainbox, and Governance Manager sites",
+            "Reworked landing-page layouts for stronger mobile UX",
+            "Replaced legacy stacked-card sections with custom swiping components",
+            "Handled plugin compatibility updates and security audits",
+            "Managed SiteGround staging, backups, and production upkeep",
+            "Compressed core visual assets for better page performance"
+        ]
+    },
+    {
         slug: "clarknav",
-        title: "CLARKNAV",
+        title: "Clarknav",
         subtitle: "Navigation Enhancement Project",
         category: "Web Development",
         description: "A comprehensive navigation system designed to enhance user experience and streamline digital workflows for modern applications.",
@@ -55,7 +209,6 @@ export const projects = [
         ],
         links: {
             website: "https://www.clarknav.com",
-            github: "https://github.com/example/clarknav",
             live: "https://demo.clarknav.com"
         },
         teamMembers: [
@@ -71,21 +224,12 @@ export const projects = [
             "Mobile-first responsive design",
             "Advanced user authentication"
         ],
-        screenshots: [
-            {
-                src: "../src/assets/Webpage_Screenshots/CN (1).webp",
-                alt: "ClarkNav Dashboard Overview"
-            },
-            {
-                src: "../src/assets/Webpage_Screenshots/CN (2).webp",
-                alt: "ClarkNav Navigation Interface"
-            }
-        ],
+        screenshots: [],
         // extraSections: ["ProjectStatistics", "KeyFeatures", "ProjectShowcase", "MobileExperience", "ProjectImpact"]
     },
     {
         slug: "itsats",
-        title: "ITS ATS",
+        title: "ITSquarehub",
         subtitle: "Applicant Tracking System",
         category: "Enterprise Software",
         description: "A comprehensive applicant tracking system designed to streamline recruitment processes and enhance HR efficiency for modern organizations.",
@@ -102,7 +246,6 @@ export const projects = [
         ],
         links: {
             website: "https://www.itsats.com",
-            github: "https://github.com/example/itsats",
             live: "https://demo.itsats.com"
         },
         teamMembers: [
@@ -116,21 +259,12 @@ export const projects = [
             "Automated resume parsing",
             "Real-time collaboration tools"
         ],
-        screenshots: [
-            {
-                src: "../src/assets/Webpage_Screenshots/ITS (1).webp",
-                alt: "ITS ATS Dashboard"
-            },
-            {
-                src: "../src/assets/Webpage_Screenshots/ITS (2).webp",
-                alt: "ITS ATS Applicant Management"
-            }
-        ],
+        screenshots: [],
         // extraSections: ["ProjectStatistics", "KeyFeatures", "ProjectShowcase", "MobileExperience", "ProjectImpact"]
     },
     {
         slug: "lavacraze",
-        title: "LAVACRAZE",
+        title: "LavaCraze",
         subtitle: "First Client Website Project",
         category: "Client Web Development",
         description: "Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design, promising a delightful and user-friendly experience.",
@@ -149,7 +283,6 @@ export const projects = [
         ],
         links: {
             website: "https://www.lavacraze.com",
-            github: "https://github.com/example/lavacraze",
             live: "https://www.lavacraze.com"
         },
         teamMembers: [
@@ -179,7 +312,7 @@ export const projects = [
     },
     {
         slug: "railroaded",
-        title: "RAILROADED",
+        title: "RailroadED",
         subtitle: "Philippine Railroad History Platform",
         category: "Educational Content Website",
         description: "Railroad-ED is an interesting website all about the history of the Philippine Railroad. It has blogs about its past, present, and future. The site is made with WordPress, making it easy for you to dive into the exciting story of the Philippine Railroad.",
@@ -196,7 +329,6 @@ export const projects = [
         ],
         links: {
             website: "https://railroaded8.wordpress.com/",
-            // github: "https://github.com/example/railroaded",
             live: "https://railroaded8.wordpress.com/"
         },
         teamMembers: [
@@ -235,7 +367,7 @@ export const projects = [
     },
     {
         slug: "brisk",
-        title: "BRISK",
+        title: "Brisk",
         subtitle: "Advanced Vehicle Rental Service",
         category: "Web Application",
         description: "Brisk is an advanced vehicle rental service. It uses mySQL for a strong database and PHP, CSS, and JavaScript for a smooth and enjoyable user experience. Brisk incorporates CRUD operations (CREATE, READ, UPDATE, DELETE) to efficiently manage data. It redefines vehicle rental with a dynamic and user-friendly approach, blending cutting-edge technologies seamlessly.",
@@ -253,7 +385,6 @@ export const projects = [
         ],
         links: {
             website: "https://www.brisk.app",
-            github: "https://github.com/example/brisk",
             live: "https://demo.brisk.app"
         },
         teamMembers: [
@@ -308,7 +439,6 @@ export const projects = [
         ],
         links: {
             website: "https://www.gpt-tasting.com",
-            github: "https://github.com/example/gpt-tasting",
             live: "https://demo.gpt-tasting.com"
         },
         teamMembers: [
@@ -351,7 +481,7 @@ export const projects = [
     },
     {
         slug: "kairos",
-        title: "KAIROS",
+        title: "Kairos",
         subtitle: "Airport Terminal Navigation System",
         category: "Navigation Web Application",
         description: "At KAIROS, we've developed a cutting-edge website for Clark International Airport Terminal 2. Utilizing QR codes strategically placed throughout the terminal, our website instantly guides users to the nearest comfort room. Built with HTML, CSS, JavaScript, and Bootstrap, our site dynamically displays maps, enables zooming, and centers the map to the user's location for seamless navigation.",
@@ -368,7 +498,6 @@ export const projects = [
         ],
         links: {
             website: "https://kairosqr.bitbucket.io/",
-            github: "https://github.com/example/kairos",
             live: "https://kairosqr.bitbucket.io/"
         },
         teamMembers: [
@@ -404,7 +533,7 @@ export const projects = [
     },
     {
         slug: "sprint",
-        title: "SPRINT",
+        title: "Sprint",
         subtitle: "Modern Vehicle Rental Platform",
         category: "Service Web Application",
         description: "Sprint Auto Care is a modern vehicle rental service, designed with a blend of Bootstrap, HTML, CSS, and JS, enriched with the power of APIs (Application Programming Interfaces). Utilizing Atlassian's Jira Software and Bitbucket, along with Google's App Script, Form, Gmail, and Spreadsheet, the website becomes a dynamic and functional platform.",
@@ -423,7 +552,6 @@ export const projects = [
         ],
         links: {
             website: "https://sprintersasi.bitbucket.io/SPRINTAutoCare1/",
-            github: "https://github.com/example/sprint",
             live: "https://sprintersasi.bitbucket.io/SPRINTAutoCare1/"
         },
         teamMembers: [
@@ -452,3 +580,111 @@ export const projects = [
         ]
     }
 ];
+
+export const featuredProjectSlugs = [
+    "razor-payments",
+    "superior-business-networks",
+    "weld-east",
+    "brainbox-corporate-sites"
+];
+
+const projectCardMeta = {
+    "razor-payments": {
+        image: RazorPaymentsLogo,
+        description: "Payments website and lead pipeline",
+        tech: ["WordPress", "Elementor Pro", "GoHighLevel"],
+        category: "WordPress"
+    },
+    "superior-business-networks": {
+        image: SbnLogo,
+        description: "Custom FSE block theme migration",
+        tech: ["WordPress FSE", "ACF", "SiteGround"],
+        category: "WordPress"
+    },
+    "weld-east": {
+        image: WeldEastLogo,
+        description: "Performance and hosting support",
+        tech: ["WordPress FSE", "PageSpeed", "DNS"],
+        category: "Maintenance"
+    },
+    "brainbox-corporate-sites": {
+        title: "Brainbox",
+        image: BrainboxLogo,
+        description: "Multi-site UX and maintenance work",
+        tech: ["WordPress", "SiteGround", "Security"],
+        category: "Operations"
+    },
+    clarknav: {
+        image: ClarknavIcon,
+        description: "Navigation system",
+        tech: ["Angular", "Laravel", "PostgreSQL"],
+        category: "Full-Stack"
+    },
+    itsats: {
+        image: AtsIcon,
+        description: "Applicant tracking system",
+        tech: ["Angular", ".NET", "PostgreSQL"],
+        category: "Enterprise"
+    },
+    lavacraze: {
+        image: LavaCrazeIcon,
+        description: "E-commerce platform",
+        tech: ["WordPress", "Elementor"],
+        category: "E-commerce"
+    },
+    railroaded: {
+        title: "Railroad-ed",
+        image: RailroadedIcon,
+        description: "Educational rail system",
+        tech: ["WordPress", "PHP", "MySQL"],
+        category: "Educational"
+    },
+    brisk: {
+        image: BriskIcon,
+        description: "Vehicle rental web app",
+        tech: ["PHP", "MySQL", "JavaScript"],
+        category: "Web App"
+    },
+    gpt: {
+        image: GptIcon,
+        description: "Coffee shop web app",
+        tech: ["HTML", "CSS", "MongoDB"],
+        category: "E-commerce"
+    },
+    kairos: {
+        image: KairosIcon,
+        description: "Airport terminal navigation",
+        tech: ["HTML", "JavaScript", "Bootstrap"],
+        category: "Navigation"
+    },
+    sprint: {
+        image: SprintIcon,
+        description: "Vehicle rental service platform",
+        tech: ["Bootstrap", "JavaScript", "Google APIs"],
+        category: "Service"
+    }
+};
+
+export const toProjectCard = (project) => {
+    const cardMeta = projectCardMeta[project.slug] || {};
+
+    return {
+        title: cardMeta.title || project.title,
+        image: cardMeta.image || project.backgroundImage,
+        link: `/projects/${project.slug}`,
+        description: cardMeta.description || project.subtitle,
+        tech: cardMeta.tech || project.techStack.slice(0, 3).map((tech) => tech.name),
+        category: cardMeta.category || project.category,
+        year: project.meta?.year || "",
+        status: project.meta?.status || "Completed"
+    };
+};
+
+export const featuredProjects = featuredProjectSlugs
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter(Boolean)
+    .map(toProjectCard);
+
+export const remainingProjects = projects
+    .filter((project) => !featuredProjectSlugs.includes(project.slug))
+    .map(toProjectCard);

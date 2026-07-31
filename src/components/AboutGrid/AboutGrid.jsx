@@ -28,12 +28,9 @@ import ResumePDF from '../../assets/KenjiJaculbia_Resume.pdf';
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
 
-import { useScrollAnimation, useStaggerScrollAnimation } from '../../hooks/useScrollAnimation';
-
 import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
 import { 
     ANIMATION_DURATION, 
@@ -417,18 +414,17 @@ const EnhancedAvatar = memo(() => {
 // Floating Particles Background Component
 const FloatingParticles = memo(() => {
     const animationConfig = getAnimationConfig();
-    
-    // Skip particles entirely on low-end devices
-    if (!canAnimate() || animationConfig.reduce) {
-        return null;
-    }
-
     const particles = useMemo(() => [
         { id: 1, size: 'w-2 h-2', color: 'bg-[#ff75df]', top: 'top-20', left: 'left-1/4', duration: 3 },
         { id: 2, size: 'w-1 h-1', color: 'bg-blue-400', top: 'top-40', left: 'right-1/3', duration: 4, delay: 1 },
         { id: 3, size: 'w-3 h-3', color: 'bg-purple-400', top: 'bottom-32', left: 'left-1/3', duration: 5, delay: 2 },
         { id: 4, size: 'w-1.5 h-1.5', color: 'bg-green-400', top: 'top-1/2', left: 'left-1/6', duration: 6, delay: 3 }
     ], []);
+    
+    // Skip particles entirely on low-end devices
+    if (!canAnimate() || animationConfig.reduce) {
+        return null;
+    }
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -707,7 +703,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
 ));
 
 // Profile Content Component
-const ProfileContent = memo(({ showRealName, onNameToggle, hoveredSkill, onSkillHover, onSkillLeave }) => (
+const ProfileContent = memo(({ showRealName, onNameToggle }) => (
     <ScrollAnimatedSection
         animationType="fadeRight"
         delay={0.3}
@@ -1153,7 +1149,7 @@ const SocialLinksGroup = memo(() => {
 });
 
 // Tech Stack Category Component
-const TechStackCategory = memo(({ stack, index, isActive, onClick }) => (
+const TechStackCategory = memo(({ stack, isActive, onClick }) => (
     <motion.button
         className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-xl sm:rounded-2xl italic tracking-tight font-black text-sm sm:text-base md:text-lg transition-all duration-500 overflow-hidden ${isActive
             ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-white shadow-2xl scale-105'

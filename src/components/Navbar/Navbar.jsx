@@ -18,7 +18,6 @@ import { scroller } from "react-scroll";
 import kyzenLogo from "/src/assets/KYZENLOGO3.png";
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { throttle } from '../../utils/helpers';
 
 // ===== DATA CONFIGURATION =====
@@ -342,7 +341,7 @@ const MobileNavItem = memo(({ item, isActive, onClick }) => {
             });
         }
         onClick(item.name);
-    }, [item.href, onClick, navigate, location.pathname]);
+    }, [item.href, item.name, onClick, navigate, location.pathname]);
 
     return (
         <motion.div
@@ -426,7 +425,7 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
             });
         }
         onClick(item.name);
-    }, [item.href, onClick, navigate, location.pathname]);
+    }, [item.href, item.name, onClick, navigate, location.pathname]);
 
     return (
         <motion.div
@@ -608,8 +607,8 @@ function Navbar() {
     const [activeItem, setActiveItem] = useState("info");
 
     // Use the optimized throttle function from utils
-    const handleScroll = useCallback(
-        throttle(() => {
+    const handleScroll = useMemo(
+        () => throttle(() => {
             const isScrolled = window.scrollY > 0;
             setScrolled(isScrolled);
         }, 16), // ~60fps

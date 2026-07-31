@@ -3,100 +3,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code, Calendar, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.webp';
-import AtsIcon from '../../assets/Projects_Icons/ATS_ico.webp';
-import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.webp';
-import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.webp';
-
-import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
-import GPTIcon from '../../assets/Projects_Icons/GPT_ico.webp';
-import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
-import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.webp';
-
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
+import {
+    featuredProjects as projects,
+    remainingProjects
+} from '../Projects/ProjectData';
 
 import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
-import { 
-    ANIMATION_DURATION, 
-    EASING, 
-    PERFORMANCE 
-} from '../../utils/constants';
-
-// ===== DATA CONFIGURATION =====
-const projects = [
-    {
-        title: "Clarknav",
-        image: ClarknavIcon,
-        link: "/projects/clarknav",
-        description: "Navigation system",
-        tech: ["Angular", "Laravel", "PostgreSQL"],
-        category: "Full-Stack",
-        year: "2025",
-        status: "Live",
-    },
-    {
-        title: "ITS ATS",
-        image: AtsIcon,
-        link: "/projects/itsats",
-        description: "Applicant tracking system",
-        tech: ["Angular", ".NET", "PostgreSQL"],
-        category: "Enterprise",
-        year: "2024",
-        status: "Completed",
-    },
-    {
-        title: "Lavacraze",
-        image: LavaCrazeIcon,
-        link: "/projects/lavacraze",
-        description: "E-commerce platform",
-        tech: ["Wordpress", "Elementor"],
-        category: "E-commerce",
-        year: "2023",
-        status: "Live",
-    },
-    {
-        title: "Railroad-ed",
-        image: RailroadedIcon,
-        link: "/projects/railroaded",
-        description: "Educational rail system",
-        tech: ["Wordpress", "D3.js", "Firebase"],
-        category: "Educational",
-        year: "2023",
-        status: "Live",
-    },
-];
-
-const remainingProjects = [
-    {
-        name: "Brisk",
-        logo: BriskIcon,
-        alt: "Brisk Logo",
-        link: "/projects/brisk"
-    },
-    {
-        name: "GPT",
-        logo: GPTIcon,
-        alt: "GPT Logo",
-        link: "/projects/gpt"
-    },
-    {
-        name: "Kairos",
-        logo: KairosIcon,
-        alt: "Kairos Logo",
-        link: "/projects/kairos"
-    },
-    {
-        name: "Sprint",
-        logo: SprintIcon,
-        alt: "Sprint Logo",
-        link: "/projects/sprint"
-    }
-];
 
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
@@ -358,7 +275,6 @@ const ProjectCardDescription = memo(({ project, showEffects }) => {
 
 // Project Card Floating Button Component
 const ProjectCardFloatingButton = memo(({
-    project,
     showEffects,
     isMobile,
     isTablet,
@@ -841,7 +757,6 @@ const ProjectCard = memo(({
                 />
 
                 <ProjectCardFloatingButton
-                    project={project}
                     showEffects={showEffects}
                     isMobile={isMobile}
                     isTablet={isTablet}
@@ -931,18 +846,18 @@ const RemainingProjectsRow = memo(() => {
                 Other Projects
             </span>
             <div className="flex flex-row flex-wrap gap-5 md:gap-12 justify-center items-center">
-                {remainingProjects.map((proj, idx) => (
+                {remainingProjects.map((project, idx) => (
                     <motion.div
-                        key={proj.name}
+                        key={project.title}
                         className="flex flex-col items-center cursor-pointer"
                         {...itemVariants(idx)}
                         viewport={{ once: true }}
                         whileHover={hoverVariants}
-                        onClick={() => navigate(proj.link)}
+                        onClick={() => navigate(project.link)}
                     >
                         <img
-                            src={proj.logo}
-                            alt={proj.alt}
+                            src={project.image}
+                            alt={`${project.title} logo`}
                             className="w-34 h-24 md:w-38 md:h-28 object-contain"
                         />
                     </motion.div>
@@ -1001,16 +916,6 @@ function ProjectGrid() {
             setActiveCard(activeCard === index ? null : index);
         },
         [isMobile, isTablet, activeCard]
-    );
-
-    // Memoize statistics data
-    const statistics = useMemo(
-        () => [
-            { value: projects.length, label: "Projects", icon: Code },
-            { value: "4+", label: "Technologies", icon: Award },
-            { value: "2024", label: "Latest", icon: Calendar },
-        ],
-        []
     );
 
     return (

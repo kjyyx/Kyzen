@@ -30,14 +30,44 @@ import StaggerContainer from '../../common/StaggerContainer';
 
 import { 
     getAnimationConfig, 
-    canAnimate, 
-    createStaggerDelay 
+    canAnimate
 } from '../../utils/helpers';
-import { 
-    ANIMATION_DURATION, 
-    EASING, 
-    PERFORMANCE 
-} from '../../utils/constants';
+
+const ProjectTechIcon = memo(({ tech }) => {
+    const [hasError, setHasError] = useState(false);
+    const initials = useMemo(() => (
+        tech.name
+            .split(/\s+/)
+            .map((word) => word[0])
+            .join('')
+            .slice(0, 3)
+            .toUpperCase()
+    ), [tech.name]);
+
+    if (hasError || !tech.icon) {
+        return (
+            <span
+                className="relative z-10 flex h-full w-full items-center justify-center rounded-xl text-sm font-black text-white"
+                style={{
+                    backgroundColor: `${tech.color}24`,
+                    border: `1px solid ${tech.color}45`
+                }}
+                aria-label={tech.name}
+            >
+                {initials}
+            </span>
+        );
+    }
+
+    return (
+        <img
+            src={tech.icon}
+            alt={`${tech.name} logo`}
+            className="w-10 h-10 object-contain relative z-10"
+            onError={() => setHasError(true)}
+        />
+    );
+});
 
 // Chatbot Notification Component
 const ProjectNotification = memo(() => {
@@ -46,7 +76,6 @@ const ProjectNotification = memo(() => {
     const { slug } = useParams();
     
     const animationConfig = getAnimationConfig();
-    const shouldAnimate = canAnimate();
 
     // Move all useMemo hooks BEFORE any early returns
     const notificationVariants = useMemo(() => {
@@ -231,7 +260,7 @@ const BackButton = memo(() => {
 
     return (
         <motion.button
-            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
+            className="fixed top-6 left-4 sm:left-6 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
             onClick={handleBack}
             {...buttonVariants}
             transition={{ 
@@ -290,8 +319,8 @@ const SectionHeader = memo(({ icon: Icon, badge, title, subtitle, delay = 0.2 })
     );
 });
 
-// Hero Image Section
-const HeroImage = memo(({ image }) => {
+// Project Hero Section
+const ProjectHero = memo(({ project }) => {
     const animationConfig = getAnimationConfig();
     
     const imageVariants = useMemo(() => {
@@ -323,37 +352,97 @@ const HeroImage = memo(({ image }) => {
     }, [animationConfig.reduce]);
 
     return (
-        <motion.div
-            className="relative overflow-hidden ml-[calc(-50vw+50%)]"
-            style={{
-                width: '100%',
-                height: 'calc(70vh - 120px)',
-                margin: 'calc(80px - 1.5vh) 0 32px',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'top',
-                backgroundSize: 'cover'
-            }}
-            {...imageVariants}
-            transition={{ 
-                delay: animationConfig.reduce ? 0.2 : 0.5, 
-                duration: animationConfig.reduce ? 0.6 : 1.2, 
-                ease: "easeOut" 
-            }}
-        >
-            <img
-                src={image}
-                alt="Project showcase"
-                className="w-full h-full object-cover object-[90%_center] sm:object-center"
-            />
-            <motion.div
-                className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
-                {...overlayVariants}
-                transition={{ 
-                    delay: animationConfig.reduce ? 0.3 : 0.8, 
-                    duration: animationConfig.reduce ? 0.4 : 0.8 
-                }}
-            />
-        </motion.div>
+        <section className="relative min-h-screen overflow-hidden px-4 pt-28 pb-16 sm:px-8 lg:pt-32">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#2e175c]/70 via-[#2e175c]/35 via-[#ff75df]/20 to-black" />
+            <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_70%_45%_at_50%_0%,black_55%,transparent_100%)]" />
+
+            <div className="mx-auto grid min-h-[calc(100vh-9rem)] w-full max-w-7xl items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+                <motion.div
+                    className="relative z-10"
+                    initial={{ opacity: 0, y: animationConfig.reduce ? 0 : 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, ease: "easeOut", delay: 0.15 }}
+                >
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#ff75df]/30 bg-[#ff75df]/10 px-4 py-2 text-xs font-black italic uppercase tracking-widest text-[#ff75df]">
+                        <Sparkles className="h-4 w-4" />
+                        {project.category}
+                    </div>
+
+                    <h1 className="text-5xl font-black italic leading-[0.9] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
+                        {project.title}
+                    </h1>
+                    <p className="mt-5 max-w-2xl text-xl font-black italic leading-tight tracking-tight text-white/78 sm:text-2xl">
+                        {project.subtitle}
+                    </p>
+                    <p className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg">
+                        {project.description}
+                    </p>
+
+                    <div className="mt-8 flex flex-wrap gap-3">
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3">
+                            <div className="text-xs font-bold uppercase tracking-wide text-white/45">Year</div>
+                            <div className="mt-1 font-black italic text-white">{project.meta.year}</div>
+                        </div>
+                        <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
+                            <div className="text-xs font-bold uppercase tracking-wide text-emerald-200/65">Status</div>
+                            <div className="mt-1 font-black italic text-emerald-200">{project.meta.status}</div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                        {project.links?.live && (
+                            <a
+                                href={project.links.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#ff75df] to-purple-500 px-6 text-sm font-black italic text-white transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff75df]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                            >
+                                <Play className="h-4 w-4" />
+                                View live
+                            </a>
+                        )}
+                        {project.links?.github && (
+                            <a
+                                href={project.links.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/[0.05] px-6 text-sm font-black italic text-white transition hover:border-white/35 hover:bg-white/[0.1] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff75df]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                            >
+                                <Github className="h-4 w-4" />
+                                View code
+                            </a>
+                        )}
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    className="relative"
+                    {...imageVariants}
+                    transition={{
+                        delay: animationConfig.reduce ? 0.2 : 0.35,
+                        duration: animationConfig.reduce ? 0.45 : 0.9,
+                        ease: "easeOut"
+                    }}
+                >
+                    <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 blur-2xl" />
+                    <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] p-4 shadow-2xl">
+                        <img
+                            src={project.backgroundImage}
+                            alt={`${project.title} project preview`}
+                            className="aspect-[16/11] w-full rounded-[1.35rem] object-contain bg-[#111111]/80"
+                        />
+                        <motion.div
+                            className="absolute inset-4 rounded-[1.35rem] bg-gradient-to-t from-black/35 via-transparent to-white/5"
+                            {...overlayVariants}
+                            transition={{
+                                delay: animationConfig.reduce ? 0.25 : 0.65,
+                                duration: animationConfig.reduce ? 0.25 : 0.6
+                            }}
+                        />
+                    </div>
+                </motion.div>
+            </div>
+        </section>
     );
 });
 
@@ -517,6 +606,8 @@ const ProjectOverview = memo(({ project }) => {
                                 {project.links?.website && (
                                     <motion.a
                                         href={project.links.website}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
                                         whileHover={linkHoverVariants}
                                     >
@@ -529,9 +620,29 @@ const ProjectOverview = memo(({ project }) => {
                                         </div>
                                     </motion.a>
                                 )}
+                                {project.links?.additional?.map((link) => (
+                                    <motion.a
+                                        key={link.url}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
+                                        whileHover={linkHoverVariants}
+                                    >
+                                        <div className="w-10 h-10 bg-gradient-to-br from-[#ff75df]/20 to-purple-400/20 rounded-xl flex items-center justify-center">
+                                            <ExternalLink className="w-5 h-5 text-[#ff75df]" />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-white font-black italic">{link.label}</div>
+                                            <div className="text-white/60 text-sm truncate">{link.url.replace(/^https?:\/\//, '')}</div>
+                                        </div>
+                                    </motion.a>
+                                ))}
                                 {project.links?.github && (
                                     <motion.a
                                         href={project.links.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
                                         whileHover={linkHoverVariants}
                                     >
@@ -627,25 +738,25 @@ const TechnologyStack = memo(({ techStack }) => {
     const techCardHoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
-                y: -4,
-                scale: 1.01,
+                y: -1,
+                scale: 1.005,
                 transition: { duration: 0.2 }
             };
         }
         
         return {
-            y: -8,
-            scale: 1.02,
-            transition: { type: "spring", stiffness: 300, damping: 20 }
+            y: -3,
+            scale: 1.01,
+            transition: { duration: 0.18, ease: "easeOut" }
         };
     }, [animationConfig.reduce]);
 
     const iconHoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
-            return { rotate: 0 };
+            return { scale: 1 };
         }
         
-        return { rotate: [0, -5, 5, 0] };
+        return { scale: 1.03 };
     }, [animationConfig.reduce]);
 
     return (
@@ -683,7 +794,7 @@ const TechnologyStack = memo(({ techStack }) => {
                                     whileHover={iconHoverVariants}
                                     transition={{ duration: animationConfig.reduce ? 0 : 0.6 }}
                                 >
-                                    <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain relative z-10" />
+                                    <ProjectTechIcon tech={tech} />
                                 </motion.div>
                                 <h3 className="text-white font-black italic text-xl mb-3 group-hover:text-white transition-colors duration-300">{tech.name}</h3>
                                 <motion.div
@@ -794,14 +905,6 @@ function ProjectPage() {
 
     const project = projects.find(p => p.slug === slug);
 
-    if (!project) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-white text-2xl">Project not found.</div>
-            </div>
-        );
-    }
-
     const backgroundEffectsVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
@@ -841,6 +944,14 @@ function ProjectPage() {
             animate: { opacity: 1, y: 0 }
         };
     }, [animationConfig.reduce]);
+
+    if (!project) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-white text-2xl">Project not found.</div>
+            </div>
+        );
+    }
 
     return (
         <motion.div
@@ -882,26 +993,22 @@ function ProjectPage() {
                 {/* Back Button */}
                 <BackButton />
 
-                {/* Project Notification */}
-                <ProjectNotification />
-
                 {/* Hero Section */}
                 <motion.div
-                    className="relative flex flex-col justify-center pt-20"
                     {...heroSectionVariants}
-                    transition={{ 
-                        duration: animationConfig.reduce ? 0.5 : 1, 
-                        delay: animationConfig.reduce ? 0.1 : 0.2 
+                    transition={{
+                        duration: animationConfig.reduce ? 0.5 : 1,
+                        delay: animationConfig.reduce ? 0.1 : 0.2
                     }}
                 >
-                    <HeroImage image={project.backgroundImage} />
+                    <ProjectHero project={project} />
                 </motion.div>
 
                 {/* Main Content */}
                 <div className="relative z-10">
                     <ProjectOverview project={project} />
                     <TechnologyStack techStack={project.techStack} />
-                    {project.screenshots && <ScreenshotGallery images={project.screenshots} />}
+                    {project.screenshots?.length > 0 && <ScreenshotGallery images={project.screenshots} />}
 
                     <ScrollAnimatedSection
                         animationType="fadeUp"

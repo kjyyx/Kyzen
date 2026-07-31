@@ -10,7 +10,6 @@ const StaggerContainer = memo(({
     staggerDelay = 0.05,
     className = '',
     as = 'div',
-    priority = 'medium',
     ...props 
 }) => {
     const { ref, variants, controls, childVariants, shouldAnimate } = useStaggerScrollAnimation(staggerDelay);
