@@ -100,7 +100,7 @@ export const projects = [
             { name: "Custom Block Theme", color: "#6366f1", icon: "https://wordpress.org/favicon.ico" },
             { name: "ACF", color: "#00d084", icon: "https://www.advancedcustomfields.com/favicon.ico" },
             { name: "The Events Calendar", color: "#f97316", icon: "https://theeventscalendar.com/favicon.ico" },
-            { name: "Event Tickets", color: "#ec4899", icon: "https://theeventscalendar.com/favicon.ico" },
+            { name: "Event Tickets", color: "#028582", icon: "https://theeventscalendar.com/favicon.ico" },
             { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" }
         ],
         links: {
@@ -134,7 +134,7 @@ export const projects = [
             { name: "WordPress FSE", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
             { name: "Crazy Domains", color: "#f59e0b", icon: "https://www.crazydomains.com.au/favicon.ico" },
             { name: "PageSpeed Insights", color: "#4285f4", icon: "https://pagespeed.web.dev/favicon.ico" },
-            { name: "Flying Scripts", color: "#8b5cf6", icon: "https://wordpress.org/favicon.ico" },
+            { name: "Flying Scripts", color: "#028582", icon: "https://wordpress.org/favicon.ico" },
             { name: "Speed Optimizer", color: "#22c55e", icon: "https://www.siteground.com/favicon.ico" }
         ],
         links: {

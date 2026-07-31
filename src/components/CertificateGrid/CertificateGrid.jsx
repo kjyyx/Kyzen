@@ -152,11 +152,11 @@ const formatDate = (dateString) => {
 const getCategoryStyle = (category) => {
     const styles = {
         "Development": {
-            gradient: "from-[#ff75df]/30 to-purple-500/30",
-            border: "border-[#ff75df]/40",
-            accent: "text-[#ff75df]",
-            bg: "bg-[#ff75df]/20",
-            glow: "shadow-[#ff75df]/20"
+            gradient: "from-brand-light/30 to-brand/30",
+            border: "border-brand-light/40",
+            accent: "text-brand-light",
+            bg: "bg-brand-light/20",
+            glow: "shadow-brand-light/20"
         },
         "Cloud": {
             gradient: "from-blue-500/30 to-cyan-500/30",
@@ -202,10 +202,10 @@ const getTypeColor = (type) => {
             glow: "shadow-blue-500/20"
         },
         "Conference": {
-            gradient: "from-purple-500/30 to-pink-500/30",
-            border: "border-purple-400/40",
-            accent: "text-purple-300",
-            glow: "shadow-purple-500/20"
+            gradient: "from-brand/30 to-brand-light/30",
+            border: "border-brand-light/40",
+            accent: "text-brand-light",
+            glow: "shadow-brand/20"
         },
         "Workshop": {
             gradient: "from-green-500/30 to-emerald-500/30",
@@ -237,7 +237,7 @@ const BottomDecoration = memo(() => (
         delay={0.3}
         className="w-full mt-12 sm:mt-20 flex justify-center"
     >
-        <div className="w-64 h-px bg-gradient-to-r from-transparent via-[#ff75df]/50 to-transparent" />
+        <div className="w-64 h-px bg-gradient-to-r from-transparent via-brand-light/50 to-transparent" />
     </ScrollAnimatedSection>
 ));
 
@@ -272,7 +272,7 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
                             key={category.name}
                             onClick={() => onCategorySelect(category.name)}
                             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-full italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
-                                ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] shadow-lg shadow-[#ff75df]/20'
+                                ? 'bg-white/10 border border-brand-light/50 text-[#f3faf9] shadow-lg shadow-brand-light/20'
                                 : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
                                 }`}
                             whileHover={buttonHoverVariants}
@@ -282,7 +282,7 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
                                 className={`w-3 h-3 sm:w-4 sm:h-4 ${category.name !== "All" && categoryStyle
                                     ? categoryStyle.accent
                                     : selectedCategory === category.name
-                                        ? 'text-[#ff75df]'
+                                        ? 'text-brand-light'
                                         : 'text-white/70'
                                     }`}
                             />
@@ -657,14 +657,14 @@ const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 p-4 sm:p-6 border-b border-white/20">
+                    <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 p-4 sm:p-6 border-b border-white/20">
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
                                 <h3 className="text-white text-lg sm:text-xl italic tracking-tight font-black line-clamp-2">
                                     {certificate.title}
                                 </h3>
                                 <p className="text-white/70 text-sm mt-1 flex items-center gap-2 line-clamp-1">
-                                    <Award className="w-4 h-4 text-[#ff75df] flex-shrink-0" />
+                                    <Award className="w-4 h-4 text-brand-light flex-shrink-0" />
                                     <span className="truncate">{certificate.issuer}</span>
                                     <span className="hidden sm:inline">•</span>
                                     <span className="hidden sm:inline">{formatDate(certificate.date)}</span>
@@ -758,16 +758,16 @@ const PageHeader = memo(() => {
                     className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
                     {...titleVariants}
                     style={{
-                        textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(255, 117, 223, 0.3)'
+                        textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(2, 133, 130, 0.26)'
                     }}
                 >
-                    Certifications<span className="text-[#ff75df]">_</span>
+                    Certifications<span className="text-brand-light">_</span>
                     <br />
-                    earned<span className="text-[#ff75df]">:</span>
+                    earned<span className="text-brand-light">:</span>
                 </motion.h2>
 
                 <motion.div
-                    className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
+                    className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full"
                     {...underlineVariants}
                 />
             </div>
@@ -876,13 +876,13 @@ const SeminarCard = memo(({ seminar }) => {
                             </h4>
 
                             <p className="text-white/80 text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2 line-clamp-1">
-                                <Award className="w-3 h-3 sm:w-4 sm:h-4 text-[#ff75df] flex-shrink-0" />
+                                <Award className="w-3 h-3 sm:w-4 sm:h-4 text-brand-light flex-shrink-0" />
                                 <span className="truncate">{seminar.organizer}</span>
                             </p>
 
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
                                 <span className="flex items-center gap-2 text-white/70">
-                                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-[#ff75df] flex-shrink-0" />
+                                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-brand-light flex-shrink-0" />
                                     <span className="truncate">
                                         {new Date(seminar.date).toLocaleDateString('en-US', {
                                             month: 'short',
@@ -906,7 +906,7 @@ const SeminarCard = memo(({ seminar }) => {
                         <span className="text-white/60 text-xs italic sm:hidden">
                             Tap
                         </span>
-                        <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#ff75df]" />
+                        <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-brand-light" />
                     </div>
                 </div>
             </motion.div>
@@ -942,7 +942,7 @@ const SeminarModal = memo(({ seminar, isOpen, onClose }) => {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 p-4 sm:p-6 border-b border-white/20">
+                    <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 p-4 sm:p-6 border-b border-white/20">
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
                                 <h3 className="text-white text-lg sm:text-xl italic tracking-tight font-black line-clamp-2">
@@ -993,14 +993,14 @@ const SeminarsSection = memo(() => (
                 delay={0.3}
             >
                 <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-2xl xs:text-3xl sm:text-4xl md:text-5xl italic tracking-tight font-black mb-3 sm:mb-4">
-                    Seminars & Workshops<span className="text-[#ff75df]">_</span>
+                    Seminars & Workshops<span className="text-brand-light">_</span>
                 </h3>
                 <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
                     Additional learning experiences and professional development initiatives
                 </p>
 
                 <motion.div
-                    className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-[#ff75df] to-transparent mx-auto mt-4 sm:mt-6 rounded-full"
+                    className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-brand-light to-transparent mx-auto mt-4 sm:mt-6 rounded-full"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
@@ -1058,7 +1058,7 @@ const StatisticsDisplay = memo(({ statistics }) => {
                         whileHover={statHoverVariants}
                     >
                         <div className="flex justify-center mb-1 sm:mb-2">
-                            <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff75df]" />
+                            <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-brand-light" />
                         </div>
                         <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">
                             {stat.value}

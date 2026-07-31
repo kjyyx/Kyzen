@@ -8,9 +8,15 @@ import ProjectPage from './ProjectPage.jsx';
 
 function MainPage() {
     return (
-        <div className="relative h-full w-full bg-[#131313] min-h-screen">
+        <div className="relative h-full w-full bg-canvas min-h-screen">
             {/* Subtle gradient with your custom colors */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2e175c]/70 via-[#2e175c]/40 via-[#ff75df]/20 to-black z-0"></div>
+            <div
+                className="absolute inset-0 z-0"
+                style={{
+                    background: `radial-gradient(circle at 8% 100%, rgba(2, 133, 130, 0.48) 0%, rgba(2, 98, 95, 0.20) 24%, transparent 48%),
+                        linear-gradient(115deg, #011417 0%, #011f21 42%, #023737 74%, #025452 100%)`
+                }}
+            />
 
             {/* Original background elements */}
             <div id="main-bg" className="z-10"></div>

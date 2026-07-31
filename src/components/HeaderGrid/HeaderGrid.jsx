@@ -105,7 +105,7 @@ const AvatarBackdrop = memo(() => {
 
     return (
         <motion.div
-            className="absolute inset-0 bg-purple-500/5 rounded-full blur-3xl"
+            className="absolute inset-0 bg-brand/5 rounded-full blur-3xl"
             animate={backdropVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 3,
@@ -130,13 +130,13 @@ const BackgroundCircles = memo(() => {
             <div className="relative w-full h-full">
                 <BackgroundCircle 
                     size="large" 
-                    color="pink-500/50" 
+                    borderClass="border-brand-light/35"
                     delay={0}
                     animationConfig={animationConfig}
                 />
                 <BackgroundCircle 
                     size="medium" 
-                    color="orange-500/50" 
+                    borderClass="border-secondary/35"
                     delay={0.3}
                     animationConfig={animationConfig}
                 />
@@ -146,7 +146,7 @@ const BackgroundCircles = memo(() => {
 });
 
 // Individual Background Circle - New optimized component
-const BackgroundCircle = memo(({ size, color, delay, animationConfig }) => {
+const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) => {
     const sizeClasses = useMemo(() => {
         const sizes = {
             large: "w-[350px] h-[350px] xs:w-[400px] xs:h-[400px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] xl:w-[1000px] xl:h-[1000px] border-2",
@@ -171,7 +171,7 @@ const BackgroundCircle = memo(({ size, color, delay, animationConfig }) => {
 
     return (
         <motion.div
-            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${sizeClasses} border-${color} rounded-full`}
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${sizeClasses} ${borderClass} rounded-full`}
             animate={circleVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 4,
@@ -224,7 +224,7 @@ const FloatingParticles = memo(() => {
 // Individual Floating Particle Component - Simplified
 const FloatingParticle = memo(({ particle }) => (
     <motion.div
-        className="absolute w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-purple-400/60 rounded-full z-10"
+        className="absolute w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-brand-light/60 rounded-full z-10"
         style={{
             left: particle.left,
             top: particle.top,
@@ -329,9 +329,9 @@ const MainTitle = memo(() => {
         
         return {
             textShadow: [
-                "0 0 30px rgba(255, 117, 223, 0.3)",
-                "0 0 35px rgba(255, 117, 223, 0.4)",
-                "0 0 30px rgba(255, 117, 223, 0.3)"
+                "0 0 30px rgba(2, 133, 130, 0.26)",
+                "0 0 35px rgba(2, 133, 130, 0.34)",
+                "0 0 30px rgba(2, 133, 130, 0.26)"
             ]
         };
     }, [animationConfig.reduce]);
@@ -341,11 +341,11 @@ const MainTitle = memo(() => {
             className="relative text-[22vw] xs:text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] xl:text-[12vw] 2xl:text-[25rem] italic tracking-tight font-black text-center whitespace-nowrap"
             {...titleVariants}
             style={{
-                textShadow: "0 0 30px rgba(255, 117, 223, 0.3), 0 0 60px rgba(255, 117, 223, 0.1)"
+                textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
             }}
         >
             <motion.span
-                className="relative bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text text-transparent inline-block px-1 xs:px-2 sm:px-3 md:px-4 lg:px-6 py-2 xs:py-3 sm:py-4 md:py-6 lg:py-8"
+                className="relative bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent inline-block px-1 xs:px-2 sm:px-3 md:px-4 lg:px-6 py-2 xs:py-3 sm:py-4 md:py-6 lg:py-8"
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
@@ -392,8 +392,8 @@ const ScrollIndicatorDot = memo(() => {
         }
         
         return {
-            borderColor: "rgba(236, 72, 153, 0.8)",
-            boxShadow: "0 0 15px rgba(236, 72, 153, 0.3)" // Reduced glow
+            borderColor: "rgba(2, 133, 130, 0.7)",
+            boxShadow: "0 0 15px rgba(2, 133, 130, 0.22)" // Reduced glow
         };
     }, [animationConfig.reduce]);
 
@@ -403,7 +403,7 @@ const ScrollIndicatorDot = memo(() => {
             whileHover={hoverVariants}
         >
             <motion.div
-                className="w-0.5 h-1 xs:w-1 xs:h-1.5 sm:w-1 sm:h-2 md:h-3 bg-pink-400 rounded-full mt-0.5 xs:mt-1 md:mt-2"
+                className="w-0.5 h-1 xs:w-1 xs:h-1.5 sm:w-1 sm:h-2 md:h-3 bg-brand-light rounded-full mt-0.5 xs:mt-1 md:mt-2"
                 animate={dotVariants}
                 transition={{ 
                     duration: animationConfig.reduce ? 0 : 1.5, 
@@ -412,7 +412,7 @@ const ScrollIndicatorDot = memo(() => {
             />
             {!animationConfig.reduce && (
                 <motion.div
-                    className="absolute inset-0 bg-pink-400/10 rounded-full"
+                    className="absolute inset-0 bg-brand-light/10 rounded-full"
                     animate={{
                         opacity: [0, 0.3, 0],
                         scale: [1, 1.1, 1] // Reduced from 1.2
@@ -456,7 +456,7 @@ const ScrollIndicator = memo(() => {
                 }}
                 whileHover={animationConfig.reduce ? {} : {
                     scale: 1.1, // Reduced from 1.2
-                    color: "rgba(236, 72, 153, 0.9)"
+                    color: "rgba(2, 133, 130, 0.9)"
                 }}
             >
                 <ScrollIndicatorLabel />
@@ -515,7 +515,7 @@ const SupportingTextParagraphs = memo(() => {
         
         return {
             x: 8, // Reduced from 10
-            color: "rgba(236, 72, 153, 1)",
+            color: "rgba(2, 133, 130, 1)",
             transition: { duration: 0.2 }
         };
     }, [animationConfig.reduce]);
@@ -524,11 +524,11 @@ const SupportingTextParagraphs = memo(() => {
         <>
             <motion.p className="mb-2 font-light tracking-wide">
                 In the digital realm of modern web development, there exists a
-                creative force known only as <span className="text-pink-400/90 font-medium">"The Developer."</span> A place where code,
+                creative force known only as <span className="text-brand-light/90 font-medium">"The Developer."</span> A place where code,
                 design, and innovation converge.
             </motion.p>
             <motion.p
-                className="text-pink-400/90 font-medium tracking-wide"
+                className="text-brand-light/90 font-medium tracking-wide"
                 whileHover={hoverVariants}
             >
                 Enter the portfolio, a digital space where creativity meets
@@ -587,8 +587,8 @@ HeaderGrid (Main Container)
 ├── BackgroundCircles (Background Effects)
 │   └── ScrollAnimatedSection
 │       └── div (relative container)
-│           ├── BackgroundCircle (large, pink-500/50, delay: 0)
-│           └── BackgroundCircle (medium, orange-500/50, delay: 0.3)
+│           ├── BackgroundCircle (large, brand-light/35, delay: 0)
+│           └── BackgroundCircle (medium, secondary/35, delay: 0.3)
 │
 ├── FloatingParticles (Decorative Elements - Conditional)
 │   └── ScrollAnimatedSection

@@ -15,7 +15,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
 
-import kyzenLogo from "/src/assets/KYZENLOGO3.png";
+import kyzenLogo from "/src/assets/KYZENLOGO5.webp";
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import { throttle } from '../../utils/helpers';
@@ -46,7 +46,7 @@ const BrandLogo = memo(({ onClick }) => (
 // Brand Text Component
 const BrandText = memo(({ onClick }) => (
     <div className="flex items-baseline cursor-pointer" onClick={onClick}>
-        <span className="text-[#e2dbd2] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
+        <span className="text-[#f3faf9] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
             Kyzen
         </span>
         <BrandTextSeparator />
@@ -103,7 +103,7 @@ const ContactButtonIcon = memo(() => (
 
 // Contact Button Overlay Component
 const ContactButtonOverlay = memo(() => (
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 ));
 
 // Contact Button Text Component
@@ -202,7 +202,7 @@ const MobileContactButtonIcon = memo(() => (
 
 // Mobile Contact Button Overlay Component
 const MobileContactButtonOverlay = memo(() => (
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 ));
 
 // Mobile Contact Button Section Component
@@ -355,7 +355,7 @@ const MobileNavItem = memo(({ item, isActive, onClick }) => {
                 href={`#${item.href}`}
                 onClick={handleScrollNav}
                 className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${isActive
-                    ? "bg-white/15 text-[#e2dbd2] backdrop-blur-sm"
+                    ? "bg-white/15 text-[#f3faf9] backdrop-blur-sm"
                     : "text-white/70 hover:bg-white/10 hover:text-white"
                     }`}
             >
@@ -373,7 +373,7 @@ const MobileNavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.3, ease: "easeInOut" }}
     >
         <IconComponent
-            className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/50 group-hover:text-white/80"
+            className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/50 group-hover:text-white/80"
                 }`}
         />
         <span className="italic tracking-tight font-black">
@@ -388,7 +388,7 @@ const MobileNavItemIndicator = memo(({ isActive }) => (
     <AnimatePresence>
         {isActive && (
             <motion.div
-                className="ml-auto w-2 h-2 bg-[#e2dbd2] rounded-full"
+                className="ml-auto w-2 h-2 bg-[#f3faf9] rounded-full"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
@@ -442,7 +442,7 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
                 href={`#${item.href}`}
                 onClick={handleScrollNav}
                 className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${isActive
-                    ? 'bg-white/10 border border-[#ff75df]/50 text-[#e2dbd2] backdrop-blur-sm shadow-lg shadow-[#ff75df]/20'
+                    ? 'bg-white/10 border border-brand-light/50 text-[#f3faf9] backdrop-blur-sm shadow-lg shadow-brand-light/20'
                     : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
                     }`}
                 whileHover={{
@@ -469,7 +469,7 @@ const NavItemBackground = memo(({ isActive }) => (
     <AnimatePresence>
         {isActive && (
             <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#ff75df]/10 via-white/10 to-[#ff75df]/10 rounded-full"
+                className="absolute inset-0 bg-gradient-to-r from-brand-light/10 via-white/10 to-brand-light/10 rounded-full"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -488,7 +488,7 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.2 }}
     >
         <IconComponent
-            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#e2dbd2]" : "text-white/40 group-hover:text-white/80"
+            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/40 group-hover:text-white/80"
                 }`}
         />
         <span className="italic tracking-tight font-black">

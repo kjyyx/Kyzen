@@ -18,7 +18,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#131313]"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#011417]"
             initial={{ opacity: 1 }}
             animate={{ opacity: fadeOut ? 0 : 1 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -29,7 +29,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                 {[0, 1, 2].map((i) => (
                     <motion.div
                         key={i}
-                        className="w-3 h-3 bg-[#ff75df] rounded-full"
+                        className="w-3 h-3 bg-brand-light rounded-full"
                         animate={{
                             scale: [1, 1.5, 1],
                             opacity: [0.5, 1, 0.5],

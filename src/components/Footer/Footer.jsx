@@ -9,7 +9,7 @@ import {
     ArrowUp,
     Heart
 } from 'lucide-react';
-import kyzenLogo from '/src/assets/KYZENLOGO3.png';
+import kyzenLogo from '/src/assets/KYZENLOGO5.webp';
 import './Footer.css';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
@@ -38,7 +38,7 @@ const socialLinks = [
         name: 'GitHub',
         href: "https://github.com/kjyyx",
         icon: Github,
-        color: 'hover:text-purple-400'
+        color: 'hover:text-brand-light'
     },
     {
         name: 'Email',
@@ -179,12 +179,12 @@ const BackgroundEffects = memo(() => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl sm:rounded-2xl">
             {/* Gradient Orbs */}
             <motion.div
-                className="absolute top-0 left-1/4 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
+                className="absolute top-0 left-1/4 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-br from-blue-500/10 to-brand/10 rounded-full blur-3xl"
                 animate={orbVariants1}
                 transition={{ duration: 6, repeat: Infinity }} // Reduced from 8
             />
             <motion.div
-                className="absolute bottom-0 right-1/4 w-24 h-24 sm:w-36 sm:h-36 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"
+                className="absolute bottom-0 right-1/4 w-24 h-24 sm:w-36 sm:h-36 bg-gradient-to-br from-brand/10 to-brand-light/10 rounded-full blur-3xl"
                 animate={orbVariants2}
                 transition={{ duration: 8, repeat: Infinity, delay: 1 }} // Reduced from 10 and delay from 2
             />
@@ -250,7 +250,7 @@ const BookCallButton = memo(() => {
             whileHover={hoverVariants}
             whileTap={tapVariants}
         >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-brand opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
             <Calendar className={`w-4 h-4 sm:w-5 sm:h-5 ${!animationConfig.reduce ? 'group-hover:rotate-12' : ''} transition-transform duration-300 relative z-10`} />
             <div className="flex gap-1 sm:gap-2 relative z-10">
                 {["BOOK", "A", "CALL"].map((word, i) => (

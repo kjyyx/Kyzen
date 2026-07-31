@@ -51,8 +51,8 @@ export const ANIMATION_PRIORITY = {
 
 // Color palette (unchanged)
 export const COLORS = {
-    primary: '#ff75df',
-    secondary: '#e2dbd2',
+    primary: '#028582',
+    secondary: '#f3faf9',
     background: {
         dark: '#000000',
         light: '#ffffff'
@@ -64,8 +64,8 @@ export const COLORS = {
     },
     accent: {
         blue: '#3b82f6',
-        purple: '#8b5cf6',
-        pink: '#ec4899',
+        teal: '#028582',
+        accent: '#fbff00',
         green: '#10b981'
     }
 };
@@ -135,5 +135,5 @@ export const SHADOWS = {
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
     lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
     xl: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
-    glow: '0 0 40px rgba(255, 117, 223, 0.3)'
+    glow: '0 0 40px rgba(2, 133, 130, 0.26)'
 };

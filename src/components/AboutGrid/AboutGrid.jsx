@@ -44,7 +44,7 @@ const techStacks = [
         category: "Frontend",
         icon: Code2,
         color: "#ff6b6b",
-        bgGradient: "from-red-500/10 to-pink-500/10",
+        bgGradient: "from-red-500/10 to-brand-light/10",
         skills: [
             { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", color: "#E34F26" },
             { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", color: "#1572B6" },
@@ -86,8 +86,8 @@ const techStacks = [
     {
         category: "API & Integration",
         icon: Code2,
-        color: "#a855f7",
-        bgGradient: "from-purple-500/10 to-violet-500/10",
+        color: "#028582",
+        bgGradient: "from-brand/10 to-secondary/10",
         skills: [
             { name: "REST API", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", color: "#6DB33F" },
             { name: "Swagger", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg", color: "#85EA2D" },
@@ -118,9 +118,9 @@ const hobbies = [
         name: "Music",
         icon: Music,
         emoji: "🎵",
-        color: "#a855f7",
-        gradient: "from-purple-500/30 to-pink-500/30",
-        border: "border-purple-400/40"
+        color: "#028582",
+        gradient: "from-brand/30 to-brand-light/30",
+        border: "border-brand-light/40"
     },
     {
         name: "Gaming",
@@ -143,7 +143,7 @@ const hobbies = [
         icon: BookOpen,
         emoji: "📚",
         color: "#ef4444",
-        gradient: "from-red-500/30 to-pink-500/30",
+        gradient: "from-red-500/30 to-brand-light/30",
         border: "border-red-400/40"
     }
 ];
@@ -180,7 +180,7 @@ const socialLinks = [
     {
         icon: Mail,
         href: "mailto:kpjaculbia@gmail.com",
-        color: "#ff75df",
+        color: "#028582",
         label: "Email",
         hoverColor: "#ff8de6"
     },
@@ -361,7 +361,7 @@ const EnhancedAvatar = memo(() => {
                 {shouldAnimate && (
                     <>
                         <motion.div
-                            className="absolute inset-0 rounded-full border-2 border-[#ff75df]/30"
+                            className="absolute inset-0 rounded-full border-2 border-brand-light/30"
                             animate={rotatingRingVariants}
                             transition={{ 
                                 duration: animationConfig.reduce ? 0 : 20, 
@@ -370,7 +370,7 @@ const EnhancedAvatar = memo(() => {
                             }}
                         />
                         <motion.div
-                            className="absolute inset-2 rounded-full border border-purple-400/20"
+                            className="absolute inset-2 rounded-full border border-brand-light/20"
                             animate={{ rotate: animationConfig.reduce ? 0 : -360 }}
                             transition={{ 
                                 duration: animationConfig.reduce ? 0 : 15, 
@@ -383,7 +383,7 @@ const EnhancedAvatar = memo(() => {
 
                 {/* Glow effect - Simplified */}
                 <motion.div
-                    className="absolute inset-4 rounded-full bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 blur-xl"
+                    className="absolute inset-4 rounded-full bg-gradient-to-br from-brand-light/20 to-brand/20 blur-xl"
                     animate={glowVariants}
                     transition={{ 
                         duration: animationConfig.reduce ? 0 : 4, 
@@ -397,7 +397,7 @@ const EnhancedAvatar = memo(() => {
                     whileHover={animationConfig.reduce ? {} : { scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                     style={{
-                        boxShadow: shouldAnimate ? '0 0 50px rgba(255, 117, 223, 0.3)' : 'none'
+                        boxShadow: shouldAnimate ? '0 0 50px rgba(2, 133, 130, 0.26)' : 'none'
                     }}
                 >
                     <img
@@ -415,9 +415,9 @@ const EnhancedAvatar = memo(() => {
 const FloatingParticles = memo(() => {
     const animationConfig = getAnimationConfig();
     const particles = useMemo(() => [
-        { id: 1, size: 'w-2 h-2', color: 'bg-[#ff75df]', top: 'top-20', left: 'left-1/4', duration: 3 },
+        { id: 1, size: 'w-2 h-2', color: 'bg-brand-light', top: 'top-20', left: 'left-1/4', duration: 3 },
         { id: 2, size: 'w-1 h-1', color: 'bg-blue-400', top: 'top-40', left: 'right-1/3', duration: 4, delay: 1 },
-        { id: 3, size: 'w-3 h-3', color: 'bg-purple-400', top: 'bottom-32', left: 'left-1/3', duration: 5, delay: 2 },
+        { id: 3, size: 'w-3 h-3', color: 'bg-brand-light', top: 'bottom-32', left: 'left-1/3', duration: 5, delay: 2 },
         { id: 4, size: 'w-1.5 h-1.5', color: 'bg-green-400', top: 'top-1/2', left: 'left-1/6', duration: 6, delay: 3 }
     ], []);
     
@@ -457,12 +457,12 @@ const HeroTitle = memo(() => (
     >
         <div className="relative w-full">
             <h2 className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight sm:leading-none italic tracking-tight text-left">
-                About<span className="text-[#ff75df]">_</span>
+                About<span className="text-brand-light">_</span>
                 <br />
-                me<span className="text-[#ff75df]">:</span>
+                me<span className="text-brand-light">:</span>
             </h2>
             <motion.div
-                className="absolute -bottom-1 sm:-bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full"
+                className="absolute -bottom-1 sm:-bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: "10rem" }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -613,15 +613,15 @@ const HobbiesSection = memo(({ hoveredHobby, onHobbyHover, onHobbyLeave }) => {
         >
             <div className="flex items-center gap-4 mb-8">
                 <motion.div
-                    className="p-4 rounded-full bg-gradient-to-r from-[#ff75df]/20 to-orange-500/20 border border-[#ff75df]/30"
+                    className="p-4 rounded-full bg-gradient-to-r from-brand-light/20 to-orange-500/20 border border-brand-light/30"
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
                 >
-                    <Coffee className="w-7 h-7 text-[#ff75df]" />
+                    <Coffee className="w-7 h-7 text-brand-light" />
                 </motion.div>
                 <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
                 <motion.div
-                    className="flex-1 h-px bg-gradient-to-r from-[#ff75df]/50 to-transparent"
+                    className="flex-1 h-px bg-gradient-to-r from-brand-light/50 to-transparent"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ delay: 0.8, duration: 0.8 }}
@@ -649,13 +649,13 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             {showRealName ? (
                 <motion.h1
                     key="real"
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-[#ff75df] via-purple-400 to-blue-400 bg-clip-text text-center"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-brand-light via-brand-light to-blue-400 bg-clip-text text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
                     transition={{ duration: 0.5, type: "spring" }}
                     style={{
-                        textShadow: '0 0 30px rgba(255, 117, 223, 0.5)'
+                        textShadow: '0 0 30px rgba(2, 133, 130, 0.42)'
                     }}
                 >
                     Kenji Jaculbia
@@ -747,7 +747,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                 {/* Tagline with Enhanced Animation */}
                 <motion.div className="relative">
                     <motion.p
-                        className="text-sm sm:text-base md:text-lg text-[#ff75df]/80 font-medium italic tracking-wide"
+                        className="text-sm sm:text-base md:text-lg text-brand-light/80 font-medium italic tracking-wide"
                         animate={{
                             opacity: [0.6, 1, 0.6]
                         }}
@@ -769,7 +769,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                     className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
                     animate={{
                         scale: [1, 1.02, 1],
-                        borderColor: ["rgba(255,255,255,0.1)", "rgba(255,117,223,0.2)", "rgba(255,255,255,0.1)"]
+                        borderColor: ["rgba(255,255,255,0.1)", "rgba(2,133,130,0.20)", "rgba(255,255,255,0.1)"]
                     }}
                     transition={{ duration: 3, repeat: Infinity }}
                 >
@@ -811,7 +811,7 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-white leading-tight">
                 Crafting Digital
                 <motion.span
-                    className="block text-transparent bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text"
+                    className="block text-transparent bg-gradient-to-r from-brand-light via-blue-400 to-cyan-400 bg-clip-text"
                     animate={{
                         backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
@@ -839,7 +839,7 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
             >
                 I'm a passionate web developer from the Philippines who transforms creative ideas into
                 <motion.span
-                    className="text-[#ff75df] italic tracking-tight font-black"
+                    className="text-brand-light italic tracking-tight font-black"
                     whileHover={{ scale: 1.05 }}
                     style={{ cursor: 'default' }}
                 >  stunning digital realities</motion.span>.
@@ -878,10 +878,10 @@ const ResumeButton = memo(() => {
 
     return (
         <motion.button
-            className="group relative px-8 py-5 bg-gradient-to-r from-[#ff75df] to-purple-500 text-black italic tracking-tight font-black rounded-3xl overflow-hidden shadow-lg"
+            className="group relative px-8 py-5 bg-gradient-to-r from-brand-light to-brand text-black italic tracking-tight font-black rounded-3xl overflow-hidden shadow-lg"
             whileHover={{
                 scale: 1.02,
-                boxShadow: '0 20px 40px rgba(255, 117, 223, 0.4)'
+                boxShadow: '0 20px 40px rgba(2, 133, 130, 0.34)'
             }}
             whileTap={{ scale: 0.98 }}
             onClick={handleDownload}
@@ -935,7 +935,7 @@ const SectionDivider = memo(() => (
         delay={0.2}
         className="w-full mt-12 sm:mt-20 flex justify-center"
     >
-        <div className="w-64 h-px bg-gradient-to-r from-transparent via-[#ff75df]/50 to-transparent" />
+        <div className="w-64 h-px bg-gradient-to-r from-transparent via-brand-light/50 to-transparent" />
     </ScrollAnimatedSection>
 ));
 
@@ -1254,18 +1254,18 @@ const TechStackSection = memo(({
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
                 >
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent to-[#ff75df]/50" />
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent to-brand-light/50" />
                     <motion.div
-                        className="relative p-5 rounded-3xl bg-gradient-to-br from-[#ff75df]/30 to-purple-500/30 border border-[#ff75df]/40 backdrop-blur-sm"
+                        className="relative p-5 rounded-3xl bg-gradient-to-br from-brand-light/30 to-brand/30 border border-brand-light/40 backdrop-blur-sm"
                         animate={{
                             rotateY: [0, 180, 360],
                             scale: [1, 1.05, 1]
                         }}
                         transition={{ duration: 6, repeat: Infinity }}
                     >
-                        <Code2 className="w-10 h-10 text-[#ff75df]" />
+                        <Code2 className="w-10 h-10 text-brand-light" />
                         <motion.div
-                            className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 blur-xl"
+                            className="absolute inset-0 rounded-3xl bg-gradient-to-r from-brand-light/20 to-brand/20 blur-xl"
                             animate={{
                                 scale: [1, 1.2, 1],
                                 opacity: [0.3, 0.6, 0.3]
@@ -1273,11 +1273,11 @@ const TechStackSection = memo(({
                             transition={{ duration: 4, repeat: Infinity }}
                         />
                     </motion.div>
-                    <div className="w-24 h-px bg-gradient-to-l from-transparent to-[#ff75df]/50" />
+                    <div className="w-24 h-px bg-gradient-to-l from-transparent to-brand-light/50" />
                 </motion.div>
 
                 <motion.h3
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}

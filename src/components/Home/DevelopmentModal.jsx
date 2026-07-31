@@ -166,7 +166,7 @@ const DevelopmentModal = ({ onClose }) => {
 
                 {/* Modal Content */}
                 <motion.div
-                    className="relative w-full max-w-11/12 sm:max-w-lg bg-gradient-to-br from-[#2e175c]/90 via-[#1a1a1a]/95 to-black/90 border border-[#ff75df]/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-[#ff75df]/20"
+                    className="relative w-full max-w-11/12 sm:max-w-lg bg-gradient-to-br from-[#023737]/90 via-[#1a1a1a]/95 to-black/90 border border-brand-light/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-brand-light/20"
                     variants={modalVariants}
                     initial="hidden"
                     animate="visible"
@@ -188,12 +188,12 @@ const DevelopmentModal = ({ onClose }) => {
                         variants={shouldAnimate ? itemVariants : {}}
                     >
                         <motion.div 
-                            className="w-16 h-16 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full flex items-center justify-center"
+                            className="w-16 h-16 bg-gradient-to-r from-brand-light to-brand-light rounded-full flex items-center justify-center"
                             animate={animationConfig.reduce ? {} : {
                                 boxShadow: [
-                                    "0 0 20px rgba(255, 117, 223, 0.3)",
-                                    "0 0 30px rgba(255, 117, 223, 0.5)",
-                                    "0 0 20px rgba(255, 117, 223, 0.3)"
+                                    "0 0 20px rgba(2, 133, 130, 0.26)",
+                                    "0 0 30px rgba(2, 133, 130, 0.42)",
+                                    "0 0 20px rgba(2, 133, 130, 0.26)"
                                 ]
                             }}
                             transition={{
@@ -215,7 +215,7 @@ const DevelopmentModal = ({ onClose }) => {
                     >
                         {/* Title */}
                         <motion.h2
-                            className="text-2xl sm:text-3xl font-black italic tracking-tight bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text text-transparent"
+                            className="text-2xl sm:text-3xl font-black italic tracking-tight bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             Under Development
@@ -223,7 +223,7 @@ const DevelopmentModal = ({ onClose }) => {
 
                         {/* Subtitle */}
                         <motion.div
-                            className="flex items-center justify-center gap-2 text-[#ff75df]/80"
+                            className="flex items-center justify-center gap-2 text-brand-light/80"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             <span className="text-sm font-medium tracking-wide">Digital Portfolio v2.0</span>
@@ -245,7 +245,7 @@ const DevelopmentModal = ({ onClose }) => {
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             <div className="flex items-center gap-2 mb-3">
-                                <AlertTriangle className="w-4 h-4 text-[#ff75df]" />
+                                <AlertTriangle className="w-4 h-4 text-brand-light" />
                                 <span className="text-sm font-medium text-white">Currently Working On:</span>
                             </div>
                             <FeaturesList animationConfig={animationConfig} />
@@ -254,7 +254,7 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Action Button */}
                         <motion.button
                             onClick={onClose}
-                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-[#ff75df] to-purple-400 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-[#ff75df]/30 transition-all duration-200"
+                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-brand-light to-brand-light text-white font-medium rounded-xl hover:shadow-lg hover:shadow-brand-light/30 transition-all duration-200"
                             whileHover={buttonHoverVariants}
                             whileTap={{ scale: animationConfig.reduce ? 1 : 0.99 }}
                             variants={shouldAnimate ? itemVariants : {}}
@@ -278,10 +278,10 @@ const DevelopmentModal = ({ onClose }) => {
 
 const FeaturesList = ({ animationConfig }) => {
     const features = [
-        { text: "Enhanced animations & interactions", color: "bg-[#ff75df]" },
-        { text: "Mobile responsiveness optimization", color: "bg-purple-400" },
-        { text: "New project showcases", color: "bg-[#ff75df]" },
-        { text: "Performance improvements", color: "bg-purple-400" }
+        { text: "Enhanced animations & interactions", color: "bg-brand-light" },
+        { text: "Mobile responsiveness optimization", color: "bg-brand-light" },
+        { text: "New project showcases", color: "bg-brand-light" },
+        { text: "Performance improvements", color: "bg-brand-light" }
     ];
 
     const itemHoverVariants = useMemo(() => {

@@ -76,10 +76,10 @@ const projectData = {
 
     // Color theme
     colors: {
-        primary: "#ff75df",
-        secondary: "#8b5cf6",
+        primary: "#028582",
+        secondary: "#025452",
         accent: "#06b6d4",
-        gradient: "from-[#ff75df] to-purple-500"
+        gradient: "from-brand-light to-brand"
     },
 
     // Project links
@@ -102,12 +102,12 @@ const projectData = {
         {
             title: "Real-time Navigation",
             description: "Advanced GPS integration with live traffic updates",
-            color: "#ff75df"
+            color: "#028582"
         },
         {
             title: "Smart Recommendations",
             description: "AI-powered suggestions based on user preferences",
-            color: "#8b5cf6"
+            color: "#025452"
         },
         {
             title: "Offline Support",
@@ -223,10 +223,10 @@ const ProjectStatistics = memo(() => {
                     <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                         Project Metrics
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 pl-2 leading-[1.15]">
+                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 pl-2 leading-[1.15]">
                         Achievement Overview
                     </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                    <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
                     <p className="text-white/70 text-lg max-w-2xl">
                         Key performance indicators showcasing project success and impact
                     </p>
@@ -243,8 +243,8 @@ const ProjectStatistics = memo(() => {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             whileHover={{ y: -8 }}
                         >
-                            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group-hover:shadow-2xl shadow-[#ff75df]/10">
-                                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 border border-white/20 mb-6 ${stat.color}`}>
+                            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group-hover:shadow-2xl shadow-brand-light/10">
+                                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-light/20 to-brand/20 border border-white/20 mb-6 ${stat.color}`}>
                                     <stat.icon className="w-8 h-8" />
                                 </div>
                                 <div className="text-4xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300">
@@ -280,7 +280,7 @@ const ProjectOverview = memo(() => {
                             <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                                 About This Project
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
+                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                 A Seamless WordPress Experience for a Modern Brand
                             </h2>
                         </div>
@@ -301,7 +301,7 @@ const ProjectOverview = memo(() => {
                                 href={projectData.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-[#ff75df]/25 transition-all duration-300 flex items-center gap-2"
+                                className="bg-gradient-to-r from-brand-light to-brand text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
                                 whileHover={{ scale: 1.05, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -330,23 +330,23 @@ const ProjectOverview = memo(() => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 space-y-8 shadow-lg shadow-[#ff75df]/10">
+                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 space-y-8 shadow-lg shadow-brand-light/10">
                             <div>
                                 <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Globe className="w-5 h-5 text-[#ff75df]" />
+                                    <Globe className="w-5 h-5 text-brand-light" />
                                     Project Links
                                 </h3>
                                 <div className="space-y-3">
                                     <a
                                         href={projectData.links.website}
-                                        className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
+                                        className="text-white/70 hover:text-brand-light transition-colors flex items-center gap-2 group"
                                     >
                                         <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         www.lavacraze.com
                                     </a>
                                     <a
                                         href={projectData.links.github}
-                                        className="text-white/70 hover:text-[#ff75df] transition-colors flex items-center gap-2 group"
+                                        className="text-white/70 hover:text-brand-light transition-colors flex items-center gap-2 group"
                                     >
                                         <Github className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                                         GitHub Repository
@@ -356,7 +356,7 @@ const ProjectOverview = memo(() => {
 
                             <div>
                                 <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Calendar className="w-5 h-5 text-[#ff75df]" />
+                                    <Calendar className="w-5 h-5 text-brand-light" />
                                     Timeline
                                 </h3>
                                 <div className="text-white/70">
@@ -367,7 +367,7 @@ const ProjectOverview = memo(() => {
 
                             <div>
                                 <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Users className="w-5 h-5 text-[#ff75df]" />
+                                    <Users className="w-5 h-5 text-brand-light" />
                                     Team
                                 </h3>
                                 <p className="text-white/70">{projectData.meta.team}</p>
@@ -375,7 +375,7 @@ const ProjectOverview = memo(() => {
 
                             <div>
                                 <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
-                                    <Award className="w-5 h-5 text-[#ff75df]" />
+                                    <Award className="w-5 h-5 text-brand-light" />
                                     Status
                                 </h3>
                                 <div className="flex items-center gap-2">
@@ -406,10 +406,10 @@ const TechnologyStack = memo(() => {
                     <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                         Built With
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-[1.15]">
+                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
                         Technology Stack
                     </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4 mx-auto" />
+                    <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4 mx-auto" />
                     <p className="text-white/70 text-lg max-w-2xl mx-auto">
                         Modern technologies and frameworks powering exceptional digital experiences
                     </p>
@@ -419,7 +419,7 @@ const TechnologyStack = memo(() => {
                     {projectData.techStack.map((tech, index) => (
                         <motion.div
                             key={tech.name}
-                            className="group relative flex flex-col items-center justify-center w-40 h-48 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-[#ff75df]/10 hover:shadow-2xl hover:shadow-[#ff75df]/20 transition-all duration-300"
+                            className="group relative flex flex-col items-center justify-center w-40 h-48 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-brand-light/10 hover:shadow-2xl hover:shadow-brand-light/20 transition-all duration-300"
                             initial={{ opacity: 0, y: 30, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true }}
@@ -472,10 +472,10 @@ const ScreenshotGallery = memo(({ images }) => (
                 <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                     Website Preview
                 </span>
-                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-tight">
+                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
                     Screenshots
                 </h2>
-                <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
                 <p className="text-white/70 text-lg max-w-2xl">
                     Visual overviews of the live site as delivered.
                 </p>
@@ -484,7 +484,7 @@ const ScreenshotGallery = memo(({ images }) => (
                 {images.map((img, idx) => (
                     <motion.div
                         key={img.src}
-                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg shadow-[#ff75df]/10 overflow-auto flex justify-center items-center"
+                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg shadow-brand-light/10 overflow-auto flex justify-center items-center"
                         initial={{ opacity: 0, scale: 0.97 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
@@ -521,10 +521,10 @@ const KeyFeatures = memo(() => {
                     <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                         Core Capabilities
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-[1.15]">
+                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
                         Key Features
                     </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                    <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
                     <p className="text-white/70 text-lg max-w-2xl">
                         Comprehensive solutions designed to transform user experience and drive engagement
                     </p>
@@ -547,7 +547,7 @@ const KeyFeatures = memo(() => {
                             <AnimatePresence>
                                 {hoveredIndex === index && (
                                     <motion.div
-                                        className="absolute -inset-4 bg-gradient-to-r from-[#ff75df]/30 to-purple-500/30 rounded-3xl blur-2xl"
+                                        className="absolute -inset-4 bg-gradient-to-r from-brand-light/30 to-brand/30 rounded-3xl blur-2xl"
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.8 }}
@@ -558,8 +558,8 @@ const KeyFeatures = memo(() => {
 
                             <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 h-full hover:bg-white/15 hover:border-white/30 transition-all duration-300">
                                 {/* Icon */}
-                                <div className="w-16 h-16 bg-gradient-to-br from-[#ff75df]/20 to-purple-500/20 border border-[#ff75df]/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                    <feature.icon className="w-8 h-8 text-[#ff75df]" />
+                                <div className="w-16 h-16 bg-gradient-to-br from-brand-light/20 to-brand/20 border border-brand-light/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <feature.icon className="w-8 h-8 text-brand-light" />
                                 </div>
 
                                 {/* Content */}
@@ -567,7 +567,7 @@ const KeyFeatures = memo(() => {
                                 <p className="text-white/70 text-lg leading-relaxed mb-6">{feature.description}</p>
 
                                 {/* Learn More Link */}
-                                <div className="flex items-center text-[#ff75df] font-black italic group-hover:translate-x-2 transition-transform duration-300">
+                                <div className="flex items-center text-brand-light font-black italic group-hover:translate-x-2 transition-transform duration-300">
                                     <span className="mr-2">Learn more</span>
                                     <ArrowRight className="w-4 h-4" />
                                 </div>
@@ -585,7 +585,7 @@ const ProjectShowcase = memo(() => {
     return (
         <section className="py-20">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden shadow-lg shadow-[#ff75df]/10">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden shadow-lg shadow-brand-light/10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
                         {/* Left Side - Content */}
                         <div className="p-12 lg:p-16 flex flex-col justify-center">
@@ -598,7 +598,7 @@ const ProjectShowcase = memo(() => {
                                 <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                                     Project Highlight
                                 </span>
-                                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
+                                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                     Lead the way.<br />
                                     <span className="text-white/60">Innovation to follow.</span>
                                 </h2>
@@ -618,7 +618,7 @@ const ProjectShowcase = memo(() => {
                                             viewport={{ once: true }}
                                             transition={{ duration: 0.6, delay: index * 0.1 }}
                                         >
-                                            <div className="w-2 h-2 bg-[#ff75df] rounded-full flex-shrink-0" />
+                                            <div className="w-2 h-2 bg-brand-light rounded-full flex-shrink-0" />
                                             <span className="text-white/70">{highlight}</span>
                                         </motion.div>
                                     ))}
@@ -626,7 +626,7 @@ const ProjectShowcase = memo(() => {
 
                                 <div className="flex flex-wrap gap-4">
                                     <motion.button
-                                        className="bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-[#ff75df]/25 transition-all duration-300 flex items-center gap-2"
+                                        className="bg-gradient-to-r from-brand-light to-brand text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
                                         whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -654,22 +654,22 @@ const ProjectShowcase = memo(() => {
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
                                 {/* Main showcase mockup */}
-                                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-8 text-center shadow-lg shadow-[#ff75df]/10">
-                                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-[#ff75df]/30 to-purple-500/30 rounded-2xl flex items-center justify-center border border-[#ff75df]/40">
-                                        <Monitor className="w-12 h-12 text-[#ff75df]" />
+                                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-8 text-center shadow-lg shadow-brand-light/10">
+                                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-brand-light/30 to-brand/30 rounded-2xl flex items-center justify-center border border-brand-light/40">
+                                        <Monitor className="w-12 h-12 text-brand-light" />
                                     </div>
                                     <h3 className="text-white text-2xl font-black italic mb-4">Interactive Demo</h3>
                                     <p className="text-white/70 mb-6">Experience the full navigation system with live interactions and real-time feedback</p>
-                                    <div className="bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 rounded-xl p-4 border border-[#ff75df]/30">
+                                    <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 rounded-xl p-4 border border-brand-light/30">
                                         <div className="text-white font-black italic mb-2">User Engagement</div>
-                                        <div className="text-3xl font-black text-[#ff75df]">+150%</div>
+                                        <div className="text-3xl font-black text-brand-light">+150%</div>
                                         <div className="text-white/60 text-sm">improvement</div>
                                     </div>
                                 </div>
 
                                 {/* Floating elements */}
                                 <motion.div
-                                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-2xl border border-purple-500/40 flex items-center justify-center"
+                                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-brand/30 to-blue-500/30 rounded-2xl border border-brand/40 flex items-center justify-center"
                                     animate={{
                                         y: [0, -10, 0],
                                         rotate: [0, 5, -5, 0]
@@ -680,11 +680,11 @@ const ProjectShowcase = memo(() => {
                                         ease: "easeInOut"
                                     }}
                                 >
-                                    <Zap className="w-8 h-8 text-purple-400" />
+                                    <Zap className="w-8 h-8 text-brand-light" />
                                 </motion.div>
 
                                 <motion.div
-                                    className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#ff75df]/30 to-red-500/30 rounded-xl border border-[#ff75df]/40 flex items-center justify-center"
+                                    className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-brand-light/30 to-red-500/30 rounded-xl border border-brand-light/40 flex items-center justify-center"
                                     animate={{
                                         y: [0, 10, 0],
                                         rotate: [0, -5, 5, 0]
@@ -696,7 +696,7 @@ const ProjectShowcase = memo(() => {
                                         delay: 1
                                     }}
                                 >
-                                    <Star className="w-6 h-6 text-[#ff75df]" />
+                                    <Star className="w-6 h-6 text-brand-light" />
                                 </motion.div>
                             </motion.div>
                         </div>
@@ -762,10 +762,10 @@ const MobileExperience = memo(() => {
                     <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                         Cross-Platform
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4">
+                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4">
                         Mobile Experience
                     </h2>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                    <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
                     <p className="text-white/70 text-lg max-w-2xl">
                         Seamless navigation across all devices with native app functionality and performance
                     </p>
@@ -809,7 +809,7 @@ const ProjectImpact = memo(() => {
     return (
         <section className="py-20">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-12 lg:p-16 shadow-lg shadow-[#ff75df]/10">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-12 lg:p-16 shadow-lg shadow-brand-light/10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
@@ -820,10 +820,10 @@ const ProjectImpact = memo(() => {
                             <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
                                 Project Impact
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-tight">
+                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                 Where Innovation Meets Excellence
                             </h2>
-                            <div className="h-1 w-32 bg-gradient-to-r from-[#ff75df] via-purple-400 to-transparent rounded-full mb-4" />
+                            <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
                             <p className="text-white/80 text-lg leading-relaxed mb-6">
                                 This project picks up where competitors left off. These innovative design approaches
                                 were combined with comprehensive app redesign and new website development, all working
@@ -839,7 +839,7 @@ const ProjectImpact = memo(() => {
                                 <span>Interested in similar solutions?</span>
                                 <motion.a
                                     href="#"
-                                    className="text-[#ff75df] hover:text-purple-400 font-black italic flex items-center gap-2 group"
+                                    className="text-brand-light hover:text-brand-light font-black italic flex items-center gap-2 group"
                                     whileHover={{ x: 4 }}
                                 >
                                     Let's collaborate!
@@ -872,7 +872,7 @@ const ProjectImpact = memo(() => {
                                         transition={{ duration: 0.6, delay: index * 0.1 }}
                                         whileHover={{ scale: 1.05, y: -2 }}
                                     >
-                                        <item.icon className="w-6 h-6 text-[#ff75df] mx-auto mb-2" />
+                                        <item.icon className="w-6 h-6 text-brand-light mx-auto mb-2" />
                                         <div className="text-2xl font-black text-white mb-1">{item.metric}</div>
                                         <div className="text-white/60 text-sm">{item.label}</div>
                                     </motion.div>
@@ -880,9 +880,9 @@ const ProjectImpact = memo(() => {
                             </div>
 
                             {/* Additional info */}
-                            <div className="bg-gradient-to-r from-[#ff75df]/10 to-purple-500/10 border border-[#ff75df]/20 rounded-xl p-6">
+                            <div className="bg-gradient-to-r from-brand-light/10 to-brand/10 border border-brand-light/20 rounded-xl p-6">
                                 <h4 className="text-white font-black italic mb-3 flex items-center gap-2">
-                                    <Award className="w-5 h-5 text-[#ff75df]" />
+                                    <Award className="w-5 h-5 text-brand-light" />
                                     Recognition
                                 </h4>
                                 <p className="text-white/70 text-sm leading-relaxed">
@@ -916,7 +916,7 @@ function ITSATS() {
                 {/* Background Effects */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
-                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#ff75df]/10 to-purple-500/10 rounded-full blur-3xl"
+                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.6, 0.3]
@@ -924,7 +924,7 @@ function ITSATS() {
                         transition={{ duration: 8, repeat: Infinity }}
                     />
                     <motion.div
-                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
+                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.3, 1],
                             opacity: [0.2, 0.5, 0.2]

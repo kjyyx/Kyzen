@@ -101,16 +101,16 @@ const SectionHeader = memo(({ icon: Icon, badge, title, subtitle, delay = 0.2 })
         className="text-center mb-12 sm:mb-16 md:mb-20"
     >
         <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 backdrop-blur-sm border border-[#ff75df]/30 rounded-full mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-light/20 to-brand/20 backdrop-blur-sm border border-brand-light/30 rounded-full mb-6"
             whileHover={{ scale: 1.02 }}
         >
-            <Icon className="w-4 h-4 text-[#ff75df]" />
+            <Icon className="w-4 h-4 text-brand-light" />
             <span className="text-white/90 text-sm font-medium tracking-wide">{badge}</span>
         </motion.div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-6 leading-[0.9]">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-[0.9]">
             {title}
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mb-4" />
+        <div className="w-24 h-1 bg-gradient-to-r from-brand-light to-brand-light rounded-full mx-auto mb-4" />
         {subtitle && (
             <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-4">
                 {subtitle}
@@ -140,8 +140,8 @@ const ProjectOverview = memo(() => (
                     <div className="relative">
                         <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-10 shadow-2xl">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-2 h-2 bg-[#ff75df] rounded-full animate-pulse" />
-                                <span className="text-[#ff75df] text-sm font-black uppercase tracking-widest">
+                                <div className="w-2 h-2 bg-brand-light rounded-full animate-pulse" />
+                                <span className="text-brand-light text-sm font-black uppercase tracking-widest">
                                     WordPress Excellence
                                 </span>
                             </div>
@@ -177,7 +177,7 @@ const ProjectOverview = memo(() => (
                                     href={projectData.links.live}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group relative overflow-hidden bg-gradient-to-r from-[#ff75df] to-purple-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight transition-all duration-300 flex items-center gap-3"
+                                    className="group relative overflow-hidden bg-gradient-to-r from-brand-light to-brand text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight transition-all duration-300 flex items-center gap-3"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -210,7 +210,7 @@ const ProjectOverview = memo(() => (
                     <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-white font-black italic text-xl flex items-center gap-3">
-                                <Award className="w-6 h-6 text-[#ff75df]" />
+                                <Award className="w-6 h-6 text-brand-light" />
                                 Project Status
                             </h3>
                             <div className="px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-green-400/20 border border-emerald-400/30 rounded-full">
@@ -221,7 +221,7 @@ const ProjectOverview = memo(() => (
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-white/70">
-                            <Calendar className="w-5 h-5 text-[#ff75df]" />
+                            <Calendar className="w-5 h-5 text-brand-light" />
                             <span className="font-medium">Delivered in {projectData.meta.year}</span>
                         </div>
                     </div>
@@ -229,7 +229,7 @@ const ProjectOverview = memo(() => (
                     {/* Project Links Card */}
                     <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
                         <h3 className="text-white font-black italic text-xl mb-6 flex items-center gap-3">
-                            <Globe className="w-6 h-6 text-[#ff75df]" />
+                            <Globe className="w-6 h-6 text-brand-light" />
                             Project Links
                         </h3>
                         <StaggerContainer
@@ -238,11 +238,11 @@ const ProjectOverview = memo(() => (
                         >
                             <motion.a
                                 href={projectData.links.website}
-                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
+                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-brand-light/30 transition-all duration-300"
                                 whileHover={{ x: 4 }}
                             >
-                                <div className="w-10 h-10 bg-gradient-to-br from-[#ff75df]/20 to-purple-400/20 rounded-xl flex items-center justify-center">
-                                    <ExternalLink className="w-5 h-5 text-[#ff75df]" />
+                                <div className="w-10 h-10 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
+                                    <ExternalLink className="w-5 h-5 text-brand-light" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="text-white font-black">Live Website</div>
@@ -251,11 +251,11 @@ const ProjectOverview = memo(() => (
                             </motion.a>
                             <motion.a
                                 href={projectData.links.github}
-                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-[#ff75df]/30 transition-all duration-300"
+                                className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-brand-light/30 transition-all duration-300"
                                 whileHover={{ x: 4 }}
                             >
-                                <div className="w-10 h-10 bg-gradient-to-br from-[#ff75df]/20 to-purple-400/20 rounded-xl flex items-center justify-center">
-                                    <Github className="w-5 h-5 text-[#ff75df]" />
+                                <div className="w-10 h-10 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
+                                    <Github className="w-5 h-5 text-brand-light" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="text-white font-black">Source Code</div>
@@ -275,16 +275,16 @@ const ProjectOverview = memo(() => (
             >
                 <div className="text-center mb-12">
                     <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 backdrop-blur-sm border border-[#ff75df]/30 rounded-full mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-light/20 to-brand/20 backdrop-blur-sm border border-brand-light/30 rounded-full mb-6"
                         whileHover={{ scale: 1.02 }}
                     >
-                        <Users className="w-4 h-4 text-[#ff75df]" />
+                        <Users className="w-4 h-4 text-brand-light" />
                         <span className="text-white/90 text-sm font-medium tracking-wide">DREAM TEAM</span>
                     </motion.div>
-                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-[#ff75df] to-purple-400 bg-clip-text mb-4 leading-tight">
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
                         Meet the Team
                     </h3>
-                    <div className="w-20 h-1 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mb-4" />
+                    <div className="w-20 h-1 bg-gradient-to-r from-brand-light to-brand-light rounded-full mx-auto mb-4" />
                     <p className="text-white/70 text-lg max-w-2xl mx-auto">
                         The talented individuals who brought this project to life
                     </p>
@@ -302,7 +302,7 @@ const ProjectOverview = memo(() => (
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         >
                             <div className="relative w-20 h-20 mx-auto mb-4">
-                                <div className="w-full h-full bg-gradient-to-br from-[#ff75df] to-purple-400 rounded-full flex items-center justify-center text-white font-black text-xl shadow-lg">
+                                <div className="w-full h-full bg-gradient-to-br from-brand-light to-brand-light rounded-full flex items-center justify-center text-white font-black text-xl shadow-lg">
                                     {member.name.split(' ').map(n => n[0]).join('')}
                                 </div>
                                 {idx === 0 && (
@@ -313,7 +313,7 @@ const ProjectOverview = memo(() => (
                             </div>
 
                             <div>
-                                <h4 className="text-white font-black text-lg mb-1 group-hover:text-[#ff75df] transition-colors duration-300">
+                                <h4 className="text-white font-black text-lg mb-1 group-hover:text-brand-light transition-colors duration-300">
                                     {member.name}
                                 </h4>
                                 <p className="text-white/60 text-sm font-medium uppercase tracking-wide">
@@ -321,7 +321,7 @@ const ProjectOverview = memo(() => (
                                 </p>
                             </div>
 
-                            <div className="w-8 h-0.5 bg-gradient-to-r from-[#ff75df] to-purple-400 rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="w-8 h-0.5 bg-gradient-to-r from-brand-light to-brand-light rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </motion.div>
                     ))}
                 </StaggerContainer>
@@ -411,9 +411,9 @@ const ScreenshotGallery = memo(({ images }) => (
                         transition={{ duration: 0.4, ease: "easeOut" }}
                     >
                         <motion.div
-                            className="absolute -inset-4 bg-gradient-to-r from-[#ff75df]/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+                            className="absolute -inset-4 bg-gradient-to-r from-brand-light/20 to-brand/20 rounded-3xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
                         />
-                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 group-hover:border-[#ff75df]/30 rounded-3xl p-3 shadow-2xl overflow-hidden transition-all duration-500">
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 group-hover:border-brand-light/30 rounded-3xl p-3 shadow-2xl overflow-hidden transition-all duration-500">
                             <ScrollAnimatedSection
                                 animationType="scale"
                                 delay={idx * 0.2}
@@ -451,7 +451,7 @@ function LavaCraze() {
                 {/* Enhanced Background Effects */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
-                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#ff75df]/10 to-purple-500/10 rounded-full blur-3xl"
+                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.6, 0.3]
@@ -459,7 +459,7 @@ function LavaCraze() {
                         transition={{ duration: 12, repeat: Infinity }}
                     />
                     <motion.div
-                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
+                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.3, 1],
                             opacity: [0.2, 0.5, 0.2]
