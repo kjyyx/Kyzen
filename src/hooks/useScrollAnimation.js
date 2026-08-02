@@ -25,7 +25,7 @@ export const useScrollAnimation = (options = {}) => {
         animationType = 'fadeUp',
         customVariants = null,
         enableStagger = false,
-        staggerDelay = 0.05,
+        staggerDelay = 0.06,
         rootMargin = PERFORMANCE.intersectionRootMargin,
         priority = 'medium'
     } = options;
@@ -74,7 +74,7 @@ export const useScrollAnimation = (options = {}) => {
             fadeUp: {
                 hidden: { 
                     opacity: 0, 
-                    y: 20
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
@@ -93,7 +93,7 @@ export const useScrollAnimation = (options = {}) => {
             fadeDown: {
                 hidden: { 
                     opacity: 0, 
-                    y: -20
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
@@ -112,11 +112,11 @@ export const useScrollAnimation = (options = {}) => {
             fadeLeft: {
                 hidden: { 
                     opacity: 0, 
-                    x: -20
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
-                    x: 0,
+                    y: 0,
                     transition: {
                         duration: baseDuration,
                         delay: baseDelay,
@@ -131,11 +131,11 @@ export const useScrollAnimation = (options = {}) => {
             fadeRight: {
                 hidden: { 
                     opacity: 0, 
-                    x: 20
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
-                    x: 0,
+                    y: 0,
                     transition: {
                         duration: baseDuration,
                         delay: baseDelay,
@@ -150,11 +150,11 @@ export const useScrollAnimation = (options = {}) => {
             scale: {
                 hidden: { 
                     opacity: 0, 
-                    scale: 0.95
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
-                    scale: 1,
+                    y: 0,
                     transition: {
                         duration: baseDuration,
                         delay: baseDelay,
@@ -169,7 +169,7 @@ export const useScrollAnimation = (options = {}) => {
             slide: {
                 hidden: { 
                     opacity: 0, 
-                    y: 30
+                    y: 24
                 },
                 visible: { 
                     opacity: 1, 
@@ -216,7 +216,7 @@ export const useScrollAnimation = (options = {}) => {
     const childVariants = useMemo(() => ({
         hidden: { 
             opacity: 0, 
-            y: animationConfig.reduce ? 5 : 10
+            y: animationConfig.reduce ? 0 : 24
         },
         visible: { 
             opacity: 1, 
@@ -254,7 +254,7 @@ export const useSimpleScrollAnimation = (delay = 0) => {
 /**
  * Optimized hook for stagger animations
  */
-export const useStaggerScrollAnimation = (staggerDelay = 0.05) => {
+export const useStaggerScrollAnimation = (staggerDelay = 0.06) => {
     return useScrollAnimation({
         animationType: 'fadeUp',
         enableStagger: true,
@@ -271,7 +271,7 @@ export const useHeroScrollAnimation = () => {
     return useScrollAnimation({
         animationType: 'slide',
         threshold: SCROLL_THRESHOLDS.minimal,
-        delay: 0.1,
+        delay: 0.08,
         priority: 'critical'
     });
 };

@@ -1,142 +1,42 @@
 import React, { memo, useMemo } from "react";
 import { motion } from "framer-motion";
-import Avatar from '../../assets/Avatar-2.png';
+import { ArrowRight, User } from "lucide-react";
+
+import BigLogo from '../../assets/KYZENLOGO6.webp';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
-import StaggerContainer from '../../common/StaggerContainer';
-import { 
-    getAnimationConfig, 
+import {
+    getAnimationConfig,
     canAnimate
 } from '../../utils/helpers';
-import { 
-    ANIMATION_DURATION, 
+import {
+    ANIMATION_DURATION,
     EASING
 } from '../../utils/constants';
 
 // ===== SUB-COMPONENTS (Alphabetically Ordered) =====
 
-// Avatar Image Component - Optimized with conditional animations
-const AvatarImage = memo(() => {
-    const animationConfig = getAnimationConfig();
-    const shouldAnimate = canAnimate();
-    
-    const avatarVariants = useMemo(() => {
-        if (animationConfig.reduce || !shouldAnimate) {
-            return {
-                initial: { opacity: 0 },
-                animate: { 
-                    opacity: 1,
-                    transition: { duration: 0.5, delay: 0.3 }
-                }
-            };
-        }
-        
-        return {
-            initial: { opacity: 0, scale: 0.9, y: 20 },
-            animate: { 
-                opacity: 1, 
-                scale: 1, 
-                y: 0,
-                transition: {
-                    duration: ANIMATION_DURATION.slower,
-                    ease: EASING.easeOut,
-                    delay: 0.8
-                }
-            }
-        };
-    }, [animationConfig.reduce, shouldAnimate]);
-
-    const floatingVariants = useMemo(() => {
-        if (animationConfig.reduce) {
-            return { y: 0 };
-        }
-        
-        return {
-            y: [0, -8, 0]
-        };
-    }, [animationConfig.reduce]);
-
-    return (
-        <motion.div
-            className="absolute top-[45%] xs:top-[46%] sm:top-[47%] md:top-[55%] lg:top-[60%] xl:top-[65%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
-            {...avatarVariants}
-        >
-            <motion.div
-                className="w-[280px] h-[330px] xs:w-[320px] xs:h-[380px] sm:w-[360px] sm:h-[420px] md:w-[500px] md:h-[600px] lg:w-[600px] lg:h-[700px] flex items-center justify-center relative"
-                style={{
-                    maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-                }}
-                animate={floatingVariants}
-                transition={{
-                    duration: animationConfig.reduce ? 0 : 4,
-                    repeat: animationConfig.reduce ? 0 : Infinity,
-                    ease: "easeInOut"
-                }}
-            >
-                {shouldAnimate && <AvatarBackdrop />}
-                <img
-                    src={Avatar}
-                    alt="Avatar"
-                    className="w-full h-full object-contain drop-shadow-2xl relative z-10"
-                />
-            </motion.div>
-        </motion.div>
-    );
-});
-
-// Avatar Backdrop Component - Simplified for performance
-const AvatarBackdrop = memo(() => {
-    const animationConfig = getAnimationConfig();
-    
-    const backdropVariants = useMemo(() => {
-        if (animationConfig.reduce) {
-            return {
-                scale: 1,
-                opacity: 0.2
-            };
-        }
-        
-        return {
-            scale: [1, 1.05, 1],
-            opacity: [0.2, 0.3, 0.2]
-        };
-    }, [animationConfig.reduce]);
-
-    return (
-        <motion.div
-            className="absolute inset-0 bg-brand/5 rounded-full blur-3xl"
-            animate={backdropVariants}
-            transition={{
-                duration: animationConfig.reduce ? 0 : 3,
-                repeat: animationConfig.reduce ? 0 : Infinity,
-                ease: "easeInOut"
-            }}
-        />
-    );
-});
-
-// Background Circles Component - Optimized
+// Background Circles Component - Shifted behind the right-side logo
 const BackgroundCircles = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     return (
         <ScrollAnimatedSection
             animationType="scale"
             delay={0.1}
-            className="absolute inset-0 z-0"
+            className="absolute right-[-5vw] md:right-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none"
             priority="critical"
         >
-            <div className="relative w-full h-full">
-                <BackgroundCircle 
-                    size="large" 
-                    borderClass="border-brand-light/35"
+            <div className="relative w-[50vw] max-w-[700px] aspect-square flex items-center justify-center">
+                <BackgroundCircle
+                    size="large"
+                    borderClass="border-brand-light/25"
                     delay={0}
                     animationConfig={animationConfig}
                 />
-                <BackgroundCircle 
-                    size="medium" 
-                    borderClass="border-secondary/35"
+                <BackgroundCircle
+                    size="medium"
+                    borderClass="border-secondary/25"
                     delay={0.3}
                     animationConfig={animationConfig}
                 />
@@ -145,12 +45,12 @@ const BackgroundCircles = memo(() => {
     );
 });
 
-// Individual Background Circle - New optimized component
+// Individual Background Circle
 const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) => {
     const sizeClasses = useMemo(() => {
         const sizes = {
-            large: "w-[350px] h-[350px] xs:w-[400px] xs:h-[400px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] xl:w-[1000px] xl:h-[1000px] border-2",
-            medium: "w-[250px] h-[250px] xs:w-[300px] xs:h-[300px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] border"
+            large: "w-[120%] h-[120%] border-2",
+            medium: "w-[85%] h-[85%] border"
         };
         return sizes[size] || sizes.medium;
     }, [size]);
@@ -162,10 +62,10 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
                 opacity: 0.3
             };
         }
-        
+
         return {
             scale: [1, 1.05, 1],
-            opacity: [0.3, 0.4, 0.3]
+            opacity: [0.2, 0.35, 0.2]
         };
     }, [animationConfig.reduce]);
 
@@ -183,14 +83,12 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
     );
 });
 
-// Floating Particles Component - Reduced particle count and simplified
+// Floating Particles Component
 const FloatingParticles = memo(() => {
     const animationConfig = getAnimationConfig();
-    
-    // Reduce particle count for performance
     const particleCount = animationConfig.reduce ? 6 : 8;
-    
-    const particles = useMemo(() => 
+
+    const particles = useMemo(() =>
         Array.from({ length: particleCount }, (_, i) => ({
             id: i,
             left: `${Math.random() * 100}%`,
@@ -202,14 +100,14 @@ const FloatingParticles = memo(() => {
     );
 
     if (!canAnimate() || animationConfig.reduce) {
-        return null; // Skip particles entirely on low-end devices
+        return null;
     }
 
     return (
         <ScrollAnimatedSection
             animationType="fadeIn"
             delay={0.3}
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none z-10"
             priority="low"
         >
             <div className="relative w-full h-full">
@@ -221,7 +119,7 @@ const FloatingParticles = memo(() => {
     );
 });
 
-// Individual Floating Particle Component - Simplified
+// Individual Floating Particle
 const FloatingParticle = memo(({ particle }) => (
     <motion.div
         className="absolute w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-brand-light/60 rounded-full z-10"
@@ -230,10 +128,10 @@ const FloatingParticle = memo(({ particle }) => (
             top: particle.top,
         }}
         animate={{
-            y: [0, -20, 0], // Reduced from -30
+            y: [0, -20, 0],
             x: [0, particle.x, 0],
-            opacity: [0.6, 0.8, 0.6], // Reduced max opacity
-            scale: [1, 1.2, 1], // Reduced from 1.5
+            opacity: [0.6, 0.8, 0.6],
+            scale: [1, 1.2, 1],
         }}
         transition={{
             duration: particle.duration,
@@ -244,35 +142,70 @@ const FloatingParticle = memo(({ particle }) => (
     />
 ));
 
-// Header Content Component
+// Main Header Content Container
 const HeaderContent = memo(() => (
-    <div className="relative z-20 min-h-screen flex items-center justify-center p-3 xs:p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16">
-        <TitleSection />
-        <AvatarImage />
+    <div className="relative z-20 w-full max-w-7xl mx-auto h-full min-h-screen flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-12 md:pb-16 lg:pb-20">
+        <LeftSection />
+        <HeroLogoMark />
     </div>
 ));
 
-// Japanese Text Component - Optimized
+// Action Buttons (CTAs) above Kyzen Title
+const HeroCTAs = memo(() => (
+    <div className="flex items-center gap-4 pt-2">
+        <a
+            href="#projects"
+            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-medium text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
+        >
+            <span>Explore Work</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </a>
+        <a
+            href="#about"
+            className="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-600/50 text-gray-200 font-medium text-sm hover:border-gray-400 transition-colors"
+        >
+            <span>About Me</span>
+            <User className="w-4 h-4 text-gray-400" />
+        </a>
+    </div>
+));
+
+// Big Watermark Logo on Right Side
+const HeroLogoMark = memo(() => (
+    <motion.div
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/6 w-[55vw] md:w-[48vw] max-w-[700px] h-auto pointer-events-none z-10 opacity-30 select-none overflow-hidden"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 0.3, x: 0 }}
+        transition={{
+            duration: ANIMATION_DURATION.slower,
+            ease: EASING.easeOut,
+            delay: 0.4
+        }}
+    >
+        <img src={BigLogo} alt="Logo" className="w-full h-full object-contain" />
+    </motion.div>
+));
+
+// Japanese Text Component
 const JapaneseText = memo(({ position, text, delay }) => {
     const animationConfig = getAnimationConfig();
-    
+
     const textVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.3, delay: delay * 0.5 }
                 }
             };
         }
-        
+
         return {
-            initial: { opacity: 0, x: -15, rotate: -3 }, // Reduced values
-            animate: { 
-                opacity: 1, 
-                x: 0, 
-                rotate: 0,
+            initial: { opacity: 0, x: -15 },
+            animate: {
+                opacity: 1,
+                x: 0,
                 transition: {
                     duration: ANIMATION_DURATION.slow,
                     ease: EASING.easeOut,
@@ -284,7 +217,7 @@ const JapaneseText = memo(({ position, text, delay }) => {
 
     return (
         <motion.span
-            className={`absolute ${position} text-[0.13em] xs:text-[0.14em] sm:text-[0.15em] md:text-[0.16em] text-gray-300/80 font-light tracking-wider drop-shadow-lg`}
+            className={`absolute ${position} text-[0.16em] text-gray-300/80 font-light tracking-wider`}
             {...textVariants}
         >
             {text}
@@ -292,27 +225,55 @@ const JapaneseText = memo(({ position, text, delay }) => {
     );
 });
 
-// Main Title Component - Optimized
+// Left Side Container (Headline -> CTAs -> Title)
+const LeftSection = memo(() => (
+    <div className="relative z-30 flex flex-col items-start space-y-6 max-w-2xl">
+        <MainHeadline />
+        <HeroCTAs />
+        <MainTitle />
+    </div>
+));
+
+// Main Headline above CTAs
+const MainHeadline = memo(() => {
+    return (
+        <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-100 leading-[1.15] font-normal tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: ANIMATION_DURATION.slower,
+                ease: EASING.easeOut,
+                delay: 0.2
+            }}
+        >
+            Building digital experiences with{" "}
+            <span className="italic text-brand-light">clarity</span> and{" "}
+            <span className="italic text-brand-light">character.</span>
+        </motion.h2>
+    );
+});
+
+// Main Title Component
 const MainTitle = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     const titleVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.6, delay: 0.2 }
                 }
             };
         }
-        
+
         return {
-            initial: { opacity: 0, y: 50, scale: 0.9 }, // Reduced values
-            animate: { 
-                opacity: 1, 
-                y: 0, 
-                scale: 1,
+            initial: { opacity: 0, y: 20 },
+            animate: {
+                opacity: 1,
+                y: 0,
                 transition: {
                     duration: ANIMATION_DURATION.slower,
                     ease: EASING.easeOut,
@@ -326,7 +287,7 @@ const MainTitle = memo(() => {
         if (animationConfig.reduce) {
             return {};
         }
-        
+
         return {
             textShadow: [
                 "0 0 30px rgba(2, 133, 130, 0.26)",
@@ -338,14 +299,14 @@ const MainTitle = memo(() => {
 
     return (
         <motion.h1
-            className="relative text-[22vw] xs:text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] xl:text-[12vw] 2xl:text-[25rem] italic tracking-tight font-black text-center whitespace-nowrap"
+            className="relative text-[10vw] xs:text-[8vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5rem] italic tracking-tight font-black text-left whitespace-nowrap leading-none pt-4"
             {...titleVariants}
             style={{
                 textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
             }}
         >
             <motion.span
-                className="relative bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent inline-block px-1 xs:px-2 sm:px-3 md:px-4 lg:px-6 py-2 xs:py-3 sm:py-4 md:py-6 lg:py-8"
+                className="relative bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent inline-block py-2"
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
@@ -354,35 +315,35 @@ const MainTitle = memo(() => {
                 }}
             >
                 KYZEN
-                
+
                 <JapaneseText
-                    position="left-[0.9em] xs:left-[0.95em] sm:left-[1em] top-[1.3em] xs:top-[1.35em] sm:top-[1.4em]"
+                    position="left-[0.1em] -top-[0.5em]"
                     text="ケンジ"
-                    delay={1.0} // Reduced delay
+                    delay={0.8}
                 />
-                
+
                 <JapaneseText
-                    position="right-[0.9em] xs:right-[0.95em] sm:right-[1em] bottom-[1.3em] xs:bottom-[1.35em] sm:bottom-[1.4em]"
+                    position="right-0 -bottom-[0.4em]"
                     text="カイゼン"
-                    delay={1.2} // Reduced delay
+                    delay={1.0}
                 />
             </motion.span>
         </motion.h1>
     );
 });
 
-// Scroll Indicator Dot Component - Simplified
+// Scroll Indicator Dot
 const ScrollIndicatorDot = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     const dotVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return { y: 0, opacity: 1 };
         }
-        
-        return { 
-            y: [0, 6, 0], // Reduced from 8
-            opacity: [1, 0.5, 1] 
+
+        return {
+            y: [0, 6, 0],
+            opacity: [1, 0.5, 1]
         };
     }, [animationConfig.reduce]);
 
@@ -390,10 +351,10 @@ const ScrollIndicatorDot = memo(() => {
         if (animationConfig.reduce) {
             return {};
         }
-        
+
         return {
             borderColor: "rgba(2, 133, 130, 0.7)",
-            boxShadow: "0 0 15px rgba(2, 133, 130, 0.22)" // Reduced glow
+            boxShadow: "0 0 15px rgba(2, 133, 130, 0.22)"
         };
     }, [animationConfig.reduce]);
 
@@ -405,25 +366,11 @@ const ScrollIndicatorDot = memo(() => {
             <motion.div
                 className="w-0.5 h-1 xs:w-1 xs:h-1.5 sm:w-1 sm:h-2 md:h-3 bg-brand-light rounded-full mt-0.5 xs:mt-1 md:mt-2"
                 animate={dotVariants}
-                transition={{ 
-                    duration: animationConfig.reduce ? 0 : 1.5, 
-                    repeat: animationConfig.reduce ? 0 : Infinity 
+                transition={{
+                    duration: animationConfig.reduce ? 0 : 1.5,
+                    repeat: animationConfig.reduce ? 0 : Infinity
                 }}
             />
-            {!animationConfig.reduce && (
-                <motion.div
-                    className="absolute inset-0 bg-brand-light/10 rounded-full"
-                    animate={{
-                        opacity: [0, 0.3, 0],
-                        scale: [1, 1.1, 1] // Reduced from 1.2
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: 0.5
-                    }}
-                />
-            )}
         </motion.div>
     );
 });
@@ -431,32 +378,28 @@ const ScrollIndicatorDot = memo(() => {
 // Scroll Indicator Component
 const ScrollIndicator = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     const indicatorVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return { y: 0 };
         }
-        
-        return { y: [0, 10, 0] }; // Reduced from 15
+
+        return { y: [0, 10, 0] };
     }, [animationConfig.reduce]);
 
     return (
         <ScrollAnimatedSection
             animationType="fadeUp"
-            delay={1.8} // Reduced delay
-            className="absolute bottom-3 xs:bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-70"
+            delay={1.2}
+            className="absolute bottom-3 xs:bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-30"
             priority="low"
         >
             <motion.div
                 className="flex flex-col items-center text-gray-400/80 cursor-pointer"
                 animate={indicatorVariants}
-                transition={{ 
-                    duration: animationConfig.reduce ? 0 : 2, 
-                    repeat: animationConfig.reduce ? 0 : Infinity 
-                }}
-                whileHover={animationConfig.reduce ? {} : {
-                    scale: 1.1, // Reduced from 1.2
-                    color: "rgba(2, 133, 130, 0.9)"
+                transition={{
+                    duration: animationConfig.reduce ? 0 : 2,
+                    repeat: animationConfig.reduce ? 0 : Infinity
                 }}
             >
                 <ScrollIndicatorLabel />
@@ -466,21 +409,21 @@ const ScrollIndicator = memo(() => {
     );
 });
 
-// Scroll Indicator Label Component - Simplified
+// Scroll Indicator Label
 const ScrollIndicatorLabel = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     const labelVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return { opacity: 0.8 };
         }
-        
-        return { opacity: [0.6, 0.9, 0.6] }; // Reduced max opacity
+
+        return { opacity: [0.6, 0.9, 0.6] };
     }, [animationConfig.reduce]);
 
     return (
         <motion.span
-            className="text-xs sm:text-sm md:text-base mb-1 xs:mb-2 font-light italic tracking-wider"
+            className="text-xs sm:text-sm mb-1 font-light italic tracking-wider"
             animate={labelVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 2,
@@ -492,85 +435,19 @@ const ScrollIndicatorLabel = memo(() => {
     );
 });
 
-// Supporting Text Component
-const SupportingText = memo(() => (
-    <ScrollAnimatedSection
-        animationType="fadeLeft"
-        delay={1.0} // Reduced delay
-        className="absolute bottom-20 xs:bottom-24 sm:bottom-28 md:bottom-32 lg:bottom-40 xl:bottom-50 left-3 right-3 xs:left-4 xs:right-auto xs:max-w-xs sm:left-6 sm:max-w-sm md:left-8 md:max-w-md lg:left-16 lg:max-w-lg xl:left-65 xl:max-w-xl text-gray-300/90 text-xs xs:text-sm sm:text-base lg:text-lg leading-relaxed z-60 px-2 xs:px-3 sm:px-4"
-        priority="medium"
-    >
-        <SupportingTextParagraphs />
-    </ScrollAnimatedSection>
-));
-
-// Supporting Text Paragraphs Component - Simplified hover effect
-const SupportingTextParagraphs = memo(() => {
-    const animationConfig = getAnimationConfig();
-    
-    const hoverVariants = useMemo(() => {
-        if (animationConfig.reduce) {
-            return {};
-        }
-        
-        return {
-            x: 8, // Reduced from 10
-            color: "rgba(2, 133, 130, 1)",
-            transition: { duration: 0.2 }
-        };
-    }, [animationConfig.reduce]);
-
-    return (
-        <>
-            <motion.p className="mb-2 font-light tracking-wide">
-                In the digital realm of modern web development, there exists a
-                creative force known only as <span className="text-brand-light/90 font-medium">"The Developer."</span> A place where code,
-                design, and innovation converge.
-            </motion.p>
-            <motion.p
-                className="text-brand-light/90 font-medium tracking-wide"
-                whileHover={hoverVariants}
-            >
-                Enter the portfolio, a digital space where creativity meets
-                technology.
-            </motion.p>
-        </>
-    );
-});
-
-// Title Section Component
-const TitleSection = memo(() => (
-    <div className="absolute top-1/4 xs:top-[28%] sm:top-[30%] md:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 w-full overflow-hidden">
-        <MainTitle />
-    </div>
-));
-
 // ===== MAIN COMPONENT =====
 
-/**
- * HeaderGrid Component - Optimized for performance
- * 
- * Key optimizations:
- * - Conditional animation rendering based on device capabilities
- * - Reduced animation values and durations
- * - Memoized variants to prevent re-renders
- * - Simplified or removed animations on low-end devices
- * - Priority-based animation loading
- */
 function HeaderGrid() {
     return (
-        <div id="header-section" className="relative min-h-screen overflow-hidden">
-            {/* Background Effects */}
+        <div id="header-section" className="relative min-h-screen overflow-hidden w-full">
+            {/* Background Circles positioned right behind the watermark logo */}
             <BackgroundCircles />
-            
-            {/* Floating Particles - Only on capable devices */}
+
+            {/* Floating Particles */}
             <FloatingParticles />
 
-            {/* Main Content */}
+            {/* Main Content Layout */}
             <HeaderContent />
-
-            {/* Supporting Text */}
-            <SupportingText/>
 
             {/* Scroll Indicator */}
             <ScrollIndicator />
@@ -579,83 +456,3 @@ function HeaderGrid() {
 }
 
 export default memo(HeaderGrid);
-
-/*
-COMPONENT TREE STRUCTURE:
-
-HeaderGrid (Main Container)
-├── BackgroundCircles (Background Effects)
-│   └── ScrollAnimatedSection
-│       └── div (relative container)
-│           ├── BackgroundCircle (large, brand-light/35, delay: 0)
-│           └── BackgroundCircle (medium, secondary/35, delay: 0.3)
-│
-├── FloatingParticles (Decorative Elements - Conditional)
-│   └── ScrollAnimatedSection
-│       └── div (relative container)
-│           └── FloatingParticle[] (6-8 particles based on device capability)
-│
-├── HeaderContent (Main Content Container)
-│   ├── TitleSection
-│   │   └── div (positioning wrapper)
-│   │       └── MainTitle
-│   │           └── motion.h1
-│   │               └── motion.span (KYZEN text with gradient)
-│   │                   ├── JapaneseText (ケンジ - top left)
-│   │                   └── JapaneseText (カイゼン - bottom right)
-│   │
-│   └── AvatarImage
-│       └── motion.div (positioning wrapper)
-│           └── motion.div (floating container with mask)
-│               ├── AvatarBackdrop (conditional)
-│               └── img (Avatar-2.png)
-│
-├── SupportingText
-│   └── ScrollAnimatedSection
-│       └── SupportingTextParagraphs
-│           ├── motion.p (first paragraph)
-│           └── motion.p (second paragraph with hover effect)
-│
-└── ScrollIndicator
-    └── ScrollAnimatedSection
-        └── motion.div (indicator container)
-            ├── ScrollIndicatorLabel
-            │   └── motion.span ("Scroll to explore" text)
-            └── ScrollIndicatorDot
-                └── motion.div (dot container)
-                    ├── motion.div (moving dot)
-                    └── motion.div (pulse effect - conditional)
-
-COMPONENT HIERARCHY BY ALPHABETICAL ORDER:
-- AvatarBackdrop
-- AvatarImage
-- BackgroundCircle
-- BackgroundCircles
-- FloatingParticle
-- FloatingParticles
-- HeaderContent
-- HeaderGrid (Main)
-- JapaneseText
-- MainTitle
-- ScrollIndicator
-- ScrollIndicatorDot
-- ScrollIndicatorLabel
-- SupportingText
-- SupportingTextParagraphs
-- TitleSection
-
-EXTERNAL DEPENDENCIES:
-- ScrollAnimatedSection (from '../../common/ScrollAnimatedSection')
-- StaggerContainer (from '../../common/StaggerContainer') [imported but not used]
-- useHeroScrollAnimation, useSimpleScrollAnimation (from '../../hooks/useScrollAnimation') [imported but not used]
-- getAnimationConfig, canAnimate, createStaggerDelay (from '../../utils/helpers')
-- ANIMATION_DURATION, EASING, PERFORMANCE (from '../../utils/constants')
-
-PERFORMANCE OPTIMIZATIONS:
-- All components are memoized with React.memo()
-- Animation variants are memoized with useMemo()
-- Conditional rendering based on device capabilities
-- FloatingParticles returns null on low-end devices
-- AvatarBackdrop only renders when shouldAnimate is true
-- Reduced animation complexity on mobile/low-end devices
-*/

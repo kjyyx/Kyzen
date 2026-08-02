@@ -9,19 +9,19 @@ export const BREAKPOINTS = {
 
 // Optimized animation durations - reduced for better performance
 export const ANIMATION_DURATION = {
-    fast: 0.15,
-    normal: 0.25,
-    slow: 0.4,
+    fast: 0.2,
+    normal: 0.4,
+    slow: 0.5,
     slower: 0.6
 };
 
 // Optimized easing curves - using simpler curves for better performance
 export const EASING = {
-    easeOut: [0.25, 0.46, 0.45, 0.94],
-    easeIn: [0.42, 0, 1, 1],
-    easeInOut: [0.42, 0, 0.58, 1],
-    bounce: [0.68, -0.55, 0.265, 1.55],
-    elastic: [0.25, 0.46, 0.45, 0.94] // Simplified from complex elastic
+    easeOut: [0.16, 1, 0.3, 1],
+    easeIn: [0.16, 1, 0.3, 1],
+    easeInOut: [0.16, 1, 0.3, 1],
+    bounce: [0.16, 1, 0.3, 1],
+    elastic: [0.16, 1, 0.3, 1]
 };
 
 // Performance settings
@@ -49,24 +49,24 @@ export const ANIMATION_PRIORITY = {
     low: 4          // Far below fold
 };
 
-// Color palette (unchanged)
+// Color palette
 export const COLORS = {
-    primary: '#028582',
-    secondary: '#f3faf9',
+    primary: 'var(--color-primary-light)',
+    secondary: 'var(--color-text-primary)',
     background: {
-        dark: '#000000',
-        light: '#ffffff'
+        dark: 'var(--color-background)',
+        light: 'var(--color-text-primary)'
     },
     text: {
-        primary: '#ffffff',
-        secondary: '#ffffff/80',
-        muted: '#ffffff/60'
+        primary: 'var(--color-text-primary)',
+        secondary: 'var(--color-text-secondary)',
+        muted: 'var(--color-text-muted)'
     },
     accent: {
-        blue: '#3b82f6',
-        teal: '#028582',
-        accent: '#fbff00',
-        green: '#10b981'
+        blue: 'var(--color-primary-light)',
+        teal: 'var(--color-primary-light)',
+        accent: 'var(--color-accent)',
+        green: 'var(--color-primary)'
     }
 };
 
@@ -131,9 +131,9 @@ export const BORDER_RADIUS = {
 
 // Shadow presets (unchanged)
 export const SHADOWS = {
-    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-    md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
-    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
-    glow: '0 0 40px rgba(2, 133, 130, 0.26)'
+    sm: '0 1px 2px 0 color-mix(in srgb, var(--color-background) 18%, transparent)',
+    md: '0 4px 6px -1px color-mix(in srgb, var(--color-background) 24%, transparent)',
+    lg: '0 10px 15px -3px color-mix(in srgb, var(--color-background) 28%, transparent)',
+    xl: '0 20px 25px -5px color-mix(in srgb, var(--color-background) 32%, transparent)',
+    glow: '0 0 40px color-mix(in srgb, var(--color-primary-light) 26%, transparent)'
 };

@@ -5,18 +5,19 @@ import { getAnimationConfig } from './helpers';
 export const scrollAnimationPresets = {
     // Minimal fade animations
     fadeIn: {
-        hidden: { opacity: 0 },
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1,
+            y: 0,
             transition: { 
-                duration: ANIMATION_DURATION.normal, 
+                duration: ANIMATION_DURATION.slow, 
                 ease: EASING.easeOut
             }
         }
     },
     
     fadeInUp: {
-        hidden: { opacity: 0, y: 20 }, // Reduced from 40
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
             y: 0,
@@ -28,7 +29,7 @@ export const scrollAnimationPresets = {
     },
     
     fadeInDown: {
-        hidden: { opacity: 0, y: -20 }, // Reduced from -40
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
             y: 0,
@@ -40,10 +41,10 @@ export const scrollAnimationPresets = {
     },
     
     fadeInLeft: {
-        hidden: { opacity: 0, x: -20 }, // Reduced from -40
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
-            x: 0,
+            y: 0,
             transition: { 
                 duration: ANIMATION_DURATION.slow, 
                 ease: EASING.easeOut
@@ -52,10 +53,10 @@ export const scrollAnimationPresets = {
     },
     
     fadeInRight: {
-        hidden: { opacity: 0, x: 20 }, // Reduced from 40
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
-            x: 0,
+            y: 0,
             transition: { 
                 duration: ANIMATION_DURATION.slow, 
                 ease: EASING.easeOut
@@ -65,25 +66,25 @@ export const scrollAnimationPresets = {
     
     // Simplified scale animations
     scaleIn: {
-        hidden: { opacity: 0, scale: 0.95 }, // Less dramatic scaling
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
-            scale: 1,
+            y: 0,
             transition: { 
                 duration: ANIMATION_DURATION.slow, 
-                ease: EASING.easeOut // Removed bounce for performance
+                ease: EASING.easeOut
             }
         }
     },
     
     // Simplified slide animations
     slideInUp: {
-        hidden: { opacity: 0, y: 30 }, // Reduced from 100
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
             y: 0,
             transition: { 
-                duration: ANIMATION_DURATION.slower, 
+                duration: ANIMATION_DURATION.slow, 
                 ease: EASING.easeOut
             }
         }
@@ -95,15 +96,15 @@ export const scrollAnimationPresets = {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.05, // Reduced from 0.1
-                delayChildren: 0.1
+                staggerChildren: 0.06,
+                delayChildren: 0.08
             }
         }
     },
     
     // Optimized stagger child
     staggerChild: {
-        hidden: { opacity: 0, y: 10 }, // Reduced from 20
+        hidden: { opacity: 0, y: 24 },
         visible: { 
             opacity: 1, 
             y: 0,
@@ -179,10 +180,10 @@ export const createSectionReveal = (direction = 'up', options = {}) => {
     }
     
     const directions = {
-        up: { y: 20 },    // Reduced from 60
-        down: { y: -20 },  // Reduced from -60
-        left: { x: -20 },  // Reduced from -60
-        right: { x: 20 }   // Reduced from 60
+        up: { y: 24 },
+        down: { y: 24 },
+        left: { y: 24 },
+        right: { y: 24 }
     };
 
     return {
@@ -192,7 +193,6 @@ export const createSectionReveal = (direction = 'up', options = {}) => {
         },
         visible: {
             opacity: 1,
-            x: 0,
             y: 0,
             transition: {
                 duration: ANIMATION_DURATION.slow,
@@ -204,7 +204,7 @@ export const createSectionReveal = (direction = 'up', options = {}) => {
 };
 
 // Optimized stagger animation with performance considerations
-export const createStaggerAnimation = (childDelay = 0.05) => {
+export const createStaggerAnimation = (childDelay = 0.06) => {
     const config = getAnimationConfig();
     const actualDelay = config.reduce ? childDelay * 0.5 : childDelay;
     
@@ -215,20 +215,20 @@ export const createStaggerAnimation = (childDelay = 0.05) => {
                 opacity: 1,
                 transition: {
                     staggerChildren: actualDelay,
-                    delayChildren: 0.05
+                    delayChildren: 0.08
                 }
             }
         },
         item: {
             hidden: { 
                 opacity: 0, 
-                y: config.reduce ? 5 : 10
+                y: config.reduce ? 0 : 24
             },
             visible: { 
                 opacity: 1, 
                 y: 0,
                 transition: {
-                    duration: config.duration,
+                    duration: ANIMATION_DURATION.normal,
                     ease: EASING.easeOut
                 }
             }
@@ -253,18 +253,16 @@ export const createHeroAnimation = () => {
     return {
         hidden: { 
             opacity: 0, 
-            y: 30,
-            scale: 0.98
+            y: 20
         },
         visible: {
             opacity: 1,
             y: 0,
-            scale: 1,
             transition: {
                 duration: ANIMATION_DURATION.slower,
                 ease: EASING.easeOut,
-                staggerChildren: 0.1,
-                delayChildren: 0.2
+                staggerChildren: 0.08,
+                delayChildren: 0.08
             }
         }
     };
@@ -273,15 +271,19 @@ export const createHeroAnimation = () => {
 // Hover animation presets (simplified for performance)
 export const hoverAnimations = {
     lift: {
-        y: -2,
-        transition: { duration: 0.2, ease: EASING.easeOut }
+        y: -4,
+        scale: 1.01,
+        transition: { duration: 0.2 }
     },
     scale: {
-        scale: 1.02,
-        transition: { duration: 0.2, ease: EASING.easeOut }
+        y: -4,
+        scale: 1.01,
+        transition: { duration: 0.2 }
     },
     glow: {
-        boxShadow: '0 10px 25px rgba(2, 133, 130, 0.26)',
-        transition: { duration: 0.3, ease: EASING.easeOut }
+        y: -4,
+        scale: 1.01,
+        boxShadow: '0 10px 25px color-mix(in srgb, var(--color-primary-light) 26%, transparent)',
+        transition: { duration: 0.2 }
     }
 };
