@@ -36,9 +36,9 @@ const BrandLogo = memo(({ onClick }) => (
     <motion.img
         alt="KYZEN Logo"
         src={kyzenLogo}
-        className="h-6 w-auto sm:h-7 md:h-8 mr-2 sm:mr-3 cursor-pointer"
-        whileHover={{ rotate: 360 }}
-        transition={{ duration: 0.6 }}
+        className="h-5 w-auto sm:h-6 md:h-6 mr-2 cursor-pointer"
+        whileHover={{ y: -1, scale: 1.02 }}
+        transition={{ duration: 0.2 }}
         onClick={onClick}
     />
 ));
@@ -46,7 +46,7 @@ const BrandLogo = memo(({ onClick }) => (
 // Brand Text Component
 const BrandText = memo(({ onClick }) => (
     <div className="flex items-baseline cursor-pointer" onClick={onClick}>
-        <span className="text-[#f3faf9] text-xl sm:text-2xl md:text-2xl italic tracking-tight font-black">
+        <span className="text-[#f3faf9] text-lg sm:text-xl md:text-xl italic tracking-tight font-black">
             Kyzen
         </span>
         <BrandTextSeparator />
@@ -58,8 +58,8 @@ const BrandText = memo(({ onClick }) => (
 const BrandTextSeparator = memo(() => (
     <motion.span
         className="text-white/40 italic tracking-tight font-light ml-1 sm:ml-2"
-        animate={{ opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        animate={{ opacity: [0.4, 0.65, 0.4] }}
+        transition={{ duration: 0.6 }}
     >
         |
     </motion.span>
@@ -84,8 +84,8 @@ const ContactButton = memo(() => {
 
     return (
         <motion.button
-            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-2.5 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-sm"
-            whileHover={{ scale: 1.05, y: -1 }}
+            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm"
+            whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleContactClick}
         >
@@ -98,7 +98,7 @@ const ContactButton = memo(() => {
 
 // Contact Button Icon Component
 const ContactButtonIcon = memo(() => (
-    <Phone className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+    <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:-translate-y-px transition-transform duration-200 relative z-10" />
 ));
 
 // Contact Button Overlay Component
@@ -197,7 +197,7 @@ const MobileContactButton = memo(() => (
 
 // Mobile Contact Button Icon Component
 const MobileContactButtonIcon = memo(() => (
-    <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+    <Phone className="w-4 h-4 group-hover:-translate-y-px transition-transform duration-200 relative z-10" />
 ));
 
 // Mobile Contact Button Overlay Component
@@ -232,7 +232,7 @@ const MobileMenuBackground = memo(() => (
 // Mobile Menu Button Component
 const MobileMenuButton = memo(({ open }) => (
     <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
-        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
             <span className="sr-only">Open main menu</span>
             <MobileMenuIcon open={open} />
         </DisclosureButton>
@@ -300,7 +300,7 @@ const MobileMenuIcon = memo(({ open }) => (
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
             >
-                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+                <Menu className="h-5 w-5" />
             </motion.div>
         ) : (
             <motion.div
@@ -310,7 +310,7 @@ const MobileMenuIcon = memo(({ open }) => (
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
             >
-                <X className="h-5 w-5 sm:h-6 sm:w-6" />
+                <X className="h-5 w-5" />
             </motion.div>
         )}
     </AnimatePresence>
@@ -354,7 +354,7 @@ const MobileNavItem = memo(({ item, isActive, onClick }) => {
                 as="a"
                 href={`#${item.href}`}
                 onClick={handleScrollNav}
-                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${isActive
+                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ${isActive
                     ? "bg-white/15 text-[#f3faf9] backdrop-blur-sm"
                     : "text-white/70 hover:bg-white/10 hover:text-white"
                     }`}
@@ -373,7 +373,7 @@ const MobileNavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.3, ease: "easeInOut" }}
     >
         <IconComponent
-            className={`w-5 h-5 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/50 group-hover:text-white/80"
+            className={`w-4 h-4 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/50 group-hover:text-white/80"
                 }`}
         />
         <span className="italic tracking-tight font-black">
@@ -446,7 +446,7 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
                     : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
                     }`}
                 whileHover={{
-                    scale: 1.05,
+                    scale: 1.02,
                     y: -2,
                     transition: { duration: 0.2, ease: "easeOut" }
                 }}
@@ -488,7 +488,7 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.2 }}
     >
         <IconComponent
-            className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/40 group-hover:text-white/80"
+            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/40 group-hover:text-white/80"
                 }`}
         />
         <span className="italic tracking-tight font-black">
@@ -527,7 +527,7 @@ const NavbarBottomBorder = memo(() => (
 
 // Navbar Inner Component
 const NavbarInner = memo(({ navigationItems, open }) => (
-    <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
+    <div className="relative flex h-16 items-center justify-between">
         <MobileMenuButton open={open} />
         <NavbarMainContent navigationItems={navigationItems} />
         <ContactButtonSection />
@@ -552,7 +552,7 @@ const ScrollBackgroundOverlay = memo(({ scrolled }) => (
     <AnimatePresence>
         {scrolled && (
             <motion.div
-                className="fixed top-0 left-0 w-full h-16 sm:h-18 md:h-20 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
+                className="fixed top-0 left-0 w-full h-16 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -652,7 +652,7 @@ function Navbar() {
     return (
         <>
             <ScrollBackgroundOverlay scrolled={scrolled} />
-            <Disclosure as="nav" className="h-16 sm:h-18 md:h-20 fixed w-full z-[100]">
+            <Disclosure as="nav" className="h-16 fixed w-full z-[100]">
                 {({ open }) => (
                     <NavbarContent
                         navigationItems={navigationItems}

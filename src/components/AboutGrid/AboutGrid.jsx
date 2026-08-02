@@ -244,7 +244,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
     }, [animationConfig.reduce]);
 
     return (
-        <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start">
+        <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5 justify-center lg:justify-start">
             {currentTechSkills.map((skill, index) => (
                 <motion.div
                     key={skill.name}
@@ -334,7 +334,7 @@ const EnhancedAvatar = memo(() => {
             return { rotate: 0 };
         }
         
-        return { rotate: 360 };
+        return { rotate: 0 };
     }, [animationConfig.reduce]);
 
     const glowVariants = useMemo(() => {
@@ -356,7 +356,7 @@ const EnhancedAvatar = memo(() => {
             className="relative"
             {...avatarVariants}
         >
-            <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56">
                 {/* Rotating rings - Only on capable devices */}
                 {shouldAnimate && (
                     <>
@@ -453,10 +453,10 @@ const HeroTitle = memo(() => (
     <ScrollAnimatedSection
         animationType="fadeDown"
         delay={0.2}
-        className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
+        className="w-full flex justify-start mb-8 sm:mb-10 md:mb-12 lg:mb-16 relative z-10"
     >
         <div className="relative w-full">
-            <h2 className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight sm:leading-none italic tracking-tight text-left">
+            <h2 className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight sm:leading-none italic tracking-tight text-left">
                 About<span className="text-brand-light">_</span>
                 <br />
                 me<span className="text-brand-light">:</span>
@@ -534,7 +534,7 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
                 />
             )}
 
-            <div className={`relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
+            <div className={`relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
                 <motion.span
                     className="text-lg sm:text-xl md:text-2xl"
                     animate={!animationConfig.reduce && isHovered ? {
@@ -619,7 +619,7 @@ const HobbiesSection = memo(({ hoveredHobby, onHobbyHover, onHobbyLeave }) => {
                 >
                     <Coffee className="w-7 h-7 text-brand-light" />
                 </motion.div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
                 <motion.div
                     className="flex-1 h-px bg-gradient-to-r from-brand-light/50 to-transparent"
                     initial={{ scaleX: 0 }}
@@ -630,7 +630,7 @@ const HobbiesSection = memo(({ hoveredHobby, onHobbyHover, onHobbyLeave }) => {
 
             <StaggerContainer
                 staggerDelay={0.12}
-                className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center"
+                className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center"
             >
                 {hobbyCards}
             </StaggerContainer>
@@ -649,7 +649,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             {showRealName ? (
                 <motion.h1
                     key="real"
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-brand-light via-brand-light to-blue-400 bg-clip-text text-center"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-brand-light via-brand-light to-blue-400 bg-clip-text text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
@@ -663,7 +663,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             ) : (
                 <motion.h1
                     key="dev"
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic font-black text-white tracking-tight text-center"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic font-black text-white tracking-tight text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
@@ -789,7 +789,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
 
         {/* Enhanced Action Buttons */}
         <motion.div
-            className="flex flex-col gap-6 w-full max-w-sm"
+            className="flex flex-col gap-4 sm:gap-5 w-full max-w-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
@@ -808,7 +808,7 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
         className="space-y-10"
     >
         <div className="space-y-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic tracking-tight font-black text-white leading-tight">
                 Crafting Digital
                 <motion.span
                     className="block text-transparent bg-gradient-to-r from-brand-light via-blue-400 to-cyan-400 bg-clip-text"
@@ -878,7 +878,7 @@ const ResumeButton = memo(() => {
 
     return (
         <motion.button
-            className="group relative px-8 py-5 bg-gradient-to-r from-brand-light to-brand text-black italic tracking-tight font-black rounded-3xl overflow-hidden shadow-lg"
+            className="group relative px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-brand-light to-brand text-black italic tracking-tight font-black rounded-2xl overflow-hidden shadow-lg"
             whileHover={{
                 scale: 1.02,
                 boxShadow: '0 20px 40px rgba(2, 133, 130, 0.34)'
@@ -998,7 +998,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
             {/* Background glow - Only on capable devices */}
             {!animationConfig.reduce && (
                 <motion.div
-                    className="absolute -inset-6 rounded-3xl opacity-0 blur-xl"
+                    className="absolute -inset-4 rounded-2xl opacity-0 blur-xl"
                     style={{ backgroundColor: skill.color }}
                     animate={{
                         opacity: isHovered ? 0.05 : 0,
@@ -1009,14 +1009,14 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
             )}
 
             <motion.div
-                className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center text-center space-y-2 sm:space-y-3 md:space-y-4 overflow-hidden"
+                className="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 flex flex-col items-center text-center space-y-2 sm:space-y-3 overflow-hidden"
                 style={{
                     borderColor: isHovered ? skill.color + '30' : 'rgba(255,255,255,0.2)'
                 }}
             >
                 {/* Skill icon */}
                 <motion.div
-                    className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center"
+                    className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
                     animate={!animationConfig.reduce && isHovered ? 
                         { rotate: [0, 5, -5, 0] } : 
                         { rotate: 0 }
@@ -1096,8 +1096,8 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
 const SocialLink = memo(({ social, index }) => (
     <motion.a
         href={social.href}
-        className="relative group w-14 h-14 flex items-center justify-center rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-sm transition-all duration-300"
-        whileHover={{ scale: 1.1, y: -2 }}
+        className="relative group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-sm transition-all duration-300"
+        whileHover={{ scale: 1.03, y: -2 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -1114,11 +1114,11 @@ const SocialLink = memo(({ social, index }) => (
         />
 
         <motion.div
-            whileHover={{ rotate: 15 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            whileHover={{ y: -1, scale: 1.02 }}
+            transition={{ duration: 0.2 }}
         >
             <social.icon
-                className="w-6 h-6 relative z-10 transition-colors duration-300"
+                className="w-5 h-5 relative z-10 transition-colors duration-300"
                 style={{ color: social.color }}
             />
         </motion.div>
@@ -1151,7 +1151,7 @@ const SocialLinksGroup = memo(() => {
 // Tech Stack Category Component
 const TechStackCategory = memo(({ stack, isActive, onClick }) => (
     <motion.button
-        className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-xl sm:rounded-2xl italic tracking-tight font-black text-sm sm:text-base md:text-lg transition-all duration-500 overflow-hidden ${isActive
+            className={`group relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-500 overflow-hidden ${isActive
             ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-white shadow-2xl scale-105'
             : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
             }`}
@@ -1187,7 +1187,7 @@ const TechStackCategory = memo(({ stack, isActive, onClick }) => (
             }}
         >
             <stack.icon
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5"
                 style={{ color: isActive ? stack.color : 'currentColor' }}
             />
         </motion.div>
@@ -1244,26 +1244,26 @@ const TechStackSection = memo(({
         <ScrollAnimatedSection
             animationType="fadeUp"
             delay={0.2}
-            className="w-full mb-16 space-y-16"
+            className="w-full mb-10 sm:mb-12 space-y-10 sm:space-y-12"
             id="skills"
         >
             <div className="text-center space-y-6">
                 <motion.div
-                    className="flex items-center justify-center gap-6 mb-8"
+                    className="flex items-center justify-center gap-4 mb-6"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
                 >
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent to-brand-light/50" />
+                    <div className="w-16 sm:w-20 h-px bg-gradient-to-r from-transparent to-brand-light/50" />
                     <motion.div
-                        className="relative p-5 rounded-3xl bg-gradient-to-br from-brand-light/30 to-brand/30 border border-brand-light/40 backdrop-blur-sm"
+                        className="relative p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-brand-light/30 to-brand/30 border border-brand-light/40 backdrop-blur-sm"
                         animate={{
                             rotateY: [0, 180, 360],
                             scale: [1, 1.05, 1]
                         }}
                         transition={{ duration: 6, repeat: Infinity }}
                     >
-                        <Code2 className="w-10 h-10 text-brand-light" />
+                        <Code2 className="w-7 h-7 sm:w-8 sm:h-8 text-brand-light" />
                         <motion.div
                             className="absolute inset-0 rounded-3xl bg-gradient-to-r from-brand-light/20 to-brand/20 blur-xl"
                             animate={{
@@ -1273,11 +1273,11 @@ const TechStackSection = memo(({
                             transition={{ duration: 4, repeat: Infinity }}
                         />
                     </motion.div>
-                    <div className="w-24 h-px bg-gradient-to-l from-transparent to-brand-light/50" />
+                    <div className="w-16 sm:w-20 h-px bg-gradient-to-l from-transparent to-brand-light/50" />
                 </motion.div>
 
                 <motion.h3
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
@@ -1286,7 +1286,7 @@ const TechStackSection = memo(({
                 </motion.h3>
 
                 <motion.p
-                    className="text-sm sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto px-4"
+                    className="text-sm sm:text-base md:text-lg text-white/70 max-w-2xl mx-auto px-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
@@ -1297,7 +1297,7 @@ const TechStackSection = memo(({
 
             <StaggerContainer
                 staggerDelay={0.1}
-                className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center mb-8 sm:mb-12 md:mb-16"
+                className="flex flex-wrap gap-2 sm:gap-3 justify-center mb-6 sm:mb-8 md:mb-10"
             >
                 {techStackCategories}
             </StaggerContainer>
@@ -1332,31 +1332,31 @@ const TechStackSection = memo(({
                         />
                     </div>
 
-                    <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 md:p-12 overflow-hidden max-w-4xl mx-auto">
+                    <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-5 sm:p-6 md:p-8 overflow-hidden max-w-4xl mx-auto">
 
                         <motion.div
-                            className="flex items-center justify-between mb-12"
+                            className="flex items-center justify-between mb-8"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
                         >
                             <div className="flex items-center gap-4">
                                 <motion.div
-                                    className="p-4 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 border border-white/30"
+                                    className="p-3 rounded-xl bg-gradient-to-br from-white/20 to-white/10 border border-white/30"
                                     whileHover={{
-                                        scale: 1.1,
-                                        rotate: 15,
+                                        scale: 1.02,
+                                        y: -2,
                                         boxShadow: `0 0 25px ${currentTechStack.color}60`
                                     }}
                                 >
                                     <currentTechStack.icon
-                                        className="w-8 h-8"
+                                        className="w-6 h-6"
                                         style={{ color: currentTechStack.color }}
                                     />
                                 </motion.div>
                                 <div>
                                     <h4
-                                        className="text-3xl italic tracking-tight font-black"
+                                        className="text-xl sm:text-2xl italic tracking-tight font-black"
                                         style={{ color: currentTechStack.color }}
                                     >
                                         {currentTechStack.category}
@@ -1370,7 +1370,7 @@ const TechStackSection = memo(({
 
                         <StaggerContainer
                             staggerDelay={0.08}
-                            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8"
+                            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6"
                         >
                             {skillCards}
                         </StaggerContainer>
@@ -1462,7 +1462,7 @@ const AboutGrid = () => {
     }, []);
 
     return (
-        <div id="about" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="about" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
             {/* Hero Title */}
             <HeroTitle />
 
@@ -1470,11 +1470,11 @@ const AboutGrid = () => {
             <ScrollAnimatedSection
                 animationType="fadeUp"
                 delay={0.1}
-                className="w-full mb-16 relative"
+                className="w-full mb-10 sm:mb-12 relative"
             >
                 <FloatingParticles />
 
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-start xl:items-center">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start xl:items-center">
                     {/* Left Side - Profile Content */}
                     <ProfileContent
                         showRealName={showRealName}

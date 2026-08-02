@@ -27,7 +27,7 @@ const BackgroundCircles = memo(() => {
             className="absolute right-[-5vw] md:right-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none"
             priority="critical"
         >
-            <div className="relative w-[50vw] max-w-[700px] aspect-square flex items-center justify-center">
+            <div className="relative w-[58vw] sm:w-[50vw] max-w-[560px] aspect-square flex items-center justify-center">
                 <BackgroundCircle
                     size="large"
                     borderClass="border-brand-light/25"
@@ -144,7 +144,7 @@ const FloatingParticle = memo(({ particle }) => (
 
 // Main Header Content Container
 const HeaderContent = memo(() => (
-    <div className="relative z-20 w-full max-w-7xl mx-auto h-full min-h-screen flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-12 md:pb-16 lg:pb-20">
+    <div className="relative z-20 w-full max-w-7xl mx-auto h-full min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-10 md:pb-14 lg:pb-16">
         <LeftSection />
         <HeroLogoMark />
     </div>
@@ -155,14 +155,14 @@ const HeroCTAs = memo(() => (
     <div className="flex items-center gap-4 pt-2">
         <a
             href="#projects"
-            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-medium text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
+            className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-medium text-xs sm:text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
         >
             <span>Explore Work</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </a>
         <a
             href="#about"
-            className="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-600/50 text-gray-200 font-medium text-sm hover:border-gray-400 transition-colors"
+            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-gray-600/50 text-gray-200 font-medium text-xs sm:text-sm hover:border-gray-400 transition-colors"
         >
             <span>About Me</span>
             <User className="w-4 h-4 text-gray-400" />
@@ -173,7 +173,7 @@ const HeroCTAs = memo(() => (
 // Big Watermark Logo on Right Side
 const HeroLogoMark = memo(() => (
     <motion.div
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/6 w-[55vw] md:w-[48vw] max-w-[700px] h-auto pointer-events-none z-10 opacity-30 select-none overflow-hidden"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/6 w-[68vw] sm:w-[56vw] md:w-[46vw] max-w-[560px] h-auto pointer-events-none z-10 opacity-25 select-none overflow-hidden"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 0.3, x: 0 }}
         transition={{
@@ -227,7 +227,7 @@ const JapaneseText = memo(({ position, text, delay }) => {
 
 // Left Side Container (Headline -> CTAs -> Title)
 const LeftSection = memo(() => (
-    <div className="relative z-30 flex flex-col items-start space-y-6 max-w-2xl">
+    <div className="relative z-30 flex flex-col items-start space-y-4 sm:space-y-5 max-w-2xl">
         <MainHeadline />
         <HeroCTAs />
         <MainTitle />
@@ -238,7 +238,7 @@ const LeftSection = memo(() => (
 const MainHeadline = memo(() => {
     return (
         <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-100 leading-[1.15] font-normal tracking-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-gray-100 leading-[1.15] font-normal tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -299,7 +299,7 @@ const MainTitle = memo(() => {
 
     return (
         <motion.h1
-            className="relative text-[10vw] xs:text-[8vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5rem] italic tracking-tight font-black text-left whitespace-nowrap leading-none pt-4"
+            className="relative text-[14vw] xs:text-[11vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.75rem] italic tracking-tight font-black text-left whitespace-nowrap leading-none pt-3"
             {...titleVariants}
             style={{
                 textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
@@ -439,7 +439,7 @@ const ScrollIndicatorLabel = memo(() => {
 
 function HeaderGrid() {
     return (
-        <div id="header-section" className="relative min-h-screen overflow-hidden w-full">
+        <div id="header-section" className="relative min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] overflow-hidden w-full">
             {/* Background Circles positioned right behind the watermark logo */}
             <BackgroundCircles />
 

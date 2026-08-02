@@ -261,8 +261,8 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
             priority="high"
         >
             <StaggerContainer
-                staggerDelay={animationConfig.reduce ? 0.05 : 0.1}
-                className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-12 sm:mb-16"
+                staggerDelay={animationConfig.reduce ? 0.05 : 0.08}
+                className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10"
             >
                 {categories.map((category) => {
                     const categoryStyle = category.name !== "All" ? getCategoryStyle(category.name) : null;
@@ -271,7 +271,7 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
                         <motion.button
                             key={category.name}
                             onClick={() => onCategorySelect(category.name)}
-                            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-full italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
+                            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full italic tracking-tight font-black text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
                                 ? 'bg-white/10 border border-brand-light/50 text-[#f3faf9] shadow-lg shadow-brand-light/20'
                                 : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
                                 }`}
@@ -366,7 +366,7 @@ const CertificateCard = memo(({ certificate, flipVariants }) => {
                 )}
 
                 <motion.div
-                    className="relative w-full h-[350px] sm:h-[400px] md:h-[420px] transition-all duration-700 preserve-3d cursor-pointer"
+                    className="relative w-full h-[310px] sm:h-[350px] md:h-[380px] transition-all duration-700 preserve-3d cursor-pointer"
                     onClick={handleFlip}
                     animate={isFlipped && shouldAnimate ? "back" : "front"}
                     variants={flipVariants} // Use the passed variants
@@ -620,7 +620,7 @@ const CertificatesGrid = memo(({ certificates, selectedCategory, flipVariants })
                 >
                     <StaggerContainer
                         staggerDelay={animationConfig.reduce ? 0.08 : 0.15}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
                     >
                         {certificates.map((certificate) => (
                             <CertificateCard
@@ -676,8 +676,8 @@ const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
                             <motion.button
                                 onClick={onClose}
                                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 flex-shrink-0"
-                                whileHover={{ scale: 1.1, rotate: 90 }}
-                                whileTap={{ scale: 0.9 }}
+                                whileHover={{ y: -2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 ✕
                             </motion.button>
@@ -750,12 +750,12 @@ const PageHeader = memo(() => {
         <ScrollAnimatedSection
             animationType="fadeDown"
             delay={0.2}
-            className="w-full flex justify-start mb-12 sm:mb-16 md:mb-20 lg:mb-28 relative z-10"
+            className="w-full flex justify-start mb-8 sm:mb-10 md:mb-12 lg:mb-16 relative z-10"
             priority="critical"
         >
             <div className="relative">
                 <motion.h2
-                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none italic tracking-tight text-left"
+                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none italic tracking-tight text-left"
                     {...titleVariants}
                     style={{
                         textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(2, 133, 130, 0.26)'
@@ -850,7 +850,7 @@ const SeminarCard = memo(({ seminar }) => {
 
                     <div className="flex gap-3 sm:gap-6">
                         {/* Responsive image */}
-                        <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 relative overflow-hidden rounded-xl border border-white/30">
+                        <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 relative overflow-hidden rounded-xl border border-white/30">
                             <img
                                 src={seminar.image}
                                 alt={seminar.title}
@@ -955,8 +955,8 @@ const SeminarModal = memo(({ seminar, isOpen, onClose }) => {
                             <motion.button
                                 onClick={onClose}
                                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 flex-shrink-0"
-                                whileHover={{ scale: 1.1, rotate: 90 }}
-                                whileTap={{ scale: 0.9 }}
+                                whileHover={{ y: -2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 ✕
                             </motion.button>
@@ -992,15 +992,15 @@ const SeminarsSection = memo(() => (
                 animationType="fadeUp"
                 delay={0.3}
             >
-                <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-2xl xs:text-3xl sm:text-4xl md:text-5xl italic tracking-tight font-black mb-3 sm:mb-4">
+                <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-2xl sm:text-3xl md:text-4xl italic tracking-tight font-black mb-3 sm:mb-4">
                     Seminars & Workshops<span className="text-brand-light">_</span>
                 </h3>
-                <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
+                <p className="text-white/70 text-sm sm:text-base max-w-2xl mx-auto px-4">
                     Additional learning experiences and professional development initiatives
                 </p>
 
                 <motion.div
-                    className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-brand-light to-transparent mx-auto mt-4 sm:mt-6 rounded-full"
+                    className="w-20 sm:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-brand-light to-transparent mx-auto mt-4 sm:mt-5 rounded-full"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
@@ -1010,7 +1010,7 @@ const SeminarsSection = memo(() => (
 
         <StaggerContainer
             staggerDelay={0.12}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-0"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 px-2 sm:px-0"
         >
             {seminars.map((seminar) => (
                 <SeminarCard
@@ -1049,7 +1049,7 @@ const StatisticsDisplay = memo(({ statistics }) => {
         >
             <StaggerContainer
                 staggerDelay={animationConfig.reduce ? 0.05 : 0.1}
-                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-8 px-2 sm:px-0"
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-5 px-2 sm:px-0"
             >
                 {statistics.map((stat) => (
                     <motion.div
@@ -1060,7 +1060,7 @@ const StatisticsDisplay = memo(({ statistics }) => {
                         <div className="flex justify-center mb-1 sm:mb-2">
                             <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-brand-light" />
                         </div>
-                        <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl italic tracking-tight font-black text-white">
+                        <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl italic tracking-tight font-black text-white">
                             {stat.value}
                         </div>
                         <div className="text-white/60 text-xs sm:text-sm md:text-base font-medium">
@@ -1147,7 +1147,7 @@ function CertificateGrid() {
     }, []);
 
     return (
-        <div id="certifications" className="flex flex-col items-center py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="certifications" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
             {/* Page Header */}
             <PageHeader />
 

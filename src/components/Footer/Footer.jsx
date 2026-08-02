@@ -137,7 +137,7 @@ const AnimatedMarqueeText = memo(() => {
                 {[0.5, 0.7, 0.9].map((delay, index) => (
                     <motion.span 
                         key={index}
-                        className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic tracking-tight font-black text-white mr-8 sm:mr-12 md:mr-16 leading-tight"
+                        className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl italic tracking-tight font-black text-white mr-6 sm:mr-10 md:mr-12 leading-tight"
                         {...textEntryVariants}
                         transition={{ 
                             ...textEntryVariants.transition,
@@ -451,7 +451,7 @@ const LogoBranding = memo(() => {
             return {};
         }
         
-        return { rotate: 360 };
+        return { y: -1, scale: 1.02 };
     }, [animationConfig.reduce]);
 
     const logoHoverTransition = useMemo(() => {
