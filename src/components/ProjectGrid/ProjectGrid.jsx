@@ -34,12 +34,12 @@ const BackgroundEffects = memo(() => {
             priority="low"
         >
             <motion.div
-                className="absolute top-20 left-10 w-24 h-24 bg-gradient-to-br from-brand-dark/10 to-brand/10 rounded-full blur-3xl"
+                className="absolute top-20 left-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-dark/10 to-brand/10 rounded-full blur-3xl"
                 animate={{ 
                     scale: [1, 1.1, 1], // Reduced from 1.2
                     opacity: [0.3, 0.5, 0.3] // Reduced max opacity
                 }}
-                transition={{ duration: 6, repeat: Infinity }} // Reduced from 8
+                transition={{ duration: 6, repeat: 0 }} // Reduced from 8
             />
             <motion.div
                 className="absolute bottom-20 right-10 w-28 h-28 bg-gradient-to-br from-brand-light/10 to-secondary/10 rounded-full blur-3xl"
@@ -47,7 +47,7 @@ const BackgroundEffects = memo(() => {
                     scale: [1, 1.2, 1], // Reduced from 1.3
                     opacity: [0.2, 0.4, 0.2] // Reduced max opacity
                 }}
-                transition={{ duration: 9, repeat: Infinity }} // Reduced from 12
+                transition={{ duration: 9, repeat: 0 }} // Reduced from 12
             />
         </ScrollAnimatedSection>
     );
@@ -80,7 +80,7 @@ const PageHeader = memo(() => {
         }
         
         return {
-            initial: { opacity: 0, x: -50 }, // Reduced from -100
+            initial: { opacity: 0, x: -24 }, // Reduced from -100
             animate: { 
                 opacity: 1, 
                 x: 0,
@@ -118,7 +118,7 @@ const PageHeader = memo(() => {
         >
             <div className="relative w-full">
                 <motion.h2
-                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none italic tracking-tight text-left"
+                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl font-display-black-italic leading-none text-left"
                     {...titleVariants}
                     style={{
                         textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(2, 133, 130, 0.26)'
@@ -176,14 +176,14 @@ const ProjectCardCornerAccents = memo(({ showEffects }) => {
             {showEffects && (
                 <>
                     <motion.div
-                        className="absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-brand-light/80 rounded-tr-lg z-30"
+                        className="absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-7 sm:h-7 border-t-2 border-r-2 border-brand-light/80 rounded-tr-lg z-30"
                         initial={{ opacity: 0, scale: 0.5, rotate: -30 }} // Reduced rotation
                         animate={{ opacity: 1, scale: 1, rotate: 0 }}
                         exit={{ opacity: 0, scale: 0.5, rotate: 30 }}
                         transition={{ duration: 0.2, ease: "easeOut" }} // Faster transition
                     />
                     <motion.div
-                        className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-brand-light/80 rounded-bl-lg z-30"
+                        className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-7 sm:h-7 border-b-2 border-l-2 border-brand-light/80 rounded-bl-lg z-30"
                         initial={{ opacity: 0, scale: 0.5, rotate: 30 }}
                         animate={{ opacity: 1, scale: 1, rotate: 0 }}
                         exit={{ opacity: 0, scale: 0.5, rotate: -30 }}
@@ -245,7 +245,7 @@ const ProjectCardDescription = memo(({ project, showEffects }) => {
                         transition={{ duration: animationConfig.reduce ? 0 : 0.1 }}
                     >
                         <motion.p
-                            className="text-white/90 text-sm sm:text-base font-normal italic tracking-wide mb-2 sm:mb-3"
+                            className="text-foreground-secondary text-sm sm:text-base font-display-medium tracking-wide mb-2 sm:mb-3"
                             initial={{ opacity: 0, x: animationConfig.reduce ? 0 : -5 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.15, delay: animationConfig.reduce ? 0 : 0.05 }}
@@ -285,7 +285,7 @@ const ProjectCardFloatingButton = memo(({
     
     const buttonVariants = useMemo(() => {
         const baseTransition = {
-            type: "spring",
+            type: "tween",
             stiffness: animationConfig.reduce ? 250 : (isMobile || isTablet) ? 200 : 150,
             damping: animationConfig.reduce ? 30 : (isMobile || isTablet) ? 25 : 20,
             duration: animationConfig.reduce ? 0.2 : (isMobile || isTablet) ? 0.3 : 0.4,
@@ -327,7 +327,7 @@ const ProjectCardFloatingButton = memo(({
             {...buttonVariants}
         >
             <motion.div
-                className={`rounded-lg sm:rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-xl shadow-2xl shadow-white/10 ${isMobile
+                className={`rounded-lg sm:rounded-xl bg-gradient-to-r from-white/30 to-white/20 border border-white/50 backdrop-blur-md shadow-lg shadow-white/10 ${isMobile
                     ? "w-[240px] h-[40px]"
                     : isTablet
                         ? "w-[260px] h-[45px]"
@@ -448,7 +448,7 @@ const ProjectCardStatusBadge = memo(({ project, statusStyle, showEffects }) => (
             transition={{ duration: 0.2 }}
         >
             <span
-                className="text-xs sm:text-sm italic tracking-tight font-black flex items-center gap-1"
+                className="text-xs sm:text-sm font-display-black-italic flex items-center gap-1"
                 style={{ color: statusStyle.color }}
             >
                 <div
@@ -470,7 +470,7 @@ const ProjectCardTitle = memo(({ project, index, showEffects }) => (
         transition={{ delay: 0.2 + index * 0.05 }}
     >
         <motion.span
-            className="block text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black italic tracking-tight leading-none pr-1"
+            className="block text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-xl sm:text-2xl md:text-3xl font-display-black-italic leading-none pr-1"
             style={{
                 textShadow: showEffects
                     ? "0 0 30px rgba(2, 133, 130, 0.42)"
@@ -487,16 +487,16 @@ const ProjectFloatingButtonIcon = memo(({ showEffects, isMobile, isTablet }) => 
     <AnimatePresence mode="wait">
         {showEffects && (
             <motion.div
-                className={`ml-2 sm:ml-3 rounded-full bg-white/25 flex items-center justify-center flex-shrink-0 ${isMobile ? "w-5 h-5" : isTablet ? "w-6 h-6" : "w-8 h-8"
+                className={`ml-2 sm:ml-3 rounded-full bg-white/25 flex items-center justify-center flex-shrink-0 ${isMobile ? "w-5 h-5" : isTablet ? "w-6 h-6" : "w-6 h-6"
                     }`}
                 initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                whileHover={{ scale: 1.04 }}
+                whileHover={{ scale: 1.01 }}
             >
                 <ExternalLink
-                    className={`text-white ${isMobile ? "w-2.5 h-2.5" : isTablet ? "w-3 h-3" : "w-4 h-4"
+                    className={`text-display ${isMobile ? "w-2.5 h-2.5" : isTablet ? "w-3 h-3" : "w-4 h-4"
                         }`}
                 />
             </motion.div>
@@ -510,7 +510,7 @@ const ProjectFloatingButtonText = memo(({ showEffects, isMobile, isTablet }) => 
         <AnimatePresence mode="wait">
             {showEffects && (
                 <motion.span
-                    className={`text-white italic tracking-tight font-black whitespace-nowrap ${isMobile ? "text-xs" : isTablet ? "text-sm" : "text-base"
+                    className={`text-display font-display-black-italic whitespace-nowrap ${isMobile ? "text-xs" : isTablet ? "text-sm" : "text-base"
                         }`}
                     initial={{ opacity: 0, x: -15 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -529,11 +529,11 @@ const ProjectGridContainer = memo(({ projects, isMobile, isTablet, activeCard, o
     <ScrollAnimatedSection
         animationType="fadeUp"
         delay={0.2}
-        className="w-full flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 relative z-10"
+        className="w-full flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-8 relative z-10"
     >
         <StaggerContainer
             staggerDelay={0.15}
-            className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12"
+            className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-8"
         >
             {projects.map((project, idx) => (
                 <ProjectGridItem
@@ -602,7 +602,7 @@ const ProjectNumberIndicator = memo(({ index, isMobile, isTablet }) => (
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 + index * 0.1 }}
             >
-                <span className="text-white/20 text-3xl lg:text-5xl xl:text-6xl font-black italic">
+                <span className="text-display/20 text-2xl lg:text-4xl xl:text-5xl font-display-black-italic">
                     {String(index + 1).padStart(2, "0")}
                 </span>
             </motion.div>
@@ -640,9 +640,9 @@ const ProjectTechBadge = memo(({ tech, index }) => {
 
     return (
         <motion.span
-            className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-normal text-white/80 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-display-medium text-foreground-secondary/90 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
             {...badgeVariants}
-            whileHover={animationConfig.reduce ? {} : { scale: 1.05 }}
+            whileHover={animationConfig.reduce ? {} : { scale: 1.01 }}
         >
             {tech}
         </motion.span>
@@ -665,15 +665,15 @@ const StatisticsSection = memo(({ statistics }) => (
                     key={stat.label}
                     className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm"
                     whileHover={{
-                        scale: 1.05,
+                        scale: 1.01,
                         backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
                 >
                     <stat.icon className="w-4 h-4 text-brand-light" />
-                    <span className="text-white italic tracking-tight font-black text-sm">
+                    <span className="text-display font-display-black-italic text-sm">
                         {stat.value}
                     </span>
-                    <span className="text-white/60 text-xs">{stat.label}</span>
+                    <span className="text-foreground-muted text-xs">{stat.label}</span>
                 </motion.div>
             ))}
         </StaggerContainer>
@@ -833,7 +833,7 @@ const RemainingProjectsRow = memo(() => {
             return { scale: 1.02 };
         }
         
-        return { scale: 1.08, y: -6 };
+        return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
 
     return (
@@ -842,7 +842,7 @@ const RemainingProjectsRow = memo(() => {
             {...containerVariants}
             viewport={{ once: true }}
         >
-            <span className="text-white/60 text-base uppercase tracking-wider font-medium mb-8 block">
+            <span className="text-foreground-muted text-base uppercase tracking-wider font-display-medium mb-8 block">
                 Other Projects
             </span>
             <div className="flex flex-row flex-wrap gap-4 md:gap-8 justify-center items-center">
@@ -919,7 +919,7 @@ function ProjectGrid() {
     );
 
     return (
-        <div id="projects" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="projects" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
 
             {/* Background Effects */}
             <BackgroundEffects />

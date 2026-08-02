@@ -73,17 +73,17 @@ const BackButton = memo(() => {
 
     return (
         <motion.button
-            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
+            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-8 h-8 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-display hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
             onClick={handleBack}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, x: -50 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.5, type: "spring" }}
+            transition={{ delay: 1.5, type: "tween" }}
         >
             <ArrowLeft className="w-6 h-6" />
             <motion.div
-                className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-display text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 initial={{ x: -10 }}
                 animate={{ x: 0 }}
             >
@@ -105,14 +105,14 @@ const SectionHeader = memo(({ icon: Icon, badge, title, subtitle, delay = 0.2 })
             whileHover={{ scale: 1.02 }}
         >
             <Icon className="w-4 h-4 text-brand-light" />
-            <span className="text-white/90 text-sm font-medium tracking-wide">{badge}</span>
+            <span className="text-foreground-secondary text-sm font-display-medium tracking-wide">{badge}</span>
         </motion.div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-[0.9]">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-[0.9]">
             {title}
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-brand-light to-brand-light rounded-full mx-auto mb-4" />
         {subtitle && (
-            <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed px-4">
                 {subtitle}
             </p>
         )}
@@ -121,8 +121,8 @@ const SectionHeader = memo(({ icon: Icon, badge, title, subtitle, delay = 0.2 })
 
 // --- Enhanced Project Overview ---
 const ProjectOverview = memo(() => (
-    <section className="py-16 sm:py-20 md:py-32 relative">
-        <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 md:px-8">
+    <section className="py-16 sm:py-12 sm:py-16 md:py-32 relative">
+        <div className="max-w-[1366px] mx-auto relative z-10 px-4 sm:px-6 md:px-8">
             <SectionHeader
                 icon={Sparkles}
                 badge="PROJECT SHOWCASE"
@@ -130,25 +130,25 @@ const ProjectOverview = memo(() => (
                 subtitle="A comprehensive look at the development process and key achievements"
             />
 
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-12 items-start">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-8 items-start">
                 {/* Main Content */}
                 <ScrollAnimatedSection
                     animationType="fadeLeft"
                     delay={0.3}
-                    className="xl:col-span-7 space-y-8 md:space-y-12"
+                    className="xl:col-span-7 space-y-5 sm:space-y-6 md:space-y-12"
                 >
                     <div className="relative">
-                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-10 shadow-2xl">
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-10 shadow-lg">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-2 h-2 bg-brand-light rounded-full animate-pulse" />
-                                <span className="text-brand-light text-sm font-black uppercase tracking-widest">
+                                <div className="w-2 h-2 bg-brand-light rounded-full" />
+                                <span className="text-brand-light text-sm font-display-heavy uppercase tracking-widest">
                                     WordPress Excellence
                                 </span>
                             </div>
-                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black italic tracking-tight text-white mb-6 leading-tight">
+                            <h3 className="text-xl md:text-2xl lg:text-3xl font-display-black-italic text-display mb-6 leading-tight">
                                 A Seamless WordPress Experience for a Modern Brand
                             </h3>
-                            <p className="text-white/80 text-base md:text-lg leading-relaxed mb-8">
+                            <p className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed mb-8">
                                 Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design.
                             </p>
 
@@ -163,7 +163,7 @@ const ProjectOverview = memo(() => (
                                         className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300"
                                     >
                                         <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-                                        <span className="text-white/90 font-medium">{highlight}</span>
+                                        <span className="text-foreground-secondary font-display-medium">{highlight}</span>
                                     </div>
                                 ))}
                             </StaggerContainer>
@@ -177,7 +177,7 @@ const ProjectOverview = memo(() => (
                                     href={projectData.links.live}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group relative overflow-hidden bg-gradient-to-r from-brand-light to-brand text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight transition-all duration-300 flex items-center gap-3"
+                                    className="group relative overflow-hidden bg-gradient-to-r from-brand-light to-brand text-display px-6 md:px-8 py-3 md:py-4 rounded-2xl font-display-black-italic transition-all duration-300 flex items-center gap-3"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -188,7 +188,7 @@ const ProjectOverview = memo(() => (
                                     href={projectData.links.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group border-2 border-white/20 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-3"
+                                    className="group border-2 border-white/20 text-display px-6 md:px-8 py-3 md:py-4 rounded-2xl font-display-black-italic hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-3"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -207,28 +207,28 @@ const ProjectOverview = memo(() => (
                     className="xl:col-span-5 space-y-6"
                 >
                     {/* Project Status Card */}
-                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-5 sm:p-6 shadow-lg">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-white font-black italic text-xl flex items-center gap-3">
+                            <h3 className="text-display font-display-black-italic text-xl flex items-center gap-3">
                                 <Award className="w-6 h-6 text-brand-light" />
                                 Project Status
                             </h3>
                             <div className="px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-green-400/20 border border-emerald-400/30 rounded-full">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                                    <span className="text-emerald-400 font-black text-sm">{projectData.meta.status}</span>
+                                    <div className="w-2 h-2 bg-emerald-400 rounded-full" />
+                                    <span className="text-emerald-400 font-display-heavy text-sm">{projectData.meta.status}</span>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3 text-white/70">
+                        <div className="flex items-center gap-3 text-foreground-secondary/80">
                             <Calendar className="w-5 h-5 text-brand-light" />
-                            <span className="font-medium">Delivered in {projectData.meta.year}</span>
+                            <span className="font-display-medium">Delivered in {projectData.meta.year}</span>
                         </div>
                     </div>
 
                     {/* Project Links Card */}
-                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
-                        <h3 className="text-white font-black italic text-xl mb-6 flex items-center gap-3">
+                    <div className="bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-5 sm:p-6 shadow-lg">
+                        <h3 className="text-display font-display-black-italic text-xl mb-6 flex items-center gap-3">
                             <Globe className="w-6 h-6 text-brand-light" />
                             Project Links
                         </h3>
@@ -241,12 +241,12 @@ const ProjectOverview = memo(() => (
                                 className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-brand-light/30 transition-all duration-300"
                                 whileHover={{ x: 4 }}
                             >
-                                <div className="w-10 h-10 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
+                                <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
                                     <ExternalLink className="w-5 h-5 text-brand-light" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="text-white font-black">Live Website</div>
-                                    <div className="text-white/60 text-sm truncate">www.lavacraze.com</div>
+                                    <div className="text-display font-display-heavy">Live Website</div>
+                                    <div className="text-foreground-muted text-sm truncate">www.lavacraze.com</div>
                                 </div>
                             </motion.a>
                             <motion.a
@@ -254,12 +254,12 @@ const ProjectOverview = memo(() => (
                                 className="group flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-brand-light/30 transition-all duration-300"
                                 whileHover={{ x: 4 }}
                             >
-                                <div className="w-10 h-10 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
+                                <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand-light/20 rounded-xl flex items-center justify-center">
                                     <Github className="w-5 h-5 text-brand-light" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="text-white font-black">Source Code</div>
-                                    <div className="text-white/60 text-sm truncate">GitHub Repository</div>
+                                    <div className="text-display font-display-heavy">Source Code</div>
+                                    <div className="text-foreground-muted text-sm truncate">GitHub Repository</div>
                                 </div>
                             </motion.a>
                         </StaggerContainer>
@@ -279,13 +279,13 @@ const ProjectOverview = memo(() => (
                         whileHover={{ scale: 1.02 }}
                     >
                         <Users className="w-4 h-4 text-brand-light" />
-                        <span className="text-white/90 text-sm font-medium tracking-wide">DREAM TEAM</span>
+                        <span className="text-foreground-secondary text-sm font-display-medium tracking-wide">DREAM TEAM</span>
                     </motion.div>
-                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
                         Meet the Team
                     </h3>
                     <div className="w-20 h-1 bg-gradient-to-r from-brand-light to-brand-light rounded-full mx-auto mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl mx-auto">
+                    <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl mx-auto">
                         The talented individuals who brought this project to life
                     </p>
                 </div>
@@ -298,11 +298,11 @@ const ProjectOverview = memo(() => (
                         <motion.div
                             key={member.name}
                             className="group text-center"
-                            whileHover={{ y: -8, scale: 1.05 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            whileHover={{ y: -2, scale: 1.01 }}
+                            transition={{ type: "tween", stiffness: 300, damping: 20 }}
                         >
-                            <div className="relative w-20 h-20 mx-auto mb-4">
-                                <div className="w-full h-full bg-gradient-to-br from-brand-light to-brand-light rounded-full flex items-center justify-center text-white font-black text-xl shadow-lg">
+                            <div className="relative w-16 h-16 mx-auto mb-4">
+                                <div className="w-full h-full bg-gradient-to-br from-brand-light to-brand-light rounded-full flex items-center justify-center text-display font-display-heavy text-xl shadow-lg">
                                     {member.name.split(' ').map(n => n[0]).join('')}
                                 </div>
                                 {idx === 0 && (
@@ -313,10 +313,10 @@ const ProjectOverview = memo(() => (
                             </div>
 
                             <div>
-                                <h4 className="text-white font-black text-lg mb-1 group-hover:text-brand-light transition-colors duration-300">
+                                <h4 className="text-display font-display-heavy text-lg mb-1 group-hover:text-brand-light transition-colors duration-300">
                                     {member.name}
                                 </h4>
-                                <p className="text-white/60 text-sm font-medium uppercase tracking-wide">
+                                <p className="text-foreground-muted text-sm font-display-medium uppercase tracking-wide">
                                     {member.role}
                                 </p>
                             </div>
@@ -332,8 +332,8 @@ const ProjectOverview = memo(() => (
 
 // --- Enhanced Technology Stack ---
 const TechnologyStack = memo(() => (
-    <section className="py-16 sm:py-20 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <section className="py-16 sm:py-12 sm:py-16 md:py-32 relative">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8">
             <SectionHeader
                 icon={Zap}
                 badge="TECH STACK"
@@ -350,28 +350,28 @@ const TechnologyStack = memo(() => (
                         key={tech.name}
                         className="group relative"
                         whileHover={{
-                            y: -8,
+                            y: -2,
                             scale: 1.02,
-                            transition: { type: "spring", stiffness: 300, damping: 20 }
+                            transition: { type: "tween", stiffness: 300, damping: 20 }
                         }}
                     >
                         <motion.div
-                            className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl"
+                            className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl"
                             style={{ background: tech.color }}
                         />
-                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl group-hover:shadow-3xl group-hover:border-white/30 transition-all duration-500 text-center h-full flex flex-col justify-center">
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-5 sm:p-6 shadow-lg group-hover:shadow-3xl group-hover:border-white/30 transition-all duration-500 text-center h-full flex flex-col justify-center">
                             <motion.div
-                                className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center relative overflow-hidden"
+                                className="w-8 h-8 mx-auto mb-6 rounded-2xl flex items-center justify-center relative overflow-hidden"
                                 style={{
                                     background: `linear-gradient(135deg, ${tech.color}20, ${tech.color}10)`,
                                     border: `1px solid ${tech.color}30`
                                 }}
-                                whileHover={{ rotate: [0, -5, 5, 0] }}
+                                whileHover={{ rotate: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain relative z-10" />
+                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-8 h-8 object-contain relative z-10" />
                             </motion.div>
-                            <h3 className="text-white font-black italic text-xl mb-3 group-hover:text-white transition-colors duration-300">{tech.name}</h3>
+                            <h3 className="text-display font-display-black-italic text-xl mb-3 group-hover:text-display transition-colors duration-300">{tech.name}</h3>
                             <motion.div
                                 className="w-12 h-1 rounded-full mx-auto"
                                 style={{ backgroundColor: tech.color }}
@@ -390,7 +390,7 @@ const TechnologyStack = memo(() => (
 
 // --- Enhanced Screenshot Gallery ---
 const ScreenshotGallery = memo(({ images }) => (
-    <section className="py-16 sm:py-20 md:py-32">
+    <section className="py-16 sm:py-12 sm:py-16 md:py-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
             <SectionHeader
                 icon={Target}
@@ -411,9 +411,9 @@ const ScreenshotGallery = memo(({ images }) => (
                         transition={{ duration: 0.4, ease: "easeOut" }}
                     >
                         <motion.div
-                            className="absolute -inset-4 bg-gradient-to-r from-brand-light/20 to-brand/20 rounded-3xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+                            className="absolute -inset-4 bg-gradient-to-r from-brand-light/20 to-brand/20 rounded-2xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
                         />
-                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-xl border border-white/20 group-hover:border-brand-light/30 rounded-3xl p-3 shadow-2xl overflow-hidden transition-all duration-500">
+                        <div className="relative bg-gradient-to-br from-white/[0.15] to-white/[0.05] backdrop-blur-md border border-white/20 group-hover:border-brand-light/30 rounded-2xl p-3 shadow-lg overflow-hidden transition-all duration-500">
                             <ScrollAnimatedSection
                                 animationType="scale"
                                 delay={idx * 0.2}
@@ -421,7 +421,7 @@ const ScreenshotGallery = memo(({ images }) => (
                                 <img
                                     src={img.src}
                                     alt={img.alt}
-                                    className="w-full h-auto rounded-2xl shadow-2xl border border-white/10"
+                                    className="w-full h-auto rounded-2xl shadow-lg border border-white/10"
                                     style={{ background: "#18181b" }}
                                 />
                             </ScrollAnimatedSection>
@@ -451,20 +451,20 @@ function LavaCraze() {
                 {/* Enhanced Background Effects */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
-                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
+                        className="absolute top-20 left-10 w-96 h-72 sm:h-80 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.6, 0.3]
                         }}
-                        transition={{ duration: 12, repeat: Infinity }}
+                        transition={{ duration: 12, repeat: 0 }}
                     />
                     <motion.div
-                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
+                        className="absolute bottom-20 right-10 w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.3, 1],
                             opacity: [0.2, 0.5, 0.2]
                         }}
-                        transition={{ duration: 15, repeat: Infinity, delay: 3 }}
+                        transition={{ duration: 15, repeat: 0, delay: 3 }}
                     />
                 </div>
 
@@ -473,7 +473,7 @@ function LavaCraze() {
 
                 {/* Hero Section with immediate animation on mount */}
                 <motion.div
-                    className="relative flex flex-col justify-center pt-20"
+                    className="relative flex flex-col justify-center pt-16"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
@@ -489,7 +489,7 @@ function LavaCraze() {
                             backgroundPosition: 'top',
                             backgroundSize: 'cover'
                         }}
-                        initial={{ opacity: 0, scale: 1.1 }}
+                        initial={{ opacity: 0, scale: 1.01 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
                     >
@@ -515,7 +515,7 @@ function LavaCraze() {
                     <ScrollAnimatedSection
                         animationType="fadeUp"
                         delay={0.3}
-                        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-20"
+                        className="max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8 pb-12 sm:pb-16"
                     >
                         <NextProjectSection />
                     </ScrollAnimatedSection>

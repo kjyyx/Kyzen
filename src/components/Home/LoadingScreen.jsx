@@ -18,7 +18,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#011417]"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-canvas"
             initial={{ opacity: 1 }}
             animate={{ opacity: fadeOut ? 0 : 1 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -36,7 +36,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                         }}
                         transition={{
                             duration: 1.5,
-                            repeat: Infinity,
+                            repeat: 0,
                             delay: i * 0.2,
                         }}
                     />

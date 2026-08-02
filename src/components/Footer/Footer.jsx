@@ -137,7 +137,7 @@ const AnimatedMarqueeText = memo(() => {
                 {[0.5, 0.7, 0.9].map((delay, index) => (
                     <motion.span 
                         key={index}
-                        className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl italic tracking-tight font-black text-white mr-6 sm:mr-10 md:mr-12 leading-tight"
+                        className="text-lg xs:text-xl sm:text-2xl md:text-3xl xl:text-5xl font-display-black-italic text-display mr-6 sm:mr-10 md:mr-12 leading-tight"
                         {...textEntryVariants}
                         transition={{ 
                             ...textEntryVariants.transition,
@@ -181,12 +181,12 @@ const BackgroundEffects = memo(() => {
             <motion.div
                 className="absolute top-0 left-1/4 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-br from-blue-500/10 to-brand/10 rounded-full blur-3xl"
                 animate={orbVariants1}
-                transition={{ duration: 6, repeat: Infinity }} // Reduced from 8
+                transition={{ duration: 6, repeat: 0 }} // Reduced from 8
             />
             <motion.div
-                className="absolute bottom-0 right-1/4 w-24 h-24 sm:w-36 sm:h-36 bg-gradient-to-br from-brand/10 to-brand-light/10 rounded-full blur-3xl"
+                className="absolute bottom-0 right-1/4 w-16 h-16 sm:w-20 sm:h-20 sm:w-36 sm:h-36 bg-gradient-to-br from-brand/10 to-brand-light/10 rounded-full blur-3xl"
                 animate={orbVariants2}
-                transition={{ duration: 8, repeat: Infinity, delay: 1 }} // Reduced from 10 and delay from 2
+                transition={{ duration: 8, repeat: 0, delay: 1 }} // Reduced from 10 and delay from 2
             />
             
             {/* Floating Particles - Reduced count */}
@@ -205,7 +205,7 @@ const BackgroundEffects = memo(() => {
                     }}
                     transition={{
                         duration: 3 + (i * 0.4), // Reduced duration
-                        repeat: Infinity,
+                        repeat: 0,
                         delay: i * 0.4
                     }}
                 />
@@ -223,7 +223,7 @@ const BookCallButton = memo(() => {
             return { scale: 1.02, y: -1 };
         }
         
-        return { scale: 1.05, y: -2 };
+        return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
 
     const tapVariants = useMemo(() => ({ scale: 0.98 }), []);
@@ -246,17 +246,17 @@ const BookCallButton = memo(() => {
 
     return (
         <motion.button
-            className="group relative px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-white to-white/95 text-black rounded-full font-black italic tracking-tight transition-all duration-300 flex items-center gap-2 sm:gap-3 overflow-hidden shadow-lg hover:shadow-xl hover:shadow-white/20 z-10 text-sm sm:text-base"
+            className="group relative px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-white to-white/95 text-foreground-dark rounded-full font-display-black-italic transition-all duration-300 flex items-center gap-2 sm:gap-3 overflow-hidden shadow-lg hover:shadow-xl hover:shadow-white/20 z-10 text-sm sm:text-base"
             whileHover={hoverVariants}
             whileTap={tapVariants}
         >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-brand opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
-            <Calendar className={`w-4 h-4 sm:w-5 sm:h-5 ${!animationConfig.reduce ? 'group-hover:rotate-12' : ''} transition-transform duration-300 relative z-10`} />
+            <Calendar className={`w-4 h-4 sm:w-5 sm:h-5 ${!animationConfig.reduce ? '' : ''} transition-transform duration-300 relative z-10`} />
             <div className="flex gap-1 sm:gap-2 relative z-10">
                 {["BOOK", "A", "CALL"].map((word, i) => (
                     <motion.span
                         key={word}
-                        className={!animationConfig.reduce ? "group-hover:animate-ascend" : ""}
+                        className={!animationConfig.reduce ? "" : ""}
                         style={{ animationDelay: `${i * 0.1}s` }}
                         {...wordAnimationProps}
                         transition={{ 
@@ -335,12 +335,12 @@ const CopyrightInfo = memo(() => {
 
     return (
         <motion.div
-            className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 italic tracking-tight font-light text-center sm:text-left"
+            className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 tracking-tight font-display-medium text-center sm:text-left"
             {...copyrightVariants}
         >
             <div className="flex items-center gap-1 sm:gap-2">
                 <span>Made with</span>
-                <Heart className={`w-3 h-3 sm:w-4 sm:h-4 text-red-400 ${!animationConfig.reduce ? 'animate-pulse' : ''}`} />
+                <Heart className={`w-3 h-3 sm:w-4 sm:h-4 text-red-400 ${!animationConfig.reduce ? '' : ''}`} />
             </div>
             <span className="hidden sm:inline">© 2025. All rights reserved</span>
             <span className="sm:hidden">© 2025</span>
@@ -366,12 +366,12 @@ const EmailCallToAction = memo(() => (
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
     >
-        <p className="text-white/80 text-sm sm:text-base md:text-lg">
+        <p className="text-foreground-secondary/90 text-sm sm:text-base">
             or say 👋🏼 to{' '}
             <motion.a
                 href="mailto:kpjaculbia@gmail.com"
-                className="text-white hover:text-blue-400 underline decoration-blue-400/50 underline-offset-4 transition-colors duration-300 font-medium relative z-10 break-all sm:break-normal"
-                whileHover={{ scale: 1.05 }}
+                className="text-display hover:text-brand-light underline decoration-brand-light/50 underline-offset-4 transition-colors duration-300 font-display-medium relative z-10 break-all sm:break-normal"
+                whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.2 }}
             >
                 kpjaculbia@gmail.com
@@ -387,7 +387,7 @@ const FooterBottomSection = memo(() => (
         variants={itemVariants}
     >
         <DecorativeLine />
-        <div className="flex flex-col sm:flex-row justify-between items-center text-white/60 text-xs sm:text-sm gap-4 sm:gap-0">
+        <div className="flex flex-col sm:flex-row justify-between items-center text-foreground-muted text-xs sm:text-sm gap-4 sm:gap-0">
             <LogoBranding />
             <CopyrightInfo />
         </div>
@@ -397,7 +397,7 @@ const FooterBottomSection = memo(() => (
 // Footer Container Component
 const FooterContainer = memo(({ children }) => (
     <motion.footer
-        className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
+        className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
         variants={footerContainerVariants}
         initial="hidden"
         whileInView="visible"
@@ -474,7 +474,7 @@ const LogoBranding = memo(() => {
                 whileHover={logoHoverVariants}
                 transition={logoHoverTransition}
             />
-            <span className="text-[#e9dcc8] text-lg sm:text-xl italic tracking-tight font-black">
+            <span className="text-foreground-secondary text-base sm:text-lg font-display-black-italic">
                 Kyzen.
             </span>
         </motion.div>
@@ -487,10 +487,10 @@ const ScrollToTopButton = memo(({ onClick }) => {
     
     const hoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
-            return { scale: 1.05, y: -1 };
+            return { scale: 1.01, y: -1 };
         }
         
-        return { scale: 1.1, y: -2 };
+        return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
 
     const tapVariants = useMemo(() => ({ scale: 0.95 }), []);
@@ -498,7 +498,7 @@ const ScrollToTopButton = memo(({ onClick }) => {
     return (
         <motion.button
             onClick={onClick}
-            className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 z-10"
+            className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-foreground-secondary/80 hover:text-display hover:bg-white/20 transition-all duration-300 z-10"
             whileHover={hoverVariants}
             whileTap={tapVariants}
         >
@@ -552,10 +552,10 @@ const SocialLinkItem = memo(({ social, index }) => {
 
     const hoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
-            return { scale: 1.05, y: -1 };
+            return { scale: 1.01, y: -1 };
         }
         
-        return { scale: 1.1, y: -2 };
+        return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
 
     const tapVariants = useMemo(() => ({ scale: 0.95 }), []);
@@ -569,11 +569,11 @@ const SocialLinkItem = memo(({ social, index }) => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group relative p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white/70 transition-all duration-300 ${social.color} hover:bg-white/20 flex items-center justify-center z-10 min-w-[44px] min-h-[44px]`}
+                className={`group relative p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-foreground-secondary/80 transition-all duration-300 ${social.color} hover:bg-white/20 flex items-center justify-center z-10 min-w-[44px] min-h-[44px]`}
                 whileHover={hoverVariants}
                 whileTap={tapVariants}
             >
-                <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${!animationConfig.reduce ? 'group-hover:rotate-12' : ''}`} />
+                <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${!animationConfig.reduce ? '' : ''}`} />
                 <span className="sr-only">{social.name}</span>
 
                 {canAnimate() && <SocialLinkTooltip name={social.name} />}
@@ -626,7 +626,7 @@ const SocialLinkTooltip = memo(({ name }) => {
 
     return (
         <motion.div
-            className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50"
+            className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-display text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50"
             {...tooltipVariants}
         >
             {name}
@@ -665,7 +665,7 @@ function Footer() {
                 animationType="fadeUp" 
                 threshold={0.2}
                 priority="medium"
-                className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
+                className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
             >
                 <BackgroundEffects />
                 <div className="mx-auto max-w-11/12 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">

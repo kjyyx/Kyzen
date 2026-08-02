@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   --color-primary: #02625f;
   --color-primary-dark: #024745;
@@ -31,6 +31,8 @@
   --color-border-strong: rgba(2, 133, 130, 0.42);
 
   --color-focus: #fbff00;
+  --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
   color: var(--color-text-primary);
   background: var(--color-background);
 }
@@ -55,6 +57,9 @@
   --color-border-brand: rgba(2, 133, 130, 0.22);
   --color-border-brand-strong: rgba(2, 133, 130, 0.42);
   --color-focus: #fbff00;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Source Code Pro", monospace;
 }
 
 html,
@@ -67,6 +72,96 @@ body,
 
 body {
   margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-text-primary);
+    letter-spacing: -0.025em;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    letter-spacing: -0.015em;
+  }
+
+  p,
+  li {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: inherit;
+  }
+
+  strong,
+  b {
+    font-weight: 800;
+    color: var(--color-text-primary);
+  }
+
+  small,
+  time,
+  figcaption {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  button,
+  input,
+  textarea,
+  select,
+  a {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .font-display-black-italic {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.025em;
+  }
+
+  .font-display-heavy {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-style: normal;
+    letter-spacing: -0.015em;
+  }
+
+  .font-display-medium {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  .text-display {
+    color: var(--color-text-primary);
+  }
+
+  .text-body {
+    color: var(--color-text-secondary);
+  }
+
+  .text-meta {
+    color: var(--color-text-muted);
+  }
 }
 
 ::selection {

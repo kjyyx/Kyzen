@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './components/Home/Home.jsx'
-import MainPage from './components/Projects/MainPage.jsx'
+
+const Home = lazy(() => import('./components/Home/Home.jsx'))
+const MainPage = lazy(() => import('./components/Projects/MainPage.jsx'))
 
 function App() {
     return (
         <Router basename="/">
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/projects/*" element={<MainPage />} />
-                {/* Add more project routes as needed */}
-            </Routes>
+            <Suspense fallback={<div className="min-h-screen bg-canvas" />}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/projects/*" element={<MainPage />} />
+                    {/* Add more project routes as needed */}
+                </Routes>
+            </Suspense>
         </Router>
     )
 }

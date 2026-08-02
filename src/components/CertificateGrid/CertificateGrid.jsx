@@ -223,7 +223,7 @@ const getTypeColor = (type) => {
     return colors[type] || {
         gradient: "from-gray-500/30 to-gray-600/30",
         border: "border-gray-400/40",
-        accent: "text-gray-300",
+        accent: "text-foreground-secondary",
         glow: "shadow-gray-500/20"
     };
 };
@@ -250,7 +250,7 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
             return { scale: 1.02 };
         }
         
-        return { scale: 1.05, y: -2 };
+        return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
 
     return (
@@ -271,19 +271,19 @@ const CategoryFilters = memo(({ categories, selectedCategory, onCategorySelect }
                         <motion.button
                             key={category.name}
                             onClick={() => onCategorySelect(category.name)}
-                            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full italic tracking-tight font-black text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
-                                ? 'bg-white/10 border border-brand-light/50 text-[#f3faf9] shadow-lg shadow-brand-light/20'
-                                : 'text-white/70 hover:text-white hover:bg-white/5 border border-white/20'
+                            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full font-display-black-italic text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm ${selectedCategory === category.name
+                                ? 'bg-white/10 border border-brand-light/50 text-display shadow-lg shadow-brand-light/20'
+                                : 'text-foreground-secondary/80 hover:text-display hover:bg-white/5 border border-white/20'
                                 }`}
                             whileHover={buttonHoverVariants}
-                            whileTap={{ scale: 0.95 }}
+                            whileTap={{ scale: 0.98 }}
                         >
                             <category.icon
                                 className={`w-3 h-3 sm:w-4 sm:h-4 ${category.name !== "All" && categoryStyle
                                     ? categoryStyle.accent
                                     : selectedCategory === category.name
                                         ? 'text-brand-light'
-                                        : 'text-white/70'
+                                        : 'text-foreground-secondary/80'
                                     }`}
                             />
                             <span className="relative z-10">{category.name}</span>
@@ -422,7 +422,7 @@ const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, on
                 <div className="relative z-10 h-full flex flex-col">
                     {/* Header */}
                     <div className={`flex-shrink-0 bg-gradient-to-r ${categoryStyle.gradient} backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 border-b ${categoryStyle.border}`}>
-                        <h4 className="text-white text-base sm:text-lg italic tracking-tight font-black flex items-center gap-2">
+                        <h4 className="text-display text-base sm:text-lg font-display-black-italic flex items-center gap-2">
                             <CategoryIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${categoryStyle.accent}`} />
                             <span className="hidden sm:inline">Certificate Details</span>
                             <span className="sm:hidden">Details</span>
@@ -431,19 +431,19 @@ const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, on
 
                     {/* Content */}
                     <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-3 sm:py-4 space-y-3 sm:space-y-4">
-                        <p className="text-white/90 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">
+                        <p className="text-foreground-secondary text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">
                             {certificate.description}
                         </p>
 
                         <div>
-                            <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
+                            <h5 className="text-display text-xs sm:text-sm mb-2 sm:mb-3 font-display-black-italic">
                                 Skills & Competencies
                             </h5>
                             <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 max-h-20 sm:max-h-none overflow-y-auto">
                                 {certificate.skills.map((skill) => (
                                     <span
                                         key={skill}
-                                        className={`px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-white/90 ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex-shrink-0`}
+                                        className={`px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-display-medium text-foreground-secondary ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex-shrink-0`}
                                     >
                                         {skill}
                                     </span>
@@ -453,21 +453,21 @@ const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, on
 
                         {/* Verification details */}
                         <div>
-                            <h5 className="text-white text-xs sm:text-sm mb-2 sm:mb-3 italic tracking-tight font-black">
+                            <h5 className="text-display text-xs sm:text-sm mb-2 sm:mb-3 font-display-black-italic">
                                 Verification Details
                             </h5>
                             <div className={`space-y-2 sm:space-y-3 p-3 sm:p-4 ${categoryStyle.bg} rounded-lg border ${categoryStyle.border}`}>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-white/70 text-xs">Issued:</span>
-                                    <span className="text-white/90 text-xs font-medium">{formatDate(certificate.date)}</span>
+                                    <span className="text-foreground-secondary/80 text-xs">Issued:</span>
+                                    <span className="text-foreground-secondary text-xs font-display-medium">{formatDate(certificate.date)}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
-                                    <span className="text-white/70 text-xs">Credential ID:</span>
-                                    <span className="text-white/90 text-xs font-mono break-all sm:max-w-[150px] truncate">{certificate.credentialId}</span>
+                                    <span className="text-foreground-secondary/80 text-xs">Credential ID:</span>
+                                    <span className="text-foreground-secondary text-xs font-mono break-all sm:max-w-[150px] truncate">{certificate.credentialId}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-white/70 text-xs">Status:</span>
-                                    <span className="text-green-400 text-xs font-medium flex items-center gap-1">
+                                    <span className="text-foreground-secondary/80 text-xs">Status:</span>
+                                    <span className="text-green-400 text-xs font-display-medium flex items-center gap-1">
                                         <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                         Verified
                                     </span>
@@ -478,7 +478,7 @@ const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, on
                         {/* View button */}
                         <motion.button
                             onClick={onVerificationClick}
-                            className={`w-full py-2 sm:py-3 px-3 sm:px-4 bg-gradient-to-r ${categoryStyle.gradient} hover:opacity-80 border ${categoryStyle.border} rounded-lg text-white italic tracking-tight font-black text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2`}
+                            className={`w-full py-2 sm:py-3 px-3 sm:px-4 bg-gradient-to-r ${categoryStyle.gradient} hover:opacity-80 border ${categoryStyle.border} rounded-lg text-display font-display-black-italic text-xs sm:text-sm transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2`}
                             whileHover={buttonHoverVariants}
                             whileTap={{ scale: 0.98 }}
                         >
@@ -488,7 +488,7 @@ const CertificateCardBack = memo(({ certificate, categoryStyle, CategoryIcon, on
                         </motion.button>
 
                         <div className="text-center py-2 sm:py-4">
-                            <span className="text-white/50 text-xs font-light italic">
+                            <span className="text-foreground-muted/80 text-xs font-display-medium">
                                 Tap to flip back
                             </span>
                         </div>
@@ -524,8 +524,8 @@ const CertificateCardFront = memo(({
             {/* Corner decorations - Only on capable devices */}
             {shouldAnimate && (
                 <>
-                    <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 ${categoryStyle.border} rounded-tr-lg opacity-50`} />
-                    <div className={`absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 ${categoryStyle.border} rounded-bl-lg opacity-50`} />
+                    <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 w-6 h-6 sm:w-7 sm:h-7 border-t-2 border-r-2 ${categoryStyle.border} rounded-tr-lg opacity-50`} />
+                    <div className={`absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-6 h-6 sm:w-7 sm:h-7 border-b-2 border-l-2 ${categoryStyle.border} rounded-bl-lg opacity-50`} />
                 </>
             )}
 
@@ -534,21 +534,21 @@ const CertificateCardFront = memo(({
                 {/* Header */}
                 <div>
                     <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className={`px-2 sm:px-3 py-1 text-xs italic tracking-tight font-black text-white ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex items-center gap-1 sm:gap-2`}>
+                        <span className={`px-2 sm:px-3 py-1 text-xs font-display-black-italic text-display ${categoryStyle.bg} backdrop-blur-sm rounded-full border ${categoryStyle.border} flex items-center gap-1 sm:gap-2`}>
                             <CategoryIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                             <span className="relative z-10">{certificate.category}</span>
                         </span>
-                        <span className="text-white/70 text-xs sm:text-sm font-medium flex items-center gap-1">
+                        <span className="text-foreground-secondary/80 text-xs sm:text-sm font-display-medium flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
                             {new Date(certificate.date).getFullYear()}
                         </span>
                     </div>
 
-                    <h3 className="text-white text-base sm:text-xl mb-2 sm:mb-3 italic tracking-tight font-black line-clamp-2">
+                    <h3 className="text-display text-base sm:text-lg mb-2 sm:mb-3 font-display-black-italic line-clamp-2">
                         {certificate.title}
                     </h3>
 
-                    <p className="text-white/90 text-xs sm:text-sm font-medium mb-3 sm:mb-4 flex items-center gap-2 line-clamp-1">
+                    <p className="text-foreground-secondary text-xs sm:text-sm font-display-medium mb-3 sm:mb-4 flex items-center gap-2 line-clamp-1">
                         <Award className={`w-3 h-3 sm:w-4 sm:h-4 ${categoryStyle.accent} flex-shrink-0`} />
                         <span className="truncate">{certificate.issuer}</span>
                     </p>
@@ -560,13 +560,13 @@ const CertificateCardFront = memo(({
                         {certificate.skills.slice(0, window.innerWidth < 640 ? 2 : 3).map((skill) => (
                             <span
                                 key={skill}
-                                className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-white/90 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 truncate max-w-[120px] sm:max-w-none"
+                                className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-display-medium text-foreground-secondary bg-white/20 backdrop-blur-sm rounded-full border border-white/30 truncate max-w-[120px] sm:max-w-none"
                             >
                                 {skill}
                             </span>
                         ))}
                         {certificate.skills.length > (window.innerWidth < 640 ? 2 : 3) && (
-                            <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-white/70 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                            <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-display-medium text-foreground-secondary/80 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                                 +{certificate.skills.length - (window.innerWidth < 640 ? 2 : 3)} more
                             </span>
                         )}
@@ -576,13 +576,13 @@ const CertificateCardFront = memo(({
                 {/* Bottom section */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 sm:gap-2" onClick={onVerificationClick}>
-                        <span className="text-white/70 text-xs italic">
+                        <span className="text-foreground-secondary/80 text-xs italic">
                             {shouldAnimate ? "Click to view" : "Tap to view"}
                         </span>
                         <ExternalLink className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${categoryStyle.accent}`} />
                     </div>
 
-                    <div className={`w-6 h-6 sm:w-8 sm:h-8 border-2 ${categoryStyle.border} rounded-full flex items-center justify-center`}>
+                    <div className={`w-6 h-6 sm:w-7 sm:h-7 border-2 ${categoryStyle.border} rounded-full flex items-center justify-center`}>
                         <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 ${categoryStyle.bg} rounded-full`}></div>
                     </div>
                 </div>
@@ -649,33 +649,33 @@ const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
                 onClick={onClose}
             >
                 <motion.div
-                    className="relative max-w-4xl w-full max-h-[90vh] sm:max-h-[80vh] bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden z-[71]"
+                    className="relative max-w-4xl w-full max-h-[90vh] sm:max-h-[80vh] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden z-[71]"
                     initial={{ scale: 0.8, opacity: 0, y: 50 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.8, opacity: 0, y: 50 }}
                     onClick={(e) => e.stopPropagation()}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ type: "tween", stiffness: 300, damping: 30 }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 p-4 sm:p-6 border-b border-white/20">
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-white text-lg sm:text-xl italic tracking-tight font-black line-clamp-2">
+                                <h3 className="text-display text-base sm:text-lg font-display-black-italic line-clamp-2">
                                     {certificate.title}
                                 </h3>
-                                <p className="text-white/70 text-sm mt-1 flex items-center gap-2 line-clamp-1">
+                                <p className="text-foreground-secondary/80 text-sm mt-1 flex items-center gap-2 line-clamp-1">
                                     <Award className="w-4 h-4 text-brand-light flex-shrink-0" />
                                     <span className="truncate">{certificate.issuer}</span>
                                     <span className="hidden sm:inline">•</span>
                                     <span className="hidden sm:inline">{formatDate(certificate.date)}</span>
                                 </p>
-                                <p className="text-white/70 text-sm mt-1 sm:hidden">
+                                <p className="text-foreground-secondary/80 text-sm mt-1 sm:hidden">
                                     {formatDate(certificate.date)}
                                 </p>
                             </div>
                             <motion.button
                                 onClick={onClose}
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 flex-shrink-0"
+                                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-foreground-secondary/80 hover:text-display hover:bg-white/20 transition-all duration-300 flex-shrink-0"
                                 whileHover={{ y: -2, scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
@@ -690,7 +690,7 @@ const CertificateModal = memo(({ certificate, isOpen, onClose }) => {
                             <img
                                 src={certificate.image}
                                 alt={certificate.title}
-                                className="max-w-full max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg border border-white/20 shadow-2xl"
+                                className="max-w-full max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg border border-white/20 shadow-lg"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent rounded-lg pointer-events-none" />
                         </div>
@@ -755,7 +755,7 @@ const PageHeader = memo(() => {
         >
             <div className="relative">
                 <motion.h2
-                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none italic tracking-tight text-left"
+                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl font-display-black-italic leading-none text-left"
                     {...titleVariants}
                     style={{
                         textShadow: animationConfig.reduce ? 'none' : '0 0 40px rgba(2, 133, 130, 0.26)'
@@ -844,13 +844,13 @@ const SeminarCard = memo(({ seminar }) => {
                     )}
 
                     {/* Type badge */}
-                    <span className={`absolute -top-2 sm:-top-3 -right-2 sm:-right-3 px-2 sm:px-4 py-1 sm:py-2 text-xs italic tracking-tight font-black text-white bg-gradient-to-r ${typeStyle.gradient} backdrop-blur-sm rounded-full border ${typeStyle.border} shadow-lg`}>
+                    <span className={`absolute -top-2 sm:-top-3 -right-2 sm:-right-3 px-2 sm:px-4 py-1 sm:py-2 text-xs font-display-black-italic text-display bg-gradient-to-r ${typeStyle.gradient} backdrop-blur-sm rounded-full border ${typeStyle.border} shadow-lg`}>
                         {seminar.type}
                     </span>
 
                     <div className="flex gap-3 sm:gap-6">
                         {/* Responsive image */}
-                        <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 relative overflow-hidden rounded-xl border border-white/30">
+                        <div className="flex-shrink-0 w-8 h-8 sm:w-14 sm:h-14 relative overflow-hidden rounded-xl border border-white/30">
                             <img
                                 src={seminar.image}
                                 alt={seminar.title}
@@ -862,8 +862,8 @@ const SeminarCard = memo(({ seminar }) => {
                             {/* View indicator - Only on hover and capable devices */}
                             {isHovered && shouldAnimate && (
                                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
-                                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                                    <div className="w-6 h-6 sm:w-7 sm:h-7 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
+                                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-display" />
                                     </div>
                                 </div>
                             )}
@@ -871,17 +871,17 @@ const SeminarCard = memo(({ seminar }) => {
 
                         {/* Content */}
                         <div className="flex-1 min-w-0">
-                            <h4 className="text-white italic tracking-tight font-black text-sm sm:text-base leading-tight mb-2 sm:mb-3 line-clamp-2">
+                            <h4 className="text-display font-display-black-italic text-sm sm:text-base leading-tight mb-2 sm:mb-3 line-clamp-2">
                                 {seminar.title}
                             </h4>
 
-                            <p className="text-white/80 text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2 line-clamp-1">
+                            <p className="text-foreground-secondary/90 text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2 line-clamp-1">
                                 <Award className="w-3 h-3 sm:w-4 sm:h-4 text-brand-light flex-shrink-0" />
                                 <span className="truncate">{seminar.organizer}</span>
                             </p>
 
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
-                                <span className="flex items-center gap-2 text-white/70">
+                                <span className="flex items-center gap-2 text-foreground-secondary/80">
                                     <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-brand-light flex-shrink-0" />
                                     <span className="truncate">
                                         {new Date(seminar.date).toLocaleDateString('en-US', {
@@ -891,7 +891,7 @@ const SeminarCard = memo(({ seminar }) => {
                                         })}
                                     </span>
                                 </span>
-                                <span className={`text-xs ${typeStyle.accent} font-medium truncate`}>
+                                <span className={`text-xs ${typeStyle.accent} font-display-medium truncate`}>
                                     {seminar.location}
                                 </span>
                             </div>
@@ -900,10 +900,10 @@ const SeminarCard = memo(({ seminar }) => {
 
                     {/* Click indicator */}
                     <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 flex items-center gap-1 sm:gap-2 opacity-50">
-                        <span className="text-white/60 text-xs italic hidden sm:inline">
+                        <span className="text-foreground-muted text-xs italic hidden sm:inline">
                             Click to view
                         </span>
-                        <span className="text-white/60 text-xs italic sm:hidden">
+                        <span className="text-foreground-muted text-xs italic sm:hidden">
                             Tap
                         </span>
                         <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-brand-light" />
@@ -934,27 +934,27 @@ const SeminarModal = memo(({ seminar, isOpen, onClose }) => {
                 onClick={onClose}
             >
                 <motion.div
-                    className="relative max-w-4xl w-full max-h-[90vh] sm:max-h-[80vh] bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden z-[71]"
+                    className="relative max-w-4xl w-full max-h-[90vh] sm:max-h-[80vh] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden z-[71]"
                     initial={{ scale: 0.8, opacity: 0, y: 50 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.8, opacity: 0, y: 50 }}
                     onClick={(e) => e.stopPropagation()}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ type: "tween", stiffness: 300, damping: 30 }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 p-4 sm:p-6 border-b border-white/20">
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-white text-lg sm:text-xl italic tracking-tight font-black line-clamp-2">
+                                <h3 className="text-display text-base sm:text-lg font-display-black-italic line-clamp-2">
                                     {seminar.title}
                                 </h3>
-                                <p className="text-white/70 text-sm mt-1">
+                                <p className="text-foreground-secondary/80 text-sm mt-1">
                                     {seminar.organizer} • {formatDate(seminar.date)}
                                 </p>
                             </div>
                             <motion.button
                                 onClick={onClose}
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 flex-shrink-0"
+                                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-foreground-secondary/80 hover:text-display hover:bg-white/20 transition-all duration-300 flex-shrink-0"
                                 whileHover={{ y: -2, scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
@@ -969,7 +969,7 @@ const SeminarModal = memo(({ seminar, isOpen, onClose }) => {
                             <img
                                 src={seminar.image}
                                 alt={seminar.title}
-                                className="max-w-full max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg border border-white/20 shadow-2xl"
+                                className="max-w-full max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg border border-white/20 shadow-lg"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent rounded-lg pointer-events-none" />
                         </div>
@@ -992,10 +992,10 @@ const SeminarsSection = memo(() => (
                 animationType="fadeUp"
                 delay={0.3}
             >
-                <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-2xl sm:text-3xl md:text-4xl italic tracking-tight font-black mb-3 sm:mb-4">
+                <h3 className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-xl sm:text-2xl md:text-3xl font-display-black-italic mb-3 sm:mb-4">
                     Seminars & Workshops<span className="text-brand-light">_</span>
                 </h3>
-                <p className="text-white/70 text-sm sm:text-base max-w-2xl mx-auto px-4">
+                <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl mx-auto px-4">
                     Additional learning experiences and professional development initiatives
                 </p>
 
@@ -1035,7 +1035,7 @@ const StatisticsDisplay = memo(({ statistics }) => {
         }
         
         return { 
-            scale: 1.05, 
+            scale: 1.01, 
             backgroundColor: "rgba(255, 255, 255, 0.1)" 
         };
     }, [animationConfig.reduce]);
@@ -1060,10 +1060,10 @@ const StatisticsDisplay = memo(({ statistics }) => {
                         <div className="flex justify-center mb-1 sm:mb-2">
                             <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-brand-light" />
                         </div>
-                        <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl italic tracking-tight font-black text-white">
+                        <div className="text-base sm:text-lg font-display-black-italic text-display">
                             {stat.value}
                         </div>
-                        <div className="text-white/60 text-xs sm:text-sm md:text-base font-medium">
+                        <div className="text-foreground-muted text-xs sm:text-sm md:text-base font-display-medium">
                             {stat.label}
                         </div>
                     </motion.div>
@@ -1147,7 +1147,7 @@ function CertificateGrid() {
     }, []);
 
     return (
-        <div id="certifications" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="certifications" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
             {/* Page Header */}
             <PageHeader />
 

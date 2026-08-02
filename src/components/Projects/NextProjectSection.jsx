@@ -73,7 +73,7 @@ const NextProjectSection = memo(() => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
             >
-                <span className="text-white/60 text-sm tracking-wider font-medium">
+                <span className="text-foreground-muted text-sm tracking-wider font-display-medium">
                     next project
                 </span>
             </motion.div>
@@ -91,7 +91,7 @@ const NextProjectSection = memo(() => {
             >
                 {/* Outlined text (default swung out state) */}
                 <motion.h2
-                    className="w-full max-w-[90vw] break-words text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] italic font-black uppercase tracking-tight text-transparent select-none text-right"
+                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase tracking-tight text-transparent select-none text-right"
                     style={{
                         WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
                         position: 'relative',
@@ -117,7 +117,7 @@ const NextProjectSection = memo(() => {
                 </motion.h2>
                 {/* Solid filled text (appears on hover) */}
                 <motion.h2
-                    className="w-full max-w-[90vw] break-words text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] italic font-black uppercase tracking-tight text-white select-none text-right"
+                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase tracking-tight text-display select-none text-right"
                     initial={{
                         opacity: 0,
                         rotateY: -20
@@ -144,7 +144,7 @@ const NextProjectSection = memo(() => {
                 </motion.h2>
                 {/* Full name subtitle, fades in on hover */}
                 <motion.span
-                    className="block text-base sm:text-lg md:text-xl text-white/70 font-medium mt-3 text-right pr-1 max-w-[80vw] truncate"
+                    className="block text-base sm:text-lg text-foreground-secondary/80 font-display-medium mt-3 text-right pr-1 max-w-[80vw] truncate"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
                     transition={{ duration: 0.4 }}

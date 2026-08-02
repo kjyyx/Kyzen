@@ -135,7 +135,7 @@ const FloatingParticle = memo(({ particle }) => (
         }}
         transition={{
             duration: particle.duration,
-            repeat: Infinity,
+            repeat: 0,
             delay: particle.delay,
             ease: "easeInOut",
         }}
@@ -144,7 +144,7 @@ const FloatingParticle = memo(({ particle }) => (
 
 // Main Header Content Container
 const HeaderContent = memo(() => (
-    <div className="relative z-20 w-full max-w-7xl mx-auto h-full min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-10 md:pb-14 lg:pb-16">
+    <div className="relative z-20 w-full max-w-[1366px] mx-auto h-full min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-10 md:pb-14 lg:pb-16">
         <LeftSection />
         <HeroLogoMark />
     </div>
@@ -155,17 +155,17 @@ const HeroCTAs = memo(() => (
     <div className="flex items-center gap-4 pt-2">
         <a
             href="#projects"
-            className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-medium text-xs sm:text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
+            className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-display-medium text-xs sm:text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
         >
             <span>Explore Work</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </a>
         <a
             href="#about"
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-gray-600/50 text-gray-200 font-medium text-xs sm:text-sm hover:border-gray-400 transition-colors"
+            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-border-brand text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong transition-colors"
         >
             <span>About Me</span>
-            <User className="w-4 h-4 text-gray-400" />
+            <User className="w-4 h-4 text-foreground-muted" />
         </a>
     </div>
 ));
@@ -217,7 +217,7 @@ const JapaneseText = memo(({ position, text, delay }) => {
 
     return (
         <motion.span
-            className={`absolute ${position} text-[0.16em] text-gray-300/80 font-light tracking-wider`}
+            className={`absolute ${position} text-[0.16em] text-foreground-secondary/80 font-display-medium tracking-wider`}
             {...textVariants}
         >
             {text}
@@ -238,7 +238,7 @@ const LeftSection = memo(() => (
 const MainHeadline = memo(() => {
     return (
         <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-gray-100 leading-[1.15] font-normal tracking-tight"
+            className="text-xl sm:text-2xl md:text-3xl text-display leading-[1.15] font-display-medium tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -299,7 +299,7 @@ const MainTitle = memo(() => {
 
     return (
         <motion.h1
-            className="relative text-[14vw] xs:text-[11vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.75rem] italic tracking-tight font-black text-left whitespace-nowrap leading-none pt-3"
+            className="relative text-[14vw] xs:text-[11vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.75rem] font-display-black-italic text-left whitespace-nowrap leading-none pt-3"
             {...titleVariants}
             style={{
                 textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
@@ -395,7 +395,7 @@ const ScrollIndicator = memo(() => {
             priority="low"
         >
             <motion.div
-                className="flex flex-col items-center text-gray-400/80 cursor-pointer"
+                className="flex flex-col items-center text-foreground-muted/80 cursor-pointer"
                 animate={indicatorVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 2,
@@ -423,7 +423,7 @@ const ScrollIndicatorLabel = memo(() => {
 
     return (
         <motion.span
-            className="text-xs sm:text-sm mb-1 font-light italic tracking-wider"
+            className="text-xs sm:text-sm mb-1 font-display-medium tracking-wider"
             animate={labelVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 2,

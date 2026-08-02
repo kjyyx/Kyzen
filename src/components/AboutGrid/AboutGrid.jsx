@@ -225,7 +225,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
                 y: 0,
                 transition: { 
                     delay: 1.1 + index * 0.1, 
-                    type: "spring" 
+                    type: "tween" 
                 }
             }
         };
@@ -233,13 +233,13 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
 
     const hoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
-            return { scale: 1.05 };
+            return { scale: 1.01 };
         }
         
         return {
-            scale: 1.1,
+            scale: 1.01,
             y: -5,
-            transition: { type: "spring", stiffness: 300, damping: 20 }
+            transition: { type: "tween", stiffness: 300, damping: 20 }
         };
     }, [animationConfig.reduce]);
 
@@ -268,9 +268,9 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
                     )}
 
                     <motion.div
-                        className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
+                        className="relative w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 flex items-center justify-center"
                         animate={!animationConfig.reduce && hoveredSkill === skill.name ? 
-                            { rotate: [0, 5, -5, 0] } : 
+                            { rotate: 0 } : 
                             { rotate: 0 }
                         }
                         transition={{ duration: 0.6 }}
@@ -278,7 +278,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
                         <motion.img
                             src={skill.icon}
                             alt={skill.name}
-                            className="w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10 object-contain"
+                            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 object-contain"
                             style={{
                                 filter: hoveredSkill === skill.name && !animationConfig.reduce
                                     ? 'brightness(1.1) saturate(1.1) drop-shadow(0 0 2px currentColor)'
@@ -289,7 +289,7 @@ const CurrentTechSkills = memo(({ hoveredSkill, onHover, onLeave }) => {
 
                     {/* Tooltip */}
                     <motion.div
-                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-display text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                         style={{ color: skill.color }}
                     >
                         {skill.name}
@@ -393,8 +393,8 @@ const EnhancedAvatar = memo(() => {
 
                 {/* Profile image container */}
                 <motion.div
-                    className="absolute inset-4 rounded-full overflow-hidden border-3 border-white/30 shadow-2xl"
-                    whileHover={animationConfig.reduce ? {} : { scale: 1.05 }}
+                    className="absolute inset-4 rounded-full overflow-hidden border-3 border-white/30 shadow-lg"
+                    whileHover={animationConfig.reduce ? {} : { scale: 1.01 }}
                     transition={{ duration: 0.3 }}
                     style={{
                         boxShadow: shouldAnimate ? '0 0 50px rgba(2, 133, 130, 0.26)' : 'none'
@@ -439,7 +439,7 @@ const FloatingParticles = memo(() => {
                     }}
                     transition={{ 
                         duration: particle.duration, 
-                        repeat: Infinity,
+                        repeat: 0,
                         delay: particle.delay || 0
                     }}
                 />
@@ -456,7 +456,7 @@ const HeroTitle = memo(() => (
         className="w-full flex justify-start mb-8 sm:mb-10 md:mb-12 lg:mb-16 relative z-10"
     >
         <div className="relative w-full">
-            <h2 className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight sm:leading-none italic tracking-tight text-left">
+            <h2 className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl font-display-black-italic leading-tight sm:leading-none text-left">
                 About<span className="text-brand-light">_</span>
                 <br />
                 me<span className="text-brand-light">:</span>
@@ -494,7 +494,7 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
                 scale: 1,
                 transition: {
                     delay: index * 0.1,
-                    type: "spring",
+                    type: "tween",
                     stiffness: 100,
                     damping: 15
                 }
@@ -509,8 +509,8 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
         
         return {
             y: -5,
-            scale: 1.05,
-            transition: { type: "spring", stiffness: 300, damping: 20 }
+            scale: 1.01,
+            transition: { type: "tween", stiffness: 300, damping: 20 }
         };
     }, [animationConfig.reduce]);
 
@@ -536,10 +536,10 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
 
             <div className={`relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r ${hobby.gradient} backdrop-blur-lg border ${hobby.border} rounded-xl sm:rounded-2xl transition-all duration-500 group-hover:shadow-xl`}>
                 <motion.span
-                    className="text-lg sm:text-xl md:text-2xl"
+                    className="text-base sm:text-lg md:text-2xl"
                     animate={!animationConfig.reduce && isHovered ? {
                         scale: [1, 1.2, 1],
-                        rotate: [0, 10, -10, 0]
+                        rotate: 0
                     } : { scale: 1, rotate: 0 }}
                     transition={{ duration: 0.6, repeat: isHovered && !animationConfig.reduce ? Infinity : 0 }}
                 >
@@ -547,7 +547,7 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
                 </motion.span>
 
                 <motion.span
-                    className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
+                    className="font-display-black-italic text-sm sm:text-base md:text-lg"
                     style={{ color: hobby.color }}
                     animate={{
                         x: isHovered ? 3 : 0,
@@ -579,7 +579,7 @@ const HobbyCard = memo(({ hobby, index, isHovered, onHover, onLeave }) => {
                                 transition={{
                                     duration: 1.5,
                                     delay: i * 0.2,
-                                    repeat: Infinity
+                                    repeat: 0
                                 }}
                             />
                         ))}
@@ -609,17 +609,17 @@ const HobbiesSection = memo(({ hoveredHobby, onHobbyHover, onHobbyLeave }) => {
         <ScrollAnimatedSection
             animationType="fadeUp"
             delay={0.3}
-            className="w-full space-y-8"
+            className="w-full space-y-5 sm:space-y-6"
         >
             <div className="flex items-center gap-4 mb-8">
                 <motion.div
                     className="p-4 rounded-full bg-gradient-to-r from-brand-light/20 to-orange-500/20 border border-brand-light/30"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    animate={{ rotate: 0 }}
+                    transition={{ duration: 4, repeat: 0 }}
                 >
-                    <Coffee className="w-7 h-7 text-brand-light" />
+                    <Coffee className="w-6 h-6 text-brand-light" />
                 </motion.div>
-                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl italic tracking-tight font-black text-white">WHEN I'M NOT CODING</h3>
+                <h3 className="text-base sm:text-lg font-display-black-italic text-display">WHEN I'M NOT CODING</h3>
                 <motion.div
                     className="flex-1 h-px bg-gradient-to-r from-brand-light/50 to-transparent"
                     initial={{ scaleX: 0 }}
@@ -649,11 +649,11 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             {showRealName ? (
                 <motion.h1
                     key="real"
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic font-black tracking-tight text-transparent bg-gradient-to-r from-brand-light via-brand-light to-blue-400 bg-clip-text text-center"
+                    className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-transparent bg-gradient-to-r from-brand-light via-brand-light to-blue-400 bg-clip-text text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
-                    transition={{ duration: 0.5, type: "spring" }}
+                    transition={{ duration: 0.5, type: "tween" }}
                     style={{
                         textShadow: '0 0 30px rgba(2, 133, 130, 0.42)'
                     }}
@@ -663,11 +663,11 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             ) : (
                 <motion.h1
                     key="dev"
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic font-black text-white tracking-tight text-center"
+                    className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-display tracking-tight text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
-                    transition={{ duration: 0.5, type: "spring" }}
+                    transition={{ duration: 0.5, type: "tween" }}
                     style={{
                         textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
                     }}
@@ -694,7 +694,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
                     transition={{
                         duration: 1.5,
                         delay: i * 0.2,
-                        repeat: Infinity
+                        repeat: 0
                     }}
                 />
             ))}
@@ -707,11 +707,11 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
     <ScrollAnimatedSection
         animationType="fadeRight"
         delay={0.3}
-        className="flex flex-col items-center space-y-8"
+        className="flex flex-col items-center space-y-5 sm:space-y-6"
     >
         <EnhancedAvatar />
         <motion.div
-            className="text-center space-y-4 sm:space-y-6 md:space-y-8 max-w-md mx-auto"
+            className="text-center space-y-4 sm:space-y-6 md:space-y-5 sm:space-y-6 max-w-md mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -731,7 +731,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
                 >
-                    <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-medium tracking-wide">
+                    <p className="text-sm sm:text-base md:text-lg text-foreground-secondary font-display-medium tracking-wide">
                         Full-Stack Web Developer
                     </p>
 
@@ -747,11 +747,11 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                 {/* Tagline with Enhanced Animation */}
                 <motion.div className="relative">
                     <motion.p
-                        className="text-sm sm:text-base md:text-lg text-brand-light/80 font-medium italic tracking-wide"
+                        className="text-sm sm:text-base text-brand-light/80 font-display-medium tracking-wide"
                         animate={{
                             opacity: [0.6, 1, 0.6]
                         }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 3, repeat: 0, ease: "easeInOut" }}
                     >
                         Building the future, one line at a time
                     </motion.p>
@@ -760,7 +760,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
 
             {/* Interactive Hint - Improved Design */}
             <motion.div
-                className="flex items-center justify-center gap-2 text-white/40 text-xs sm:text-sm mt-6 sm:mt-8"
+                className="flex items-center justify-center gap-2 text-foreground-muted/70 text-xs sm:text-sm mt-6 sm:mt-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
@@ -771,18 +771,18 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                         scale: [1, 1.02, 1],
                         borderColor: ["rgba(255,255,255,0.1)", "rgba(2,133,130,0.20)", "rgba(255,255,255,0.1)"]
                     }}
-                    transition={{ duration: 3, repeat: Infinity }}
+                    transition={{ duration: 3, repeat: 0 }}
                 >
                     <motion.div
                         animate={{
                             y: [0, -2, 0],
-                            rotate: [0, 5, -5, 0]
+                            rotate: 0
                         }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        transition={{ duration: 2, repeat: 0 }}
                     >
                         👆
                     </motion.div>
-                    <span className="font-medium">Click name to toggle</span>
+                    <span className="font-display-medium">Click name to toggle</span>
                 </motion.div>
             </motion.div>
         </motion.div>
@@ -808,14 +808,14 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
         className="space-y-10"
     >
         <div className="space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic tracking-tight font-black text-white leading-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-display leading-tight">
                 Crafting Digital
                 <motion.span
                     className="block text-transparent bg-gradient-to-r from-brand-light via-blue-400 to-cyan-400 bg-clip-text"
                     animate={{
                         backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
-                    transition={{ duration: 5, repeat: Infinity }}
+                    transition={{ duration: 5, repeat: 0 }}
                     style={{
                         backgroundSize: '200% 200%'
                     }}
@@ -826,21 +826,21 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
         </div>
 
         <motion.div
-            className="space-y-8"
+            className="space-y-5 sm:space-y-6"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
         >
             <motion.p
-                className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed"
+                className="text-sm sm:text-base text-foreground-secondary leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
             >
                 I'm a passionate web developer from the Philippines who transforms creative ideas into
                 <motion.span
-                    className="text-brand-light italic tracking-tight font-black"
-                    whileHover={{ scale: 1.05 }}
+                    className="text-brand-light font-display-black-italic"
+                    whileHover={{ scale: 1.01 }}
                     style={{ cursor: 'default' }}
                 >  stunning digital realities</motion.span>.
                 My journey started with curiosity and has evolved into a deep expertise in modern web technologies.
@@ -853,7 +853,7 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
                 transition={{ delay: 0.9 }}
             >
                 <motion.h3
-                    className="text-white italic tracking-tight font-black text-xl"
+                    className="text-display font-display-black-italic text-xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
@@ -878,7 +878,7 @@ const ResumeButton = memo(() => {
 
     return (
         <motion.button
-            className="group relative px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-brand-light to-brand text-black italic tracking-tight font-black rounded-2xl overflow-hidden shadow-lg"
+            className="group relative px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-brand-light to-brand text-foreground-dark font-display-black-italic rounded-2xl overflow-hidden shadow-lg"
             whileHover={{
                 scale: 1.02,
                 boxShadow: '0 20px 40px rgba(2, 133, 130, 0.34)'
@@ -909,7 +909,7 @@ const ResumeButton = memo(() => {
                         transition={{
                             duration: 2,
                             delay: i * 0.3,
-                            repeat: Infinity
+                            repeat: 0
                         }}
                     />
                 ))}
@@ -917,12 +917,12 @@ const ResumeButton = memo(() => {
 
             <div className="relative flex items-center justify-center gap-3">
                 <motion.div
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={{ rotate: 0 }}
+                    transition={{ duration: 2, repeat: 0 }}
                 >
-                    <Download className="w-6 h-6 text-white" />
+                    <Download className="w-6 h-6 text-display" />
                 </motion.div>
-                <span className="text-lg text-white">Download Resume</span>
+                <span className="text-lg text-display">Download Resume</span>
             </div>
         </motion.button>
     );
@@ -967,7 +967,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
                 transition: {
                     delay: index * 0.1,
                     duration: 0.6,
-                    type: "spring",
+                    type: "tween",
                     stiffness: 100
                 }
             }
@@ -976,14 +976,14 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
 
     const hoverVariants = useMemo(() => {
         if (animationConfig.reduce) {
-            return { scale: 1.05 };
+            return { scale: 1.01 };
         }
         
         return {
-            scale: 1.1,
-            y: -8,
+            scale: 1.01,
+            y: -2,
             rotateY: 10,
-            transition: { type: "spring", stiffness: 300, damping: 20 }
+            transition: { type: "tween", stiffness: 300, damping: 20 }
         };
     }, [animationConfig.reduce]);
 
@@ -1016,9 +1016,9 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
             >
                 {/* Skill icon */}
                 <motion.div
-                    className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center"
+                    className="relative w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 flex items-center justify-center"
                     animate={!animationConfig.reduce && isHovered ? 
-                        { rotate: [0, 5, -5, 0] } : 
+                        { rotate: 0 } : 
                         { rotate: 0 }
                     }
                     transition={{ duration: 0.6 }}
@@ -1026,7 +1026,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
                     <motion.img
                         src={skill.logo}
                         alt={skill.name}
-                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain relative z-10"
+                        className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 object-contain relative z-10"
                         style={{
                             filter: isHovered && !animationConfig.reduce
                                 ? 'brightness(1.2) saturate(1.3)'
@@ -1049,7 +1049,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
                 {/* Skill name */}
                 <motion.div className="relative z-10 space-y-1 sm:space-y-2">
                     <motion.h5
-                        className="italic tracking-tight font-black text-sm sm:text-base md:text-lg"
+                        className="font-display-black-italic text-sm sm:text-base md:text-lg"
                         style={{
                             color: isHovered ? skill.color : '#ffffff'
                         }}
@@ -1081,7 +1081,7 @@ const SkillCard = memo(({ skill, index, isHovered, onHover, onLeave }) => {
                                 transition={{
                                     duration: 2,
                                     delay: i * 0.2,
-                                    repeat: Infinity
+                                    repeat: 0
                                 }}
                             />
                         ))}
@@ -1097,8 +1097,8 @@ const SocialLink = memo(({ social, index }) => (
     <motion.a
         href={social.href}
         className="relative group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-sm transition-all duration-300"
-        whileHover={{ scale: 1.03, y: -2 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ y: -1 }}
+        whileTap={{ scale: 0.98 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 + index * 0.1 }}
@@ -1110,7 +1110,7 @@ const SocialLink = memo(({ social, index }) => (
                 scale: [1, 1.2, 1],
                 opacity: [0, 0.3, 0]
             }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 2, repeat: 0 }}
         />
 
         <motion.div
@@ -1124,7 +1124,7 @@ const SocialLink = memo(({ social, index }) => (
         </motion.div>
 
         <motion.div
-            className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+            className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/80 text-display text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
             style={{ color: social.color }}
         >
             {social.label}
@@ -1151,17 +1151,17 @@ const SocialLinksGroup = memo(() => {
 // Tech Stack Category Component
 const TechStackCategory = memo(({ stack, isActive, onClick }) => (
     <motion.button
-            className={`group relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl italic tracking-tight font-black text-xs sm:text-sm md:text-base transition-all duration-500 overflow-hidden ${isActive
-            ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-white shadow-2xl scale-105'
-            : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
+            className={`group relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl font-display-black-italic text-xs sm:text-sm md:text-base transition-all duration-500 overflow-hidden ${isActive
+            ? 'bg-gradient-to-r from-white/15 to-white/10 border-2 text-display shadow-lg scale-105'
+            : 'bg-white/5 border border-white/10 text-foreground-muted hover:bg-white/10 hover:text-foreground-secondary/90'
             }`}
         style={{
             borderColor: isActive ? stack.color : 'rgba(255,255,255,0.1)',
             boxShadow: isActive ? `0 0 30px ${stack.color}40` : 'none'
         }}
         onClick={onClick}
-        whileHover={{ scale: 1.05, y: -2 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ y: -2, scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
     >
         <motion.div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -1172,7 +1172,7 @@ const TechStackCategory = memo(({ stack, isActive, onClick }) => (
             animate={{
                 backgroundPosition: isActive ? ['0% 0%', '100% 100%'] : '0% 0%'
             }}
-            transition={{ duration: 3, repeat: Infinity }}
+            transition={{ duration: 3, repeat: 0 }}
         />
 
         <motion.div
@@ -1261,23 +1261,23 @@ const TechStackSection = memo(({
                             rotateY: [0, 180, 360],
                             scale: [1, 1.05, 1]
                         }}
-                        transition={{ duration: 6, repeat: Infinity }}
+                        transition={{ duration: 6, repeat: 0 }}
                     >
-                        <Code2 className="w-7 h-7 sm:w-8 sm:h-8 text-brand-light" />
+                        <Code2 className="w-6 h-6 sm:w-7 sm:h-7 text-brand-light" />
                         <motion.div
-                            className="absolute inset-0 rounded-3xl bg-gradient-to-r from-brand-light/20 to-brand/20 blur-xl"
+                            className="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-light/20 to-brand/20 blur-xl"
                             animate={{
                                 scale: [1, 1.2, 1],
                                 opacity: [0.3, 0.6, 0.3]
                             }}
-                            transition={{ duration: 4, repeat: Infinity }}
+                            transition={{ duration: 4, repeat: 0 }}
                         />
                     </motion.div>
                     <div className="w-16 sm:w-20 h-px bg-gradient-to-l from-transparent to-brand-light/50" />
                 </motion.div>
 
                 <motion.h3
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl italic tracking-tight font-black text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
+                    className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
@@ -1286,7 +1286,7 @@ const TechStackSection = memo(({
                 </motion.h3>
 
                 <motion.p
-                    className="text-sm sm:text-base md:text-lg text-white/70 max-w-2xl mx-auto px-4"
+                    className="text-sm sm:text-base text-foreground-secondary/80 max-w-2xl mx-auto px-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
@@ -1311,14 +1311,14 @@ const TechStackSection = memo(({
                     exit={{ opacity: 0, y: -40, scale: 0.95 }}
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
-                    <div className="absolute inset-0 overflow-hidden rounded-3xl max-w-4xl mx-auto">
+                    <div className="absolute inset-0 overflow-hidden rounded-2xl max-w-4xl mx-auto">
                         <motion.div
                             className={`absolute inset-0 bg-gradient-to-br ${currentTechStack.bgGradient} opacity-20 blur-2xl`}
                             animate={{
                                 scale: [1, 1.1, 1],
-                                rotate: [0, 2, -2, 0]
+                                rotate: 0
                             }}
-                            transition={{ duration: 8, repeat: Infinity }}
+                            transition={{ duration: 8, repeat: 0 }}
                         />
                         <motion.div
                             className="absolute top-0 left-0 w-full h-full"
@@ -1328,11 +1328,11 @@ const TechStackSection = memo(({
                             animate={{
                                 opacity: [0.3, 0.6, 0.3]
                             }}
-                            transition={{ duration: 4, repeat: Infinity }}
+                            transition={{ duration: 4, repeat: 0 }}
                         />
                     </div>
 
-                    <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-5 sm:p-6 md:p-8 overflow-hidden max-w-4xl mx-auto">
+                    <div className="relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-5 sm:p-6 md:p-5 sm:p-6 overflow-hidden max-w-4xl mx-auto">
 
                         <motion.div
                             className="flex items-center justify-between mb-8"
@@ -1356,12 +1356,12 @@ const TechStackSection = memo(({
                                 </motion.div>
                                 <div>
                                     <h4
-                                        className="text-xl sm:text-2xl italic tracking-tight font-black"
+                                        className="text-xl sm:text-2xl font-display-black-italic"
                                         style={{ color: currentTechStack.color }}
                                     >
                                         {currentTechStack.category}
                                     </h4>
-                                    <p className="text-white/60 text-sm">
+                                    <p className="text-foreground-muted text-sm">
                                         {currentTechStack.skills.length} technologies mastered
                                     </p>
                                 </div>
@@ -1389,7 +1389,7 @@ const TechStackSection = memo(({
                         key={index}
                         className="relative cursor-pointer"
                         onClick={() => onCategoryClick(index)}
-                        whileHover={{ scale: 1.2 }}
+                        whileHover={{ scale: 1.01 }}
                     >
                         <div
                             className={`w-3 h-3 rounded-full transition-all duration-300 ${activeCategory === index ? 'bg-white scale-125' : 'bg-white/30'
@@ -1406,7 +1406,7 @@ const TechStackSection = memo(({
                                     scale: [1, 1.5, 1],
                                     opacity: [0.3, 0.6, 0.3]
                                 }}
-                                transition={{ duration: 2, repeat: Infinity }}
+                                transition={{ duration: 2, repeat: 0 }}
                             />
                         )}
                     </motion.div>
@@ -1462,7 +1462,7 @@ const AboutGrid = () => {
     }, []);
 
     return (
-        <div id="about" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="about" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
             {/* Hero Title */}
             <HeroTitle />
 
@@ -1474,7 +1474,7 @@ const AboutGrid = () => {
             >
                 <FloatingParticles />
 
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start xl:items-center">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-8 items-start xl:items-center">
                     {/* Left Side - Profile Content */}
                     <ProfileContent
                         showRealName={showRealName}

@@ -144,7 +144,7 @@ const DevelopmentModal = ({ onClose }) => {
             return {};
         }
         
-        return { scale: 1.05 };
+        return { scale: 1.01 };
     }, [animationConfig.reduce]);
 
     if (!shouldShow) return null;
@@ -166,7 +166,7 @@ const DevelopmentModal = ({ onClose }) => {
 
                 {/* Modal Content */}
                 <motion.div
-                    className="relative w-full max-w-11/12 sm:max-w-lg bg-gradient-to-br from-[#023737]/90 via-[#1a1a1a]/95 to-black/90 border border-brand-light/30 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-brand-light/20"
+                    className="relative w-full max-w-11/12 sm:max-w-lg bg-gradient-to-br from-[#023737]/90 via-[#1a1a1a]/95 to-black/90 border border-brand-light/30 rounded-2xl p-6 sm:p-5 sm:p-6 backdrop-blur-md shadow-lg shadow-brand-light/20"
                     variants={modalVariants}
                     initial="hidden"
                     animate="visible"
@@ -175,7 +175,7 @@ const DevelopmentModal = ({ onClose }) => {
                     {/* Close Button */}
                     <motion.button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors duration-200"
+                        className="absolute top-4 right-4 p-2 text-foreground-secondary/80 hover:text-display hover:bg-white/10 rounded-full transition-colors duration-200"
                         whileHover={closeButtonHoverVariants}
                         whileTap={{ scale: animationConfig.reduce ? 1 : 0.95 }}
                     >
@@ -188,7 +188,7 @@ const DevelopmentModal = ({ onClose }) => {
                         variants={shouldAnimate ? itemVariants : {}}
                     >
                         <motion.div 
-                            className="w-16 h-16 bg-gradient-to-r from-brand-light to-brand-light rounded-full flex items-center justify-center"
+                            className="w-8 h-8 bg-gradient-to-r from-brand-light to-brand-light rounded-full flex items-center justify-center"
                             animate={animationConfig.reduce ? {} : {
                                 boxShadow: [
                                     "0 0 20px rgba(2, 133, 130, 0.26)",
@@ -202,7 +202,7 @@ const DevelopmentModal = ({ onClose }) => {
                                 ease: "easeInOut"
                             }}
                         >
-                            <Code2 className="w-8 h-8 text-white" />
+                            <Code2 className="w-6 h-6 text-display" />
                         </motion.div>
                     </motion.div>
 
@@ -215,7 +215,7 @@ const DevelopmentModal = ({ onClose }) => {
                     >
                         {/* Title */}
                         <motion.h2
-                            className="text-2xl sm:text-3xl font-black italic tracking-tight bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent"
+                            className="text-2xl sm:text-3xl font-display-black-italic bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             Under Development
@@ -226,12 +226,12 @@ const DevelopmentModal = ({ onClose }) => {
                             className="flex items-center justify-center gap-2 text-brand-light/80"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
-                            <span className="text-sm font-medium tracking-wide">Digital Portfolio v2.0</span>
+                            <span className="text-sm font-display-medium tracking-wide">Digital Portfolio v2.0</span>
                         </motion.div>
 
                         {/* Message */}
                         <motion.p
-                            className="text-white/80 text-sm sm:text-base leading-relaxed px-2"
+                            className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed px-2"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             This portfolio is currently being enhanced with new features, 
@@ -246,7 +246,7 @@ const DevelopmentModal = ({ onClose }) => {
                         >
                             <div className="flex items-center gap-2 mb-3">
                                 <AlertTriangle className="w-4 h-4 text-brand-light" />
-                                <span className="text-sm font-medium text-white">Currently Working On:</span>
+                                <span className="text-sm font-display-medium text-display">Currently Working On:</span>
                             </div>
                             <FeaturesList animationConfig={animationConfig} />
                         </motion.div>
@@ -254,7 +254,7 @@ const DevelopmentModal = ({ onClose }) => {
                         {/* Action Button */}
                         <motion.button
                             onClick={onClose}
-                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-brand-light to-brand-light text-white font-medium rounded-xl hover:shadow-lg hover:shadow-brand-light/30 transition-all duration-200"
+                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-brand-light to-brand-light text-display font-display-medium rounded-xl hover:shadow-lg hover:shadow-brand-light/30 transition-all duration-200"
                             whileHover={buttonHoverVariants}
                             whileTap={{ scale: animationConfig.reduce ? 1 : 0.99 }}
                             variants={shouldAnimate ? itemVariants : {}}
@@ -264,7 +264,7 @@ const DevelopmentModal = ({ onClose }) => {
 
                         {/* Footer Note */}
                         <motion.p
-                            className="text-xs text-white/50 mt-4"
+                            className="text-xs text-foreground-muted/80 mt-4"
                             variants={shouldAnimate ? itemVariants : {}}
                         >
                             Thank you for your patience! 🚀
@@ -296,7 +296,7 @@ const FeaturesList = ({ animationConfig }) => {
     }, [animationConfig.reduce]);
 
     return (
-        <ul className="space-y-2 text-xs sm:text-sm text-white/70">
+        <ul className="space-y-2 text-xs sm:text-sm text-foreground-secondary/80">
             {features.map((feature, index) => (
                 <motion.li 
                     key={index}

@@ -179,19 +179,19 @@ const BackButton = memo(() => {
 
     return (
         <motion.button
-            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
+            className="fixed top-1/2 left-6 transform -translate-y-1/2 z-50 w-8 h-8 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-display hover:bg-white/20 transition-all duration-300 group flex items-center justify-center"
             onClick={handleBack}
-            whileHover={{ scale: 1.15, x: -5 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ opacity: 0, x: -50 }}
+            whileHover={{ x: -2 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.5, type: "spring" }}
+            transition={{ delay: 1.5, type: "tween" }}
         >
             <ArrowLeft className="w-6 h-6 group-hover:scale-110 transition-transform" />
 
             {/* Minimal tooltip */}
             <motion.div
-                className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className="absolute left-full ml-4 px-2 py-1 bg-black/80 text-display text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 initial={{ x: -10 }}
                 animate={{ x: 0 }}
             >
@@ -211,7 +211,7 @@ const ProjectStatistics = memo(() => {
     ];
 
     return (
-        <section className="py-20">
+        <section className="py-12 sm:py-16">
             <div className="max-w-6xl mx-auto">
                 <motion.div
                     className="text-left mb-16"
@@ -220,14 +220,14 @@ const ProjectStatistics = memo(() => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                         Project Metrics
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 pl-2 leading-[1.15]">
+                    <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 pl-2 leading-[1.15]">
                         Achievement Overview
                     </h2>
                     <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
+                    <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl">
                         Key performance indicators showcasing project success and impact
                     </p>
                 </motion.div>
@@ -241,16 +241,16 @@ const ProjectStatistics = memo(() => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            whileHover={{ y: -8 }}
+                            whileHover={{ y: -2 }}
                         >
-                            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group-hover:shadow-2xl shadow-brand-light/10">
-                                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-light/20 to-brand/20 border border-white/20 mb-6 ${stat.color}`}>
-                                    <stat.icon className="w-8 h-8" />
+                            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-300 group-hover:shadow-lg shadow-brand-light/10">
+                                <div className={`inline-flex items-center justify-center w-8 h-8 rounded-2xl bg-gradient-to-br from-brand-light/20 to-brand/20 border border-white/20 mb-6 ${stat.color}`}>
+                                    <stat.icon className="w-6 h-6" />
                                 </div>
-                                <div className="text-4xl font-black text-white mb-2 group-hover:scale-110 transition-transform duration-300">
+                                <div className="text-2xl font-display-heavy text-display mb-2 group-hover:scale-110 transition-transform duration-300">
                                     {stat.value}
                                 </div>
-                                <div className="text-white/60 font-medium">
+                                <div className="text-foreground-muted font-display-medium">
                                     {stat.label}
                                 </div>
                             </div>
@@ -265,31 +265,31 @@ const ProjectStatistics = memo(() => {
 // Project Overview Component
 const ProjectOverview = memo(() => {
     return (
-        <section className="py-20">
+        <section className="py-12 sm:py-16">
             <div className="max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
                     {/* Main Content */}
                     <motion.div
-                        className="lg:col-span-3 space-y-8"
-                        initial={{ opacity: 0, x: -50 }}
+                        className="lg:col-span-3 space-y-5 sm:space-y-6"
+                        initial={{ opacity: 0, x: -24 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
                         <div>
-                            <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                            <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                                 About This Project
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
+                            <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                 A Seamless WordPress Experience for a Modern Brand
                             </h2>
                         </div>
 
                         <div className="prose prose-lg prose-invert">
-                            <p className="text-white/80 text-xl leading-relaxed mb-6">
+                            <p className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed mb-6">
                                 Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design, promising a delightful and user-friendly experience.
                             </p>
-                            {/* <p className="text-white/70 text-lg leading-relaxed">
+                            {/* <p className="text-foreground-secondary/80 text-sm sm:text-base leading-relaxed">
                                 The project methodology involved extensive user research, iterative design processes,
                                 and advanced development techniques. Every aspect was carefully crafted to ensure
                                 optimal performance, accessibility, and user satisfaction across all platforms and devices.
@@ -301,9 +301,9 @@ const ProjectOverview = memo(() => {
                                 href={projectData.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-brand-light to-brand text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
+                                className="bg-gradient-to-r from-brand-light to-brand text-display px-8 py-4 rounded-xl font-display-black-italic hover:shadow-lg hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
+                                whileHover={{ y: -2, scale: 1.01 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <Play className="w-5 h-5" />
                                 Live Demo
@@ -312,9 +312,9 @@ const ProjectOverview = memo(() => {
                                 href={projectData.links.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border border-white/20 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
+                                className="border border-white/20 text-display px-8 py-4 rounded-xl font-display-black-italic hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
+                                whileHover={{ y: -2, scale: 1.01 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <Github className="w-5 h-5" />
                                 View Code
@@ -330,57 +330,57 @@ const ProjectOverview = memo(() => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 space-y-8 shadow-lg shadow-brand-light/10">
+                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 space-y-5 sm:space-y-6 shadow-lg shadow-brand-light/10">
                             <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <h3 className="text-display font-display-black-italic mb-4 flex items-center gap-2">
                                     <Globe className="w-5 h-5 text-brand-light" />
                                     Project Links
                                 </h3>
                                 <div className="space-y-3">
                                     <a
                                         href={projectData.links.website}
-                                        className="text-white/70 hover:text-brand-light transition-colors flex items-center gap-2 group"
+                                        className="text-foreground-secondary/80 hover:text-brand-light transition-colors flex items-center gap-2 group"
                                     >
                                         <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         www.lavacraze.com
                                     </a>
                                     <a
                                         href={projectData.links.github}
-                                        className="text-white/70 hover:text-brand-light transition-colors flex items-center gap-2 group"
+                                        className="text-foreground-secondary/80 hover:text-brand-light transition-colors flex items-center gap-2 group"
                                     >
-                                        <Github className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                                        <Github className="w-4 h-4 transition-transform" />
                                         GitHub Repository
                                     </a>
                                 </div>
                             </div>
 
                             <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <h3 className="text-display font-display-black-italic mb-4 flex items-center gap-2">
                                     <Calendar className="w-5 h-5 text-brand-light" />
                                     Timeline
                                 </h3>
-                                <div className="text-white/70">
+                                <div className="text-foreground-secondary/80">
                                     <p className="mb-2">{projectData.meta.duration}</p>
-                                    <p className="text-sm text-white/50">Completed in {projectData.meta.year}</p>
+                                    <p className="text-sm text-foreground-muted/80">Completed in {projectData.meta.year}</p>
                                 </div>
                             </div>
 
                             <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <h3 className="text-display font-display-black-italic mb-4 flex items-center gap-2">
                                     <Users className="w-5 h-5 text-brand-light" />
                                     Team
                                 </h3>
-                                <p className="text-white/70">{projectData.meta.team}</p>
+                                <p className="text-foreground-secondary/80">{projectData.meta.team}</p>
                             </div>
 
                             <div>
-                                <h3 className="text-white font-black italic mb-4 flex items-center gap-2">
+                                <h3 className="text-display font-display-black-italic mb-4 flex items-center gap-2">
                                     <Award className="w-5 h-5 text-brand-light" />
                                     Status
                                 </h3>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                                    <span className="text-white/70">{projectData.meta.status}</span>
+                                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                    <span className="text-foreground-secondary/80">{projectData.meta.status}</span>
                                 </div>
                             </div>
                         </div>
@@ -394,7 +394,7 @@ const ProjectOverview = memo(() => {
 // Technology Stack Component
 const TechnologyStack = memo(() => {
     return (
-        <section className="py-20">
+        <section className="py-12 sm:py-16">
             <div className="max-w-6xl mx-auto">
                 <motion.div
                     className="text-center mb-16"
@@ -403,14 +403,14 @@ const TechnologyStack = memo(() => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                         Built With
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
+                    <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
                         Technology Stack
                     </h2>
                     <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4 mx-auto" />
-                    <p className="text-white/70 text-lg max-w-2xl mx-auto">
+                    <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl mx-auto">
                         Modern technologies and frameworks powering exceptional digital experiences
                     </p>
                 </motion.div>
@@ -419,7 +419,7 @@ const TechnologyStack = memo(() => {
                     {projectData.techStack.map((tech, index) => (
                         <motion.div
                             key={tech.name}
-                            className="group relative flex flex-col items-center justify-center w-40 h-48 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-brand-light/10 hover:shadow-2xl hover:shadow-brand-light/20 transition-all duration-300"
+                            className="group relative flex flex-col items-center justify-center w-32 h-40 sm:w-36 sm:h-44 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-lg shadow-brand-light/10 hover:shadow-lg hover:shadow-brand-light/20 transition-all duration-300"
                             initial={{ opacity: 0, y: 30, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true }}
@@ -437,15 +437,15 @@ const TechnologyStack = memo(() => {
                                 transition={{ duration: 0.3 }}
                             />
                             <div
-                                className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-white/10 border border-white/20 shadow-inner"
+                                className="w-8 h-8 rounded-xl flex items-center justify-center mb-4 bg-white/10 border border-white/20 shadow-inner"
                                 style={{
                                     backgroundColor: `${tech.color}22`,
                                     borderColor: `${tech.color}44`
                                 }}
                             >
-                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-10 h-10 object-contain" />
+                                <img src={tech.icon} alt={tech.name + ' logo'} className="w-8 h-8 object-contain" />
                             </div>
-                            <h3 className="text-white font-black italic mb-1 text-lg z-10">{tech.name}</h3>
+                            <h3 className="text-display font-display-black-italic mb-1 text-lg z-10">{tech.name}</h3>
                             <div
                                 className="w-10 h-1 rounded-full mt-3 opacity-60 group-hover:opacity-100 transition-opacity mx-auto z-10"
                                 style={{ backgroundColor: tech.color }}
@@ -460,7 +460,7 @@ const TechnologyStack = memo(() => {
 
 // Add this new component above the main Brisk function/component
 const ScreenshotGallery = memo(({ images }) => (
-    <section className="py-20">
+    <section className="py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
             <motion.div
                 className="mb-10 text-left"
@@ -469,22 +469,22 @@ const ScreenshotGallery = memo(({ images }) => (
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                     Website Preview
                 </span>
-                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
+                <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-tight">
                     Screenshots
                 </h2>
                 <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
-                <p className="text-white/70 text-lg max-w-2xl">
+                <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl">
                     Visual overviews of the live site as delivered.
                 </p>
             </motion.div>
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-8">
                 {images.map((img, idx) => (
                     <motion.div
                         key={img.src}
-                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg shadow-brand-light/10 overflow-auto flex justify-center items-center"
+                        className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg shadow-brand-light/10 overflow-auto flex justify-center items-center"
                         initial={{ opacity: 0, scale: 0.97 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
@@ -494,7 +494,7 @@ const ScreenshotGallery = memo(({ images }) => (
                         <img
                             src={img.src}
                             alt={img.alt}
-                            className="w-full h-auto rounded-2xl shadow-2xl border border-white/10 object-top object-contain"
+                            className="w-full h-auto rounded-2xl shadow-lg border border-white/10 object-top object-contain"
                             style={{ background: "#18181b" }}
                         />
                     </motion.div>
@@ -509,7 +509,7 @@ const KeyFeatures = memo(() => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     return (
-        <section className="py-20">
+        <section className="py-12 sm:py-16">
             <div className="max-w-6xl mx-auto">
                 <motion.div
                     className="text-left mb-16"
@@ -518,14 +518,14 @@ const KeyFeatures = memo(() => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                         Core Capabilities
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
+                    <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4 leading-[1.15]">
                         Key Features
                     </h2>
                     <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
+                    <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl">
                         Comprehensive solutions designed to transform user experience and drive engagement
                     </p>
                 </motion.div>
@@ -541,13 +541,13 @@ const KeyFeatures = memo(() => {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
-                            whileHover={{ y: -8 }}
+                            whileHover={{ y: -2 }}
                         >
                             {/* Glow effect */}
                             <AnimatePresence>
                                 {hoveredIndex === index && (
                                     <motion.div
-                                        className="absolute -inset-4 bg-gradient-to-r from-brand-light/30 to-brand/30 rounded-3xl blur-2xl"
+                                        className="absolute -inset-4 bg-gradient-to-r from-brand-light/30 to-brand/30 rounded-2xl blur-2xl"
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.8 }}
@@ -556,18 +556,18 @@ const KeyFeatures = memo(() => {
                                 )}
                             </AnimatePresence>
 
-                            <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 h-full hover:bg-white/15 hover:border-white/30 transition-all duration-300">
+                            <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 h-full hover:bg-white/15 hover:border-white/30 transition-all duration-300">
                                 {/* Icon */}
-                                <div className="w-16 h-16 bg-gradient-to-br from-brand-light/20 to-brand/20 border border-brand-light/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                    <feature.icon className="w-8 h-8 text-brand-light" />
+                                <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand/20 border border-brand-light/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <feature.icon className="w-6 h-6 text-brand-light" />
                                 </div>
 
                                 {/* Content */}
-                                <h3 className="text-white text-2xl font-black italic mb-4">{feature.title}</h3>
-                                <p className="text-white/70 text-lg leading-relaxed mb-6">{feature.description}</p>
+                                <h3 className="text-display text-xl font-display-black-italic mb-4">{feature.title}</h3>
+                                <p className="text-foreground-secondary/80 text-sm sm:text-base leading-relaxed mb-6">{feature.description}</p>
 
                                 {/* Learn More Link */}
-                                <div className="flex items-center text-brand-light font-black italic group-hover:translate-x-2 transition-transform duration-300">
+                                <div className="flex items-center text-brand-light font-display-black-italic group-hover:translate-x-2 transition-transform duration-300">
                                     <span className="mr-2">Learn more</span>
                                     <ArrowRight className="w-4 h-4" />
                                 </div>
@@ -583,26 +583,26 @@ const KeyFeatures = memo(() => {
 // Project Showcase Component
 const ProjectShowcase = memo(() => {
     return (
-        <section className="py-20">
-            <div className="max-w-7xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden shadow-lg shadow-brand-light/10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
+        <section className="py-12 sm:py-16">
+            <div className="max-w-[1366px] mx-auto">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg shadow-brand-light/10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[460px]">
                         {/* Left Side - Content */}
-                        <div className="p-12 lg:p-16 flex flex-col justify-center">
+                        <div className="p-6 sm:p-5 sm:p-6 lg:p-10 flex flex-col justify-center">
                             <motion.div
-                                initial={{ opacity: 0, x: -50 }}
+                                initial={{ opacity: 0, x: -24 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                                <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                                     Project Highlight
                                 </span>
-                                <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
+                                <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                     Lead the way.<br />
-                                    <span className="text-white/60">Innovation to follow.</span>
+                                    <span className="text-foreground-muted">Innovation to follow.</span>
                                 </h2>
-                                <p className="text-white/80 text-xl leading-relaxed mb-8">
+                                <p className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed mb-8">
                                     Our innovative approach combines cutting-edge design principles with advanced
                                     technology implementation. This results in a navigation experience that not only
                                     meets current user expectations but anticipates future needs.
@@ -619,24 +619,24 @@ const ProjectShowcase = memo(() => {
                                             transition={{ duration: 0.6, delay: index * 0.1 }}
                                         >
                                             <div className="w-2 h-2 bg-brand-light rounded-full flex-shrink-0" />
-                                            <span className="text-white/70">{highlight}</span>
+                                            <span className="text-foreground-secondary/80">{highlight}</span>
                                         </motion.div>
                                     ))}
                                 </div>
 
                                 <div className="flex flex-wrap gap-4">
                                     <motion.button
-                                        className="bg-gradient-to-r from-brand-light to-brand text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:shadow-2xl hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        className="bg-gradient-to-r from-brand-light to-brand text-display px-8 py-4 rounded-xl font-display-black-italic hover:shadow-lg hover:shadow-brand-light/25 transition-all duration-300 flex items-center gap-2"
+                                        whileHover={{ y: -2, scale: 1.01 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
                                         <Eye className="w-5 h-5" />
                                         View Case Study
                                     </motion.button>
                                     <motion.button
-                                        className="border border-white/20 text-white px-8 py-4 rounded-xl font-black italic tracking-tight hover:bg-white/10 hover:border-white/40 transition-all duration-300"
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        className="border border-white/20 text-display px-8 py-4 rounded-xl font-display-black-italic hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+                                        whileHover={{ y: -2, scale: 1.01 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
                                         Documentation
                                     </motion.button>
@@ -645,7 +645,7 @@ const ProjectShowcase = memo(() => {
                         </div>
 
                         {/* Right Side - Visual */}
-                        <div className="relative bg-gradient-to-br from-gray-900 to-black p-12 lg:p-16 flex items-center justify-center">
+                        <div className="relative bg-gradient-to-br from-gray-900 to-black p-6 sm:p-5 sm:p-6 lg:p-10 flex items-center justify-center">
                             <motion.div
                                 className="relative w-full max-w-md"
                                 initial={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -654,44 +654,44 @@ const ProjectShowcase = memo(() => {
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
                                 {/* Main showcase mockup */}
-                                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-8 text-center shadow-lg shadow-brand-light/10">
-                                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-brand-light/30 to-brand/30 rounded-2xl flex items-center justify-center border border-brand-light/40">
-                                        <Monitor className="w-12 h-12 text-brand-light" />
+                                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 text-center shadow-lg shadow-brand-light/10">
+                                    <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 bg-gradient-to-br from-brand-light/30 to-brand/30 rounded-2xl flex items-center justify-center border border-brand-light/40">
+                                        <Monitor className="w-8 h-8 text-brand-light" />
                                     </div>
-                                    <h3 className="text-white text-2xl font-black italic mb-4">Interactive Demo</h3>
-                                    <p className="text-white/70 mb-6">Experience the full navigation system with live interactions and real-time feedback</p>
+                                    <h3 className="text-display text-xl font-display-black-italic mb-4">Interactive Demo</h3>
+                                    <p className="text-foreground-secondary/80 mb-6">Experience the full navigation system with live interactions and real-time feedback</p>
                                     <div className="bg-gradient-to-r from-brand-light/20 to-brand/20 rounded-xl p-4 border border-brand-light/30">
-                                        <div className="text-white font-black italic mb-2">User Engagement</div>
-                                        <div className="text-3xl font-black text-brand-light">+150%</div>
-                                        <div className="text-white/60 text-sm">improvement</div>
+                                        <div className="text-display font-display-black-italic mb-2">User Engagement</div>
+                                        <div className="text-2xl font-display-heavy text-brand-light">+150%</div>
+                                        <div className="text-foreground-muted text-sm">improvement</div>
                                     </div>
                                 </div>
 
                                 {/* Floating elements */}
                                 <motion.div
-                                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-brand/30 to-blue-500/30 rounded-2xl border border-brand/40 flex items-center justify-center"
+                                    className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-brand/30 to-blue-500/30 rounded-2xl border border-brand/40 flex items-center justify-center"
                                     animate={{
                                         y: [0, -10, 0],
-                                        rotate: [0, 5, -5, 0]
+                                        rotate: 0
                                     }}
                                     transition={{
                                         duration: 4,
-                                        repeat: Infinity,
+                                        repeat: 0,
                                         ease: "easeInOut"
                                     }}
                                 >
-                                    <Zap className="w-8 h-8 text-brand-light" />
+                                    <Zap className="w-6 h-6 text-brand-light" />
                                 </motion.div>
 
                                 <motion.div
-                                    className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-brand-light/30 to-red-500/30 rounded-xl border border-brand-light/40 flex items-center justify-center"
+                                    className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-brand-light/30 to-red-500/30 rounded-xl border border-brand-light/40 flex items-center justify-center"
                                     animate={{
                                         y: [0, 10, 0],
-                                        rotate: [0, -5, 5, 0]
+                                        rotate: 0
                                     }}
                                     transition={{
                                         duration: 3,
-                                        repeat: Infinity,
+                                        repeat: 0,
                                         ease: "easeInOut",
                                         delay: 1
                                     }}
@@ -717,27 +717,27 @@ const MobileExperience = memo(() => {
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.8, type: "spring", stiffness: 100 }}
-                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ delay: index * 0.1, duration: 0.8, type: "tween", stiffness: 100 }}
+                whileHover={{ y: -2, scale: 1.01 }}
             >
-                <div className="bg-black rounded-3xl p-3 shadow-2xl">
-                    <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl overflow-hidden h-96 border border-white/20">
-                        <div className="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-6 h-full flex flex-col">
+                <div className="bg-black rounded-2xl p-3 shadow-lg">
+                    <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl overflow-hidden h-72 sm:h-80 border border-white/20">
+                        <div className="bg-gradient-to-br from-gray-800 to-gray-900 text-display p-6 h-full flex flex-col">
                             <div className="flex-1 flex flex-col justify-center">
                                 <motion.h4
-                                    className="text-2xl font-black italic mb-4"
+                                    className="text-xl font-display-black-italic mb-4"
                                     style={{ color: feature.color }}
                                 >
                                     {feature.title}
                                 </motion.h4>
-                                <p className="text-gray-300 mb-6 text-sm leading-relaxed">
+                                <p className="text-foreground-secondary mb-6 text-sm leading-relaxed">
                                     {feature.description}
                                 </p>
                                 <motion.button
-                                    className="self-start px-6 py-3 rounded-lg font-black italic text-white"
+                                    className="self-start px-6 py-3 rounded-lg font-display-black-italic text-display"
                                     style={{ backgroundColor: feature.color }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.98 }}
                                 >
                                     Explore
                                 </motion.button>
@@ -750,8 +750,8 @@ const MobileExperience = memo(() => {
     );
 
     return (
-        <section className="py-20 overflow-hidden">
-            <div className="max-w-7xl mx-auto">
+        <section className="py-12 sm:py-16 overflow-hidden">
+            <div className="max-w-[1366px] mx-auto">
                 <motion.div
                     className="text-left mb-16"
                     initial={{ opacity: 0, y: 30 }}
@@ -759,14 +759,14 @@ const MobileExperience = memo(() => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                    <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                         Cross-Platform
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4">
+                    <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-4">
                         Mobile Experience
                     </h2>
                     <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
-                    <p className="text-white/70 text-lg max-w-2xl">
+                    <p className="text-foreground-secondary/80 text-sm sm:text-base max-w-2xl">
                         Seamless navigation across all devices with native app functionality and performance
                     </p>
                 </motion.div>
@@ -794,8 +794,8 @@ const MobileExperience = memo(() => {
                                 className="w-3 h-3 rounded-full mx-auto mb-4"
                                 style={{ backgroundColor: feature.color }}
                             />
-                            <h4 className="text-white font-black italic mb-2">{feature.title}</h4>
-                            <p className="text-white/60 text-sm">{feature.description}</p>
+                            <h4 className="text-display font-display-black-italic mb-2">{feature.title}</h4>
+                            <p className="text-foreground-muted text-sm">{feature.description}</p>
                         </motion.div>
                     ))}
                 </motion.div>
@@ -807,39 +807,39 @@ const MobileExperience = memo(() => {
 // Project Impact Component
 const ProjectImpact = memo(() => {
     return (
-        <section className="py-20">
+        <section className="py-12 sm:py-16">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-12 lg:p-16 shadow-lg shadow-brand-light/10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-5 sm:p-6 lg:p-10 shadow-lg shadow-brand-light/10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
+                            initial={{ opacity: 0, x: -24 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <span className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4 block">
+                            <span className="text-foreground-muted text-xs sm:text-sm uppercase tracking-wider font-display-medium mb-4 block">
                                 Project Impact
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tight text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
+                            <h2 className="text-3xl md:text-4xl font-display-black-italic text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text mb-6 leading-tight">
                                 Where Innovation Meets Excellence
                             </h2>
                             <div className="h-1 w-32 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full mb-4" />
-                            <p className="text-white/80 text-lg leading-relaxed mb-6">
+                            <p className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed mb-6">
                                 This project picks up where competitors left off. These innovative design approaches
                                 were combined with comprehensive app redesign and new website development, all working
                                 in parallel to modernize the complete user experience ecosystem.
                             </p>
-                            <p className="text-white/70 leading-relaxed mb-8">
+                            <p className="text-foreground-secondary/80 leading-relaxed mb-8">
                                 The versatility of this navigation system extends far beyond initial expectations.
                                 It provides exceptional value across multiple industries, from public services to
                                 professional applications, demonstrating scalability and adaptability.
                             </p>
 
-                            <div className="flex items-center gap-2 text-white/70">
+                            <div className="flex items-center gap-2 text-foreground-secondary/80">
                                 <span>Interested in similar solutions?</span>
                                 <motion.a
                                     href="#"
-                                    className="text-brand-light hover:text-brand-light font-black italic flex items-center gap-2 group"
+                                    className="text-brand-light hover:text-brand-light font-display-black-italic flex items-center gap-2 group"
                                     whileHover={{ x: 4 }}
                                 >
                                     Let's collaborate!
@@ -870,22 +870,22 @@ const ProjectImpact = memo(() => {
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.6, delay: index * 0.1 }}
-                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileHover={{ y: -2, scale: 1.01 }}
                                     >
                                         <item.icon className="w-6 h-6 text-brand-light mx-auto mb-2" />
-                                        <div className="text-2xl font-black text-white mb-1">{item.metric}</div>
-                                        <div className="text-white/60 text-sm">{item.label}</div>
+                                        <div className="text-2xl font-display-heavy text-display mb-1">{item.metric}</div>
+                                        <div className="text-foreground-muted text-sm">{item.label}</div>
                                     </motion.div>
                                 ))}
                             </div>
 
                             {/* Additional info */}
                             <div className="bg-gradient-to-r from-brand-light/10 to-brand/10 border border-brand-light/20 rounded-xl p-6">
-                                <h4 className="text-white font-black italic mb-3 flex items-center gap-2">
+                                <h4 className="text-display font-display-black-italic mb-3 flex items-center gap-2">
                                     <Award className="w-5 h-5 text-brand-light" />
                                     Recognition
                                 </h4>
-                                <p className="text-white/70 text-sm leading-relaxed">
+                                <p className="text-foreground-secondary/80 text-sm leading-relaxed">
                                     This project has been recognized for its innovative approach to digital navigation
                                     and has set new benchmarks in the industry for user experience design.
                                 </p>
@@ -917,20 +917,20 @@ function Brisk() {
                 {/* Background Effects */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
-                        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
+                        className="absolute top-20 left-10 w-96 h-72 sm:h-80 bg-gradient-to-br from-brand-light/10 to-brand/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.6, 0.3]
                         }}
-                        transition={{ duration: 8, repeat: Infinity }}
+                        transition={{ duration: 8, repeat: 0 }}
                     />
                     <motion.div
-                        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
+                        className="absolute bottom-20 right-10 w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-brand/10 to-blue-500/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.3, 1],
                             opacity: [0.2, 0.5, 0.2]
                         }}
-                        transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+                        transition={{ duration: 10, repeat: 0, delay: 2 }}
                     />
                 </div>
 
@@ -939,7 +939,7 @@ function Brisk() {
 
                 {/* Hero Section (keeping original) */}
                 <motion.div
-                    className="relative flex flex-col justify-center pt-20"
+                    className="relative flex flex-col justify-center pt-16"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
@@ -956,7 +956,7 @@ function Brisk() {
                     transition={{ delay: 0.6, duration: 0.8 }}
                 >
                     <h1
-                        className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl italic tracking-tight font-black text-transparent select-none pointer-events-none"
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display-black-italic text-transparent select-none pointer-events-none"
                         style={{
                             WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
                         }}
@@ -991,7 +991,7 @@ function Brisk() {
                 </motion.div>
 
                 {/* Main Content */}
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
+                <div className="relative z-10 max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8 pb-12 sm:pb-16">
 
                     {/* Project Statistics */}
                     {/* <ProjectStatistics /> */}

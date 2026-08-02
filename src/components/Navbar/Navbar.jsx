@@ -46,7 +46,7 @@ const BrandLogo = memo(({ onClick }) => (
 // Brand Text Component
 const BrandText = memo(({ onClick }) => (
     <div className="flex items-baseline cursor-pointer" onClick={onClick}>
-        <span className="text-[#f3faf9] text-lg sm:text-xl md:text-xl italic tracking-tight font-black">
+        <span className="text-display text-base sm:text-lg font-display-black-italic">
             Kyzen
         </span>
         <BrandTextSeparator />
@@ -57,7 +57,7 @@ const BrandText = memo(({ onClick }) => (
 // Brand Text Separator Component
 const BrandTextSeparator = memo(() => (
     <motion.span
-        className="text-white/40 italic tracking-tight font-light ml-1 sm:ml-2"
+        className="text-foreground-muted/70 tracking-tight font-display-medium ml-1 sm:ml-2"
         animate={{ opacity: [0.4, 0.65, 0.4] }}
         transition={{ duration: 0.6 }}
     >
@@ -67,7 +67,7 @@ const BrandTextSeparator = memo(() => (
 
 // Brand Text Title Component
 const BrandTextTitle = memo(() => (
-    <span className="text-white/80 italic tracking-tight font-light ml-1 sm:ml-2 lg:inline">
+    <span className="text-foreground-secondary/90 tracking-tight font-display-medium ml-1 sm:ml-2 lg:inline">
         Web Developer
     </span>
 ));
@@ -84,7 +84,7 @@ const ContactButton = memo(() => {
 
     return (
         <motion.button
-            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm"
+            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleContactClick}
@@ -108,7 +108,7 @@ const ContactButtonOverlay = memo(() => (
 
 // Contact Button Text Component
 const ContactButtonText = memo(() => (
-    <span className="italic tracking-tight font-black relative z-10">
+    <span className="font-display-black-italic relative z-10">
         contact
     </span>
 ));
@@ -174,7 +174,7 @@ const Logo = memo(() => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.01 }}
         >
             <BrandLogo onClick={handleBrandClick} />
             <BrandText onClick={handleBrandClick} />
@@ -185,7 +185,7 @@ const Logo = memo(() => {
 // Mobile Contact Button Component
 const MobileContactButton = memo(() => (
     <motion.button
-        className="group w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-white to-white/95 text-black font-medium transition-all duration-300 overflow-hidden relative"
+        className="group w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden relative"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
     >
@@ -219,7 +219,7 @@ const MobileContactButtonSection = memo(() => (
 
 // Mobile Contact Button Text Component
 const MobileContactButtonText = memo(() => (
-    <span className="italic tracking-tight font-black relative z-10">
+    <span className="font-display-black-italic relative z-10">
         contact
     </span>
 ));
@@ -232,7 +232,7 @@ const MobileMenuBackground = memo(() => (
 // Mobile Menu Button Component
 const MobileMenuButton = memo(({ open }) => (
     <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 transition-colors duration-200">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-display hover:bg-white/10 transition-colors duration-200">
             <span className="sr-only">Open main menu</span>
             <MobileMenuIcon open={open} />
         </DisclosureButton>
@@ -354,9 +354,9 @@ const MobileNavItem = memo(({ item, isActive, onClick }) => {
                 as="a"
                 href={`#${item.href}`}
                 onClick={handleScrollNav}
-                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ${isActive
-                    ? "bg-white/15 text-[#f3faf9] backdrop-blur-sm"
-                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                className={`group flex items-center gap-3 w-full rounded-xl px-4 py-2.5 text-sm font-display-medium transition-all duration-300 ${isActive
+                    ? "bg-white/15 text-display backdrop-blur-sm"
+                    : "text-foreground-secondary/80 hover:bg-white/10 hover:text-display"
                     }`}
             >
                 <MobileNavItemContent item={item} isActive={isActive} IconComponent={IconComponent} />
@@ -373,10 +373,10 @@ const MobileNavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.3, ease: "easeInOut" }}
     >
         <IconComponent
-            className={`w-4 h-4 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/50 group-hover:text-white/80"
+            className={`w-4 h-4 transition-all duration-300 ${isActive ? "text-display" : "text-foreground-muted/80 group-hover:text-foreground-secondary/90"
                 }`}
         />
-        <span className="italic tracking-tight font-black">
+        <span className="font-display-black-italic">
             {item.name}
         </span>
         <MobileNavItemIndicator isActive={isActive} />
@@ -388,7 +388,7 @@ const MobileNavItemIndicator = memo(({ isActive }) => (
     <AnimatePresence>
         {isActive && (
             <motion.div
-                className="ml-auto w-2 h-2 bg-[#f3faf9] rounded-full"
+                className="ml-auto w-2 h-2 bg-foreground rounded-full"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
@@ -441,9 +441,9 @@ const NavItem = memo(({ item, index, isActive, onClick }) => {
             <motion.a
                 href={`#${item.href}`}
                 onClick={handleScrollNav}
-                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium group transition-all duration-300 ${isActive
-                    ? 'bg-white/10 border border-brand-light/50 text-[#f3faf9] backdrop-blur-sm shadow-lg shadow-brand-light/20'
-                    : 'text-white/70 hover:text-white hover:bg-white/5 backdrop-blur-sm'
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-display-medium group transition-all duration-300 ${isActive
+                    ? 'bg-white/10 border border-brand-light/50 text-display backdrop-blur-sm shadow-lg shadow-brand-light/20'
+                    : 'text-foreground-secondary/80 hover:text-display hover:bg-white/5 backdrop-blur-sm'
                     }`}
                 whileHover={{
                     scale: 1.02,
@@ -488,10 +488,10 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
         transition={{ duration: 0.2 }}
     >
         <IconComponent
-            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-300 ${isActive ? "text-[#f3faf9]" : "text-white/40 group-hover:text-white/80"
+            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-300 ${isActive ? "text-display" : "text-foreground-muted/70 group-hover:text-foreground-secondary/90"
                 }`}
         />
-        <span className="italic tracking-tight font-black">
+        <span className="font-display-black-italic">
             {item.name}
         </span>
     </motion.div>
@@ -500,7 +500,7 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
 // Navbar Content Component
 const NavbarContent = memo(({ navigationItems, mobileNavigationItems, open }) => (
     <motion.div
-        className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
+        className="mx-auto max-w-[1366px] px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
