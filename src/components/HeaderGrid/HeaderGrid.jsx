@@ -64,8 +64,8 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
         }
 
         return {
-            scale: [1, 1.05, 1],
-            opacity: [0.2, 0.35, 0.2]
+            scale: 1,
+            opacity: 0.28
         };
     }, [animationConfig.reduce]);
 
@@ -75,7 +75,7 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
             animate={circleVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 4,
-                repeat: animationConfig.reduce ? 0 : Infinity,
+                repeat: 0,
                 ease: "easeInOut",
                 delay: animationConfig.reduce ? 0 : delay
             }}
@@ -86,14 +86,14 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
 // Floating Particles Component
 const FloatingParticles = memo(() => {
     const animationConfig = getAnimationConfig();
-    const particleCount = animationConfig.reduce ? 6 : 8;
+    const particleCount = animationConfig.reduce ? 0 : 4;
 
     const particles = useMemo(() =>
         Array.from({ length: particleCount }, (_, i) => ({
             id: i,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            duration: animationConfig.reduce ? 2 : 3 + Math.random() * 2,
+            duration: animationConfig.reduce ? 0 : 2.5 + Math.random(),
             delay: animationConfig.reduce ? 0 : Math.random() * 2,
             x: animationConfig.reduce ? 0 : Math.random() * 20 - 10
         })), [particleCount, animationConfig.reduce]
@@ -128,10 +128,10 @@ const FloatingParticle = memo(({ particle }) => (
             top: particle.top,
         }}
         animate={{
-            y: [0, -20, 0],
-            x: [0, particle.x, 0],
-            opacity: [0.6, 0.8, 0.6],
-            scale: [1, 1.2, 1],
+            y: [0, -10, 0],
+            x: [0, particle.x * 0.5, 0],
+            opacity: [0.35, 0.55, 0.35],
+            scale: [1, 1.01, 1],
         }}
         transition={{
             duration: particle.duration,
@@ -289,11 +289,7 @@ const MainTitle = memo(() => {
         }
 
         return {
-            textShadow: [
-                "0 0 30px rgba(2, 133, 130, 0.26)",
-                "0 0 35px rgba(2, 133, 130, 0.34)",
-                "0 0 30px rgba(2, 133, 130, 0.26)"
-            ]
+            textShadow: "0 0 24px rgba(2, 133, 130, 0.24)"
         };
     }, [animationConfig.reduce]);
 
@@ -310,7 +306,7 @@ const MainTitle = memo(() => {
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
-                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeat: 0,
                     ease: "easeInOut"
                 }}
             >
@@ -318,13 +314,13 @@ const MainTitle = memo(() => {
 
                 <JapaneseText
                     position="left-[0.1em] -top-[0.5em]"
-                    text="ケンジ"
+                    text={"\u30b1\u30f3\u30b8"}
                     delay={0.8}
                 />
 
                 <JapaneseText
                     position="right-0 -bottom-[0.4em]"
-                    text="カイゼン"
+                    text={"\u30ab\u30a4\u30bc\u30f3"}
                     delay={1.0}
                 />
             </motion.span>
@@ -342,8 +338,8 @@ const ScrollIndicatorDot = memo(() => {
         }
 
         return {
-            y: [0, 6, 0],
-            opacity: [1, 0.5, 1]
+            y: 0,
+            opacity: 0.75
         };
     }, [animationConfig.reduce]);
 
@@ -368,7 +364,7 @@ const ScrollIndicatorDot = memo(() => {
                 animate={dotVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 1.5,
-                    repeat: animationConfig.reduce ? 0 : Infinity
+                    repeat: 0
                 }}
             />
         </motion.div>
@@ -384,7 +380,7 @@ const ScrollIndicator = memo(() => {
             return { y: 0 };
         }
 
-        return { y: [0, 10, 0] };
+        return { y: 0 };
     }, [animationConfig.reduce]);
 
     return (
@@ -399,7 +395,7 @@ const ScrollIndicator = memo(() => {
                 animate={indicatorVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 2,
-                    repeat: animationConfig.reduce ? 0 : Infinity
+                    repeat: 0
                 }}
             >
                 <ScrollIndicatorLabel />
@@ -418,7 +414,7 @@ const ScrollIndicatorLabel = memo(() => {
             return { opacity: 0.8 };
         }
 
-        return { opacity: [0.6, 0.9, 0.6] };
+        return { opacity: 0.75 };
     }, [animationConfig.reduce]);
 
     return (
@@ -427,7 +423,7 @@ const ScrollIndicatorLabel = memo(() => {
             animate={labelVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 2,
-                repeat: animationConfig.reduce ? 0 : Infinity
+                repeat: 0
             }}
         >
             Scroll to explore
