@@ -16,10 +16,7 @@ import {
     Plane,
     Mail,
     Github,
-    Linkedin,
-    MapPin,
-    Calendar,
-    Sparkles
+    Linkedin
 } from 'lucide-react';
 
 import ProfileImage from '../../assets/PROFILE-2.jpg';
@@ -180,21 +177,21 @@ const socialLinks = [
     {
         icon: Mail,
         href: "mailto:kpjaculbia@gmail.com",
-        color: "#028582",
+        color: "#ea4335",
         label: "Email",
         hoverColor: "#ff8de6"
     },
     {
         icon: Github,
         href: "https://github.com/kjyyx",
-        color: "#60a5fa",
+        color: "#333",
         label: "GitHub",
         hoverColor: "#7db6fb"
     },
     {
         icon: Linkedin,
-        href: "www.linkedin.com/in/kenji-jaculbia-9b048a314",
-        color: "#10b981",
+        href: "https://www.linkedin.com/in/kenji-jaculbia-9b048a314",
+        color: "#0a66c2",
         label: "LinkedIn",
         hoverColor: "#34d399"
     }
@@ -439,7 +436,8 @@ const FloatingParticles = memo(() => {
                     }}
                     transition={{ 
                         duration: particle.duration, 
-                        repeat: 0,
+                        repeat: Infinity,
+                        repeatType: "mirror",
                         delay: particle.delay || 0
                     }}
                 />
@@ -694,7 +692,8 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
                     transition={{
                         duration: 1.5,
                         delay: i * 0.2,
-                        repeat: 0
+                        repeat: Infinity,
+                        repeatType: "mirror"
                     }}
                 />
             ))}
@@ -711,7 +710,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
     >
         <EnhancedAvatar />
         <motion.div
-            className="text-center space-y-4 sm:space-y-6 md:space-y-5 sm:space-y-6 max-w-md mx-auto"
+            className="text-center space-y-4 sm:space-y-5 md:space-y-6 max-w-md mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -751,7 +750,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                         animate={{
                             opacity: [0.6, 1, 0.6]
                         }}
-                        transition={{ duration: 3, repeat: 0, ease: "easeInOut" }}
+                        transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
                     >
                         Building the future, one line at a time
                     </motion.p>
@@ -771,18 +770,19 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                         scale: [1, 1.02, 1],
                         borderColor: ["rgba(255,255,255,0.1)", "rgba(2,133,130,0.20)", "rgba(255,255,255,0.1)"]
                     }}
-                    transition={{ duration: 3, repeat: 0 }}
+                    transition={{ duration: 3, repeat: Infinity, repeatType: "mirror" }}
                 >
                     <motion.div
                         animate={{
                             y: [0, -2, 0],
                             rotate: 0
                         }}
-                        transition={{ duration: 2, repeat: 0 }}
+                        transition={{ duration: 2, repeat: Infinity }}
                     >
                         👆
                     </motion.div>
                     <span className="font-display-medium">Click name to toggle</span>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-light/60 ml-1 animate-pulse" />
                 </motion.div>
             </motion.div>
         </motion.div>

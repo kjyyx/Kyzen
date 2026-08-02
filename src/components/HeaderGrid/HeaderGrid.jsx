@@ -75,7 +75,8 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
             animate={circleVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 4,
-                repeat: 0,
+                repeat: animationConfig.reduce ? 0 : Infinity,
+                repeatType: "mirror",
                 ease: "easeInOut",
                 delay: animationConfig.reduce ? 0 : delay
             }}
@@ -135,7 +136,8 @@ const FloatingParticle = memo(({ particle }) => (
         }}
         transition={{
             duration: particle.duration,
-            repeat: 0,
+            repeat: Infinity,
+            repeatType: "mirror",
             delay: particle.delay,
             ease: "easeInOut",
         }}
@@ -144,9 +146,9 @@ const FloatingParticle = memo(({ particle }) => (
 
 // Main Header Content Container
 const HeaderContent = memo(() => (
-    <div className="relative z-20 w-full max-w-[1366px] mx-auto h-full min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-10 md:pb-14 lg:pb-16">
+    <div className="relative z-20 w-full max-w-[1366px] mx-auto h-full min-h-[100svh] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-12 md:pb-16 lg:pb-20">
         <LeftSection />
-        <HeroLogoMark />
+        {/* <HeroLogoMark /> */}
     </div>
 ));
 
@@ -225,12 +227,34 @@ const JapaneseText = memo(({ position, text, delay }) => {
     );
 });
 
-// Left Side Container (Headline -> CTAs -> Title)
+// Identity / Role line beneath the KYZEN title
+const IdentityLine = memo(() => {
+    const animationConfig = getAnimationConfig();
+    return (
+        <motion.p
+            className="text-xs sm:text-sm font-display-medium text-foreground-secondary/70 tracking-widest uppercase"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: ANIMATION_DURATION.slower,
+                ease: EASING.easeOut,
+                delay: animationConfig.reduce ? 0.3 : 0.55
+            }}
+        >
+            Full-Stack Web Developer
+            <span className="text-brand-light mx-2">·</span>
+            Philippines
+        </motion.p>
+    );
+});
+
+// Left Side Container (Title -> Identity -> Headline -> CTAs)
 const LeftSection = memo(() => (
     <div className="relative z-30 flex flex-col items-start space-y-4 sm:space-y-5 max-w-2xl">
+        <MainTitle />
+        <IdentityLine />
         <MainHeadline />
         <HeroCTAs />
-        <MainTitle />
     </div>
 ));
 
@@ -295,7 +319,7 @@ const MainTitle = memo(() => {
 
     return (
         <motion.h1
-            className="relative text-[14vw] xs:text-[11vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.75rem] font-display-black-italic text-left whitespace-nowrap leading-none pt-3"
+            className="relative text-[22vw] xs:text-[18vw] sm:text-[14vw] md:text-[10vw] lg:text-[8rem] xl:text-[10rem] font-display-black-italic text-left whitespace-nowrap leading-none"
             {...titleVariants}
             style={{
                 textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
@@ -306,7 +330,8 @@ const MainTitle = memo(() => {
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
-                    repeat: 0,
+                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeatType: "mirror",
                     ease: "easeInOut"
                 }}
             >
@@ -338,8 +363,8 @@ const ScrollIndicatorDot = memo(() => {
         }
 
         return {
-            y: 0,
-            opacity: 0.75
+            y: [0, 8, 0],
+            opacity: [0.75, 0.4, 0.75]
         };
     }, [animationConfig.reduce]);
 
@@ -364,7 +389,8 @@ const ScrollIndicatorDot = memo(() => {
                 animate={dotVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 1.5,
-                    repeat: 0
+                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    ease: "easeInOut"
                 }}
             />
         </motion.div>
@@ -395,7 +421,8 @@ const ScrollIndicator = memo(() => {
                 animate={indicatorVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 2,
-                    repeat: 0
+                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeatType: "mirror"
                 }}
             >
                 <ScrollIndicatorLabel />
@@ -414,7 +441,9 @@ const ScrollIndicatorLabel = memo(() => {
             return { opacity: 0.8 };
         }
 
-        return { opacity: 0.75 };
+        return {
+            opacity: [0.6, 0.85, 0.6]
+        };
     }, [animationConfig.reduce]);
 
     return (
@@ -422,8 +451,9 @@ const ScrollIndicatorLabel = memo(() => {
             className="text-xs sm:text-sm mb-1 font-display-medium tracking-wider"
             animate={labelVariants}
             transition={{
-                duration: animationConfig.reduce ? 0 : 2,
-                repeat: 0
+                duration: animationConfig.reduce ? 0 : 2.5,
+                repeat: animationConfig.reduce ? 0 : Infinity,
+                ease: "easeInOut"
             }}
         >
             Scroll to explore
@@ -435,9 +465,13 @@ const ScrollIndicatorLabel = memo(() => {
 
 function HeaderGrid() {
     return (
-        <div id="header-section" className="relative min-h-[82svh] lg:min-h-[calc(100svh-5rem)] lg:max-h-[920px] overflow-hidden w-full">
-            {/* Background Circles positioned right behind the watermark logo */}
-            <BackgroundCircles />
+        <div id="header-section" className="relative min-h-[100svh] overflow-hidden w-full">
+            {/* Atmospheric gradient overlays — ProjectPage hero style */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#011417] via-[#011417]/55 to-[#011417]/5 pointer-events-none z-[5]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#011417]/75 via-[#011417]/20 to-transparent pointer-events-none z-[5]" />
+
+            {/* Background Circles — commented out, kept for reference */}
+            {/* <BackgroundCircles /> */}
 
             {/* Floating Particles */}
             <FloatingParticles />
