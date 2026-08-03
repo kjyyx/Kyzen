@@ -7,13 +7,14 @@ import SprintBg from '../../assets/Projects_Icons/Sprint_bg.webp';
 import RailroadedBg from '../../assets/Projects_Icons/Railroaded_bg.webp';
 import KairosBg from '../../assets/Projects_Icons/Kairos_bg.webp';
 import PlaceholderBg from '../../assets/BG-static.png';
-import AtsIcon from '../../assets/Projects_Icons/ATS_ico.webp';
-import ClarknavIcon from '../../assets/Projects_Icons/Clarknav_ico.webp';
+import AtsIcon from '../../assets/Projects_Icons/New Icons/ITS_ico.webp';
+import ClarknavIcon from '../../assets/Projects_Icons/New Icons/ClarkNav_ico.webp';
 import GptIcon from '../../assets/Projects_Icons/GPT_ico.webp';
 import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
-import LavaCrazeIcon from '../../assets/Projects_Icons/Lavacraze_ico.webp';
+import LavaCrazeIcon from '../../assets/Projects_Icons/New Icons/Lavacraze_ico.webp';
 import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
-import RailroadedIcon from '../../assets/Projects_Icons/Railroaded_ico.webp';
+import RailroadedIcon from '../../assets/Projects_Icons/New Icons/RailRoaded_ico.webp';
+import SignUmIcon from '../../assets/Projects_Icons/New Icons/SignUm_ico.webp';
 import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.webp';
 import BrainboxLogo from '../../assets/Projects_Icons/BB_Logo.webp';
 import RazorPaymentsLogo from '../../assets/Projects_Icons/RP_Logo.webp';
@@ -48,6 +49,51 @@ import RailroadedSS5 from '../../assets/Webpage_Screenshots/Railroaded_ss5.webp'
 import SprintSS1 from '../../assets/Webpage_Screenshots/Sprint_ss1.webp';
 import SprintSS2 from '../../assets/Webpage_Screenshots/Sprint_ss2.webp';
 
+import RazorPaymentsSS1 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-2026-08-03-12_11_04.webp';
+import RazorPaymentsSS2 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-solutions-2026-08-03-12_11_29.webp';
+import RazorPaymentsSS3 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-industries-2026-08-03-12_11_42.webp';
+import RazorPaymentsSS4 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-resources-2026-08-03-12_12_16.webp';
+import RazorPaymentsSS5 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-get-started-2026-08-03-12_12_28.webp';
+
+import SbnSS1 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-2026-08-03-12_15_25.webp';
+import SbnSS2 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-business-networking-events-perth-2026-08-03-12_15_44.webp';
+import SbnSS3 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-members-2026-08-03-12_15_54.webp';
+import SbnSS4 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-insights-2026-08-03-12_16_06.webp';
+import SbnSS5 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-membership-2026-08-03-12_16_21.webp';
+import SbnSS6 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-sponsorship-2026-08-03-12_16_34.webp';
+import SbnSS7 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-contact-2026-08-03-12_16_50.webp';
+
+const techIcons = {
+    acf: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/advancedcustomfields.svg",
+    angular: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+    aws: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    azure: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+    bootstrap: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+    cloudconvert: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cloudconvert.svg",
+    css: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    dotnet: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg",
+    elementor: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/elementor.svg",
+    expo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/expo.svg",
+    github: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+    google: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
+    hostinger: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/hostinger.svg",
+    html: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    jira: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jira.svg",
+    javascript: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    laravel: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg",
+    mailgun: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/mailgun.svg",
+    mongodb: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+    mysql: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+    php: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
+    postgresql: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+    react: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    siteground: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/siteground.svg",
+    supabase: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",
+    tailwind: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+    typescript: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    wordpress: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg"
+};
+
 export const projects = [
     {
         slug: "razor-payments",
@@ -61,12 +107,12 @@ export const projects = [
             status: "Live"
         },
         techStack: [
-            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Elementor Pro", color: "#92003B", icon: "https://elementor.com/favicon.ico" },
-            { name: "Blocksy", color: "#0ea5e9", icon: "https://creativethemes.com/blocksy/wp-content/uploads/2021/10/favicon.png" },
-            { name: "GoHighLevel", color: "#38bdf8", icon: "https://www.gohighlevel.com/favicon.ico" },
-            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" },
-            { name: "Mailgun", color: "#ef4444", icon: "https://www.mailgun.com/favicon.ico" }
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Elementor Pro", color: "#92003B", icon: techIcons.elementor },
+            { name: "Blocksy", color: "#0ea5e9", icon: techIcons.wordpress },
+            { name: "GoHighLevel", color: "#38bdf8", icon: techIcons.google },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground },
+            { name: "Mailgun", color: "#ef4444", icon: techIcons.mailgun }
         ],
         links: {
             website: "https://razorpayments.com.au",
@@ -82,6 +128,28 @@ export const projects = [
             "Configured go, books, links, and mail subdomains for GHL",
             "Set up Mailgun/LC Email SPF, DKIM, and MX records",
             "Resolved email authentication and Outlook formatting issues"
+        ],
+        screenshots: [
+            {
+                src: RazorPaymentsSS1,
+                alt: "Razor Payments homepage"
+            },
+            {
+                src: RazorPaymentsSS2,
+                alt: "Razor Payments solutions page"
+            },
+            {
+                src: RazorPaymentsSS3,
+                alt: "Razor Payments industries page"
+            },
+            {
+                src: RazorPaymentsSS4,
+                alt: "Razor Payments resources page"
+            },
+            {
+                src: RazorPaymentsSS5,
+                alt: "Razor Payments get started page"
+            }
         ]
     },
     {
@@ -96,12 +164,12 @@ export const projects = [
             status: "Live"
         },
         techStack: [
-            { name: "WordPress FSE", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Custom Block Theme", color: "#6366f1", icon: "https://wordpress.org/favicon.ico" },
-            { name: "ACF", color: "#00d084", icon: "https://www.advancedcustomfields.com/favicon.ico" },
-            { name: "The Events Calendar", color: "#f97316", icon: "https://theeventscalendar.com/favicon.ico" },
-            { name: "Event Tickets", color: "#028582", icon: "https://theeventscalendar.com/favicon.ico" },
-            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" }
+            { name: "WordPress FSE", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Custom Block Theme", color: "#6366f1", icon: techIcons.wordpress },
+            { name: "ACF", color: "#00d084", icon: techIcons.acf },
+            { name: "The Events Calendar", color: "#f97316", icon: techIcons.wordpress },
+            { name: "Event Tickets", color: "#028582", icon: techIcons.wordpress },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground }
         ],
         links: {
             website: "https://superiorbusinessnetworks.com.au",
@@ -117,6 +185,36 @@ export const projects = [
             "Added events and ticketing functionality",
             "Promoted staging to production with zero downtime",
             "Performed broken-link audits, QA checks, and handover documentation"
+        ],
+        screenshots: [
+            {
+                src: SbnSS1,
+                alt: "Superior Business Networks homepage"
+            },
+            {
+                src: SbnSS2,
+                alt: "Superior Business Networks events page"
+            },
+            {
+                src: SbnSS3,
+                alt: "Superior Business Networks members page"
+            },
+            {
+                src: SbnSS4,
+                alt: "Superior Business Networks insights page"
+            },
+            {
+                src: SbnSS5,
+                alt: "Superior Business Networks membership page"
+            },
+            {
+                src: SbnSS6,
+                alt: "Superior Business Networks sponsorship page"
+            },
+            {
+                src: SbnSS7,
+                alt: "Superior Business Networks contact page"
+            }
         ]
     },
     {
@@ -131,11 +229,11 @@ export const projects = [
             status: "Live"
         },
         techStack: [
-            { name: "WordPress FSE", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Crazy Domains", color: "#f59e0b", icon: "https://www.crazydomains.com.au/favicon.ico" },
-            { name: "PageSpeed Insights", color: "#4285f4", icon: "https://pagespeed.web.dev/favicon.ico" },
-            { name: "Flying Scripts", color: "#028582", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Speed Optimizer", color: "#22c55e", icon: "https://www.siteground.com/favicon.ico" }
+            { name: "WordPress FSE", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Crazy Domains", color: "#f59e0b", icon: techIcons.google },
+            { name: "PageSpeed Insights", color: "#4285f4", icon: techIcons.google },
+            { name: "Flying Scripts", color: "#028582", icon: techIcons.wordpress },
+            { name: "Speed Optimizer", color: "#22c55e", icon: techIcons.siteground }
         ],
         links: {
             website: "https://www.weldeast.com.au",
@@ -164,11 +262,11 @@ export const projects = [
             status: "Maintained"
         },
         techStack: [
-            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "SiteGround", color: "#84cc16", icon: "https://www.siteground.com/favicon.ico" },
-            { name: "Mobile UX", color: "#06b6d4", icon: "https://developer.mozilla.org/favicon-48x48.cbbd161b.png" },
-            { name: "Security Audits", color: "#ef4444", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Image Optimisation", color: "#22c55e", icon: "https://developer.mozilla.org/favicon-48x48.cbbd161b.png" }
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground },
+            { name: "Mobile UX", color: "#06b6d4", icon: techIcons.react },
+            { name: "Security Audits", color: "#ef4444", icon: techIcons.wordpress },
+            { name: "Image Optimisation", color: "#22c55e", icon: techIcons.google }
         ],
         links: {
             website: "https://brain-box.com.au",
@@ -191,6 +289,69 @@ export const projects = [
         ]
     },
     {
+        slug: "sign-um",
+        title: "Sign-um",
+        subtitle: "Digital Document Signing and Workflow System",
+        category: "Full-Stack Web Application",
+        description: "Built a PHP and MySQL platform for routing, signing, approving, and tracking digital documents across multiple user roles. The system included RESTful PHP APIs, real-time status updates, CloudConvert DOCX-to-PDF conversion, notification workflows, SMTP email delivery, signature capture, Google 2FA, and reassignment logic for pending approvals.",
+        backgroundImage: PlaceholderBg,
+        meta: {
+            year: "2026",
+            status: "Completed"
+        },
+        techStack: [
+            { name: "PHP", color: "#777bb4", icon: techIcons.php },
+            { name: "MySQL", color: "#4479a1", icon: techIcons.mysql },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "CloudConvert", color: "#028582", icon: techIcons.cloudconvert },
+            { name: "PHPMailer", color: "#22c55e", icon: techIcons.github },
+            { name: "Google 2FA", color: "#4285f4", icon: techIcons.google }
+        ],
+        links: {},
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Full-Stack Developer" }
+        ],
+        highlights: [
+            "Built role-based document routing, approval, and tracking workflows",
+            "Created RESTful PHP APIs for live document status updates",
+            "Integrated CloudConvert for automatic DOCX-to-PDF conversion",
+            "Implemented notifications with AJAX polling, cross-tab syncing, and SMTP email",
+            "Added signature capture, password validation, and Google 2FA",
+            "Designed reassignment logic for pending tasks when users are unavailable"
+        ]
+    },
+    {
+        slug: "electric-bill-calculator",
+        title: "ElectricBillCalculator",
+        subtitle: "Utility Cost and Submeter Manager",
+        category: "Mobile App Development",
+        description: "Built a React Native and Expo mobile app for calculating shared utility costs using individual submeter readings. The app tracks meters, estimates monthly usage per tenant, stores history in Supabase, supports image-based data management, and includes offline caching and reminder alerts.",
+        backgroundImage: PlaceholderBg,
+        meta: {
+            year: "2026",
+            status: "Completed"
+        },
+        techStack: [
+            { name: "React Native", color: "#61dafb", icon: techIcons.react },
+            { name: "Expo", color: "#000020", icon: techIcons.expo },
+            { name: "Supabase", color: "#3ecf8e", icon: techIcons.supabase },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "Nativewind", color: "#06b6d4", icon: techIcons.tailwind }
+        ],
+        links: {},
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Mobile App Developer" }
+        ],
+        highlights: [
+            "Calculated shared utility costs from individual submeter readings",
+            "Built meter tracking and monthly bill estimation flows",
+            "Integrated Supabase for cloud storage and usage history",
+            "Added image-based data management for meter records",
+            "Implemented offline caching and reminder alerts",
+            "Designed a clean mobile UI for faster household utility tracking"
+        ]
+    },
+    {
         slug: "clarknav",
         title: "Clarknav",
         subtitle: "Navigation Enhancement Project",
@@ -202,10 +363,10 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "Angular", color: "#dd0031", icon: "https://angular.io/assets/images/logos/angular/angular.svg" },
-            { name: "Laravel", color: "#ff2d20", icon: "https://laravel.com/img/logomark.min.svg" },
-            { name: "PostgreSQL", color: "#336791", icon: "https://www.postgresql.org/media/img/about/press/elephant.webp" },
-            { name: "TypeScript", color: "#3178c6", icon: "https://www.typescriptlang.org/favicon-32x32.webp" }
+            { name: "Angular", color: "#dd0031", icon: techIcons.angular },
+            { name: "Laravel", color: "#ff2d20", icon: techIcons.laravel },
+            { name: "PostgreSQL", color: "#336791", icon: techIcons.postgresql },
+            { name: "TypeScript", color: "#3178c6", icon: techIcons.typescript }
         ],
         links: {
             website: "https://www.clarknav.com",
@@ -239,10 +400,10 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "Angular", color: "#dd0031", icon: "https://angular.io/assets/images/logos/angular/angular.svg" },
-            { name: ".NET", color: "#512bd4", icon: "https://dotnet.microsoft.com/favicon.ico" },
-            { name: "PostgreSQL", color: "#336791", icon: "https://www.postgresql.org/media/img/about/press/elephant.webp" },
-            { name: "Azure", color: "#0078d4", icon: "https://azure.microsoft.com/favicon.ico" }
+            { name: "Angular", color: "#dd0031", icon: techIcons.angular },
+            { name: ".NET", color: "#512bd4", icon: techIcons.dotnet },
+            { name: "PostgreSQL", color: "#336791", icon: techIcons.postgresql },
+            { name: "Azure", color: "#0078d4", icon: techIcons.azure }
         ],
         links: {
             website: "https://www.itsats.com",
@@ -274,12 +435,12 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "Elementor", color: "#92003B", icon: "https://elementor.com/favicon.ico" },
-            { name: "Hostinger", color: "#673de6", icon: "https://hostinger.com/favicon.ico" },
-            { name: "Google Analytics", color: "#fbbc05", icon: "https://analytics.google.com/favicon.ico" },
-            { name: "Site Kit", color: "#4285f4", icon: "https://sitekit.withgoogle.com/favicon.ico" },
-            { name: "All-in-One SEO", color: "#00aa63", icon: "https://aioseo.com/favicon.ico" }
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Elementor", color: "#92003B", icon: techIcons.elementor },
+            { name: "Hostinger", color: "#673de6", icon: techIcons.hostinger },
+            { name: "Google Analytics", color: "#fbbc05", icon: techIcons.google },
+            { name: "Site Kit", color: "#4285f4", icon: techIcons.google },
+            { name: "All-in-One SEO", color: "#00aa63", icon: techIcons.wordpress }
         ],
         links: {
             website: "https://www.lavacraze.com",
@@ -322,10 +483,10 @@ export const projects = [
             status: "Live"
         },
         techStack: [
-            { name: "WordPress", color: "#21759b", icon: "https://wordpress.org/favicon.ico" },
-            { name: "PHP", color: "#777bb4", icon: "https://www.php.net/favicon.ico" },
-            { name: "MySQL", color: "#4479a1", icon: "https://www.mysql.com/favicon.ico" },
-            { name: "CSS", color: "#1572b6", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" }
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "PHP", color: "#777bb4", icon: techIcons.php },
+            { name: "MySQL", color: "#4479a1", icon: techIcons.mysql },
+            { name: "CSS", color: "#1572b6", icon: techIcons.css }
         ],
         links: {
             website: "https://railroaded8.wordpress.com/",
@@ -377,11 +538,11 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "PHP", color: "#777bb4", icon: "https://www.php.net/favicon.ico" },
-            { name: "MySQL", color: "#4479a1", icon: "https://www.mysql.com/favicon.ico" },
-            { name: "JavaScript", color: "#f7df1e", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.webp" },
-            { name: "CSS", color: "#1572b6", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" },
-            { name: "HTML", color: "#e34c26", icon: "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" }
+            { name: "PHP", color: "#777bb4", icon: techIcons.php },
+            { name: "MySQL", color: "#4479a1", icon: techIcons.mysql },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "CSS", color: "#1572b6", icon: techIcons.css },
+            { name: "HTML", color: "#e34c26", icon: techIcons.html }
         ],
         links: {
             website: "https://www.brisk.app",
@@ -432,10 +593,10 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "HTML", color: "#e34c26", icon: "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" },
-            { name: "CSS", color: "#1572b6", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" },
-            { name: "JavaScript", color: "#f7df1e", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.webp" },
-            { name: "MongoDB", color: "#47a248", icon: "https://www.mongodb.com/favicon.ico" }
+            { name: "HTML", color: "#e34c26", icon: techIcons.html },
+            { name: "CSS", color: "#1572b6", icon: techIcons.css },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "MongoDB", color: "#47a248", icon: techIcons.mongodb }
         ],
         links: {
             website: "https://www.gpt-tasting.com",
@@ -491,10 +652,10 @@ export const projects = [
             status: "Live"
         },
         techStack: [
-            { name: "HTML", color: "#e34c26", icon: "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" },
-            { name: "CSS", color: "#1572b6", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" },
-            { name: "JavaScript", color: "#f7df1e", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.webp" },
-            { name: "Bootstrap", color: "#7952b3", icon: "https://getbootstrap.com/favicon.ico" }
+            { name: "HTML", color: "#e34c26", icon: techIcons.html },
+            { name: "CSS", color: "#1572b6", icon: techIcons.css },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "Bootstrap", color: "#7952b3", icon: techIcons.bootstrap }
         ],
         links: {
             website: "https://kairosqr.bitbucket.io/",
@@ -543,12 +704,12 @@ export const projects = [
             status: "Completed"
         },
         techStack: [
-            { name: "Bootstrap", color: "#7952b3", icon: "https://getbootstrap.com/favicon.ico" },
-            { name: "HTML", color: "#e34c26", icon: "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" },
-            { name: "CSS", color: "#1572b6", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" },
-            { name: "JavaScript", color: "#f7df1e", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.webp" },
-            { name: "Google APIs", color: "#4285f4", icon: "https://developers.google.com/favicon.ico" },
-            { name: "Jira", color: "#0052cc", icon: "https://www.atlassian.com/favicon.ico" }
+            { name: "Bootstrap", color: "#7952b3", icon: techIcons.bootstrap },
+            { name: "HTML", color: "#e34c26", icon: techIcons.html },
+            { name: "CSS", color: "#1572b6", icon: techIcons.css },
+            { name: "JavaScript", color: "#f7df1e", icon: techIcons.javascript },
+            { name: "Google APIs", color: "#4285f4", icon: techIcons.google },
+            { name: "Jira", color: "#0052cc", icon: techIcons.jira }
         ],
         links: {
             website: "https://sprintersasi.bitbucket.io/SPRINTAutoCare1/",
@@ -613,6 +774,18 @@ const projectCardMeta = {
         description: "Multi-site UX and maintenance work",
         tech: ["WordPress", "SiteGround", "Security"],
         category: "Operations"
+    },
+    "sign-um": {
+        image: SignUmIcon,
+        description: "Digital document workflow system",
+        tech: ["PHP", "MySQL", "Google 2FA"],
+        category: "Full-Stack"
+    },
+    "electric-bill-calculator": {
+        image: PlaceholderBg,
+        description: "Utility cost mobile app",
+        tech: ["React Native", "Expo", "Supabase"],
+        category: "Mobile App"
     },
     clarknav: {
         image: ClarknavIcon,

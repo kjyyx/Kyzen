@@ -19,6 +19,7 @@ import {
 import BonnieImage from '../../assets/Bonnie_Rabbit.webp';
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
+import '../Home/Home.css';
 
 import {
     getAnimationConfig,
@@ -254,24 +255,24 @@ const HeroSection = memo(({ project, animationConfig }) => {
 
             {/* Back breadcrumb — top left */}
             <motion.div
-                className="absolute top-20 left-0 right-0 z-20 max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12"
+                className="absolute top-20 left-0 right-0 z-30 max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: animationConfig.reduce ? 0.2 : 0.4, duration: 0.5 }}
             >
                 <motion.button
                     onClick={handleBack}
-                    className="group flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-foreground-secondary/80 font-display-medium text-sm hover:text-display hover:border-brand-light/40 transition-all duration-300"
+                    className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/55 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/70 transition-all duration-300"
                     whileHover={{ x: -2 }}
                     whileTap={{ scale: 0.97 }}
                 >
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" />
-                    <span>Back to Portfolio</span>
+                    <span className="font-display-black-italic">Back to Portfolio</span>
                 </motion.button>
             </motion.div>
 
             {/* Hero content — bottom-left anchored */}
-            <div className="absolute inset-0 flex flex-col justify-end z-10 pointer-events-none">
+            <div className="absolute inset-0 flex flex-col justify-end z-30 pointer-events-none">
                 <div className="max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-10 sm:pb-14 md:pb-18 pointer-events-auto">
 
                     {/* Category pill */}
@@ -289,7 +290,7 @@ const HeroSection = memo(({ project, animationConfig }) => {
 
                     {/* Project title */}
                     <motion.h1
-                        className="text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] font-display-black-italic text-transparent bg-gradient-to-r from-white via-white/95 to-brand-light bg-clip-text leading-none mb-4"
+                        className="text-[clamp(2.75rem,6.5vw,5.75rem)] font-display-black-italic text-transparent bg-gradient-to-r from-white via-white/95 to-brand-light bg-clip-text leading-none mb-4"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
@@ -354,10 +355,11 @@ const HeroSection = memo(({ project, animationConfig }) => {
                                 href={project.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-display-medium text-xs sm:text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.18)]"
+                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm hover:-translate-y-px"
                             >
-                                <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-                                <span>Live Site</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 relative z-10" />
+                                <span className="font-display-black-italic relative z-10">Live Site</span>
                             </a>
                         )}
                         {project.links?.github && (
@@ -365,10 +367,10 @@ const HeroSection = memo(({ project, animationConfig }) => {
                                 href={project.links.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:bg-white/15 hover:border-white/30 transition-all duration-300"
+                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/55 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/70 hover:-translate-y-px transition-all duration-300"
                             >
-                                <Github className="w-3.5 h-3.5" />
-                                <span>Source</span>
+                                <Github className="w-3.5 h-3.5 group-hover:text-brand-light transition-colors" />
+                                <span className="font-display-black-italic">Source</span>
                             </a>
                         )}
                     </motion.div>
@@ -780,9 +782,11 @@ function ProjectPage() {
             animate="animate"
             exit="exit"
             transition={{ duration: animationConfig.reduce ? 0.3 : 0.5, ease: "easeInOut" }}
-            className="min-h-screen relative overflow-hidden"
+            className="project-page min-h-screen relative overflow-hidden"
         >
             {/* Ambient background orbs — fixed, looping */}
+            <div id="main-bg" className="z-10"></div>
+
             {canAnimate() && (
                 <div className="fixed inset-0 pointer-events-none z-0">
                     <motion.div
@@ -814,7 +818,7 @@ function ProjectPage() {
             <HeroSection project={project} animationConfig={animationConfig} />
 
             {/* Main Content */}
-            <div className="relative z-10">
+            <div className="relative z-20">
                 <ProjectOverview project={project} />
                 <TechnologyStack techStack={project.techStack} />
                 {project.screenshots && project.screenshots.length > 0 && (

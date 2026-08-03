@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, User } from "lucide-react";
 
 import BigLogo from '../../assets/KYZENLOGO6.webp';
+import HeaderBackground from '../../assets/Background_4.png';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import {
@@ -75,12 +76,26 @@ const BackgroundCircle = memo(({ size, borderClass, delay, animationConfig }) =>
             animate={circleVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 4,
-                repeat: animationConfig.reduce ? 0 : Infinity,
+                repeat: 0,
                 repeatType: "mirror",
                 ease: "easeInOut",
                 delay: animationConfig.reduce ? 0 : delay
             }}
         />
+    );
+});
+
+// Full-bleed Background Image - ProjectPage hero treatment
+const HeaderBackgroundImage = memo(() => {
+    return (
+        <div className="absolute inset-0 z-0 h-full w-full">
+            <img
+                src={HeaderBackground}
+                alt=""
+                aria-hidden="true"
+                className="block h-full min-h-full w-full min-w-full max-w-none object-cover object-[center_right]"
+            />
+        </div>
     );
 });
 
@@ -136,7 +151,7 @@ const FloatingParticle = memo(({ particle }) => (
         }}
         transition={{
             duration: particle.duration,
-            repeat: Infinity,
+            repeat: 0,
             repeatType: "mirror",
             delay: particle.delay,
             ease: "easeInOut",
@@ -157,17 +172,18 @@ const HeroCTAs = memo(() => (
     <div className="flex items-center gap-4 pt-2">
         <a
             href="#projects"
-            className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-light/20 border border-brand-light/40 text-brand-light font-display-medium text-xs sm:text-sm hover:bg-brand-light/30 transition-all duration-300 shadow-[0_0_20px_rgba(2,133,130,0.2)]"
+            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm hover:-translate-y-px"
         >
-            <span>Explore Work</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="font-display-black-italic relative z-10">Explore Work</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform relative z-10" />
         </a>
         <a
             href="#about"
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-border-brand text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong transition-colors"
+            className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/55 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/70 hover:-translate-y-px transition-all duration-300"
         >
-            <span>About Me</span>
-            <User className="w-4 h-4 text-foreground-muted" />
+            <span className="font-display-black-italic">About Me</span>
+            <User className="w-4 h-4 text-foreground-muted group-hover:text-brand-light transition-colors" />
         </a>
     </div>
 ));
@@ -241,7 +257,7 @@ const IdentityLine = memo(() => {
                 delay: animationConfig.reduce ? 0.3 : 0.55
             }}
         >
-            Full-Stack Web Developer
+            Junior Web Developer
             <span className="text-brand-light mx-2">·</span>
             Philippines
         </motion.p>
@@ -326,11 +342,11 @@ const MainTitle = memo(() => {
             }}
         >
             <motion.span
-                className="relative bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-transparent inline-block py-2"
+                className="relative inline-block py-2 text-brand-light"
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
-                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeat: 0,
                     repeatType: "mirror",
                     ease: "easeInOut"
                 }}
@@ -363,8 +379,8 @@ const ScrollIndicatorDot = memo(() => {
         }
 
         return {
-            y: [0, 8, 0],
-            opacity: [0.75, 0.4, 0.75]
+            y: 0,
+            opacity: 0.75
         };
     }, [animationConfig.reduce]);
 
@@ -389,7 +405,7 @@ const ScrollIndicatorDot = memo(() => {
                 animate={dotVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 1.5,
-                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeat: 0,
                     ease: "easeInOut"
                 }}
             />
@@ -421,7 +437,7 @@ const ScrollIndicator = memo(() => {
                 animate={indicatorVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 2,
-                    repeat: animationConfig.reduce ? 0 : Infinity,
+                    repeat: 0,
                     repeatType: "mirror"
                 }}
             >
@@ -442,7 +458,7 @@ const ScrollIndicatorLabel = memo(() => {
         }
 
         return {
-            opacity: [0.6, 0.85, 0.6]
+            opacity: 0.75
         };
     }, [animationConfig.reduce]);
 
@@ -452,7 +468,7 @@ const ScrollIndicatorLabel = memo(() => {
             animate={labelVariants}
             transition={{
                 duration: animationConfig.reduce ? 0 : 2.5,
-                repeat: animationConfig.reduce ? 0 : Infinity,
+                repeat: 0,
                 ease: "easeInOut"
             }}
         >
@@ -466,15 +482,18 @@ const ScrollIndicatorLabel = memo(() => {
 function HeaderGrid() {
     return (
         <div id="header-section" className="relative min-h-[100svh] overflow-hidden w-full">
+            {/* Full-bleed Background Image */}
+            <HeaderBackgroundImage />
+
             {/* Atmospheric gradient overlays — ProjectPage hero style */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#011417] via-[#011417]/55 to-[#011417]/5 pointer-events-none z-[5]" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#011417]/75 via-[#011417]/20 to-transparent pointer-events-none z-[5]" />
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-[#011417] via-[#011417]/55 to-[#011417]/5 pointer-events-none z-[5]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#011417]/75 via-[#011417]/20 to-transparent pointer-events-none z-[5]" /> */}
 
             {/* Background Circles — commented out, kept for reference */}
             {/* <BackgroundCircles /> */}
 
             {/* Floating Particles */}
-            <FloatingParticles />
+            {/* <FloatingParticles /> */}
 
             {/* Main Content Layout */}
             <HeaderContent />

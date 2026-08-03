@@ -38,66 +38,107 @@ import {
 // Static data moved outside component
 const techStacks = [
     {
-        category: "Frontend",
+        category: "Languages",
         icon: Code2,
-        color: "#ff6b6b",
-        bgGradient: "from-red-500/10 to-brand-light/10",
+        color: "#028582",
+        bgGradient: "from-brand/10 to-brand-light/10",
         skills: [
+            { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", color: "#F7DF1E" },
             { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", color: "#E34F26" },
             { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", color: "#1572B6" },
-            { name: "Angular", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg", color: "#DD0031" },
-            { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", color: "#06B6D4" }
+            { name: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", color: "#777BB4" },
+            { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", color: "#3776AB" }
         ]
     },
     {
-        category: "Backend",
-        icon: Database,
-        color: "#45b7d1",
-        bgGradient: "from-blue-500/10 to-indigo-500/10",
+        category: "Front-End",
+        icon: Code2,
+        color: "#06B6D4",
+        bgGradient: "from-cyan-500/10 to-brand-light/10",
         skills: [
-            { name: ".NET", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-plain.svg", color: "#512BD4" },
-            { name: "Laravel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg", color: "#FF2D20" }
+            { name: "Angular", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg", color: "#DD0031" },
+            { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", color: "#61DAFB" },
+            { name: "React Native", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", color: "#61DAFB" },
+            { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", color: "#FFFFFF" },
+            { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", color: "#06B6D4" },
+            { name: "Nativewind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", color: "#38BDF8" },
+            { name: "Elementor", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/elementor.svg", color: "#92003B" }
         ]
     },
     {
-        category: "Database",
+        category: "Back-End & APIs",
         icon: Database,
-        color: "#4ecdc4",
+        color: "#45B7D1",
+        bgGradient: "from-blue-500/10 to-brand/10",
+        skills: [
+            { name: "Laravel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg", color: "#FF2D20" },
+            { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", color: "#339933" },
+            { name: "Express", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", color: "#FFFFFF" },
+            { name: ".NET", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg", color: "#512BD4" },
+            { name: "REST APIs", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg", color: "#85EA2D" },
+            { name: "JWT Auth", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jsonwebtokens.svg", color: "#D63AFF" },
+            { name: "WebSocket", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/socketdotio.svg", color: "#FFFFFF" }
+        ]
+    },
+    {
+        category: "Databases",
+        icon: Database,
+        color: "#4ECDC4",
         bgGradient: "from-teal-500/10 to-cyan-500/10",
         skills: [
             { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", color: "#336791" },
-            { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", color: "#4479A1" }
+            { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", color: "#4479A1" },
+            { name: "Supabase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg", color: "#3ECF8E" }
         ]
     },
     {
-        category: "DevOps & Tools",
+        category: "Cloud & DevOps",
         icon: Smartphone,
-        color: "#f9ca24",
-        bgGradient: "from-yellow-500/10 to-orange-500/10",
+        color: "#FBFF00",
+        bgGradient: "from-accent/10 to-brand-light/10",
         skills: [
+            { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", color: "#FF9900" },
             { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", color: "#F05032" },
             { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", color: "#181717" },
-            { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", color: "#FF9900" }
+            { name: "SiteGround", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/siteground.svg", color: "#8CC63F" },
+            { name: "Hostinger", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/hostinger.svg", color: "#673DE6" },
+            { name: "cPanel", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cpanel.svg", color: "#FF6C2C" },
+            { name: "Crazy Domains", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", color: "#F59E0B" }
         ]
     },
     {
-        category: "API & Integration",
+        category: "CMS & E-Commerce",
         icon: Code2,
-        color: "#028582",
-        bgGradient: "from-brand/10 to-secondary/10",
+        color: "#21759B",
+        bgGradient: "from-brand/10 to-cyan-500/10",
         skills: [
-            { name: "REST API", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", color: "#6DB33F" },
-            { name: "Swagger", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg", color: "#85EA2D" },
-            { name: "OpenAPI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openapi/openapi-plain.svg", color: "#6BA539" }
+            { name: "WordPress FSE", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg", color: "#21759B" },
+            { name: "Block Themes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg", color: "#028582" },
+            { name: "ACF", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/advancedcustomfields.svg", color: "#00D084" }
         ]
     },
     {
-        category: "Design & UX",
+        category: "Automation",
         icon: Palette,
-        color: "#10b981",
-        bgGradient: "from-green-500/10 to-emerald-500/10",
+        color: "#10B981",
+        bgGradient: "from-green-500/10 to-brand-light/10",
         skills: [
-            { name: "Adobe XD", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg", color: "#FF61F6" }
+            { name: "GoHighLevel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", color: "#38BDF8" },
+            { name: "Webhooks", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg", color: "#85EA2D" },
+            { name: "DNS Config", logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cloudflare.svg", color: "#F38020" },
+            { name: "SPF / DKIM / MX", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", color: "#4285F4" }
+        ]
+    },
+    {
+        category: "Performance & SEO",
+        icon: Palette,
+        color: "#22C55E",
+        bgGradient: "from-green-500/10 to-cyan-500/10",
+        skills: [
+            { name: "PageSpeed", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", color: "#4285F4" },
+            { name: "Core Web Vitals", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg", color: "#4285F4" },
+            { name: "LCP Optimization", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg", color: "#22C55E" },
+            { name: "Image Optimization", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", color: "#34A853" }
         ]
     }
 ];
@@ -147,24 +188,24 @@ const hobbies = [
 
 const currentTechSkills = [
     {
+        name: 'WordPress',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg',
+        color: '#21759B'
+    },
+    {
         name: 'React',
         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
         color: '#61DAFB'
     },
     {
-        name: 'Vite',
-        icon: 'https://vitejs.dev/logo.svg',
-        color: '#646CFF'
+        name: 'React Native',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+        color: '#61DAFB'
     },
     {
-        name: 'Tailwind CSS',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
-        color: '#06B6D4'
-    },
-    {
-        name: 'Framer Motion',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg',
-        color: '#BB6BD9'
+        name: 'Laravel',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg',
+        color: '#FF2D20'
     },
     {
         name: 'JavaScript',
@@ -731,7 +772,7 @@ const ProfileContent = memo(({ showRealName, onNameToggle }) => (
                     transition={{ delay: 0.7 }}
                 >
                     <p className="text-sm sm:text-base md:text-lg text-foreground-secondary font-display-medium tracking-wide">
-                        Full-Stack Web Developer
+                        Junior Web Developer
                     </p>
 
                     {/* Subtle underline accent */}
@@ -837,13 +878,13 @@ const ProfileStory = memo(({ hoveredSkill, onSkillHover, onSkillLeave }) => (
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
             >
-                I'm a passionate web developer from the Philippines who transforms creative ideas into
+                I'm a junior web developer from the Philippines who builds responsive WordPress systems, web apps, and workflow tools that turn creative ideas into
                 <motion.span
                     className="text-brand-light font-display-black-italic"
                     whileHover={{ scale: 1.01 }}
                     style={{ cursor: 'default' }}
                 >  stunning digital realities</motion.span>.
-                My journey started with curiosity and has evolved into a deep expertise in modern web technologies.
+                My journey started with curiosity and has grown through client websites, performance work, API integrations, and full-stack academic projects.
             </motion.p>
 
             <motion.div
@@ -878,51 +919,24 @@ const ResumeButton = memo(() => {
 
     return (
         <motion.button
-            className="group relative px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-brand-light to-brand text-foreground-dark font-display-black-italic rounded-2xl overflow-hidden shadow-lg"
+            className="group relative flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden text-xs sm:text-sm"
             whileHover={{
                 scale: 1.02,
-                boxShadow: '0 20px 40px rgba(2, 133, 130, 0.34)'
+                y: -1
             }}
             whileTap={{ scale: 0.98 }}
             onClick={handleDownload}
         >
-            <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
-                initial={{ x: "-150%" }}
-                whileHover={{ x: "150%" }}
-                transition={{ duration: 0.8 }}
-            />
-
-            <div className="absolute inset-0 overflow-hidden">
-                {[...Array(5)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white/60 rounded-full"
-                        style={{
-                            left: `${20 + i * 15}%`,
-                            top: `${30 + (i % 2) * 40}%`
-                        }}
-                        animate={{
-                            y: [0, -20, 0],
-                            opacity: [0, 1, 0]
-                        }}
-                        transition={{
-                            duration: 2,
-                            delay: i * 0.3,
-                            repeat: 0
-                        }}
-                    />
-                ))}
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
             <div className="relative flex items-center justify-center gap-3">
                 <motion.div
                     animate={{ rotate: 0 }}
                     transition={{ duration: 2, repeat: 0 }}
                 >
-                    <Download className="w-6 h-6 text-display" />
+                    <Download className="w-4 h-4 text-foreground-dark group-hover:-translate-y-px transition-transform duration-200" />
                 </motion.div>
-                <span className="text-lg text-display">Download Resume</span>
+                <span className="font-display-black-italic">Download Resume</span>
             </div>
         </motion.button>
     );

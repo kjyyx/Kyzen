@@ -68,7 +68,7 @@ const BrandTextSeparator = memo(() => (
 // Brand Text Title Component
 const BrandTextTitle = memo(() => (
     <span className="text-foreground-secondary/90 tracking-tight font-display-medium ml-1 sm:ml-2 lg:inline">
-        Web Developer
+        Junior Web Developer
     </span>
 ));
 

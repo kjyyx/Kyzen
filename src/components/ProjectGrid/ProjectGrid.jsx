@@ -464,13 +464,13 @@ const ProjectCardStatusBadge = memo(({ project, statusStyle, showEffects }) => (
 // Project Card Title Component
 const ProjectCardTitle = memo(({ project, index, showEffects }) => (
     <motion.div
-        className="absolute -bottom-4 sm:-bottom-6 left-4 sm:left-6 z-30"
+        className="absolute -bottom-4 sm:-bottom-4 left-4 sm:left-6 z-30"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 + index * 0.05 }}
     >
         <motion.span
-            className="block text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-xl sm:text-2xl md:text-3xl font-display-black-italic leading-none pr-1"
+            className="block text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text text-xl sm:text-2xl md:text-5xl font-display-black-italic leading-none pr-1"
             style={{
                 textShadow: showEffects
                     ? "0 0 30px rgba(2, 133, 130, 0.42)"
