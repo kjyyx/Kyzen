@@ -11,7 +11,7 @@ import AtsIcon from '../../assets/Projects_Icons/New Icons/ITS_ico.webp';
 import ClarknavIcon from '../../assets/Projects_Icons/New Icons/ClarkNav_ico.webp';
 import GptIcon from '../../assets/Projects_Icons/GPT_ico.webp';
 import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
-import LavaCrazeIcon from '../../assets/Projects_Icons/New Icons/Lavacraze_ico.webp';
+import LavaCrazeIcon from '../../assets/Projects_Icons/New Icons/LavaCraze_ico.webp';
 import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
 import RailroadedIcon from '../../assets/Projects_Icons/New Icons/RailRoaded_ico.webp';
 import SignUmIcon from '../../assets/Projects_Icons/New Icons/SignUm_ico.webp';
