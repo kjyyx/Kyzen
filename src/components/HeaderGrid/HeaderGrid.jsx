@@ -333,14 +333,14 @@ const MainTitle = memo(() => {
 
     return (
         <motion.h1
-            className="relative text-[22vw] xs:text-[18vw] sm:text-[14vw] md:text-[10vw] lg:text-[8rem] xl:text-[10rem] font-display-black-italic text-left whitespace-nowrap leading-none"
+            className="relative text-[22vw] xs:text-[18vw] sm:text-[14vw] md:text-[10vw] lg:text-[8rem] xl:text-[10rem] font-display-black-italic text-left whitespace-nowrap leading-none pr-[0.12em] pb-[0.04em]"
             {...titleVariants}
             style={{
                 textShadow: "0 0 30px rgba(2, 133, 130, 0.26), 0 0 60px rgba(2, 133, 130, 0.10)"
             }}
         >
             <motion.span
-                className="relative inline-block py-2 text-brand-light"
+                className="relative inline-block py-2 pr-[0.08em] text-transparent bg-gradient-to-r from-white via-brand-light to-brand-light bg-clip-text"
                 animate={glowVariants}
                 transition={{
                     duration: animationConfig.reduce ? 0 : 3,
