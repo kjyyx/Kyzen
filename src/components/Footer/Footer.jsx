@@ -342,8 +342,8 @@ const CopyrightInfo = memo(() => {
                 <span>Made with</span>
                 <Heart className={`w-3 h-3 sm:w-4 sm:h-4 text-red-400 ${!animationConfig.reduce ? '' : ''}`} />
             </div>
-            <span className="hidden sm:inline">© 2025. All rights reserved</span>
-            <span className="sm:hidden">© 2025</span>
+            <span className="hidden sm:inline">© 2026. All rights reserved</span>
+            <span className="sm:hidden">© 2026</span>
         </motion.div>
     );
 });

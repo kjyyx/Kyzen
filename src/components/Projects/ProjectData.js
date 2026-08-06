@@ -63,6 +63,26 @@ import SbnSS5 from '../../assets/Webpage_Screenshots/screencapture-superiorbusin
 import SbnSS6 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-sponsorship-2026-08-03-12_16_34.webp';
 import SbnSS7 from '../../assets/Webpage_Screenshots/screencapture-superiorbusinessnetworks-au-contact-2026-08-03-12_16_50.webp';
 
+import ClarknavSS1 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_23_41.webp';
+import ClarknavSS2 from '../../assets/Webpage_Screenshots/Screenshot 2026-08-03 182502.webp';
+import ClarknavSS3 from '../../assets/Webpage_Screenshots/Screenshot 2026-08-03 182559.webp';
+import ClarknavSS4 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_27_56.webp';
+import ClarknavSS5 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_28_07.webp';
+import ClarknavSS6 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_28_22.webp';
+import ClarknavSS7 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_28_38.webp';
+import ClarknavSS8 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_29_05.webp';
+import ClarknavSS9 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_27_35.webp';
+import ClarknavSS10 from '../../assets/Webpage_Screenshots/screencapture-clarknav-2026-08-03-18_27_47.webp';
+
+import SignUmSS1 from '../../assets/Webpage_Screenshots/SignUm_ss1.png';
+import SignUmSS2 from '../../assets/Webpage_Screenshots/SignUm_ss2.png';
+import SignUmSS3 from '../../assets/Webpage_Screenshots/SignUm_ss3.png';
+import SignUmSS4 from '../../assets/Webpage_Screenshots/SignUm_ss4.png';
+import SignUmSS5 from '../../assets/Webpage_Screenshots/SignUm_ss5.png';
+import SignUmSS6 from '../../assets/Webpage_Screenshots/SignUm_ss6.png';
+import SignUmSS7 from '../../assets/Webpage_Screenshots/SignUm_ss7.png';
+import SignUmSS8 from '../../assets/Webpage_Screenshots/SignUm_ss8.png';
+
 const techIcons = {
     acf: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/advancedcustomfields.svg",
     angular: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
@@ -100,7 +120,7 @@ export const projects = [
         title: "Razor Payments",
         subtitle: "Payments Website, DNS, and Lead Pipeline",
         category: "WordPress Development",
-        description: "Built and deployed the Razor Payments website from staging to production using WordPress, Elementor Pro, and the Blocksy theme. The work covered front-end alignment, custom landing pages, GoHighLevel lead capture, DNS subdomain setup, Mailgun sender authentication, SSL, and SiteGround production management.",
+        description: "Built the Razor Payments website on a staging environment using WordPress, Elementor Pro, and the Blocksy theme, then deployed it to live production. The project covered front-end implementation, custom landing pages, GoHighLevel webhook integration, DNS records for go, books, links, and mail subdomains, Mailgun sender authentication, SSL, and SiteGround production management.",
         backgroundImage: RazorPaymentsLogo,
         meta: {
             year: "2026",
@@ -122,12 +142,12 @@ export const projects = [
             { name: "Kenji Jaculbia", role: "Junior Web Developer" }
         ],
         highlights: [
-            "Built the site from scratch on a staging environment",
+            "Built the complete website on a staging environment",
             "Promoted staging to SiteGround production with SSL configured",
-            "Integrated Elementor Forms with GoHighLevel inbound webhooks",
+            "Integrated Elementor forms with GoHighLevel inbound webhooks",
             "Configured go, books, links, and mail subdomains for GHL",
-            "Set up Mailgun/LC Email SPF, DKIM, and MX records",
-            "Resolved email authentication and Outlook formatting issues"
+            "Set up dedicated sender records with SPF, DKIM, and MX authentication",
+            "Delivered the project quickly while maintaining production quality"
         ],
         screenshots: [
             {
@@ -157,7 +177,7 @@ export const projects = [
         title: "SBN",
         subtitle: "Custom WordPress Block Theme Migration",
         category: "WordPress Full Site Editing",
-        description: "Designed and built a custom WordPress Full Site Editing block theme from scratch in VS Code, migrating a Divi-based site into a modern block architecture for a Perth business networking organisation. The build supports dynamic directory and event workflows with ACF, The Events Calendar, and Event Tickets.",
+        description: "Designed and built a custom WordPress Full Site Editing block theme in VS Code, migrating an existing Divi website into a modern block architecture with zero downtime. The build used Advanced Custom Fields, The Events Calendar, and Event Tickets to support directory, event, and membership workflows.",
         backgroundImage: SbnLogo,
         meta: {
             year: "2026",
@@ -179,12 +199,12 @@ export const projects = [
             { name: "Kenji Jaculbia", role: "Junior Web Developer" }
         ],
         highlights: [
-            "Migrated from legacy Divi setup to custom block architecture",
-            "Built a custom FSE theme from scratch in VS Code",
+            "Migrated a legacy Divi site to a custom block architecture",
+            "Built a WordPress FSE theme from scratch in VS Code",
             "Implemented ACF-powered content management",
-            "Added events and ticketing functionality",
+            "Integrated event and ticketing workflows",
             "Promoted staging to production with zero downtime",
-            "Performed broken-link audits, QA checks, and handover documentation"
+            "Performed QA checks, broken-link audits, and handover documentation"
         ],
         screenshots: [
             {
@@ -222,7 +242,7 @@ export const projects = [
         title: "Weld East",
         subtitle: "WordPress Performance and Hosting Support",
         category: "WordPress Maintenance",
-        description: "Supported Weld East's WordPress site with domain configuration, Full Site Editing page updates, and performance optimisation for an Australian custom metal solutions brand. The work focused on Core Web Vitals, blog template fixes, LCP image preloading, and delayed non-critical scripts.",
+        description: "Supported Weld East's WordPress site with hosting, domain configuration, Full Site Editing updates, and performance optimisation for an Australian custom metal solutions brand. The work focused on improving Google PageSpeed Insights scores through LCP image preloading, delayed non-critical scripts, and targeted front-end fixes.",
         backgroundImage: WeldEastLogo,
         meta: {
             year: "2026",
@@ -244,9 +264,9 @@ export const projects = [
         ],
         highlights: [
             "Managed domain configuration through Crazy Domains",
-            "Handled new-page requests using WordPress Full Site Editing",
-            "Improved PageSpeed Insights scores to 90+",
-            "Fixed blog template performance issues",
+            "Handled page updates using WordPress Full Site Editing",
+            "Improved Google PageSpeed Insights scores to 90+",
+            "Fixed technical issues affecting desktop and mobile UX",
             "Preloaded LCP hero images and delayed non-critical scripts"
         ]
     },
@@ -255,7 +275,7 @@ export const projects = [
         title: "Brainbox",
         subtitle: "Multi-Site WordPress Maintenance and UX Modernisation",
         category: "WordPress Operations",
-        description: "Maintained and modernised multiple Brainbox ecosystem sites, including Brainbox, Blue Zoo, and Governance Manager. The work included landing-page restructuring, mobile UX improvements, security audits, plugin compatibility updates, asset compression, backups, staging workflows, and SiteGround administration.",
+        description: "Maintained and modernised multiple Brainbox ecosystem websites as the sole in-house web developer, including Brainbox, Blue Zoo, and Governance Manager. The work covered WordPress updates, Elementor Pro builds, custom block theme support, landing-page restructuring, mobile UX improvements, security checks, asset optimisation, backups, staging workflows, and SiteGround administration.",
         backgroundImage: BrainboxLogo,
         meta: {
             year: "2026",
@@ -280,12 +300,12 @@ export const projects = [
             { name: "Kenji Jaculbia", role: "Junior Web Developer" }
         ],
         highlights: [
+            "Acted as the sole in-house developer for multiple client websites",
             "Maintained Blue Zoo, Brainbox, and Governance Manager sites",
-            "Reworked landing-page layouts for stronger mobile UX",
-            "Replaced legacy stacked-card sections with custom swiping components",
-            "Handled plugin compatibility updates and security audits",
-            "Managed SiteGround staging, backups, and production upkeep",
-            "Compressed core visual assets for better page performance"
+            "Restructured landing pages for stronger mobile UX",
+            "Replaced legacy card sections with improved responsive components",
+            "Handled plugin compatibility, security checks, and technical fixes",
+            "Managed SiteGround staging, backups, SSL, and production upkeep"
         ]
     },
     {
@@ -293,7 +313,7 @@ export const projects = [
         title: "Sign-um",
         subtitle: "Digital Document Signing and Workflow System",
         category: "Full-Stack Web Application",
-        description: "Built a PHP and MySQL platform for routing, signing, approving, and tracking digital documents across multiple user roles. The system included RESTful PHP APIs, real-time status updates, CloudConvert DOCX-to-PDF conversion, notification workflows, SMTP email delivery, signature capture, Google 2FA, and reassignment logic for pending approvals.",
+        description: "Built a PHP and MySQL platform for routing, signing, approving, and tracking digital documents across multiple user roles. The system included RESTful PHP APIs, live document status updates, CloudConvert DOCX-to-PDF conversion, AJAX notification polling, cross-tab syncing, SMTP email delivery via PHPMailer, signature capture, Google 2FA, and orphan-catcher reassignment logic for pending tasks.",
         backgroundImage: PlaceholderBg,
         meta: {
             year: "2026",
@@ -307,17 +327,55 @@ export const projects = [
             { name: "PHPMailer", color: "#22c55e", icon: techIcons.github },
             { name: "Google 2FA", color: "#4285f4", icon: techIcons.google }
         ],
-        links: {},
+        links: {
+            additional: [
+                { label: "Evidence Album", url: "https://ibb.co/album/ZRwVGG" }
+            ]
+        },
         teamMembers: [
             { name: "Kenji Jaculbia", role: "Full-Stack Developer" }
         ],
         highlights: [
-            "Built role-based document routing, approval, and tracking workflows",
-            "Created RESTful PHP APIs for live document status updates",
+            "Built role-based document routing, signing, approval, and tracking workflows",
+            "Created RESTful PHP APIs for real-time document status updates",
             "Integrated CloudConvert for automatic DOCX-to-PDF conversion",
             "Implemented notifications with AJAX polling, cross-tab syncing, and SMTP email",
-            "Added signature capture, password validation, and Google 2FA",
-            "Designed reassignment logic for pending tasks when users are unavailable"
+            "Added password validation, signature capture, and Google 2FA",
+            "Designed orphan-catcher logic to reassign pending tasks to active users"
+        ],
+        screenshots: [
+            {
+                src: SignUmSS1,
+                alt: "SignUm interface evidence 1"
+            },
+            {
+                src: SignUmSS2,
+                alt: "SignUm interface evidence 2"
+            },
+            {
+                src: SignUmSS3,
+                alt: "SignUm interface evidence 3"
+            },
+            {
+                src: SignUmSS4,
+                alt: "SignUm interface evidence 4"
+            },
+            {
+                src: SignUmSS5,
+                alt: "SignUm interface evidence 5"
+            },
+            {
+                src: SignUmSS6,
+                alt: "SignUm interface evidence 6"
+            },
+            {
+                src: SignUmSS7,
+                alt: "SignUm interface evidence 7"
+            },
+            {
+                src: SignUmSS8,
+                alt: "SignUm interface evidence 8"
+            }
         ]
     },
     {
@@ -325,7 +383,7 @@ export const projects = [
         title: "ElectricBillCalculator",
         subtitle: "Utility Cost and Submeter Manager",
         category: "Mobile App Development",
-        description: "Built a React Native and Expo mobile app for calculating shared utility costs using individual submeter readings. The app tracks meters, estimates monthly usage per tenant, stores history in Supabase, supports image-based data management, and includes offline caching and reminder alerts.",
+        description: "Built a React Native and Expo mobile app for calculating shared utility costs from individual submeter readings. The app includes meter tracking, monthly bill estimation, power usage calculations per tenant, Supabase cloud storage, history tracking, image-based data management, offline caching, reminder alerts, and a clean mobile UI for faster household utility tracking.",
         backgroundImage: PlaceholderBg,
         meta: {
             year: "2026",
@@ -344,8 +402,8 @@ export const projects = [
         ],
         highlights: [
             "Calculated shared utility costs from individual submeter readings",
-            "Built meter tracking and monthly bill estimation flows",
-            "Integrated Supabase for cloud storage and usage history",
+            "Built meter tracking, monthly bill estimation, and tenant usage flows",
+            "Integrated Supabase for cloud storage and history tracking",
             "Added image-based data management for meter records",
             "Implemented offline caching and reminder alerts",
             "Designed a clean mobile UI for faster household utility tracking"
@@ -354,9 +412,9 @@ export const projects = [
     {
         slug: "clarknav",
         title: "Clarknav",
-        subtitle: "Navigation Enhancement Project",
-        category: "Web Development",
-        description: "A comprehensive navigation system designed to enhance user experience and streamline digital workflows for modern applications.",
+        subtitle: "Real-Time Jeepney and Clark Loop Navigation",
+        category: "Full-Stack Navigation Application",
+        description: "Built a responsive real-time navigation application for routing jeepneys and the Clark Loop BRT in Clark, Philippines. The system used Angular, Laravel, PostgreSQL, Google Maps API, geolocation, and WebSockets to provide live location tracking, route guidance, travel time estimates, fare details, and admin-managed route data.",
         backgroundImage: ClarknavBg,
         meta: {
             year: "2024",
@@ -374,26 +432,68 @@ export const projects = [
         },
         teamMembers: [
             { name: "Kenji Jaculbia", role: "Full-Stack Developer" },
-            { name: "Sarah Johnson", role: "UI/UX Designer" },
-            { name: "Mike Chen", role: "Backend Developer" },
-            { name: "Lisa Rodriguez", role: "Project Manager" },
-            { name: "David Kim", role: "QA Engineer" }
+            { name: "Jenna Pangilinan", role: "UI/UX Designer" },
+            { name: "Jazper Garcia", role: "Full-Stack Developer" },
+            { name: "Sean Warner Datu", role: "Researcher" },
         ],
         highlights: [
-            "Capstone project achievement",
-            "Real-time navigation updates",
-            "Mobile-first responsive design",
-            "Advanced user authentication"
+            "Built a capstone navigation app for jeepneys and the Clark Loop BRT",
+            "Integrated Google Maps API, geolocation, and WebSockets",
+            "Delivered real-time location tracking and route guidance",
+            "Created user and admin panels with role-based access control",
+            "Managed trip planning, route data, travel estimates, and fare details",
+            "Hosted the backend on AWS EC2/RDS and deployed the frontend on Hostinger"
         ],
-        screenshots: [],
+        screenshots: [
+            {
+                src: ClarknavSS1,
+                alt: "Clarknav homepage"
+            },
+            {
+                src: ClarknavSS2,
+                alt: "Clarknav capture 2"
+            },
+            {
+                src: ClarknavSS3,
+                alt: "Clarknav capture 3"
+            },
+            {
+                src: ClarknavSS4,
+                alt: "Clarknav capture 4"
+            },
+            {
+                src: ClarknavSS5,
+                alt: "Clarknav capture 5"
+            },
+            {
+                src: ClarknavSS6,
+                alt: "Clarknav capture 6"
+            },
+            {
+                src: ClarknavSS7,
+                alt: "Clarknav capture 7"
+            },
+            {
+                src: ClarknavSS8,
+                alt: "Clarknav capture 8"
+            },
+            {
+                src: ClarknavSS9,
+                alt: "Clarknav capture 9"
+            },
+            {
+                src: ClarknavSS10,
+                alt: "Clarknav capture 10"
+            }
+        ],
         // extraSections: ["ProjectStatistics", "KeyFeatures", "ProjectShowcase", "MobileExperience", "ProjectImpact"]
     },
     {
         slug: "itsats",
         title: "ITSquarehub",
         subtitle: "Applicant Tracking System",
-        category: "Enterprise Software",
-        description: "A comprehensive applicant tracking system designed to streamline recruitment processes and enhance HR efficiency for modern organizations.",
+        category: "Enterprise Recruitment Platform",
+        description: "Developed an Applicant Tracking System during internship at IT Squarehub using Angular, .NET Core, and PostgreSQL. The platform was designed to make recruitment faster and easier with responsive pages, efficient applicant data storage, secure REST APIs, and role-based access control for private HR data.",
         backgroundImage: AtsBg,
         meta: {
             year: "2024",
@@ -410,15 +510,17 @@ export const projects = [
             live: "https://demo.itsats.com"
         },
         teamMembers: [
-            { name: "Kenji Jaculbia", role: "Full-Stack Developer" },
+            { name: "Kenji Jaculbia", role: "Full-Stack Developer Intern" },
             { name: "Shane Paras", role: "Senior Developer" },
             { name: "CJ Ocampo", role: "System Architect" }
         ],
         highlights: [
-            "Internship project success",
-            "Advanced applicant filtering",
-            "Automated resume parsing",
-            "Real-time collaboration tools"
+            "Developed an ATS using Angular, .NET Core, and PostgreSQL",
+            "Designed responsive pages for recruitment workflows",
+            "Optimized database layouts for applicant data storage",
+            "Built secure REST APIs for HR data workflows",
+            "Implemented role-based access control",
+            "Supported faster and easier applicant management"
         ],
         screenshots: [],
         // extraSections: ["ProjectStatistics", "KeyFeatures", "ProjectShowcase", "MobileExperience", "ProjectImpact"]
@@ -428,7 +530,7 @@ export const projects = [
         title: "LavaCraze",
         subtitle: "First Client Website Project",
         category: "Client Web Development",
-        description: "Lava Craze marks our debut website project tailored for a client, constructed using WordPress and powered by Hostinger hosting services. By integrating an array of plugins such as Site Kit, All-in-one SEO, Elementor, Google Analytics, and Autoptimize, our website seamlessly merges cutting-edge technology with captivating design, promising a delightful and user-friendly experience.",
+        description: "Built a WordPress website for Lava Craze using Elementor and Hostinger hosting. The project included page design, SEO setup, Google Analytics through Site Kit, All-in-One SEO configuration, Autoptimize performance support, and a user-friendly structure for presenting the brand online.",
         backgroundImage: LavaCrazeBg,
         meta: {
             year: "2024",
@@ -476,7 +578,7 @@ export const projects = [
         title: "RailroadED",
         subtitle: "Philippine Railroad History Platform",
         category: "Educational Content Website",
-        description: "Railroad-ED is an interesting website all about the history of the Philippine Railroad. It has blogs about its past, present, and future. The site is made with WordPress, making it easy for you to dive into the exciting story of the Philippine Railroad.",
+        description: "Built a WordPress educational content website focused on the history, present state, and future of the Philippine railroad system. The project used a blog-based structure to organize research, articles, navigation, and long-form content in an accessible format.",
         backgroundImage: RailroadedBg,
         meta: {
             year: "2023",
@@ -531,7 +633,7 @@ export const projects = [
         title: "Brisk",
         subtitle: "Advanced Vehicle Rental Service",
         category: "Web Application",
-        description: "Brisk is an advanced vehicle rental service. It uses mySQL for a strong database and PHP, CSS, and JavaScript for a smooth and enjoyable user experience. Brisk incorporates CRUD operations (CREATE, READ, UPDATE, DELETE) to efficiently manage data. It redefines vehicle rental with a dynamic and user-friendly approach, blending cutting-edge technologies seamlessly.",
+        description: "Built a PHP, MySQL, JavaScript, HTML, and CSS vehicle rental web application with CRUD operations for managing rental data. The project focused on database-backed workflows, dynamic interfaces, and practical data management for a rental service experience.",
         backgroundImage: BriskBg,
         meta: {
             year: "2024",
@@ -586,7 +688,7 @@ export const projects = [
         title: "GPT",
         subtitle: "Delightful Coffee Shop Experience",
         category: "E-commerce Web Application",
-        description: "Galactic Pressed Tasting brings you a delightful coffee shop website, made with HTML, CSS, and JS for an enjoyable online experience. We've added MongoDB, a fancy database system, and integrated CRUD operations to make sure everything runs smoothly. This creates a strong and reliable platform for all coffee lovers out there.",
+        description: "Built a coffee shop web application using HTML, CSS, JavaScript, and MongoDB. The project included CRUD functionality, product and order-style interfaces, and a database-backed structure for managing coffee shop content and interactions.",
         backgroundImage: GptBg,
         meta: {
             year: "2024",
@@ -645,7 +747,7 @@ export const projects = [
         title: "Kairos",
         subtitle: "Airport Terminal Navigation System",
         category: "Navigation Web Application",
-        description: "At KAIROS, we've developed a cutting-edge website for Clark International Airport Terminal 2. Utilizing QR codes strategically placed throughout the terminal, our website instantly guides users to the nearest comfort room. Built with HTML, CSS, JavaScript, and Bootstrap, our site dynamically displays maps, enables zooming, and centers the map to the user's location for seamless navigation.",
+        description: "Built a QR-based navigation website for Clark International Airport Terminal 2 using HTML, CSS, JavaScript, and Bootstrap. The system displayed dynamic maps, supported zooming and location centering, and helped users find nearby comfort rooms through strategically placed QR codes.",
         backgroundImage: KairosBg,
         meta: {
             year: "2024",
@@ -697,7 +799,7 @@ export const projects = [
         title: "Sprint",
         subtitle: "Modern Vehicle Rental Platform",
         category: "Service Web Application",
-        description: "Sprint Auto Care is a modern vehicle rental service, designed with a blend of Bootstrap, HTML, CSS, and JS, enriched with the power of APIs (Application Programming Interfaces). Utilizing Atlassian's Jira Software and Bitbucket, along with Google's App Script, Form, Gmail, and Spreadsheet, the website becomes a dynamic and functional platform.",
+        description: "Built a Bootstrap, HTML, CSS, and JavaScript vehicle rental service platform supported by API-driven workflows. The project used Jira and Bitbucket for development collaboration and Google Apps Script, Forms, Gmail, and Sheets for connected service operations.",
         backgroundImage: SprintBg,
         meta: {
             year: "2024",
@@ -734,7 +836,7 @@ export const projects = [
                 src: SprintSS1,
                 alt: "Sprint Project Management Interface"
             },
-                        {
+            {
                 src: SprintSS2,
                 alt: "Sprint Project Management Interface"
             }
@@ -752,7 +854,7 @@ export const featuredProjectSlugs = [
 const projectCardMeta = {
     "razor-payments": {
         image: RazorPaymentsLogo,
-        description: "Payments website and lead pipeline",
+        description: "Payments site, DNS, and GHL pipeline",
         tech: ["WordPress", "Elementor Pro", "GoHighLevel"],
         category: "WordPress"
     },
@@ -764,14 +866,14 @@ const projectCardMeta = {
     },
     "weld-east": {
         image: WeldEastLogo,
-        description: "Performance and hosting support",
+        description: "PageSpeed, hosting, and FSE support",
         tech: ["WordPress FSE", "PageSpeed", "DNS"],
         category: "Maintenance"
     },
     "brainbox-corporate-sites": {
         title: "Brainbox",
         image: BrainboxLogo,
-        description: "Multi-site UX and maintenance work",
+        description: "Multi-site UX and WordPress operations",
         tech: ["WordPress", "SiteGround", "Security"],
         category: "Operations"
     },
@@ -789,21 +891,21 @@ const projectCardMeta = {
     },
     clarknav: {
         image: ClarknavIcon,
-        description: "Navigation system",
+        description: "Real-time Clark transport navigation",
         tech: ["Angular", "Laravel", "PostgreSQL"],
         category: "Full-Stack"
     },
     itsats: {
         image: AtsIcon,
-        description: "Applicant tracking system",
+        description: "Recruitment workflow platform",
         tech: ["Angular", ".NET", "PostgreSQL"],
         category: "Enterprise"
     },
     lavacraze: {
         image: LavaCrazeIcon,
-        description: "E-commerce platform",
+        description: "Client WordPress website",
         tech: ["WordPress", "Elementor"],
-        category: "E-commerce"
+        category: "Client Web"
     },
     railroaded: {
         title: "Railroad-ed",
@@ -820,7 +922,7 @@ const projectCardMeta = {
     },
     gpt: {
         image: GptIcon,
-        description: "Coffee shop web app",
+        description: "Coffee shop CRUD web app",
         tech: ["HTML", "CSS", "MongoDB"],
         category: "E-commerce"
     },
@@ -832,7 +934,7 @@ const projectCardMeta = {
     },
     sprint: {
         image: SprintIcon,
-        description: "Vehicle rental service platform",
+        description: "API-supported rental platform",
         tech: ["Bootstrap", "JavaScript", "Google APIs"],
         category: "Service"
     }

@@ -121,7 +121,7 @@ function Footer() {
                                 <img alt="KYZEN Logo" src={kyzenLogo} className="h-6 w-auto" />
                                 <span className='text-[#e9dcc8] text-lg italic tracking-tight font-black'>Kenzie.</span>
                             </div>
-                            <span className='italic tracking-tight font-light mt-2 sm:mt-0'>Copyright 2025. All rights reserved</span>
+                            <span className='italic tracking-tight font-light mt-2 sm:mt-0'>Copyright 2026. All rights reserved</span>
                         </div>
                     </div>
                 </div>

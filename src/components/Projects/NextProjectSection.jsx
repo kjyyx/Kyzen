@@ -1,57 +1,29 @@
 import React, { useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
+import { projects } from "./ProjectData";
 
-// Project order hierarchy
-const projectOrder = [
-    "/projects/clarknav",
-    "/projects/itsats",
-    "/projects/lavacraze",
-    "/projects/railroaded",
-    "/projects/brisk",
-    "/projects/gpt",
-    "/projects/kairos",
-    "/projects/sprint"
-];
-
-const projectNames = {
-    "/projects/clarknav": "CLARKNAV",
-    "/projects/itsats": "ITS ATS",
-    "/projects/lavacraze": "LAVACRAZE",
-    "/projects/railroaded": "RAILROADED",
-    "/projects/brisk": "BRISK",
-    "/projects/gpt": "GPT",
-    "/projects/kairos": "KAIROS",
-    "/projects/sprint": "SPRINT"
-};
-
-const projectFullNames = {
-    "/projects/clarknav": "Clarknav",
-    "/projects/itsats": "Applicant Tracking System",
-    "/projects/lavacraze": "Lavacraze",
-    "/projects/railroaded": "Railroad-ed",
-    "/projects/brisk": "Brisk",
-    "/projects/gpt": "Galactic Pressed Tasting",
-    "/projects/kairos": "Kairos",
-    "/projects/sprint": "Sprint"
-};
+const projectOrder = projects.map((project) => `/projects/${project.slug}`);
+const projectLookup = projects.reduce((lookup, project) => {
+    lookup[`/projects/${project.slug}`] = project;
+    return lookup;
+}, {});
 
 const NextProjectSection = memo(() => {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Find current project index
     const currentPath = location.pathname.toLowerCase();
     const currentIndex = projectOrder.findIndex(
         (path) => currentPath.endsWith(path)
     );
 
-    // Get next project index (wrap around)
-    const nextIndex = (currentIndex + 1) % projectOrder.length;
+    const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % projectOrder.length : 0;
     const nextProjectPath = projectOrder[nextIndex];
-    const nextProjectName = projectNames[nextProjectPath];
-    const nextProjectFullName = projectFullNames[nextProjectPath];
+    const nextProject = projectLookup[nextProjectPath];
+    const nextProjectName = nextProject?.title?.toUpperCase() || "PROJECT";
+    const nextProjectFullName = nextProject?.subtitle || nextProject?.title || "View next project";
 
     const handleProjectClick = useCallback(() => {
         navigate(nextProjectPath);
@@ -59,11 +31,11 @@ const NextProjectSection = memo(() => {
 
     return (
         <motion.div
-            className="relative h-full flex flex-col items-end justify-end overflow-visible py-12 pr-8"
+            className="relative h-full flex flex-col items-end justify-end overflow-visible py-12 pr-0 sm:pr-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.5 }}
         >
             {/* Next Project Label */}
             <motion.div
@@ -71,9 +43,9 @@ const NextProjectSection = memo(() => {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+                transition={{ delay: 0.15, duration: 0.4 }}
             >
-                <span className="text-foreground-muted text-sm tracking-wider font-display-medium">
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-foreground-muted">
                     next project
                 </span>
             </motion.div>
@@ -93,7 +65,7 @@ const NextProjectSection = memo(() => {
                 <motion.h2
                     className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase text-transparent select-none text-right"
                     style={{
-                        WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
+                        WebkitTextStroke: '1.5px rgba(243, 250, 249, 0.72)',
                         position: 'relative',
                         zIndex: 1,
                         transformOrigin: "100% 50%",
@@ -109,7 +81,7 @@ const NextProjectSection = memo(() => {
                         opacity: isHovered ? 0 : 1
                     }}
                     transition={{
-                        duration: 0.6,
+                        duration: 0.35,
                         ease: [0.23, 1, 0.32, 1]
                     }}
                 >
@@ -127,7 +99,7 @@ const NextProjectSection = memo(() => {
                         rotateY: isHovered ? 0 : -20
                     }}
                     transition={{
-                        duration: 0.6,
+                        duration: 0.35,
                         ease: [0.23, 1, 0.32, 1]
                     }}
                     style={{
@@ -144,7 +116,7 @@ const NextProjectSection = memo(() => {
                 </motion.h2>
                 {/* Full name subtitle, fades in on hover */}
                 <motion.span
-                    className="block text-base sm:text-lg text-foreground-secondary/80 font-display-medium mt-3 text-right pr-1 max-w-[80vw] truncate"
+                    className="block text-sm sm:text-base text-foreground-secondary/80 font-display-medium mt-3 text-right pr-1 max-w-[80vw] truncate"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
                     transition={{ duration: 0.4 }}

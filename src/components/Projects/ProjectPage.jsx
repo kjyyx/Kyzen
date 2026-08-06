@@ -420,7 +420,7 @@ const ProjectOverview = memo(({ project }) => {
                                         </div>
                                     </motion.a>
                                 ))}
-                                {!project.links?.github && (
+                                {!project.links?.github && !project.links?.website && !project.links?.additional?.length && (
                                     <div className="rounded-xl border border-border-brand bg-background-soft/60 p-3 text-xs leading-relaxed text-foreground-muted">
                                         Source code is unavailable for some older or client-owned work.
                                     </div>
@@ -682,7 +682,7 @@ function ProjectPage() {
             animate="animate"
             exit="exit"
             transition={{ duration: animationConfig.reduce ? 0.3 : 0.5, ease: "easeInOut" }}
-            className="project-page min-h-screen relative overflow-hidden"
+            className="project-page project-detail-page min-h-screen relative overflow-hidden"
         >
             <div id="main-bg" className="z-10"></div>
 

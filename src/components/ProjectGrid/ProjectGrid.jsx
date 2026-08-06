@@ -309,7 +309,7 @@ const ProjectCardFloatingButton = memo(({
                 y: (isMobile || isTablet)
                     ? (showEffects ? 20 : 15)
                     : showEffects
-                        ? (verticalRectangle ? (animationConfig.reduce ? -60 : -80) : 0)
+                        ? (verticalRectangle ? (animationConfig.reduce ? -90 : -140) : 0)
                         : 0,
             },
             transition: baseTransition
@@ -321,7 +321,7 @@ const ProjectCardFloatingButton = memo(({
             className={`absolute ${isMobile || isTablet
                 ? "top-3 sm:top-4 -right-3 sm:-right-4"
                 : verticalRectangle
-                    ? "top-12 sm:top-16 -right-12 sm:-right-16"
+                    ? "top-8 sm:top-10 -right-20 sm:-right-24"
                     : "top-8 sm:top-10 -left-12 sm:-left-16"
                 } z-40`}
             {...buttonVariants}

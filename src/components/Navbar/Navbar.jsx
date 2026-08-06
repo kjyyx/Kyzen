@@ -552,7 +552,7 @@ const ScrollBackgroundOverlay = memo(({ scrolled }) => (
     <AnimatePresence>
         {scrolled && (
             <motion.div
-                className="fixed top-0 left-0 w-full h-16 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-[4]"
+                className="fixed top-0 left-0 w-full h-16 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-[50]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -652,7 +652,7 @@ function Navbar() {
     return (
         <>
             <ScrollBackgroundOverlay scrolled={scrolled} />
-            <Disclosure as="nav" className="h-16 fixed w-full z-[5]">
+            <Disclosure as="nav" className="h-16 fixed w-full z-[50]">
                 {({ open }) => (
                     <NavbarContent
                         navigationItems={navigationItems}
