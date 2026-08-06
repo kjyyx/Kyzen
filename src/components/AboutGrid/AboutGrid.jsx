@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 import ProfileImage from '../../assets/PROFILE-3.webp';
-import ResumePDF from '../../assets/KenjiJaculbia_Resume.pdf';
+import ResumePDF from '../../assets/Kenji_Jaculbia_CV_v6.pdf';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
