@@ -667,17 +667,15 @@ const ProfileStory = memo(() => (
 ));
 
 // Resume Button Component
-const ResumeButton = memo(() => {
-    const handleDownload = useCallback(() => {
-        window.open(ResumePDF, '_blank');
-    }, []);
-
-    return (
-        <motion.button
+const ResumeButton = memo(() => (
+        <motion.a
+            href={ResumePDF}
+            download="Kenji_Jaculbia_CV_v6.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden text-xs sm:text-sm"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleDownload}
         >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative flex items-center justify-center gap-3">
@@ -686,9 +684,8 @@ const ResumeButton = memo(() => {
                 </motion.div>
                 <span className="font-display-black-italic">Download Resume</span>
             </div>
-        </motion.button>
-    );
-});
+        </motion.a>
+));
 
 // Section Divider Component
 const SectionDivider = memo(() => (
