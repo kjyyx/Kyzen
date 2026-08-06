@@ -91,7 +91,7 @@ const NextProjectSection = memo(() => {
             >
                 {/* Outlined text (default swung out state) */}
                 <motion.h2
-                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase tracking-tight text-transparent select-none text-right"
+                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase text-transparent select-none text-right"
                     style={{
                         WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
                         position: 'relative',
@@ -117,7 +117,7 @@ const NextProjectSection = memo(() => {
                 </motion.h2>
                 {/* Solid filled text (appears on hover) */}
                 <motion.h2
-                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase tracking-tight text-display select-none text-right"
+                    className="w-full max-w-[90vw] break-words text-3xl sm:text-4xl md:text-5xl xl:text-8xl font-display-black-italic uppercase text-display select-none text-right"
                     initial={{
                         opacity: 0,
                         rotateY: -20

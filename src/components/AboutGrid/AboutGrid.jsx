@@ -702,7 +702,7 @@ const NameDisplay = memo(({ showRealName, onToggle }) => (
             ) : (
                 <motion.h1
                     key="dev"
-                    className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-display tracking-tight text-center"
+                    className="text-xl sm:text-2xl md:text-3xl font-display-black-italic text-display text-center"
                     initial={{ opacity: 0, y: 10, rotateX: -90 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -10, rotateX: 90 }}
@@ -1476,7 +1476,7 @@ const AboutGrid = () => {
     }, []);
 
     return (
-        <div id="about" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="about" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-6 md:px-8 lg:px-12 relative">
             {/* Hero Title */}
             <HeroTitle />
 

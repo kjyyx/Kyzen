@@ -45,7 +45,7 @@ function Home() {
 
                 <Navbar />
                 <HeaderGrid />
-                <div className="relative z-20 mx-auto min-h-screen max-w-[1366px] px-4 sm:px-8">
+                <div className="relative mx-auto min-h-screen max-w-[1366px] px-0 sm:px-8">
                     <AboutGrid />
                     <ProjectGrid />
                     <CertificateGrid />

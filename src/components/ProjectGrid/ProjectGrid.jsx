@@ -640,7 +640,7 @@ const ProjectTechBadge = memo(({ tech, index }) => {
 
     return (
         <motion.span
-            className="px-2 sm:px-3 py-1 text-xs sm:text-sm tracking-tight font-display-medium text-foreground-secondary/90 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm font-display-medium text-foreground-secondary/90 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/20 transition-colors"
             {...badgeVariants}
             whileHover={animationConfig.reduce ? {} : { scale: 1.01 }}
         >
@@ -919,7 +919,7 @@ function ProjectGrid() {
     );
 
     return (
-        <div id="projects" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="projects" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-6 md:px-8 lg:px-12 relative">
 
             {/* Background Effects */}
             <BackgroundEffects />

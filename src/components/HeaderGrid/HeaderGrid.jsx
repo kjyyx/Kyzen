@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, User } from "lucide-react";
 
 import BigLogo from '../../assets/KYZENLOGO6.webp';
-import HeaderBackground from '../../assets/Background_4.png';
+import HeaderBackground from '../../assets/Background_5.png';
 
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import {
@@ -93,7 +93,7 @@ const HeaderBackgroundImage = memo(() => {
                 src={HeaderBackground}
                 alt=""
                 aria-hidden="true"
-                className="block h-full min-h-full w-full min-w-full max-w-none object-cover object-[center_right]"
+                className="block h-full min-h-full w-full min-w-full max-w-none object-cover object-[88%_center] sm:object-[76%_center] md:object-[87%_center] lg:object-[center_right]"
             />
         </div>
     );
@@ -123,7 +123,7 @@ const FloatingParticles = memo(() => {
         <ScrollAnimatedSection
             animationType="fadeIn"
             delay={0.3}
-            className="absolute inset-0 pointer-events-none z-10"
+            className="absolute inset-0 pointer-events-none z-[1]"
             priority="low"
         >
             <div className="relative w-full h-full">
@@ -138,7 +138,7 @@ const FloatingParticles = memo(() => {
 // Individual Floating Particle
 const FloatingParticle = memo(({ particle }) => (
     <motion.div
-        className="absolute w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-brand-light/60 rounded-full z-10"
+        className="absolute w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-brand-light/60 rounded-full z-[1]"
         style={{
             left: particle.left,
             top: particle.top,
@@ -161,7 +161,7 @@ const FloatingParticle = memo(({ particle }) => (
 
 // Main Header Content Container
 const HeaderContent = memo(() => (
-    <div className="relative z-20 w-full max-w-[1366px] mx-auto h-full min-h-[100svh] flex items-end justify-between px-4 sm:px-6 lg:px-8 pb-12 md:pb-16 lg:pb-20">
+    <div className="relative z-[2] w-full max-w-[1366px] mx-auto h-full min-h-[100svh] flex items-end justify-between px-6 lg:px-8 pb-12 md:pb-16 lg:pb-20">
         <LeftSection />
         {/* <HeroLogoMark /> */}
     </div>
@@ -191,7 +191,7 @@ const HeroCTAs = memo(() => (
 // Big Watermark Logo on Right Side
 const HeroLogoMark = memo(() => (
     <motion.div
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/6 w-[68vw] sm:w-[56vw] md:w-[46vw] max-w-[560px] h-auto pointer-events-none z-10 opacity-25 select-none overflow-hidden"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/6 w-[68vw] sm:w-[56vw] md:w-[46vw] max-w-[560px] h-auto pointer-events-none z-[1] opacity-25 select-none overflow-hidden"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 0.3, x: 0 }}
         transition={{
@@ -258,15 +258,13 @@ const IdentityLine = memo(() => {
             }}
         >
             Junior Web Developer
-            <span className="text-brand-light mx-2">·</span>
-            Philippines
         </motion.p>
     );
 });
 
 // Left Side Container (Title -> Identity -> Headline -> CTAs)
 const LeftSection = memo(() => (
-    <div className="relative z-30 flex flex-col items-start space-y-4 sm:space-y-5 max-w-2xl">
+    <div className="relative z-[3] flex flex-col items-start space-y-4 sm:space-y-5 max-w-2xl">
         <MainTitle />
         <IdentityLine />
         <MainHeadline />
@@ -278,7 +276,7 @@ const LeftSection = memo(() => (
 const MainHeadline = memo(() => {
     return (
         <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl text-display leading-[1.15] font-display-medium tracking-tight"
+            className="text-xl sm:text-2xl md:text-3xl text-display leading-[1.15] font-display-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -288,8 +286,8 @@ const MainHeadline = memo(() => {
             }}
         >
             Building digital experiences with{" "}
-            <span className="italic text-brand-light">clarity</span> and{" "}
-            <span className="italic text-brand-light">character.</span>
+            <span className="font-display-bold-italic text-brand-light">clarity</span> and{" "}
+            <span className="font-display-bold-italic text-brand-light">character.</span>
         </motion.h2>
     );
 });
@@ -359,11 +357,11 @@ const MainTitle = memo(() => {
                     delay={0.8}
                 />
 
-                <JapaneseText
+                {/* <JapaneseText
                     position="right-0 -bottom-[0.4em]"
                     text={"\u30ab\u30a4\u30bc\u30f3"}
                     delay={1.0}
-                />
+                /> */}
             </motion.span>
         </motion.h1>
     );
@@ -429,7 +427,7 @@ const ScrollIndicator = memo(() => {
         <ScrollAnimatedSection
             animationType="fadeUp"
             delay={1.2}
-            className="absolute bottom-3 xs:bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-30"
+            className="absolute bottom-3 xs:bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-[3]"
             priority="low"
         >
             <motion.div

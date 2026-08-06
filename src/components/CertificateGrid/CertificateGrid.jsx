@@ -576,7 +576,7 @@ const CertificateCardFront = memo(({
                 {/* Bottom section */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 sm:gap-2" onClick={onVerificationClick}>
-                        <span className="text-foreground-secondary/80 text-xs italic">
+                        <span className="text-foreground-secondary/80 text-xs font-display-medium">
                             {shouldAnimate ? "Click to view" : "Tap to view"}
                         </span>
                         <ExternalLink className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${categoryStyle.accent}`} />
@@ -900,10 +900,10 @@ const SeminarCard = memo(({ seminar }) => {
 
                     {/* Click indicator */}
                     <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 flex items-center gap-1 sm:gap-2 opacity-50">
-                        <span className="text-foreground-muted text-xs italic hidden sm:inline">
+                        <span className="text-foreground-muted text-xs font-display-medium hidden sm:inline">
                             Click to view
                         </span>
-                        <span className="text-foreground-muted text-xs italic sm:hidden">
+                        <span className="text-foreground-muted text-xs font-display-medium sm:hidden">
                             Tap
                         </span>
                         <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-brand-light" />
@@ -1147,7 +1147,7 @@ function CertificateGrid() {
     }, []);
 
     return (
-        <div id="certifications" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 relative">
+        <div id="certifications" className="flex flex-col items-center py-8 sm:py-10 md:py-12 lg:py-16 max-w-[1366px] mx-auto w-full px-6 md:px-8 lg:px-12 relative">
             {/* Page Header */}
             <PageHeader />
 

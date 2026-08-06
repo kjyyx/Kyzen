@@ -1,6 +1,6 @@
-import React, { useEffect, memo, useCallback, useState, useMemo } from 'react';
+import React, { useEffect, memo, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { projects } from './ProjectData';
 import NextProjectSection from './NextProjectSection';
 import {
@@ -11,26 +11,16 @@ import {
     Globe,
     Calendar,
     CheckCircle,
-    Star,
-    X,
-    AlertCircle
+    Star
 } from 'lucide-react';
 
-import BonnieImage from '../../assets/Bonnie_Rabbit.webp';
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
 import '../Home/Home.css';
 
-import {
-    getAnimationConfig,
-    canAnimate
-} from '../../utils/helpers';
-import {
-    EASING,
-    PERFORMANCE
-} from '../../utils/constants';
+import { getAnimationConfig } from '../../utils/helpers';
 
-// Status color map — consistent, brand-safe
+// Status color map - consistent, brand-safe
 const STATUS_COLORS = {
     Live: '#10b981',
     Completed: '#3b82f6',
@@ -38,146 +28,7 @@ const STATUS_COLORS = {
     'In Progress': '#f59e0b'
 };
 
-// ===== CHATBOT NOTIFICATION =====
-const ProjectNotification = memo(() => {
-    const [isVisible, setIsVisible] = useState(true);
-    const [isTyping, setIsTyping] = useState(true);
-    const { slug } = useParams();
-
-    const animationConfig = getAnimationConfig();
-
-    const notificationVariants = useMemo(() => {
-        if (animationConfig.reduce) {
-            return {
-                initial: { opacity: 0, y: 20, scale: 0.95 },
-                animate: { opacity: 1, y: 0, scale: 1 },
-                exit: { opacity: 0, y: 20, scale: 0.95 }
-            };
-        }
-        return {
-            initial: { opacity: 0, y: 100, scale: 0.8 },
-            animate: { opacity: 1, y: 0, scale: 1 },
-            exit: { opacity: 0, y: 100, scale: 0.8 }
-        };
-    }, [animationConfig.reduce]);
-
-    const characterVariants = useMemo(() => {
-        if (animationConfig.reduce) {
-            return {
-                initial: { opacity: 0, x: -10 },
-                animate: { opacity: 1, x: 0 }
-            };
-        }
-        return {
-            initial: { opacity: 0, x: -20, rotate: -10 },
-            animate: { opacity: 1, x: 0, rotate: 0 }
-        };
-    }, [animationConfig.reduce]);
-
-    useEffect(() => {
-        setIsVisible(true);
-        setIsTyping(true);
-
-        const typingTimer = setTimeout(() => {
-            setIsTyping(false);
-        }, animationConfig.reduce ? 2000 : 3000);
-
-        const hideTimer = setTimeout(() => {
-            setIsVisible(false);
-        }, animationConfig.reduce ? 8000 : 12000);
-
-        return () => {
-            clearTimeout(typingTimer);
-            clearTimeout(hideTimer);
-        };
-    }, [slug, animationConfig.reduce]);
-
-    if (!isVisible) return null;
-
-    return (
-        <AnimatePresence>
-            <motion.div
-                className="fixed bottom-6 right-6 z-50 max-w-sm"
-                {...notificationVariants}
-                transition={{
-                    type: animationConfig.reduce ? "tween" : "spring",
-                    stiffness: animationConfig.reduce ? undefined : 300,
-                    damping: animationConfig.reduce ? undefined : 20,
-                    duration: animationConfig.reduce ? 0.3 : undefined
-                }}
-            >
-                <div className="relative flex items-end gap-3">
-                    <motion.div
-                        className="flex-shrink-0"
-                        {...characterVariants}
-                        transition={{
-                            delay: animationConfig.reduce ? 0.1 : 0.3,
-                            duration: animationConfig.reduce ? 0.3 : 0.5
-                        }}
-                    >
-                        <div className="relative">
-                            <div className="w-20 h-32 overflow-hidden">
-                                <img
-                                    src={BonnieImage}
-                                    alt="Bonnie Assistant"
-                                    className="w-full h-full object-cover object-center"
-                                    onError={(e) => {
-                                        e.target.style.display = 'none';
-                                        e.target.nextSibling.style.display = 'flex';
-                                    }}
-                                />
-                                <div className="w-full h-full bg-gradient-to-br from-brand-dark to-brand items-center justify-center text-display font-display-black-italic text-xl hidden rounded-lg">
-                                    B
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <div className="relative flex-1">
-                        <div className="absolute bottom-4 left-[-6px] w-0 h-0 border-t-[6px] border-t-transparent border-r-[10px] border-r-white/15 border-b-[6px] border-b-transparent"></div>
-                        <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl rounded-bl-sm p-4 shadow-lg relative">
-                            <button
-                                onClick={() => setIsVisible(false)}
-                                className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-foreground-muted hover:text-display transition-colors duration-200 rounded-full hover:bg-white/10"
-                            >
-                                <X className="w-3 h-3" />
-                            </button>
-
-                            <div className="pr-8">
-                                {isTyping ? (
-                                    <div className="flex items-center gap-2 text-foreground-secondary/80">
-                                        <div className="flex gap-1">
-                                            <div className="w-2 h-2 bg-brand-light rounded-full"></div>
-                                            <div className="w-2 h-2 bg-brand-light rounded-full" style={{ animationDelay: '0.1s' }}></div>
-                                            <div className="w-2 h-2 bg-brand-light rounded-full" style={{ animationDelay: '0.2s' }}></div>
-                                        </div>
-                                        <span className="text-sm italic">Bonnie is typing...</span>
-                                    </div>
-                                ) : (
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ duration: animationConfig.reduce ? 0.3 : 0.5 }}
-                                    >
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <AlertCircle className="w-4 h-4 text-brand-light flex-shrink-0" />
-                                            <span className="font-display-black-italic text-brand-light text-sm">Hey there! 👋</span>
-                                        </div>
-                                        <p className="text-foreground-secondary text-sm leading-relaxed">
-                                            Just a heads up – some projects are not live or available on GitHub because my school account got deleted and I lost access to the original files. Sorry about that!
-                                        </p>
-                                    </motion.div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
-        </AnimatePresence>
-    );
-});
-
-// ===== SECTION HEADER — Portfolio Pattern (Left-aligned) =====
+// ===== SECTION HEADER - Portfolio Pattern (Left-aligned) =====
 const SectionHeader = memo(({ line1, line2, delay = 0.2 }) => {
     const animationConfig = getAnimationConfig();
 
@@ -185,17 +36,21 @@ const SectionHeader = memo(({ line1, line2, delay = 0.2 }) => {
         <ScrollAnimatedSection
             animationType="fadeUp"
             delay={animationConfig.reduce ? delay * 0.5 : delay}
-            className="w-full flex justify-start mb-10 sm:mb-12 relative"
+            className="w-full flex justify-start mb-8 sm:mb-10 relative"
             priority="high"
         >
             <div className="relative w-full">
+                <div className="mb-3 flex items-center gap-3">
+                    <span className="h-px w-10 bg-accent" />
+                    <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-muted">Case Study</span>
+                </div>
                 <motion.h2
-                    className="pl-2 text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-5xl font-display-black-italic leading-none text-left"
+                    className="text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 bg-clip-text text-3xl sm:text-4xl md:text-[2.8rem] font-display-black-italic leading-none text-left"
                     initial={{ opacity: 0, x: -24 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: animationConfig.reduce ? 0.4 : 0.6, ease: "easeOut" }}
-                    style={{ textShadow: '0 0 40px rgba(2, 133, 130, 0.26)' }}
+                    transition={{ duration: animationConfig.reduce ? 0.3 : 0.45, ease: "easeOut" }}
+                    style={{ textShadow: '0 0 24px rgba(2, 133, 130, 0.18)' }}
                 >
                     {line1}<span className="text-brand-light">_</span>
                     {line2 && (
@@ -206,9 +61,9 @@ const SectionHeader = memo(({ line1, line2, delay = 0.2 }) => {
                     )}
                 </motion.h2>
                 <motion.div
-                    className="absolute -bottom-2 left-0 h-0.5 sm:h-1 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full"
+                    className="absolute -bottom-3 left-0 h-0.5 bg-gradient-to-r from-brand-light via-brand-light to-transparent rounded-full"
                     initial={{ width: 0 }}
-                    whileInView={{ width: "10rem" }}
+                    whileInView={{ width: "7rem" }}
                     viewport={{ once: true }}
                     transition={{
                         duration: animationConfig.reduce ? 0.5 : 0.8,
@@ -220,7 +75,7 @@ const SectionHeader = memo(({ line1, line2, delay = 0.2 }) => {
     );
 });
 
-// ===== HERO SECTION — Full-bleed with overlaid content =====
+// ===== HERO SECTION - Full-bleed with overlaid content =====
 const HeroSection = memo(({ project, animationConfig }) => {
     const navigate = useNavigate();
     const handleBack = useCallback(() => navigate('/'), [navigate]);
@@ -229,15 +84,15 @@ const HeroSection = memo(({ project, animationConfig }) => {
     return (
         <div
             className="relative w-full overflow-hidden"
-            style={{ height: 'calc(88vh - 4rem)', minHeight: '520px', maxHeight: '900px' }}
+            style={{ height: 'calc(78vh - 4rem)', minHeight: '460px', maxHeight: '780px' }}
         >
             {/* Background image */}
             <motion.div
                 className="absolute inset-0"
-                initial={{ opacity: 0, scale: 1.03 }}
+                initial={{ opacity: 0, scale: 1.015 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
-                    duration: animationConfig.reduce ? 0.6 : 1.2,
+                    duration: animationConfig.reduce ? 0.4 : 0.7,
                     ease: 'easeOut',
                     delay: animationConfig.reduce ? 0.1 : 0.15
                 }}
@@ -249,20 +104,20 @@ const HeroSection = memo(({ project, animationConfig }) => {
                 />
             </motion.div>
 
-            {/* Gradient overlays — left-anchored and bottom-anchored */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#011417] via-[#011417]/60 to-[#011417]/10 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#011417]/80 via-[#011417]/20 to-transparent pointer-events-none" />
+            {/* Gradient overlays - left-anchored and bottom-anchored */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#011417] via-[#011417]/70 to-[#011417]/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#011417]/88 via-[#011417]/34 to-transparent pointer-events-none" />
 
-            {/* Back breadcrumb — top left */}
+            {/* Back breadcrumb - top left */}
             <motion.div
-                className="absolute top-20 left-0 right-0 z-30 max-w-[1366px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12"
+                className="absolute top-20 left-0 right-0 z-[3] max-w-[1366px] mx-auto px-6 md:px-8 lg:px-12"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: animationConfig.reduce ? 0.2 : 0.4, duration: 0.5 }}
             >
                 <motion.button
                     onClick={handleBack}
-                    className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/55 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/70 transition-all duration-300"
+                    className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/75 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/80 transition-all duration-200"
                     whileHover={{ x: -2 }}
                     whileTap={{ scale: 0.97 }}
                 >
@@ -271,9 +126,9 @@ const HeroSection = memo(({ project, animationConfig }) => {
                 </motion.button>
             </motion.div>
 
-            {/* Hero content — bottom-left anchored */}
-            <div className="absolute inset-0 flex flex-col justify-end z-30 pointer-events-none">
-                <div className="max-w-[1366px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-10 sm:pb-14 md:pb-18 pointer-events-auto">
+            {/* Hero content - bottom-left anchored */}
+            <div className="absolute inset-0 flex flex-col justify-end z-[3] pointer-events-none">
+                <div className="max-w-[1180px] mx-auto w-full px-6 md:px-8 pb-10 sm:pb-14 md:pb-18 pointer-events-auto">
 
                     {/* Category pill */}
                     <motion.div
@@ -290,7 +145,7 @@ const HeroSection = memo(({ project, animationConfig }) => {
 
                     {/* Project title */}
                     <motion.h1
-                        className="text-[clamp(2.75rem,6.5vw,5.75rem)] font-display-black-italic text-transparent bg-gradient-to-r from-white via-white/95 to-brand-light bg-clip-text leading-none mb-4"
+                        className="text-[clamp(2.35rem,5vw,4.65rem)] font-display-black-italic text-transparent bg-gradient-to-r from-white via-white/95 to-brand-light bg-clip-text leading-none mb-4 max-w-4xl"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
@@ -298,7 +153,7 @@ const HeroSection = memo(({ project, animationConfig }) => {
                             duration: animationConfig.reduce ? 0.5 : 0.9,
                             ease: 'easeOut'
                         }}
-                        style={{ textShadow: '0 0 80px rgba(2, 133, 130, 0.30)' }}
+                        style={{ textShadow: '0 0 42px rgba(2, 133, 130, 0.24)' }}
                     >
                         {project.title}
                     </motion.h1>
@@ -313,7 +168,7 @@ const HeroSection = memo(({ project, animationConfig }) => {
                         {project.subtitle}
                     </motion.p>
 
-                    {/* Meta row — status, tech tags, CTAs */}
+                    {/* Meta row - status, tech tags, CTAs */}
                     <motion.div
                         className="flex flex-wrap items-center gap-2 sm:gap-3"
                         initial={{ opacity: 0, y: 15 }}
@@ -327,14 +182,14 @@ const HeroSection = memo(({ project, animationConfig }) => {
                                 {project.meta?.status}
                             </span>
                             <span className="text-foreground-muted/80 text-xs font-display-medium">
-                                · {project.meta?.year}
+                                &middot; {project.meta?.year}
                             </span>
                         </div>
 
                         {/* Divider */}
                         <div className="hidden sm:block w-px h-4 bg-white/20" />
 
-                        {/* Tech tags — first 4 */}
+                        {/* Tech tags - first 4 */}
                         {project.techStack.slice(0, 4).map(tech => (
                             <span
                                 key={tech.name}
@@ -355,9 +210,9 @@ const HeroSection = memo(({ project, animationConfig }) => {
                                 href={project.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-300 overflow-hidden relative text-xs sm:text-sm hover:-translate-y-px"
+                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-white to-white/95 text-foreground-dark font-display-medium transition-all duration-200 overflow-hidden relative text-xs sm:text-sm hover:-translate-y-px"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-brand-light/10 to-brand/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                                 <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 relative z-10" />
                                 <span className="font-display-black-italic relative z-10">Live Site</span>
                             </a>
@@ -367,7 +222,7 @@ const HeroSection = memo(({ project, animationConfig }) => {
                                 href={project.links.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/55 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/70 hover:-translate-y-px transition-all duration-300"
+                                className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-border-brand bg-surface/75 text-foreground-secondary font-display-medium text-xs sm:text-sm hover:border-border-brand-strong hover:bg-surface-hover/80 hover:-translate-y-px transition-all duration-200"
                             >
                                 <Github className="w-3.5 h-3.5 group-hover:text-brand-light transition-colors" />
                                 <span className="font-display-black-italic">Source</span>
@@ -389,104 +244,70 @@ const ProjectOverview = memo(({ project }) => {
     const statusColor = STATUS_COLORS[project.meta?.status] || '#028582';
 
     const linkHoverVariants = useMemo(() => ({
-        x: animationConfig.reduce ? 2 : 4
+        x: animationConfig.reduce ? 1 : 2
     }), [animationConfig.reduce]);
 
     const teamMemberHoverVariants = useMemo(() => ({
-        y: animationConfig.reduce ? -4 : -3,
-        scale: animationConfig.reduce ? 1.02 : 1.01
+        y: animationConfig.reduce ? -1 : -2,
+        scale: 1.01
     }), [animationConfig.reduce]);
 
     return (
-        <section className="py-16 sm:py-20 md:py-24 relative">
-            <div className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] relative z-10 px-4 sm:px-6 md:px-8">
+        <section className="py-14 sm:py-16 md:py-20 relative">
+            <div className="mx-auto w-full max-w-[1180px] relative z-10 px-6 md:px-8">
 
                 <SectionHeader line1="Project" line2="Overview" delay={0.2} />
 
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 lg:gap-6 items-start">
 
-                    {/* ── Left: Main content card ── */}
+                    {/* -- Left: Main content card -- */}
                     <ScrollAnimatedSection
                         animationType="fadeLeft"
                         delay={0.3}
                         className="xl:col-span-7 space-y-6"
                         priority="high"
                     >
-                        <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.03] backdrop-blur-md border border-white/[0.14] hover:border-white/[0.22] rounded-2xl p-6 md:p-10 shadow-lg transition-colors duration-300">
+                        <div className="relative bg-surface/92 border border-border-brand hover:border-border-brand-strong rounded-2xl p-5 sm:p-6 md:p-8 shadow-lg transition-colors duration-200">
                             {/* Top accent line */}
                             <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-light/25 to-transparent rounded-full" />
 
-                            <h3 className="text-xl md:text-2xl lg:text-3xl font-display-black-italic text-display mb-5 leading-tight">
+                            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-muted mb-3">Brief</p>
+                            <h3 className="text-xl md:text-2xl lg:text-[2rem] font-display-black-italic text-display mb-5 leading-tight">
                                 {project.subtitle}
                             </h3>
-                            <p className="text-foreground-secondary/90 text-sm sm:text-base leading-relaxed mb-8">
+                            <p className="text-foreground-secondary/90 text-sm sm:text-base leading-[1.8] mb-8 max-w-3xl">
                                 {project.description}
                             </p>
 
                             {/* Key Highlights */}
                             <StaggerContainer
                                 staggerDelay={animationConfig.reduce ? 0.05 : 0.1}
-                                className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8"
+                                className="grid grid-cols-1 md:grid-cols-2 gap-2.5 mb-8"
                                 priority="medium"
                             >
                                 {project.highlights.map((highlight, idx) => (
                                     <div
                                         key={idx}
-                                        className="flex items-start gap-3 p-3 bg-brand-light/5 rounded-xl border border-brand-light/15 hover:bg-brand-light/10 hover:border-brand-light/25 transition-colors duration-300"
+                                        className="flex items-start gap-3 p-3 bg-background-soft/70 rounded-xl border border-border-brand hover:bg-surface-hover/70 hover:border-border-brand-strong transition-colors duration-200"
                                     >
-                                        <CheckCircle className="w-4 h-4 text-brand-light flex-shrink-0 mt-0.5" />
+                                        <CheckCircle className="w-4 h-4 text-brand-light flex-shrink-0 mt-0.5" aria-hidden="true" />
                                         <span className="text-foreground-secondary/90 font-display-medium text-sm">{highlight}</span>
                                     </div>
                                 ))}
                             </StaggerContainer>
 
-                            {/* Action Buttons */}
-                            <div className="flex flex-wrap gap-3">
-                                {project.links?.live && (
-                                    <motion.a
-                                        href={project.links.live}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="group relative overflow-hidden bg-gradient-to-r from-brand-light to-brand text-display px-6 py-3 rounded-full font-display-black-italic transition-all duration-300 flex items-center gap-2 shadow-[0_0_20px_rgba(2,133,130,0.28)]"
-                                        whileHover={{ scale: animationConfig.reduce ? 1.01 : 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <motion.div
-                                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                                            initial={{ x: "-150%" }}
-                                            whileHover={{ x: "150%" }}
-                                            transition={{ duration: 0.6 }}
-                                        />
-                                        <ExternalLink className="w-4 h-4 relative z-10" />
-                                        <span className="relative z-10">Live Site</span>
-                                    </motion.a>
-                                )}
-                                {project.links?.github && (
-                                    <motion.a
-                                        href={project.links.github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="group border border-white/20 text-display px-6 py-3 rounded-full font-display-black-italic hover:bg-white/5 hover:border-white/35 transition-all duration-300 flex items-center gap-2"
-                                        whileHover={{ scale: animationConfig.reduce ? 1.01 : 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <Github className="w-4 h-4" />
-                                        View Code
-                                    </motion.a>
-                                )}
-                            </div>
                         </div>
                     </ScrollAnimatedSection>
 
-                    {/* ── Right: Sidebar cards ── */}
+                    {/* -- Right: Sidebar cards -- */}
                     <ScrollAnimatedSection
                         animationType="fadeRight"
                         delay={0.4}
-                        className="xl:col-span-5 space-y-4"
+                        className="xl:col-span-5 space-y-4 xl:sticky xl:top-24"
                         priority="high"
                     >
                         {/* Status Card */}
-                        <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.03] backdrop-blur-md border border-white/[0.14] hover:border-white/[0.22] rounded-2xl p-5 shadow-lg transition-colors duration-300">
+                        <div className="relative bg-surface/90 border border-border-brand hover:border-border-brand-strong rounded-2xl p-5 shadow-lg transition-colors duration-200">
                             <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-light/20 to-transparent rounded-full" />
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-display font-display-black-italic text-lg flex items-center gap-2">
@@ -511,10 +332,35 @@ const ProjectOverview = memo(({ project }) => {
                                 <Calendar className="w-4 h-4 text-brand-light" />
                                 <span className="font-display-medium">Delivered in {project.meta?.year}</span>
                             </div>
+                            <div className="mt-4 grid grid-cols-2 gap-3 border-t border-border-brand pt-4">
+                                <div>
+                                    <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground-muted">Role</p>
+                                    <p className="mt-1 text-sm font-display-black-italic text-display">{project.teamMembers?.[0]?.role || 'Developer'}</p>
+                                </div>
+                                <div>
+                                    <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground-muted">Stack</p>
+                                    <p className="mt-1 text-sm font-display-black-italic text-display">{project.techStack.length} tools</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative bg-surface/90 border border-border-brand hover:border-border-brand-strong rounded-2xl p-5 shadow-lg transition-colors duration-200">
+                            <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-light/20 to-transparent rounded-full" />
+                            <h3 className="text-display font-display-black-italic text-lg mb-4">Primary Stack</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {project.techStack.slice(0, 6).map((tech) => (
+                                    <span
+                                        key={tech.name}
+                                        className="rounded-full border border-border-brand bg-background-soft/70 px-3 py-1.5 text-xs font-display-medium text-foreground-secondary"
+                                    >
+                                        {tech.name}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Links Card */}
-                        <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.03] backdrop-blur-md border border-white/[0.14] hover:border-white/[0.22] rounded-2xl p-5 shadow-lg transition-colors duration-300">
+                        <div className="relative bg-surface/90 border border-border-brand hover:border-border-brand-strong rounded-2xl p-5 shadow-lg transition-colors duration-200">
                             <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-light/20 to-transparent rounded-full" />
                             <h3 className="text-display font-display-black-italic text-lg mb-4 flex items-center gap-2">
                                 <Globe className="w-5 h-5 text-brand-light" />
@@ -526,7 +372,7 @@ const ProjectOverview = memo(({ project }) => {
                                         href={project.links.website}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group flex items-center gap-3 p-3 bg-brand-light/5 hover:bg-brand-light/10 rounded-xl border border-brand-light/15 hover:border-brand-light/30 transition-all duration-300"
+                                        className="group flex items-center gap-3 p-3 bg-background-soft/70 hover:bg-surface-hover/80 rounded-xl border border-border-brand hover:border-border-brand-strong transition-all duration-200"
                                         whileHover={linkHoverVariants}
                                     >
                                         <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand/20 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -543,7 +389,7 @@ const ProjectOverview = memo(({ project }) => {
                                         href={project.links.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group flex items-center gap-3 p-3 bg-brand-light/5 hover:bg-brand-light/10 rounded-xl border border-brand-light/15 hover:border-brand-light/30 transition-all duration-300"
+                                        className="group flex items-center gap-3 p-3 bg-background-soft/70 hover:bg-surface-hover/80 rounded-xl border border-border-brand hover:border-border-brand-strong transition-all duration-200"
                                         whileHover={linkHoverVariants}
                                     >
                                         <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand/20 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -562,7 +408,7 @@ const ProjectOverview = memo(({ project }) => {
                                         href={link.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group flex items-center gap-3 p-3 bg-brand-light/5 hover:bg-brand-light/10 rounded-xl border border-brand-light/15 hover:border-brand-light/30 transition-all duration-300"
+                                        className="group flex items-center gap-3 p-3 bg-background-soft/70 hover:bg-surface-hover/80 rounded-xl border border-border-brand hover:border-border-brand-strong transition-all duration-200"
                                         whileHover={linkHoverVariants}
                                     >
                                         <div className="w-8 h-8 bg-gradient-to-br from-brand-light/20 to-brand/20 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -574,23 +420,28 @@ const ProjectOverview = memo(({ project }) => {
                                         </div>
                                     </motion.a>
                                 ))}
+                                {!project.links?.github && (
+                                    <div className="rounded-xl border border-border-brand bg-background-soft/60 p-3 text-xs leading-relaxed text-foreground-muted">
+                                        Source code is unavailable for some older or client-owned work.
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </ScrollAnimatedSection>
                 </div>
 
-                {/* ── Team Section ── */}
+                {/* -- Team Section -- */}
                 <ScrollAnimatedSection
                     animationType="fadeUp"
                     delay={0.5}
-                    className="mt-20 sm:mt-24"
+                    className="mt-14 sm:mt-16"
                     priority="medium"
                 >
                     <SectionHeader line1="The" line2="Team" delay={0.1} />
 
                     <StaggerContainer
                         staggerDelay={animationConfig.reduce ? 0.08 : 0.15}
-                        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center"
+                        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 justify-items-center"
                         priority="medium"
                     >
                         {project.teamMembers.map((member, idx) => (
@@ -600,8 +451,8 @@ const ProjectOverview = memo(({ project }) => {
                                 whileHover={teamMemberHoverVariants}
                                 transition={{ type: "tween", duration: 0.2 }}
                             >
-                                <div className="relative w-14 h-14 mx-auto mb-3">
-                                    <div className="w-full h-full bg-gradient-to-br from-brand-light to-brand rounded-full flex items-center justify-center text-display font-display-black-italic text-lg shadow-lg shadow-brand-light/20">
+                                <div className="relative w-12 h-12 mx-auto mb-3">
+                                    <div className="w-full h-full bg-gradient-to-br from-brand-light to-brand rounded-full flex items-center justify-center text-display font-display-black-italic text-base shadow-lg shadow-brand-light/20">
                                         {member.name.split(' ').map(n => n[0]).join('')}
                                     </div>
                                     {idx === 0 && (
@@ -631,53 +482,48 @@ const TechnologyStack = memo(({ techStack }) => {
     const animationConfig = getAnimationConfig();
 
     return (
-        <section className="py-16 sm:py-20 md:py-24 relative">
-            <div className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] px-4 sm:px-6 md:px-8">
+        <section className="py-14 sm:py-16 md:py-20 relative">
+            <div className="mx-auto w-full max-w-[1180px] px-6 md:px-8">
                 <SectionHeader line1="Built" line2="With" delay={0.2} />
 
                 <StaggerContainer
-                    staggerDelay={animationConfig.reduce ? 0.1 : 0.15}
-                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"
+                    staggerDelay={animationConfig.reduce ? 0.06 : 0.08}
+                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4"
                     priority="medium"
                 >
                     {techStack.map((tech, index) => (
                         <motion.div
                             key={tech.name}
                             className="group relative"
-                            whileHover={{ y: -4, scale: 1.02, transition: { type: "tween", duration: 0.2 } }}
+                            whileHover={{ y: -2, scale: 1.01, transition: { type: "tween", duration: 0.2 } }}
                         >
-                            {/* Glow on hover */}
-                            <motion.div
-                                className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl"
-                                style={{ background: tech.color }}
-                            />
-                            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.03] backdrop-blur-md border border-white/[0.14] group-hover:border-white/[0.24] rounded-2xl p-5 shadow-lg transition-all duration-300 flex flex-col items-center gap-3 text-center h-full justify-center">
+                            <div className="relative bg-surface/90 border border-border-brand group-hover:border-border-brand-strong rounded-2xl p-3.5 shadow-lg transition-all duration-200 flex items-center gap-3 text-left h-full">
                                 {/* Top accent */}
                                 <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-brand-light/15 to-transparent" />
 
                                 <div
-                                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                                    className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/90 flex-shrink-0"
                                     style={{
-                                        background: `linear-gradient(135deg, ${tech.color}22, ${tech.color}08)`,
                                         border: `1px solid ${tech.color}30`
                                     }}
                                 >
-                                    <img src={tech.icon} alt={tech.name + ' logo'} className="w-8 h-8 object-contain" />
+                                    <img src={tech.icon} alt={tech.name + ' logo'} className="w-6 h-6 object-contain" />
                                 </div>
 
-                                <h3 className="text-display font-display-black-italic text-base leading-tight">{tech.name}</h3>
-
-                                <motion.div
-                                    className="h-0.5 rounded-full"
-                                    style={{ backgroundColor: tech.color }}
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: 32 }}
-                                    viewport={{ once: true }}
-                                    transition={{
-                                        delay: index * (animationConfig.reduce ? 0.05 : 0.1) + 0.4,
-                                        duration: animationConfig.reduce ? 0.4 : 0.7
-                                    }}
-                                />
+                                <div className="min-w-0">
+                                    <h3 className="text-display font-display-black-italic text-sm leading-tight">{tech.name}</h3>
+                                    <motion.div
+                                        className="mt-2 h-0.5 rounded-full"
+                                        style={{ backgroundColor: tech.color }}
+                                        initial={{ width: 0 }}
+                                        whileInView={{ width: 28 }}
+                                        viewport={{ once: true }}
+                                        transition={{
+                                            delay: index * (animationConfig.reduce ? 0.03 : 0.05) + 0.2,
+                                            duration: animationConfig.reduce ? 0.3 : 0.45
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </motion.div>
                     ))}
@@ -690,56 +536,110 @@ const TechnologyStack = memo(({ techStack }) => {
 // ===== SCREENSHOT GALLERY =====
 const ScreenshotGallery = memo(({ images }) => {
     const animationConfig = getAnimationConfig();
+    const [featuredImage, ...supportingImages] = images;
+    const getCaptureLabel = useCallback((alt, index) => {
+        const cleaned = alt
+            .replace(/^Razor Payments\s*/i, '')
+            .replace(/^Superior Business Networks\s*/i, '')
+            .replace(/\spage$/i, '')
+            .trim();
+
+        return cleaned || (index === 0 ? 'Homepage' : `Capture ${index + 1}`);
+    }, []);
 
     return (
-        <section className="py-16 sm:py-20 md:py-24">
-            <div className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] px-4 sm:px-6 md:px-8">
+        <section className="py-14 sm:py-16 md:py-20">
+            <div className="mx-auto w-full max-w-[1180px] px-6 md:px-8">
                 <SectionHeader line1="Visual" line2="Showcase" delay={0.2} />
 
-                <StaggerContainer
-                    staggerDelay={animationConfig.reduce ? 0.15 : 0.25}
-                    className="space-y-8 sm:space-y-12"
-                    priority="medium"
-                >
-                    {images.map((img, idx) => (
+                <div className="space-y-6 sm:space-y-8">
+                    <ScrollAnimatedSection
+                        animationType="scale"
+                        delay={0.1}
+                        priority="medium"
+                    >
                         <motion.div
-                            key={img.src}
                             className="relative group"
-                            whileHover={{ scale: animationConfig.reduce ? 1.005 : 1.01 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            whileHover={{ y: animationConfig.reduce ? 0 : -2 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
                         >
-                            {/* Glow on hover */}
-                            <motion.div
-                                className="absolute -inset-4 bg-gradient-to-r from-brand-light/10 to-brand/10 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
-                            />
+                            <a
+                                href={featuredImage.src}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block relative rounded-2xl overflow-hidden border border-border-brand group-hover:border-border-brand-strong bg-surface/90 p-2 sm:p-3 shadow-[0_0_32px_rgba(2,133,130,0.08)] transition-colors duration-200"
+                            >
+                                <div className="flex h-8 items-center gap-2 rounded-t-xl border border-b-0 border-border-brand bg-background-soft/90 px-3">
+                                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                                    <span className="h-2.5 w-2.5 rounded-full bg-accent/80" />
+                                    <span className="h-2.5 w-2.5 rounded-full bg-brand-light/80" />
+                                    <span className="ml-2 truncate font-mono text-[10px] uppercase tracking-[0.14em] text-foreground-muted">
+                                        {getCaptureLabel(featuredImage.alt, 0)} / full-page capture
+                                    </span>
+                                </div>
+                                <div className="relative h-[420px] sm:h-[520px] lg:h-[620px] overflow-hidden rounded-b-xl border border-border-brand bg-background-soft">
+                                    <img
+                                        src={featuredImage.src}
+                                        alt={featuredImage.alt}
+                                        className="h-auto min-h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.01]"
+                                    />
+                                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-background via-background/80 to-transparent p-4 sm:p-5">
+                                        <div>
+                                            <p className="font-display-black-italic text-base text-display">{getCaptureLabel(featuredImage.alt, 0)}</p>
+                                            <p className="mt-1 text-xs text-foreground-muted">Cropped preview. Open to view full page.</p>
+                                        </div>
+                                        <ExternalLink className="h-4 w-4 flex-shrink-0 text-brand-light" />
+                                    </div>
+                                </div>
+                                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-light/25 to-transparent" />
+                            </a>
+                        </motion.div>
+                    </ScrollAnimatedSection>
 
-                            {/* Brand-framed container */}
-                            <div className="relative rounded-2xl overflow-hidden border border-white/[0.14] group-hover:border-brand-light/30 shadow-[0_0_40px_rgba(2,133,130,0.08)] group-hover:shadow-[0_0_60px_rgba(2,133,130,0.16)] transition-all duration-500">
-                                {/* Glass frame padding */}
-                                <div className="p-2 sm:p-3 bg-gradient-to-br from-white/[0.05] to-white/[0.02] backdrop-blur-sm">
-                                    <ScrollAnimatedSection
-                                        animationType="scale"
-                                        delay={idx * (animationConfig.reduce ? 0.1 : 0.18)}
-                                        priority="low"
+                    {supportingImages.length > 0 && (
+                        <StaggerContainer
+                            staggerDelay={animationConfig.reduce ? 0.08 : 0.12}
+                            className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
+                            priority="medium"
+                        >
+                            {supportingImages.map((img, index) => (
+                                <motion.div
+                                    key={img.src}
+                                    className="relative group"
+                                    whileHover={{ y: animationConfig.reduce ? 0 : -2 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                >
+                                    <a
+                                        href={img.src}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block relative rounded-2xl overflow-hidden border border-border-brand group-hover:border-border-brand-strong bg-surface/90 p-2 shadow-lg transition-colors duration-200"
                                     >
-                                        <div className="relative rounded-xl overflow-hidden">
+                                        <div className="flex h-7 items-center gap-1.5 rounded-t-xl border border-b-0 border-border-brand bg-background-soft/90 px-2.5">
+                                            <span className="h-2 w-2 rounded-full bg-red-400/60" />
+                                            <span className="h-2 w-2 rounded-full bg-accent/70" />
+                                            <span className="h-2 w-2 rounded-full bg-brand-light/70" />
+                                            <span className="ml-1 truncate font-mono text-[9px] uppercase tracking-[0.12em] text-foreground-muted">
+                                                {getCaptureLabel(img.alt, index + 1)}
+                                            </span>
+                                        </div>
+                                        <div className="relative h-[260px] sm:h-[320px] overflow-hidden rounded-b-xl bg-background-soft">
                                             <img
                                                 src={img.src}
                                                 alt={img.alt}
-                                                className="w-full h-auto rounded-xl"
+                                                className="h-auto min-h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
                                             />
-                                            {/* Subtle bottom gradient overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#011417]/20 to-transparent pointer-events-none rounded-xl" />
+                                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/80 to-transparent p-3">
+                                                <p className="text-xs font-display-black-italic text-foreground-secondary">{getCaptureLabel(img.alt, index + 1)}</p>
+                                                <p className="mt-0.5 text-[10px] font-mono uppercase tracking-[0.12em] text-foreground-muted">Open full capture</p>
+                                            </div>
                                         </div>
-                                    </ScrollAnimatedSection>
-                                </div>
-
-                                {/* Bottom brand accent line */}
-                                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-light/25 to-transparent" />
-                            </div>
-                        </motion.div>
-                    ))}
-                </StaggerContainer>
+                                    </a>
+                                </motion.div>
+                            ))}
+                        </StaggerContainer>
+                    )}
+                </div>
             </div>
         </section>
     );
@@ -784,41 +684,13 @@ function ProjectPage() {
             transition={{ duration: animationConfig.reduce ? 0.3 : 0.5, ease: "easeInOut" }}
             className="project-page min-h-screen relative overflow-hidden"
         >
-            {/* Ambient background orbs — fixed, looping */}
             <div id="main-bg" className="z-10"></div>
-
-            {canAnimate() && (
-                <div className="fixed inset-0 pointer-events-none z-0">
-                    <motion.div
-                        className="absolute top-20 left-10 w-96 h-72 sm:h-80 bg-gradient-to-br from-brand-light/8 to-brand/8 rounded-full blur-3xl"
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                        transition={{
-                            duration: animationConfig.reduce ? 8 : 12,
-                            repeat: Infinity,
-                            repeatType: "mirror"
-                        }}
-                    />
-                    <motion.div
-                        className="absolute bottom-20 right-10 w-64 h-64 bg-gradient-to-br from-brand/8 to-blue-500/8 rounded-full blur-3xl"
-                        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
-                        transition={{
-                            duration: animationConfig.reduce ? 10 : 15,
-                            repeat: Infinity,
-                            repeatType: "mirror",
-                            delay: animationConfig.reduce ? 1.5 : 3
-                        }}
-                    />
-                </div>
-            )}
-
-            {/* Chatbot Notification */}
-            <ProjectNotification />
 
             {/* Hero Section */}
             <HeroSection project={project} animationConfig={animationConfig} />
 
             {/* Main Content */}
-            <div className="relative z-20">
+            <div className="relative z-[1]">
                 <ProjectOverview project={project} />
                 <TechnologyStack techStack={project.techStack} />
                 {project.screenshots && project.screenshots.length > 0 && (
@@ -828,7 +700,7 @@ function ProjectPage() {
                 <ScrollAnimatedSection
                     animationType="fadeUp"
                     delay={0.3}
-                    className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] px-4 sm:px-6 md:px-8 pb-16 sm:pb-20"
+                    className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] px-6 md:px-8 pb-16 sm:pb-20"
                     priority="low"
                 >
                     <NextProjectSection />

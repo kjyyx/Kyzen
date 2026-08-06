@@ -57,7 +57,7 @@ const BrandText = memo(({ onClick }) => (
 // Brand Text Separator Component
 const BrandTextSeparator = memo(() => (
     <motion.span
-        className="text-foreground-muted/70 tracking-tight font-display-medium ml-1 sm:ml-2"
+        className="text-foreground-muted/70 font-display-medium ml-1 sm:ml-2"
         animate={{ opacity: [0.4, 0.65, 0.4] }}
         transition={{ duration: 0.6 }}
     >
@@ -67,7 +67,7 @@ const BrandTextSeparator = memo(() => (
 
 // Brand Text Title Component
 const BrandTextTitle = memo(() => (
-    <span className="text-foreground-secondary/90 tracking-tight font-display-medium ml-1 sm:ml-2 lg:inline">
+    <span className="text-foreground-secondary/90 font-display-medium ml-1 sm:ml-2 lg:inline">
         Junior Web Developer
     </span>
 ));
@@ -116,7 +116,7 @@ const ContactButtonText = memo(() => (
 // Contact Button Section Component
 const ContactButtonSection = memo(() => (
     <motion.div
-        className="hidden md:ml-4 lg:ml-6 md:block relative z-[90]"
+        className="hidden md:ml-4 lg:ml-6 md:block relative z-[2]"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
@@ -127,7 +127,7 @@ const ContactButtonSection = memo(() => (
 
 // Desktop Navigation Component
 const DesktopNavigation = memo(({ navigationItems }) => (
-    <div className="hidden md:ml-6 lg:ml-10 md:block relative z-[90]">
+    <div className="hidden md:ml-6 lg:ml-10 md:block relative z-[2]">
         <motion.div
             className="flex space-x-1 lg:space-x-2"
             initial={{ opacity: 0, y: -20 }}
@@ -231,7 +231,7 @@ const MobileMenuBackground = memo(() => (
 
 // Mobile Menu Button Component
 const MobileMenuButton = memo(({ open }) => (
-    <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[100]">
+    <div className="absolute inset-y-0 right-0 flex items-center md:hidden z-[3]">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-lg p-2 text-display hover:bg-white/10 transition-colors duration-200">
             <span className="sr-only">Open main menu</span>
             <MobileMenuIcon open={open} />
@@ -251,7 +251,7 @@ const MobileMenuContent = memo(({ mobileNavigationItems }) => (
 const MobileMenuContainer = memo(({ open, mobileNavigationItems }) => (
     <AnimatePresence>
         {open && (
-            <DisclosurePanel static className="md:hidden relative z-[80]">
+            <DisclosurePanel static className="md:hidden relative z-[2]">
                 <motion.div
                     className="mt-4 sm:mt-5 w-11/12 max-w-sm mx-auto bg-black/80 backdrop-blur-[20px] rounded-2xl border border-white/20 shadow-[inset_0_0_30px_rgba(255,255,255,0.08)] overflow-hidden"
                     initial={{
@@ -500,7 +500,7 @@ const NavItemContent = memo(({ item, isActive, IconComponent }) => (
 // Navbar Content Component
 const NavbarContent = memo(({ navigationItems, mobileNavigationItems, open }) => (
     <motion.div
-        className="mx-auto max-w-[1366px] px-3 sm:px-4 md:px-6 lg:px-8 relative z-[100]"
+        className="mx-auto max-w-[1366px] px-5 md:px-6 lg:px-8 relative z-[2]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -537,7 +537,7 @@ const NavbarInner = memo(({ navigationItems, open }) => (
 // Navbar Main Content Component
 const NavbarMainContent = memo(({ navigationItems }) => (
     <motion.div
-        className="flex flex-1 items-center justify-between relative z-[90]"
+        className="flex flex-1 items-center justify-between relative z-[2]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
@@ -552,7 +552,7 @@ const ScrollBackgroundOverlay = memo(({ scrolled }) => (
     <AnimatePresence>
         {scrolled && (
             <motion.div
-                className="fixed top-0 left-0 w-full h-16 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-40"
+                className="fixed top-0 left-0 w-full h-16 bg-black/20 backdrop-blur-[15px] border-b border-white/5 z-[4]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -652,7 +652,7 @@ function Navbar() {
     return (
         <>
             <ScrollBackgroundOverlay scrolled={scrolled} />
-            <Disclosure as="nav" className="h-16 fixed w-full z-[100]">
+            <Disclosure as="nav" className="h-16 fixed w-full z-[5]">
                 {({ open }) => (
                     <NavbarContent
                         navigationItems={navigationItems}

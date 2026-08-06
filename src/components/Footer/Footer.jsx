@@ -299,7 +299,7 @@ const CallToActionSection = memo(() => {
 
     return (
         <motion.div
-            className="flex flex-col items-center gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12 relative z-50"
+        className="flex flex-col items-center gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12 relative z-[2]"
             variants={itemVariants}
         >
             <BookCallButton />
@@ -335,7 +335,7 @@ const CopyrightInfo = memo(() => {
 
     return (
         <motion.div
-            className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 tracking-tight font-display-medium text-center sm:text-left"
+            className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 font-display-medium text-center sm:text-left"
             {...copyrightVariants}
         >
             <div className="flex items-center gap-1 sm:gap-2">
@@ -361,7 +361,7 @@ const DecorativeLine = memo(() => (
 // Email Call to Action Component
 const EmailCallToAction = memo(() => (
     <motion.div
-        className="text-center relative z-30 px-4"
+        className="text-center relative z-[2] px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
@@ -383,7 +383,7 @@ const EmailCallToAction = memo(() => (
 // Footer Bottom Section Component
 const FooterBottomSection = memo(() => (
     <motion.div
-        className="space-y-4 sm:space-y-6 relative z-50"
+        className="space-y-4 sm:space-y-6 relative z-[2]"
         variants={itemVariants}
     >
         <DecorativeLine />
@@ -397,14 +397,14 @@ const FooterBottomSection = memo(() => (
 // Footer Container Component
 const FooterContainer = memo(({ children }) => (
     <motion.footer
-        className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
+        className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-[1]"
         variants={footerContainerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
     >
         <BackgroundEffects />
-        <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-[2]">
             {children}
         </div>
     </motion.footer>
@@ -516,7 +516,7 @@ const ScrollToTopSection = memo(() => {
 
     return (
         <motion.div
-            className="flex justify-center mb-6 sm:mb-8 relative z-50"
+            className="flex justify-center mb-6 sm:mb-8 relative z-[2]"
             variants={itemVariants}
         >
             <ScrollToTopButton onClick={scrollToTop} />
@@ -596,7 +596,7 @@ const SocialLinksSection = memo(() => {
 
     return (
         <motion.div
-            className="flex justify-center mb-8 sm:mb-10 md:mb-12 relative z-50"
+        className="flex justify-center mb-8 sm:mb-10 md:mb-12 relative z-[2]"
             variants={itemVariants}
         >
             <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8">
@@ -626,7 +626,7 @@ const SocialLinkTooltip = memo(({ name }) => {
 
     return (
         <motion.div
-            className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-display text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50"
+            className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-display text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-[3]"
             {...tooltipVariants}
         >
             {name}
@@ -660,15 +660,15 @@ const SocialLinkTooltip = memo(({ name }) => {
  */
 function Footer() {
     return (
-        <div id="footer-section" className="pb-4 sm:pb-6 px-2 sm:px-4 mt-8 sm:mt-10 relative">
+        <div id="footer-section" className="pb-4 sm:pb-6 px-6 sm:px-4 mt-8 sm:mt-10 relative">
             <ScrollAnimatedSection 
                 animationType="fadeUp" 
                 threshold={0.2}
                 priority="medium"
-                className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-15"
+                className="mx-auto w-11/12 sm:w-11/12 md:w-5/6 lg:w-2/3 max-w-[1366px] backdrop-blur-[15px] bg-black/30 rounded-xl sm:rounded-2xl border border-white/10 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] relative overflow-hidden z-[1]"
             >
                 <BackgroundEffects />
-                <div className="mx-auto max-w-11/12 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-40">
+                <div className="mx-auto max-w-11/12 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 md:py-12 relative z-[2]">
                     <AnimatedMarqueeText />
                     <CallToActionSection />
                     
