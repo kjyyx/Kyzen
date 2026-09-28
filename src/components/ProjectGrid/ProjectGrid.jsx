@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
+import React, { useState, useEffect, useMemo, useCallback, memo, startTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code, Calendar, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import ScrollAnimatedSection from '../../common/ScrollAnimatedSection';
 import StaggerContainer from '../../common/StaggerContainer';
 import {
-    featuredProjects as projects,
-    remainingProjects
+    featuredProjects as initialFeatured,
+    remainingProjects as initialRemaining,
+    allProjectCards
 } from '../Projects/ProjectData';
 
-import { 
-    getAnimationConfig, 
+import {
+    getAnimationConfig,
     canAnimate
 } from '../../utils/helpers';
 
@@ -20,12 +21,12 @@ import {
 // Background Effects Component
 const BackgroundEffects = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     // Skip background effects on low-end devices
     if (!canAnimate() || animationConfig.reduce) {
         return null;
     }
-    
+
     return (
         <ScrollAnimatedSection
             animationType="fadeIn"
@@ -35,7 +36,7 @@ const BackgroundEffects = memo(() => {
         >
             <motion.div
                 className="absolute top-20 left-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-dark/10 to-brand/10 rounded-full blur-3xl"
-                animate={{ 
+                animate={{
                     scale: [1, 1.1, 1], // Reduced from 1.2
                     opacity: [0.3, 0.5, 0.3] // Reduced max opacity
                 }}
@@ -43,7 +44,7 @@ const BackgroundEffects = memo(() => {
             />
             <motion.div
                 className="absolute bottom-20 right-10 w-28 h-28 bg-gradient-to-br from-brand-light/10 to-secondary/10 rounded-full blur-3xl"
-                animate={{ 
+                animate={{
                     scale: [1, 1.2, 1], // Reduced from 1.3
                     opacity: [0.2, 0.4, 0.2] // Reduced max opacity
                 }}
@@ -67,22 +68,22 @@ const BottomDecoration = memo(() => (
 // Page Header Component
 const PageHeader = memo(() => {
     const animationConfig = getAnimationConfig();
-    
+
     const titleVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.4 }
                 }
             };
         }
-        
+
         return {
             initial: { opacity: 0, x: -24 }, // Reduced from -100
-            animate: { 
-                opacity: 1, 
+            animate: {
+                opacity: 1,
                 x: 0,
                 transition: { duration: 0.6 } // Reduced from 1
             }
@@ -93,16 +94,16 @@ const PageHeader = memo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { width: 0 },
-                animate: { 
+                animate: {
                     width: "8rem", // Reduced width
                     transition: { duration: 0.4, delay: 0.2 }
                 }
             };
         }
-        
+
         return {
             initial: { width: 0 },
-            animate: { 
+            animate: {
                 width: "10rem",
                 transition: { duration: 0.8, delay: 0.3 } // Reduced delay
             }
@@ -141,12 +142,12 @@ const PageHeader = memo(() => {
 // Project Card Background Glow Component
 const ProjectCardGlow = memo(({ showEffects }) => {
     const animationConfig = getAnimationConfig();
-    
+
     // Skip glow effects on low-end devices
     if (animationConfig.reduce) {
         return null;
     }
-    
+
     return (
         <AnimatePresence>
             {showEffects && (
@@ -165,12 +166,12 @@ const ProjectCardGlow = memo(({ showEffects }) => {
 // Project Card Corner Accents Component
 const ProjectCardCornerAccents = memo(({ showEffects }) => {
     const animationConfig = getAnimationConfig();
-    
+
     // Skip corner accents on low-end devices
     if (animationConfig.reduce) {
         return null;
     }
-    
+
     return (
         <AnimatePresence>
             {showEffects && (
@@ -198,33 +199,33 @@ const ProjectCardCornerAccents = memo(({ showEffects }) => {
 // Project Card Description Overlay Component
 const ProjectCardDescription = memo(({ project, showEffects }) => {
     const animationConfig = getAnimationConfig();
-    
+
     const descriptionVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.2 }
                 },
-                exit: { 
+                exit: {
                     opacity: 0,
                     transition: { duration: 0.15 }
                 }
             };
         }
-        
+
         return {
             initial: { opacity: 0, y: 15, scale: 0.98 }, // Reduced values
-            animate: { 
-                opacity: 1, 
-                y: 0, 
+            animate: {
+                opacity: 1,
+                y: 0,
                 scale: 1,
                 transition: { duration: 0.2, ease: "easeOut" }
             },
-            exit: { 
-                opacity: 0, 
-                y: 8, 
+            exit: {
+                opacity: 0,
+                y: 8,
                 scale: 0.98,
                 transition: { duration: 0.15 }
             }
@@ -282,7 +283,7 @@ const ProjectCardFloatingButton = memo(({
     onProjectClick
 }) => {
     const animationConfig = getAnimationConfig();
-    
+
     const buttonVariants = useMemo(() => {
         const baseTransition = {
             type: "tween",
@@ -290,7 +291,7 @@ const ProjectCardFloatingButton = memo(({
             damping: animationConfig.reduce ? 30 : (isMobile || isTablet) ? 25 : 20,
             duration: animationConfig.reduce ? 0.2 : (isMobile || isTablet) ? 0.3 : 0.4,
         };
-        
+
         return {
             initial: {
                 opacity: 1,
@@ -344,15 +345,15 @@ const ProjectCardFloatingButton = memo(({
                 onClick={onProjectClick}
             >
                 <div className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between h-full`}>
-                    <ProjectFloatingButtonText 
-                        showEffects={showEffects} 
-                        isMobile={isMobile} 
-                        isTablet={isTablet} 
+                    <ProjectFloatingButtonText
+                        showEffects={showEffects}
+                        isMobile={isMobile}
+                        isTablet={isTablet}
                     />
-                    <ProjectFloatingButtonIcon 
-                        showEffects={showEffects} 
-                        isMobile={isMobile} 
-                        isTablet={isTablet} 
+                    <ProjectFloatingButtonIcon
+                        showEffects={showEffects}
+                        isMobile={isMobile}
+                        isTablet={isTablet}
                     />
                 </div>
             </motion.div>
@@ -363,7 +364,7 @@ const ProjectCardFloatingButton = memo(({
 // Project Card Image Component
 const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, setImageLoaded }) => {
     const animationConfig = getAnimationConfig();
-    
+
     const imageVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
@@ -376,7 +377,7 @@ const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, se
                 transition: { duration: 0.2 }
             };
         }
-        
+
         return {
             animate: {
                 scale: showEffects ? (isMobile ? 1.01 : 1.02) : 1,
@@ -395,7 +396,7 @@ const ProjectCardImage = memo(({ project, showEffects, isMobile, imageLoaded, se
                 transition: { duration: 0 }
             };
         }
-        
+
         return {
             animate: {
                 scale: showEffects ? (isMobile ? 1.02 : 1.05) : 1,
@@ -613,22 +614,22 @@ const ProjectNumberIndicator = memo(({ index, isMobile, isTablet }) => (
 // Project Tech Badge Component
 const ProjectTechBadge = memo(({ tech, index }) => {
     const animationConfig = getAnimationConfig();
-    
+
     const badgeVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.2, delay: index * 0.02 }
                 }
             };
         }
-        
+
         return {
             initial: { opacity: 0, scale: 0.8 },
-            animate: { 
-                opacity: 1, 
+            animate: {
+                opacity: 1,
                 scale: 1,
                 transition: {
                     duration: 0.2,
@@ -781,25 +782,25 @@ const ProjectCard = memo(({
     );
 });
 
-const RemainingProjectsRow = memo(() => {
+const RemainingProjectsRow = memo(({ remainingProjects }) => {
     const navigate = useNavigate();
     const animationConfig = getAnimationConfig();
-    
+
     const containerVariants = useMemo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.4 }
                 }
             };
         }
-        
+
         return {
             initial: { opacity: 0, y: 30 }, // Reduced from 40
-            animate: { 
-                opacity: 1, 
+            animate: {
+                opacity: 1,
                 y: 0,
                 transition: { duration: 0.5, delay: 0.2 }
             }
@@ -810,18 +811,18 @@ const RemainingProjectsRow = memo(() => {
         if (animationConfig.reduce) {
             return {
                 initial: { opacity: 0 },
-                animate: { 
+                animate: {
                     opacity: 1,
                     transition: { duration: 0.3, delay: idx * 0.05 }
                 }
             };
         }
-        
+
         return {
             initial: { opacity: 0, y: 20, scale: 0.95 }, // Reduced values
-            animate: { 
-                opacity: 1, 
-                y: 0, 
+            animate: {
+                opacity: 1,
+                y: 0,
                 scale: 1,
                 transition: { duration: 0.4, delay: 0.1 + idx * 0.08 }
             }
@@ -832,9 +833,11 @@ const RemainingProjectsRow = memo(() => {
         if (animationConfig.reduce) {
             return { scale: 1.02 };
         }
-        
+
         return { scale: 1.01, y: -2 };
     }, [animationConfig.reduce]);
+
+    if (!remainingProjects || remainingProjects.length === 0) return null;
 
     return (
         <motion.div
@@ -897,6 +900,53 @@ function ProjectGrid() {
     const [isMobile, setIsMobile] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
     const [activeCard, setActiveCard] = useState(null);
+    const [activeFilter, setActiveFilter] = useState("WordPress"); // default to WordPress
+
+    const filters = ["All", "WordPress", "Web Apps", "Mobile App", "Other"];
+
+    const handleFilterClick = useCallback((filter) => {
+        startTransition(() => {
+            setActiveFilter(filter);
+        });
+    }, []);
+
+    const displayProjects = useMemo(() => {
+        if (activeFilter === "All") {
+            return { featured: initialFeatured, remaining: initialRemaining };
+        }
+
+        let filtered = [];
+        const filterStr = activeFilter.toLowerCase();
+
+        if (filterStr === "wordpress") {
+            filtered = allProjectCards.filter(p => {
+                const cat = (p.category || '').toLowerCase();
+                const techStr = (p.tech || []).join(" ").toLowerCase();
+                return cat.includes("wordpress") || cat.includes("operations") || cat.includes("maintenance") || techStr.includes("wordpress") || techStr.includes("elementor") || techStr.includes("acf");
+            });
+        } else if (filterStr === "web apps") {
+            filtered = allProjectCards.filter(p => {
+                const cat = (p.category || '').toLowerCase();
+                return cat.includes("web app") || cat.includes("full-stack") || cat.includes("enterprise") || cat.includes("e-commerce") || cat.includes("service");
+            });
+        } else if (filterStr === "mobile app") {
+            filtered = allProjectCards.filter(p => {
+                const cat = (p.category || '').toLowerCase();
+                return cat.includes("mobile app");
+            });
+        } else {
+            filtered = allProjectCards.filter(p => {
+                const cat = (p.category || '').toLowerCase();
+                const techStr = (p.tech || []).join(" ").toLowerCase();
+                const isWP = cat.includes("wordpress") || cat.includes("operations") || cat.includes("maintenance") || techStr.includes("wordpress") || techStr.includes("elementor") || techStr.includes("acf");
+                const isWeb = cat.includes("web app") || cat.includes("full-stack") || cat.includes("enterprise") || cat.includes("e-commerce") || cat.includes("service");
+                const isMob = cat.includes("mobile app");
+                return !isWP && !isWeb && !isMob;
+            });
+        }
+
+        return { featured: filtered, remaining: [] };
+    }, [activeFilter]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -930,16 +980,35 @@ function ProjectGrid() {
             {/* Statistics Section (optional - uncomment if needed) */}
             {/* <StatisticsSection statistics={statistics} /> */}
 
+            {/* Filter Section */}
+            <ScrollAnimatedSection animationType="fadeIn" delay={0.3} className="w-full flex justify-start mb-8 z-20 overflow-x-auto pb-4 hide-scrollbar">
+                <div className="flex gap-2 sm:gap-4">
+                    {filters.map(filter => (
+                        <button
+                            key={filter}
+                            onClick={() => handleFilterClick(filter)}
+                            className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-display-medium transition-all duration-300 ${activeFilter === filter ? 'bg-brand-light/20 text-brand-light border border-brand-light/50 shadow-[0_0_15px_rgba(2,133,130,0.3)]' : 'bg-transparent text-foreground-muted border border-border-brand hover:border-brand-light/30 hover:text-foreground'}`}
+                        >
+                            {filter}
+                        </button>
+                    ))}
+                </div>
+            </ScrollAnimatedSection>
+
             {/* Projects Grid */}
             <ProjectGridContainer
-                projects={projects}
+                key={`grid-${activeFilter}`}
+                projects={displayProjects.featured}
                 isMobile={isMobile}
                 isTablet={isTablet}
                 activeCard={activeCard}
                 onCardClick={handleCardClick}
             />
 
-            <RemainingProjectsRow />
+            <RemainingProjectsRow
+                key={`row-${activeFilter}`}
+                remainingProjects={displayProjects.remaining}
+            />
 
             {/* Bottom Decoration */}
             <BottomDecoration />
