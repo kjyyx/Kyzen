@@ -11,12 +11,15 @@ import AtsIcon from '../../assets/Projects_Icons/New Icons/ITS_ico.webp';
 import ClarknavIcon from '../../assets/Projects_Icons/New Icons/ClarkNav_ico.webp';
 import GptIcon from '../../assets/Projects_Icons/GPT_ico.webp';
 import BriskIcon from '../../assets/Projects_Icons/Brisk_ico.webp';
-import LavaCrazeIcon from '../../assets/Projects_Icons/New Icons/LavaCraze_ico.webp';
+import LavaCrazeIcon from '../../assets/Projects_Icons/LC_Logo.webp';
 import SprintIcon from '../../assets/Projects_Icons/Sprint_ico.webp';
-import RailroadedIcon from '../../assets/Projects_Icons/New Icons/RailRoaded_ico.webp';
+import RailroadedIcon from '../../assets/Projects_Icons/RR_Logo.webp';
 import SignUmIcon from '../../assets/Projects_Icons/New Icons/SignUm_ico.webp';
 import KairosIcon from '../../assets/Projects_Icons/Kairos_ico.webp';
 import BrainboxLogo from '../../assets/Projects_Icons/BB_Logo.webp';
+import BlueZooLogo from '../../assets/Projects_Icons/BZ_Logo.webp';
+import GovernanceManagerLogo from '../../assets/Projects_Icons/GM_Logo.webp';
+import TheHelmLogo from '../../assets/Projects_Icons/TH_Logo.webp';
 import RazorPaymentsLogo from '../../assets/Projects_Icons/RP_Logo.webp';
 import SbnLogo from '../../assets/Projects_Icons/SBN_Logo.webp';
 import WeldEastLogo from '../../assets/Projects_Icons/WE_Logo.webp';
@@ -48,6 +51,12 @@ import RailroadedSS5 from '../../assets/Webpage_Screenshots/Railroaded_ss5.webp'
 
 import SprintSS1 from '../../assets/Webpage_Screenshots/Sprint_ss1.webp';
 import SprintSS2 from '../../assets/Webpage_Screenshots/Sprint_ss2.webp';
+
+import BrainboxSS1 from '../../assets/Webpage_Screenshots/screencapture-staging18-brain-box-au-2026-09-28-16_26_40.png';
+import BlueZooSS1 from '../../assets/Webpage_Screenshots/screencapture-bluezoo-au-2026-09-28-16_24_14.png';
+import GovernanceManagerSS1 from '../../assets/Webpage_Screenshots/screencapture-governancemanager-org-2026-09-28-16_24_44.png';
+import TheHelmSS1 from '../../assets/Webpage_Screenshots/TheHelm-1.png';
+import TheHelmSS2 from '../../assets/Webpage_Screenshots/TheHelm-2.png';
 
 import RazorPaymentsSS1 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-2026-08-03-12_11_04.webp';
 import RazorPaymentsSS2 from '../../assets/Webpage_Screenshots/screencapture-razorpayments-au-solutions-2026-08-03-12_11_29.webp';
@@ -139,7 +148,7 @@ export const projects = [
             live: "https://razorpayments.com.au"
         },
         teamMembers: [
-            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+            { name: "Kenji Jaculbia", role: "Lead Developer (End-to-End Build)" }
         ],
         highlights: [
             "Built the complete website on a staging environment",
@@ -196,7 +205,7 @@ export const projects = [
             live: "https://superiorbusinessnetworks.com.au"
         },
         teamMembers: [
-            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+            { name: "Kenji Jaculbia", role: "WordPress Developer (Rebrand & Migration)" }
         ],
         highlights: [
             "Migrated a legacy Divi site to a custom block architecture",
@@ -260,7 +269,7 @@ export const projects = [
             live: "https://www.weldeast.com.au"
         },
         teamMembers: [
-            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+            { name: "Kenji Jaculbia", role: "Technical Developer / Performance & Support" }
         ],
         highlights: [
             "Managed domain configuration through Crazy Domains",
@@ -290,14 +299,10 @@ export const projects = [
         ],
         links: {
             website: "https://brain-box.com.au",
-            live: "https://brain-box.com.au",
-            additional: [
-                { label: "Blue Zoo", url: "https://bluezoo.com.au" },
-                { label: "Governance Manager", url: "https://governancemanager.org" }
-            ]
+            live: "https://brain-box.com.au"
         },
         teamMembers: [
-            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+            { name: "Kenji Jaculbia", role: "Junior Web Developer (Maintenance & Deployment)" }
         ],
         highlights: [
             "Acted as the sole in-house developer for multiple client websites",
@@ -306,6 +311,76 @@ export const projects = [
             "Replaced legacy card sections with improved responsive components",
             "Handled plugin compatibility, security checks, and technical fixes",
             "Managed SiteGround staging, backups, SSL, and production upkeep"
+        ],
+        screenshots: [
+            { src: BrainboxSS1, alt: "Brainbox corporate staging site" }
+        ]
+    },
+    {
+        slug: "blue-zoo",
+        title: "Blue Zoo",
+        subtitle: "Corporate WordPress Modernisation",
+        category: "WordPress Operations",
+        description: "Maintained and modernised the Blue Zoo corporate website as part of the Brainbox ecosystem. Focused on WordPress updates, responsive component design, Elementor Pro builds, and ensuring strong mobile UX across all service pages.",
+        backgroundImage: BlueZooLogo,
+        meta: {
+            year: "2026",
+            status: "Maintained"
+        },
+        techStack: [
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Elementor Pro", color: "#92003B", icon: techIcons.elementor },
+            { name: "Mobile UX", color: "#06b6d4", icon: techIcons.react },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground }
+        ],
+        links: {
+            website: "https://bluezoo.com.au",
+            live: "https://bluezoo.com.au"
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Modernised corporate landing pages",
+            "Built responsive components with Elementor Pro",
+            "Ensured strong mobile user experience",
+            "Handled ongoing WordPress maintenance"
+        ],
+        screenshots: [
+            { src: BlueZooSS1, alt: "Blue Zoo corporate site" }
+        ]
+    },
+    {
+        slug: "governance-manager",
+        title: "Governance Manager",
+        subtitle: "Platform Website Maintenance",
+        category: "WordPress Operations",
+        description: "Managed the front-end and technical upkeep of the Governance Manager platform website. Responsibilities included plugin compatibility checks, security audits, staging-to-production deployment via SiteGround, and maintaining brand consistency.",
+        backgroundImage: GovernanceManagerLogo,
+        meta: {
+            year: "2026",
+            status: "Maintained"
+        },
+        techStack: [
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "Security Audits", color: "#ef4444", icon: techIcons.wordpress },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground }
+        ],
+        links: {
+            website: "https://governancemanager.org",
+            live: "https://governancemanager.org"
+        },
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Junior Web Developer" }
+        ],
+        highlights: [
+            "Performed regular security audits and plugin updates",
+            "Managed staging and production environments",
+            "Ensured technical reliability of the platform website",
+            "Maintained consistent brand presentation"
+        ],
+        screenshots: [
+            { src: GovernanceManagerSS1, alt: "Governance Manager platform site" }
         ]
     },
     {
@@ -841,6 +916,40 @@ export const projects = [
                 alt: "Sprint Project Management Interface"
             }
         ]
+    },
+    {
+        slug: "the-helm",
+        title: "The Helm",
+        subtitle: "Prototype Development & Local-to-Live Migration",
+        category: "Prototype & Migration",
+        description: "Developed a high-fidelity website prototype for a client proposal during a brand transition from 'The CEO Circle' to 'The Helm.' Work included local development using LocalWP, an Elementor Pro staging build within a secure SiteGround environment, and full migration from local to the live production server. Note: this project was a prototype and proposal build — it was not a fully completed and publicly launched website.",
+        backgroundImage: TheHelmLogo,
+        meta: {
+            year: "2026",
+            status: "Prototype"
+        },
+        techStack: [
+            { name: "WordPress", color: "#21759b", icon: techIcons.wordpress },
+            { name: "LocalWP", color: "#33eb91", icon: techIcons.wordpress },
+            { name: "SiteGround", color: "#84cc16", icon: techIcons.siteground },
+            { name: "Elementor Pro", color: "#92003B", icon: techIcons.elementor }
+        ],
+        links: {},
+        teamMembers: [
+            { name: "Kenji Jaculbia", role: "Prototype & Migration Developer" }
+        ],
+        highlights: [
+            "Started initial layout build using LocalWP with Live Links",
+            "Executed branding transition from 'The CEO Circle' to 'The Helm'",
+            "Migrated the prototype from local development to the live SiteGround production server",
+            "Configured DNS settings and issued SSL certificates for the new brand URL",
+            "Managed the full build within a secure SiteGround staging environment",
+            "Designed and built a high-fidelity staging prototype using Elementor Pro"
+        ],
+        screenshots: [
+            { src: TheHelmSS1, alt: "The Helm homepage" },
+            { src: TheHelmSS2, alt: "The Helm interface" }
+        ]
     }
 ];
 
@@ -848,7 +957,9 @@ export const featuredProjectSlugs = [
     "razor-payments",
     "superior-business-networks",
     "weld-east",
-    "brainbox-corporate-sites"
+    "brainbox-corporate-sites",
+    "blue-zoo",
+    "governance-manager"
 ];
 
 const projectCardMeta = {
@@ -875,6 +986,20 @@ const projectCardMeta = {
         image: BrainboxLogo,
         description: "Multi-site UX and WordPress operations",
         tech: ["WordPress", "SiteGround", "Security"],
+        category: "Operations"
+    },
+    "blue-zoo": {
+        title: "Blue Zoo",
+        image: BlueZooLogo,
+        description: "Corporate WordPress modernisation",
+        tech: ["WordPress", "Elementor Pro", "Mobile UX"],
+        category: "Operations"
+    },
+    "governance-manager": {
+        title: "Governance Manager",
+        image: GovernanceManagerLogo,
+        description: "Platform website maintenance",
+        tech: ["WordPress", "Security", "SiteGround"],
         category: "Operations"
     },
     "sign-um": {
@@ -937,6 +1062,12 @@ const projectCardMeta = {
         description: "API-supported rental platform",
         tech: ["Bootstrap", "JavaScript", "Google APIs"],
         category: "Service"
+    },
+    "the-helm": {
+        image: TheHelmLogo,
+        description: "Prototype & Branding Transition",
+        tech: ["WordPress", "Elementor Pro", "LocalWP"],
+        category: "Migration"
     }
 };
 
@@ -963,3 +1094,5 @@ export const featuredProjects = featuredProjectSlugs
 export const remainingProjects = projects
     .filter((project) => !featuredProjectSlugs.includes(project.slug))
     .map(toProjectCard);
+
+export const allProjectCards = projects.map(toProjectCard);
